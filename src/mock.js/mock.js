@@ -10,52 +10,42 @@ let spacesTags=[{}]
 let notifications=[
     {id: 1,
     userId: 1,
-    description: "your space has a request",
-    eventId: [1,3,4],
+    eventsId: [{eventId:1},{eventId:3}],
     chatId: 1
     },
     {id: 2,
     userId: 2,
-    description: "waiting for the lender's response",
-    eventId: [2,5],
+    eventId: [{eventId:2},{eventId:3}],
     chatId: 1
     },
     {id: 3,
     userId: 3,
-    description: "your space has a request",
-    eventId: [1,3,4],
+    eventId: [{eventId:1},{eventId:2}],
     chatId: 2
     },
     {id: 4,
     userId: 2,
-    description: "the lender responded",
-    eventId: [2,5],
+    eventId: [{eventId:1},{eventId:3}],
     chatId: 1
     },
-    {id: 5,
-    userId: 1,
-    description: "new message in the chat",
-    eventId: [1,3,4],
-    chatId: 1
-    }
 ];
 
 let inventory=[
     {id:1,
     spaceId:1,
-    data:["nevera","mesa","comedor"]
+    productsId:[{productId:1},{productId:2}]
     },
     {id:2,
     spaceId:2,
-    data:["maletas","lavadora","sofa"]
+    data:[{productId:2},{productId:4},{productId:1}]
     },
     {id:3,
     spaceId:3,
-    data:["quimico1","quimico2","quimico3"]
+    data:[{productId:3}]
     },
     {id:4,
     spaceId:4,
-    data:["aparato1","aparato2","aparato3"]
+    data:[{productId:3},{productId:4}]
     }
 ];
 
