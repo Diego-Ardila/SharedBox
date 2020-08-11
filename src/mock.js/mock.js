@@ -5,7 +5,7 @@ let lender=[
         email: "me@veilhelmalexander.com",
         password: "1qsdf123423ñlksdfñlakjsfñ",
         passwordEncrypted: true,
-        scores: ["13241asf324","413asdf41","13452asdf34","22adsadffa23"],
+        scores: ["13241asf324","413asdf41"],
         averageScore: 4.7,
         notifications: "dsf1wrqdfas134",
         spaces: ["jñkljlñklkj141","nbnbn34141432"],
@@ -16,7 +16,7 @@ let lender=[
         email: "AmeliaPerez@gmail.com",
         password: "1qsdf123423ñlksd3423jsfñ",
         passwordEncrypted: true,
-        scores: ["asddsfd343","afafd334234","daadfsfsad34","ghjjhf4434"],
+        scores: ["asddsfd343","afafd334234"],
         averageScore: 4.2,
         notifications: "sggsf3223455",
         spaces: ["mjkhlh1234"],
@@ -27,7 +27,7 @@ let lender=[
         email: "diego@gmail.com",
         password: "asdfasdf143514",
         passwordEncrypted: true,
-        scores: ["asdfa134513451","adgasd345"],
+        scores: ["asdfa134513451"],
         averageScore: 4.1,
         notifications: "dsf1wrqdfas134",
         spaces: ["ñhljkhlkjh13432"],
@@ -42,7 +42,7 @@ let tenant=[
         email: "sara@gmail.com",
         password: "adñkl145134123",
         passwordEncrypted: true,
-        scores: ["adfjkñ2345", "adsfadf3353", "añsdñ41351123"],
+        scores: ["adfjkñ234564", "adsfadf3353"],
         averageScore: 4.1,
         currentSPaces: [],
         reservedSpaces: ["jñkljlñklkj141"],
@@ -76,6 +76,58 @@ let tenant=[
         notifications: "90145lkjadf"
     },
 ]
+
+let scores=[
+    {
+        id:"13241asf324",
+        userId: "1345asdfasd1",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id:"413asdf41",
+        userId: "1345asdfasd1",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id:"asddsfd343",
+        userId: "1345dfa1",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id:"afafd334234",
+        userId: "1345dfa1",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id:"asdfa134513451",
+        userId: "fdaf234",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id:"adfjkñ234564",
+        userId:"adsfñk245",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id: "adsfadf3353",
+        userId: "adsfñk245",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id: "adfjkñ2345",
+        userId: "adñflkjds134",
+        comments:"Excellent",
+        score: 5
+    },
+];
+
 
 let spaces=[
     {
@@ -140,25 +192,24 @@ let spaces=[
     }
 ]
 
-<<<<<<< HEAD
 let notifications=[
-    {id: 1,
-    userId: 1,
+    {id: "123wasda44wqw",
+    userId: "1345asdfasd1",
     eventsId: [{eventId:1},{eventId:3}],
     chatId: 1
     },
-    {id: 2,
-    userId: 2,
+    {id: "5t3353463wefse",
+    userId: "adsfñk245",
     eventId: [{eventId:2},{eventId:3}],
     chatId: 1
     },
-    {id: 3,
-    userId: 3,
+    {id: "uerh2uh7riehr",
+    userId: "1345dfa1",
     eventId: [{eventId:1},{eventId:2}],
     chatId: 2
     },
-    {id: 4,
-    userId: 2,
+    {id: "324nubefhsdiyb",
+    userId: "adsfñk245",
     eventId: [{eventId:1},{eventId:3}],
     chatId: 1
     },
@@ -166,21 +217,22 @@ let notifications=[
 
 let inventory=[
     {id:1,
-    spaceId:1,
+    spaceId:"jñkljlñklkj141",
     productsId:[{productId:1},{productId:2}]
     },
     {id:2,
-    spaceId:2,
-    data:[{productId:2},{productId:4},{productId:1}]
+    spaceId:"nbnbn34141432",
+    productsId:[{productId:2},{productId:4},{productId:1}]
     },
     {id:3,
-    spaceId:3,
-    data:[{productId:3}]
+    spaceId:"mjkhlh1234",
+    productsId:[{productId:3}]
     },
     {id:4,
-    spaceId:4,
-    data:[{productId:3},{productId:4}]
-=======
+    spaceId:"ñhljkhlkjh13432",
+    productsId:[{productId:3},{productId:4}]
+    }
+];
 let spacesTags=[
     {
         _id: "adsfa134",
@@ -405,17 +457,11 @@ let datesReserved = [
                 month: 2
             },
         ]
->>>>>>> 57b18b522256182a37df5e9f3bb35d2d6c195af6
     }
 ]
 
-let notifications=[{}];
 
-let inventory=[{}];
 
-let scores=[{}];
-
-let chats=[{}];
 
 let events=[
     {
