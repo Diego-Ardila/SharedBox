@@ -539,3 +539,29 @@ let scoresCriterias=[
         score:"metal"
     }
 ]
+let frequentAskedQuestions = [
+    {
+        _id:"123wasda44wqw",
+        question: "Is the entrance of the place big enough",
+        answer: "yes usually you can fit a piano in the entrance",
+        spaceId: "jñkljlñklkj141"
+    },
+    {
+        _id:"5t3353463wefse",
+        question: "can i cancel the reserve one day before the rent day",
+        answer: "yes, one day before the rent day is the limit for cancelling reserves",
+        spaceId: "nbnbn34141432"
+    },
+    {
+        _id:"uerh2uh7riehr",
+        question: "How will this payment be treated for federal (and state) income tax purposes?",
+        answer: "The payment will be considered taxable income to you and should be included as part of your federal (and state if applicable) gross income when reporting your taxes.",
+        spaceId: "mjkhlh1234"
+    },
+    {
+        _id:"324nubefhsdiyb",
+        question: "How far are you to the center?  ",
+        answer: "It's pretty close to the center of the city.",
+        spaceId: "ñhljkhlkjh13432"
+    },
+]
