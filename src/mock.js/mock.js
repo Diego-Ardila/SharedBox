@@ -94,7 +94,8 @@ let spaces=[
         location: {
             long:123413,
             latt:1345145
-        }
+        },
+        frequentaskedQuestionsId= "dahjdalf13r4"
     },
     {
         _id: "nbnbn34141432",
