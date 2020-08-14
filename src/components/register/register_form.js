@@ -1,33 +1,55 @@
 import React from 'react';
+import axios from 'axios';
 
 class Form extends React.Component {
     state={
         name:"",
         email:"",
         phoneNumber:"",
-        password:""
+        password:"",
+        v_password:"",
+        passwordErr:false,
     }
 
     base={
         nameId:"name",
         emailId:"email",
         phoneId:"phoneNumber",
-        passwordId:"password"
+        passwordId:"password",
+        v_passwordId:"v_password"
     }
 
     handleChange= (event) => {
         const { name , value } = event.target
-
-        this.setState({[name] : value})
+        this.setState({ [name] : value })
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        
+
+        if(this.state.password===this.state.v_password){
+            axios({
+                url: "http://localhost:3001/posts",
+                method: "POST",
+                data: this.state,
+            }) 
+            .then(({data})=>{console.log(data); this.props.handleError(false)})
+            .catch((err)=>{console.log(err) ; this.props.handleError(true)})
+
+        }else {this.setState({passwordErr:true})}
         //this.props.sendSubmition(this.state);
+        this.setState({
+            name:"",
+            email:"",
+            phoneNumber:"",
+            password:"",
+            v_password:"",
+            
+        })
     }
 
     render(){
+
         return(
             <form onSubmit={this.handleSubmit} >
                 <label htmlFor={this.base.nameId}>
@@ -56,6 +78,14 @@ class Form extends React.Component {
                     <br/>
                     <input type="password" id={this.base.passwordId} name={this.base.passwordId} value={this.state.password} onChange={this.handleChange} />
                     <br/>
+                </label>
+
+                <label htmlFor={this.base.v_passwordId}>
+                    validate Password:
+                    <br/>
+                    <input type="password" id={this.base.v_passwordId} name={this.base.v_passwordId} value={this.state.v_password} onChange={this.handleChange} />
+                    <br/>
+                    {this.state.passwordErr ? <p>Your passwords didn't match</p> : <p></p>}
                 </label>
                 <br/>
                 <button>Send</button>
