@@ -10,8 +10,7 @@ import profileForm from './components/profile/profile_from';
 function App() {
   return (
     <Router>
-    <div className="App">
-      <Login></Login>
+    <div className="App">           
       <Profile></Profile>
     </div>
     </Router>
