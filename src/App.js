@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 
 
 
+
 function App() {
   //const login = <Login></Login>
   return (
@@ -17,6 +18,7 @@ function App() {
         {/* <Route path="*" component={Default} /> */}
         <Redirect from="*" to="/lender/login" />
       </Switch>
+
     </div>
     </Router>
   );
