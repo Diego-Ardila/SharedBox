@@ -5,7 +5,7 @@ let lender=[
         email: "me@veilhelmalexander.com",
         password: "1qsdf123423ñlksdfñlakjsfñ",
         passwordEncrypted: true,
-        scores: ["13241asf324","413asdf41","13452asdf34","22adsadffa23"],
+        scores: ["13241asf324","413asdf41"],
         averageScore: 4.7,
         notifications: "dsf1wrqdfas134",
         spaces: ["jñkljlñklkj141","nbnbn34141432"],
@@ -16,7 +16,7 @@ let lender=[
         email: "AmeliaPerez@gmail.com",
         password: "1qsdf123423ñlksd3423jsfñ",
         passwordEncrypted: true,
-        scores: ["asddsfd343","afafd334234","daadfsfsad34","ghjjhf4434"],
+        scores: ["asddsfd343","afafd334234"],
         averageScore: 4.2,
         notifications: "sggsf3223455",
         spaces: ["mjkhlh1234"],
@@ -27,7 +27,7 @@ let lender=[
         email: "diego@gmail.com",
         password: "asdfasdf143514",
         passwordEncrypted: true,
-        scores: ["asdfa134513451","adgasd345"],
+        scores: ["asdfa134513451"],
         averageScore: 4.1,
         notifications: "dsf1wrqdfas134",
         spaces: ["ñhljkhlkjh13432"],
@@ -42,7 +42,7 @@ let tenant=[
         email: "sara@gmail.com",
         password: "adñkl145134123",
         passwordEncrypted: true,
-        scores: ["adfjkñ2345", "adsfadf3353", "añsdñ41351123"],
+        scores: ["adfjkñ234564", "adsfadf3353"],
         averageScore: 4.1,
         currentSPaces: [],
         reservedSpaces: ["jñkljlñklkj141"],
@@ -76,6 +76,58 @@ let tenant=[
         notifications: "90145lkjadf"
     },
 ]
+
+let scores=[
+    {
+        id:"13241asf324",
+        userId: "1345asdfasd1",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id:"413asdf41",
+        userId: "1345asdfasd1",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id:"asddsfd343",
+        userId: "1345dfa1",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id:"afafd334234",
+        userId: "1345dfa1",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id:"asdfa134513451",
+        userId: "fdaf234",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id:"adfjkñ234564",
+        userId:"adsfñk245",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id: "adsfadf3353",
+        userId: "adsfñk245",
+        comments:"Excellent",
+        score: 5
+    },
+    {
+        id: "adfjkñ2345",
+        userId: "adñflkjds134",
+        comments:"Excellent",
+        score: 5
+    },
+];
+
 
 let spaces=[
     {
@@ -141,6 +193,47 @@ let spaces=[
     }
 ]
 
+let notifications=[
+    {id: "123wasda44wqw",
+    userId: "1345asdfasd1",
+    eventsId: [{eventId:1},{eventId:3}],
+    chatId: 1
+    },
+    {id: "5t3353463wefse",
+    userId: "adsfñk245",
+    eventId: [{eventId:2},{eventId:3}],
+    chatId: 1
+    },
+    {id: "uerh2uh7riehr",
+    userId: "1345dfa1",
+    eventId: [{eventId:1},{eventId:2}],
+    chatId: 2
+    },
+    {id: "324nubefhsdiyb",
+    userId: "adsfñk245",
+    eventId: [{eventId:1},{eventId:3}],
+    chatId: 1
+    },
+];
+
+let inventory=[
+    {id:1,
+    spaceId:"jñkljlñklkj141",
+    productsId:[{productId:1},{productId:2}]
+    },
+    {id:2,
+    spaceId:"nbnbn34141432",
+    productsId:[{productId:2},{productId:4},{productId:1}]
+    },
+    {id:3,
+    spaceId:"mjkhlh1234",
+    productsId:[{productId:3}]
+    },
+    {id:4,
+    spaceId:"ñhljkhlkjh13432",
+    productsId:[{productId:3},{productId:4}]
+    }
+];
 let spacesTags=[
     {
         _id: "adsfa134",
@@ -368,16 +461,108 @@ let datesReserved = [
     }
 ]
 
-let notifications=[{}];
 
-let inventory=[{}];
 
-let scores=[{}];
 
-let chats=[{}];
+let events=[
+    {
+        id: 1,
+        event:"event 1",
+        id_notifications : [{
+            id_notificatio : 1,    
+            id_notificatio : 3,    
+        }]
+    },
+ 
+    {
+        id: 2,
+        event:"event 2",
+        id_notifications : [{
+            id_notificatio : 2,    
+            id_notificatio : 4
+        }],
+    },
+    {
+        id: 3,
+        event:"event 3",
+        id_notifications : [{
+            id_notificatio : 1,
+            id_notificatio : 2,
+            id_notificatio : 3,
+            id_notificatio : 4
+        }]
+    },
+]
 
-let events=[{}]
+let productsElementsObjects=[
+    {
+        id:1,
+        object:"television",
+        category:"electronic",
+        units:1
+    },
+    {
+        id:2,
+        object:"fruts",
+        category:"organic",
+        units:10
+    },
+    {
+        id:3,
+        object:"steel sheets",
+        category:"metal",
+        units:4
+    },
+    {
+        id:4,
+        object:"wood sheets",
+        category:"organic",
+        units:30
+    },
 
-let productsElementsObjects=[{}]
+]
 
-let scoresCriterias=[{}]
+let scoresCriterias=[
+    {
+        id: 1,
+        score :"organic",
+    },
+    {
+        id:2,
+        score:"plastic"
+    },
+    {
+        id:3,
+        score:"chemical"
+    },
+    {
+        id:4,
+        score:"metal"
+    }
+]
+let frequentAskedQuestions = [
+    {
+        _id:"123wasda44wqw",
+        question: "Is the entrance of the place big enough",
+        answer: "yes usually you can fit a piano in the entrance",
+        spaceId: "jñkljlñklkj141"
+    },
+    {
+        _id:"5t3353463wefse",
+        question: "can i cancel the reserve one day before the rent day",
+        answer: "yes, one day before the rent day is the limit for cancelling reserves",
+        spaceId: "nbnbn34141432"
+    },
+    {
+        _id:"uerh2uh7riehr",
+        question: "How will this payment be treated for federal (and state) income tax purposes?",
+        answer: "The payment will be considered taxable income to you and should be included as part of your federal (and state if applicable) gross income when reporting your taxes.",
+        spaceId: "mjkhlh1234"
+    },
+    {
+        _id:"324nubefhsdiyb",
+        question: "How far are you to the center?  ",
+        answer: "It's pretty close to the center of the city.",
+        spaceId: "ñhljkhlkjh13432"
+    },
+]

@@ -17,6 +17,7 @@ class Login extends React.Component{
             <div className = "login-page">
                 <div>
                     <p>LOGIN HEADER (TO DO)</p>
+
                     <LoginForm handleErrorLogin = {this.handleErrorLogin}></LoginForm>
                 </div>
                 <button>new user? create new account</button><br></br>
