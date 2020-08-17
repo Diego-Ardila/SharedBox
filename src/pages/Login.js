@@ -7,7 +7,6 @@ class Login extends React.Component{
         errMessage: ""
     }
     
-    //change the state of error in login
     handleErrorLogin = (err) => {
         this.setState({loginError : true, errMessage : err})
     }
