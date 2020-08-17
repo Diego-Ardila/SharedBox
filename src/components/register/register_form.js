@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-const emailRegex=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+const emailRegex=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
 class Form extends React.Component {
     state={
         name:"",
@@ -19,14 +20,22 @@ class Form extends React.Component {
     }
     validate
     handleChange= (event) => {
+
         const { name , value } = event.target
+
         if("phoneNumber" === name){
+
             if(/(\+[0-9])?[ -]*^[0-9\b]+$/.test(value) || value ===""){
+
                 this.setState({[name] : value})
+
             }
+
         } else if(name !== "phoneNumber") this.setState({ [name] : value })
+
     }
     handleSubmit = (event) => {
+
         event.preventDefault();
         this.setState ({
             submitError: "",
@@ -43,20 +52,28 @@ class Form extends React.Component {
             }) 
             .then(({data})=>{console.log(data); this.props.handleError(false)})
             .catch((err)=>{console.log(err) ; this.props.handleError(true)})
-        }else if( !emailRegex.test(this.state.email) && this.state.password !== this.state.v_password ){
-            this.setState({submitError : "Your password and your Email are not valid"}); console.log(!emailRegex.test(this.state.email)); console.log(this.state.password !== this.state.v_password)
-        }else if(this.state.password !== this.state.v_password && emailRegex.test(this.state.email)){
-            this.setState({submitError : "Your passwords didn't match"})
-        }else if(!emailRegex.test(this.state.email) && this.state.password === this.state.v_password){
-            this.setState({submitError : "your Email is not valid"})
+
+        }else if( 
+                    !emailRegex.test(this.state.email) && 
+                    this.state.password !== this.state.v_password 
+                    
+                ){
+
+                        this.setState({submitError : "Your password and your Email are not valid"}); 
+
+        }else if(
+                    this.state.password !== this.state.v_password && 
+                    emailRegex.test(this.state.email)
+                    
+                ){
+                        this.setState({submitError : "Your passwords didn't match"})
+        }else if(
+                    !emailRegex.test(this.state.email) && 
+                    this.state.password === this.state.v_password
+                    
+                ){
+                        this.setState({submitError : "your Email is not valid"})
         }
-        this.setState({
-            name:"",
-            email:"",
-            phoneNumber:"",
-            password:"",
-            v_password:"",
-        })
         //this.props.sendSubmition(this.state);
     }
     render(){
@@ -71,7 +88,7 @@ class Form extends React.Component {
                 <label htmlFor={this.base.emailId}>
                     User E-mail:
                     <br/>
-                    <input type="email" id={this.base.emailId} name={this.base.emailId} value={this.state.email} onChange={this.handleChange} />
+                    <input type="text" id={this.base.emailId} name={this.base.emailId} value={this.state.email} onChange={this.handleChange} />
                     <br/>
                 </label>
                 <label htmlFor={this.base.phoneId}>
