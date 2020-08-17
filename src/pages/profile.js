@@ -10,6 +10,7 @@ class Profile extends Component{
     }
 
     componentDidMount = () => {
+        
         axios.get("http://localhost:3001/user")
         .then(response=>{
             this.setState({
