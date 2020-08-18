@@ -53,7 +53,6 @@ class Form extends React.Component {
                 this.props.history.push('/lender/profile')
             })
             .catch((err)=>{
-                console.dir(err.response.data) ; 
                 this.props.handleError(err.response.data)
             })
 
