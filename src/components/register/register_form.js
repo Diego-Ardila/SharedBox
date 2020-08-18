@@ -49,34 +49,34 @@ class Form extends React.Component {
                 data: this.state,
             }) 
             .then(({data})=>{
-                                localStorage.setItem('token', data); 
-                                this.props.history.push('/lender/profile')
+                localStorage.setItem('token', data); 
+                this.props.history.push('/lender/profile')
             })
             .catch((err)=>{
-                                console.dir(err.response.data) ; 
-                                this.props.handleError(err.response.data)
+                console.dir(err.response.data) ; 
+                this.props.handleError(err.response.data)
             })
 
         }else if( 
-                    !emailRegex.test(this.state.email) && 
-                    this.state.password !== this.state.v_password 
+                !emailRegex.test(this.state.email) && 
+                this.state.password !== this.state.v_password 
                     
                 ){
 
-                        this.setState({submitError : "Your password and your Email are not valid"}); 
+                this.setState({submitError : "Your password and your Email are not valid"}); 
 
         }else if(
-                    this.state.password !== this.state.v_password && 
-                    emailRegex.test(this.state.email)
+                this.state.password !== this.state.v_password && 
+                emailRegex.test(this.state.email)
                     
                 ){
-                        this.setState({submitError : "Your passwords didn't match"})
+                this.setState({submitError : "Your passwords didn't match"})
         }else if(
-                    !emailRegex.test(this.state.email) && 
-                    this.state.password === this.state.v_password
+                !emailRegex.test(this.state.email) && 
+                this.state.password === this.state.v_password
                     
                 ){
-                        this.setState({submitError : "your Email is not valid"})
+                this.setState({submitError : "your Email is not valid"})
         }
 
     }
