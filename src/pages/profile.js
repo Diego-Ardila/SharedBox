@@ -1,5 +1,5 @@
 import React, {Component}  from 'react'
-import ProfileForm from '../components/profile/profile_from';
+import ProfileForm from '../components/profile/ProfileForm';
 import DisplayProfile from '../components/profile/DisplayProfile';
 import axios from 'axios';
 
@@ -8,11 +8,9 @@ class Profile extends Component{
         showProfile: true,
         data:{}
     }
-
-    componentDidMount = () => {
-        
+    componentDidMount = () => {        
         axios.get("http://localhost:3001/user")
-        .then(response=>{
+        .then( response => {
             this.setState({
                 data: response.data
             })
@@ -21,7 +19,6 @@ class Profile extends Component{
             console.log(error)
         })
     }
-
     handleClick = (event) => {
         this.setState({
             showProfile: !this.state.showProfile
