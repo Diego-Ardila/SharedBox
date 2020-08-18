@@ -20,7 +20,6 @@ class Form extends React.Component {
         passwordId:"password",
         v_passwordId:"v_password"
     }
-    validate
     handleChange= (event) => {
 
         const { name , value } = event.target
@@ -48,12 +47,18 @@ class Form extends React.Component {
        } */
         if(this.state.password === this.state.v_password && emailRegex.test(this.state.email)){
             axios({
-                url: "http://localhost:8000/lender/login",
+                url: "http://127.0.0.1:8000/lender",
                 method: "POST",
                 data: this.state,
             }) 
-            .then(({data})=>{console.log(token); this.props.handleError(false)})
-            .catch((err)=>{console.log(err) ; this.props.handleError(true)})
+            .then(({data})=>{
+                                localStorage.setItem('token', data); 
+                                this.props.history.push('/lender/profile')
+            })
+            .catch((err)=>{
+                                console.dir(err.response.data) ; 
+                                this.props.handleError(err.response.data)
+            })
 
         }else if( 
                     !emailRegex.test(this.state.email) && 
