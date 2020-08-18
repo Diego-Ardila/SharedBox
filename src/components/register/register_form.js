@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+
+
 const emailRegex=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 class Form extends React.Component {
@@ -46,11 +48,11 @@ class Form extends React.Component {
        } */
         if(this.state.password === this.state.v_password && emailRegex.test(this.state.email)){
             axios({
-                url: "http://localhost:3001/posts",
+                url: "http://localhost:8000/lender/login",
                 method: "POST",
                 data: this.state,
             }) 
-            .then(({data})=>{console.log(data); this.props.handleError(false)})
+            .then(({data})=>{console.log(token); this.props.handleError(false)})
             .catch((err)=>{console.log(err) ; this.props.handleError(true)})
 
         }else if( 
