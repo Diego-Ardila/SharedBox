@@ -41,10 +41,7 @@ class Form extends React.Component {
         this.setState ({
             submitError: "",
         }) 
-      /*   if(this.state.submitError!=="") {
-            //this.state.submitError="";
-            this.setState({submitError : ""})
-       } */
+
         if(this.state.password === this.state.v_password && emailRegex.test(this.state.email)){
             axios({
                 url: "http://127.0.0.1:8000/lender",
@@ -81,7 +78,7 @@ class Form extends React.Component {
                 ){
                         this.setState({submitError : "your Email is not valid"})
         }
-        //this.props.sendSubmition(this.state);
+
     }
     render(){
         return(
