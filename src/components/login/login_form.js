@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useRef} from "react"
 import axios from "axios"
 
 const base = {
@@ -12,6 +12,9 @@ function LoginForm (props) {
 
     let [email, setEmail] = useState("")
     let [password, setPassword] = useState("")
+    
+    const emailInput = useRef()
+    const passwordInput = useRef()
 
     const handleChange = (event) => {
             if(event.target.id === base.emailId ) setEmail(email = event.target.value)
@@ -19,18 +22,22 @@ function LoginForm (props) {
         }  
 
     const clearFields = (arrFields = []) => {
-        arrFields.forEach(field => document.getElementById(field).value ="")
+        arrFields.forEach(field => field.current.value ="")
     }
     
     const clearState = () => {
         setEmail(email ="")
         setPassword(password ="")
     }
+
+    const setFocus = () => {
+        emailInput.current.focus()
+    }
     
     const handleSubmit = async (event) =>  {
         event.preventDefault()
         try{
-            const token = await axios({
+            const response = await axios({
                  method:"POST",
                  url: "http://127.0.0.1:4000/lender/login",
                  data:{
@@ -38,12 +45,14 @@ function LoginForm (props) {
                      password
                  }
              })
-             console.log(token)
+             localStorage.setItem("token", response.data)
+             props.history.push("/profile")
         }catch(error) {
+            console.dir(error)
             props.handleErrorLogin(error.response.data)
-            clearFields([base.emailId, base.passwordId])
+            clearFields([emailInput, passwordInput])
             clearState()
-            document.getElementById(base.emailId).focus()
+            setFocus()
         }   
     }
 
@@ -53,13 +62,13 @@ function LoginForm (props) {
                 <label htmlFor={base.emailId}>
                     EMAIL:
                     <br></br>
-                    <input type ="email" id={base.emailId} placeholder="me@email.com" onChange ={handleChange}></input>
+                    <input type ="email" ref={emailInput} id={base.emailId}  placeholder="me@email.com" onChange ={handleChange}></input>
                     <br></br>
                 </label>
                 <label htmlFor={base.passwordId}>
                     PASSWORD:
                     <br></br>
-                    <input type ="password" id={base.passwordId} placeholder="password" onChange ={handleChange}></input>
+                    <input type ="password" ref={passwordInput} id={base.passwordId}  placeholder="password" onChange ={handleChange}></input>
                     <br></br>
                     <br></br>
                 </label>
