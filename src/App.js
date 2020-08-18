@@ -11,7 +11,7 @@ function App() {
         <Switch>
           <Route exact path="/lender/login" component={Login} />
           {/* <Route exact path="/lender/register/" component={register} /> */}
-          <Route exact path="/lender/profile/:id" component={Profile} />
+          <Route exact path="/lender/profile" component={Profile} />
           <Redirect from="*" to="/lender/login" />
         </Switch>
       </div>
