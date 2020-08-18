@@ -1,7 +1,6 @@
 import React, {useState , useEffect} from 'react';
 import axios from 'axios';
 
-
 const base = {
     imageID: "profile-image",
     nameID: "profile-name",
@@ -21,11 +20,11 @@ function ProfileForm(props){
     let [email,setEmail]=useState(props.data.email);
     let [phoneNumber,setPhoneNumber]=useState(props.data.phoneNumber);
     let [country,setCountry]=useState(props.data.country);    
-    let [city,setCity]=useState(props.data.city||""); 
-    
+    let [city,setCity]=useState(props.data.city||"");     
     let [emailValid,setEmailValid]=useState(true);
     let [phoneValid,setPhoneValid]=useState(true);      
-    let [formValid,setFormValid]=useState(true);   
+    let [formValid,setFormValid]=useState(true);  
+    let [error,setError]=useState('');
     
     useEffect(() => {
         if (emailValid && phoneValid ){
@@ -37,7 +36,6 @@ function ProfileForm(props){
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
         axios({
             method:'PUT',
             url: "http://127.0.0.1:4000/lender/",
@@ -52,12 +50,11 @@ function ProfileForm(props){
                 city
             }
         })
-        .then( response => {           
-             console.dir(response)
+        .then( response => { 
              props.handleClick();
         })
         .catch(error=>{
-            console.dir(error)
+            setError(error)
         })
     }   
     const handleChange = (event) => {
