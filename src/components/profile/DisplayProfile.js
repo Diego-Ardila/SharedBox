@@ -9,7 +9,7 @@ function DisplayProfile(props){
       <form>
         <fieldset>
           <legend>Información del Usuario</legend>
-          <img src={photo} width="200"/>
+          <img src="https://imageog.flaticon.com/icons/png/512/16/16480.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF" width="200"/>
           <p>Nombre: {name}</p>
           <p>Email: {email}</p>
           <p>phone: {phoneNumber}</p>        
