@@ -1,5 +1,47 @@
 import React, {useState, useRef} from "react"
 import axios from "axios"
+import styled from "styled-components"
+
+const InputField = styled.input`
+    width: 310px;
+    height: 43px;
+    left: 455px;
+    top: 682px;
+    background: #318FB5;
+    opacity: 0.4;
+    border-radius: 40px;
+    text-align: center;
+    ::placeholder,
+  ::-webkit-input-placeholder {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: bold;
+        line-height: 24px;
+        text-align: center;
+        color: #4D84AA;
+  }
+  :-ms-input-placeholder {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: bold;
+        line-height: 24px;
+        text-align: center;
+        color: #4D84AA;
+  }
+`
+
+const LoginBotton = styled.button`
+    background: #001244;
+    border-radius: 40px;
+    width: 155px;
+    height: 43px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 24px;
+    text-align: center;
+    color: #FFF9F4;
+`
 
 const base = {
     emailId: "login-email",
@@ -46,7 +88,7 @@ function LoginForm (props) {
                  }
              })
              localStorage.setItem("token", response.data)
-             props.history.push("/profile")
+             props.history.push("/lender/profile")
         }catch(error) {
             console.dir(error)
             props.handleErrorLogin(error.response.data)
@@ -62,17 +104,17 @@ function LoginForm (props) {
                 <label htmlFor={base.emailId}>
                     EMAIL:
                     <br></br>
-                    <input type ="email" ref={emailInput} id={base.emailId}  placeholder="me@email.com" onChange ={handleChange}></input>
+                    <InputField type ="email" ref={emailInput} id={base.emailId}  placeholder="me@email.com" onChange ={handleChange}></InputField>
                     <br></br>
                 </label>
                 <label htmlFor={base.passwordId}>
                     PASSWORD:
                     <br></br>
-                    <input type ="password" ref={passwordInput} id={base.passwordId}  placeholder="password" onChange ={handleChange}></input>
+                    <InputField type ="password" ref={passwordInput} id={base.passwordId}  placeholder="password" onChange ={handleChange}></InputField>
                     <br></br>
                     <br></br>
                 </label>
-                <input type="submit" id={base.submitId} value="submit"></input>
+                <LoginBotton type="submit" id={base.submitId} value="submit">LOGIN</LoginBotton>
             </form>
         </div>
     )
