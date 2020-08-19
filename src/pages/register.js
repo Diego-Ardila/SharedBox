@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../components/register/register_form';
+import Form from '../components/register/RegisterForm';
 
 
 

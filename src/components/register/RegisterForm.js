@@ -44,7 +44,7 @@ class Form extends React.Component {
 
         if(this.state.password === this.state.v_password && emailRegex.test(this.state.email)){
             axios({
-                url: "http://127.0.0.1:8000/lender",
+                url: "http://127.0.0.1:4000/lender",
                 method: "POST",
                 data: this.state,
             }) 
