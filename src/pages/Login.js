@@ -1,5 +1,5 @@
 import React from "react"
-import LoginForm from "../components/login/login_form"
+import LoginForm from "../components/login/LoginForm"
 
 class Login extends React.Component{
     state = {
@@ -17,7 +17,7 @@ class Login extends React.Component{
                 <div>
                     <p>LOGIN HEADER (TO DO)</p>
 
-                    <LoginForm handleErrorLogin = {this.handleErrorLogin}></LoginForm>
+                    <LoginForm handleErrorLogin = {this.handleErrorLogin} history = {this.props.history}></LoginForm>
                 </div>
                 <button>new user? create new account</button><br></br>
                 <p>{this.state.loginError ? this.state.errMessage : ""}</p>

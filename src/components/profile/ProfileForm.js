@@ -40,7 +40,7 @@ function ProfileForm(props){
             method:'PUT',
             url: "http://127.0.0.1:4000/lender/",
             headers:{
-                Authorization: "Bearer "+localStorage.getItem('Token')
+                Authorization: "Bearer "+localStorage.getItem('token')
             },
             data:{
                 name,

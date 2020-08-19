@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import './App.css';
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import register from "../src/pages/register"
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/lender/login" component={Login} />
-          {/* <Route exact path="/lender/register/" component={register} /> */}
+          <Route exact path="/lender/register/" component={register} />
           <Route exact path="/lender/profile" component={Profile} />
           <Redirect from="*" to="/lender/login" />
         </Switch>
@@ -20,3 +21,4 @@ function App() {
 }
 
 export default App;
+

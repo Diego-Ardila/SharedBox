@@ -9,13 +9,31 @@ class Profile extends Component{
         data:{},
         error: ''
     }
-    componentDidMount = () => {    
-    localStorage.setItem('Token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNjMWI2MWI3NjlmOTJhM2M0MzdjNTgiLCJpYXQiOjE1OTc3NzQ3MDIsImV4cCI6MTU5Nzg2MTEwMn0.OVAPqPElwkbyZSnPAu8Cn8ii1b97iycDu2BKSgLPVsg')
+    componentDidMount = () => {        
         axios({
             method:"GET",
             url: "http://127.0.0.1:4000/lender/",
             headers:{
-                Authorization: 'Bearer '+localStorage.getItem('Token')
+                Authorization: 'Bearer '+localStorage.getItem('token')
+            }
+        })
+        .then( response => {
+            this.setState({
+                data: response.data                
+            })
+        })
+        .catch(error=>{
+            this.setState({
+                error                
+            })
+        })
+    }
+    componentDidUpdate = () => {        
+        axios({
+            method:"GET",
+            url: "http://127.0.0.1:4000/lender/",
+            headers:{
+                Authorization: 'Bearer '+localStorage.getItem('token')
             }
         })
         .then( response => {
