@@ -24,6 +24,9 @@ const NewUserButton = styled.button`
     text-decoration-line: underline;
     color: #001244;
     border: none;
+    &:hover {
+        cursor: pointer;
+    }
 `
 class Login extends React.Component{
     state = {

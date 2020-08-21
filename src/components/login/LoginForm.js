@@ -11,23 +11,17 @@ const InputField = styled.input`
     opacity: 0.4;
     border-radius: 40px;
     text-align: center;
-    ::placeholder,
-  ::-webkit-input-placeholder {
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: bold;
-        line-height: 24px;
-        text-align: center;
-        color: #4D84AA;
-  }
-  :-ms-input-placeholder {
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: bold;
-        line-height: 24px;
-        text-align: center;
-        color: #4D84AA;
-  }
+    outline: none;
+    color: #001244;
+    font-weight: bold;
+    :focus {
+        box-shadow: 0 0 4pt 4pt #B0CAC7;
+        opacity: 0.7;
+    }
+    &:hover {
+        box-shadow: 0 0 3pt 2pt #B0CAC7;
+        opacity: 0.7;
+    }
 `
 
 const LoginBotton = styled.button`
@@ -41,6 +35,12 @@ const LoginBotton = styled.button`
     line-height: 24px;
     text-align: center;
     color: #FFF9F4;
+    outline:none;
+    &:hover {
+        width: 153px;
+        height: 46px;
+        cursor: pointer;
+    }
 `
 
 const base = {
@@ -91,7 +91,10 @@ function LoginForm (props) {
              props.history.push("/lender/profile")
         }catch(error) {
             console.dir(error)
-            props.handleErrorLogin(error.response.data)
+            let errMessage
+            if(error.status === 400) errMessage = error.response.data
+            if(error.message === "Network Error") errMessage ="failed connection to dataServer, check your connection to the internet and try again later" 
+            props.handleErrorLogin(errMessage)
             clearFields([emailInput, passwordInput])
             clearState()
             setFocus()
