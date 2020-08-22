@@ -1,0 +1,35 @@
+.react-tags {
+    width: 375px;
+}
+
+.react-tags__selected{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+}
+
+.react-tags__search-input {
+    width: 310px;
+    height: 43px;
+    left: 455px;
+    top: 682px;
+    background: #318FB5;
+    opacity: 0.4;
+    border-radius: 40px;
+    text-align: center;
+    outline: none;
+    color: #001244;
+    font-weight: bold;
+}
+.react-tags__search-input:hover {
+    box-shadow: 0 0 3pt 2pt #B0CAC7;
+    opacity: 0.7;
+}
+
+.react-tags__search-input:focus {
+    box-shadow: 0 0 3pt 2pt #B0CAC7;
+    opacity: 0.7;
+}

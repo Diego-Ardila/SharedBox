@@ -3,6 +3,8 @@ import styled from "styled-components"
 import DimensionsForm from "../components/publishArea/dimensionsForm"
 import PhotoUploadForm from "../components/publishArea/photosUploadForm"
 import LocationForm from "../components/publishArea/locationForm"
+import DescriptionForm from "../components/publishArea/descriptionForm"
+import PriceForm from "../components/publishArea/priceForm"
 
 const MainWraper = styled.section`
   display: flex;
@@ -20,8 +22,9 @@ export default function PublishArea (props) {
         <MainWraper>
             <DimensionsForm></DimensionsForm>
             <LocationForm></LocationForm>
+            <DescriptionForm></DescriptionForm>
             <PhotoUploadForm></PhotoUploadForm>
-            {/* <FAQForm></FAQForm> */}
+            <PriceForm></PriceForm>
         </MainWraper>
     )
 }
