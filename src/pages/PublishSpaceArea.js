@@ -1,23 +1,25 @@
 import React, {useState} from "react"
 import styled from "styled-components"
-import BasicSpaceForm from "../components/publishArea/BasicSpaceForm"
+import DimensionsForm from "../components/publishArea/dimensionsForm"
 import PhotoUploadForm from "../components/publishArea/photosUploadForm"
+import LocationForm from "../components/publishArea/locationForm"
 
 const MainWraper = styled.section`
   display: flex;
   justify-content: center;
   align-content: center;
   align-items: center;
-  width : 100vh;
-  height: 100vh;
+  width : 100vw;
+  min-height: 100vh;
   background: linear-gradient(180deg, #FFF9F4 1.12%, #B0CAC7 100%);
 `
 
 export default function PublishArea (props) {
-    const [formToRender, setFormToRender] = useState("BasicSpaceForm")
+    //const [formToRender, setFormToRender] = useState("BasicSpaceForm")
     return (
         <MainWraper>
-            {/* <BasicSpaceForm></BasicSpaceForm> */}
+            <DimensionsForm></DimensionsForm>
+            <LocationForm></LocationForm>
             <PhotoUploadForm></PhotoUploadForm>
             {/* <FAQForm></FAQForm> */}
         </MainWraper>

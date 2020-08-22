@@ -5,7 +5,7 @@ import Logo from "../logo.svg"
 
 
 const MainWraper = styled.section`
-    background: linear-gradient(180deg, #FFF9F4 1.12%, #B0CAC7 100%);
+    background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0) 46.35%, rgba(130, 130, 130, 0.1) 100%), linear-gradient(180deg, #FFF9F4 1.12%, #B0CAC7 100%);
     height: 100vh;
     margin: 0 auto;
     border: 0;

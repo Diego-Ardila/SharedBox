@@ -2,27 +2,6 @@ import React, {useState, useRef} from "react"
 import axios from "axios"
 import styled from "styled-components"
 
-const InputField = styled.input`
-    width: 310px;
-    height: 43px;
-    left: 455px;
-    top: 682px;
-    background: #318FB5;
-    opacity: 0.4;
-    border-radius: 40px;
-    text-align: center;
-    outline: none;
-    color: #001244;
-    font-weight: bold;
-    :focus {
-        box-shadow: 0 0 4pt 4pt #B0CAC7;
-        opacity: 0.7;
-    }
-    &:hover {
-        box-shadow: 0 0 3pt 2pt #B0CAC7;
-        opacity: 0.7;
-    }
-`
 
 const LoginBotton = styled.button`
     background: #001244;
@@ -107,13 +86,13 @@ function LoginForm (props) {
                 <label htmlFor={base.emailId}>
                     EMAIL:
                     <br></br>
-                    <InputField type ="email" ref={emailInput} id={base.emailId}  placeholder="me@email.com" onChange ={handleChange}></InputField>
+                    <input type ="email" ref={emailInput} id={base.emailId}  placeholder="me@email.com" onChange ={handleChange}></input>
                     <br></br>
                 </label>
                 <label htmlFor={base.passwordId}>
                     PASSWORD:
                     <br></br>
-                    <InputField type ="password" ref={passwordInput} id={base.passwordId}  placeholder="password" onChange ={handleChange}></InputField>
+                    <input type ="password" ref={passwordInput} id={base.passwordId}  placeholder="password" onChange ={handleChange}></input>
                     <br></br>
                     <br></br>
                 </label>

@@ -20,6 +20,7 @@ const NextButton = styled.button`
     text-align: center;
     color: #FFF9F4;
     margin: 24px;
+    border-radius: 40px;
 `
 
 const FormWrapper = styled.section`
@@ -48,24 +49,13 @@ export default function PhotosUploadForm () {
         if (event.target.files && event.target.files[0]) {
             Object.values(event.target.files).forEach(file => fileObj.push(file))
             fileObj.forEach( file => previewBlobPhotos.push(URL.createObjectURL(file)))
-            setImagesURLs(imagesURLs = previewBlobPhotos)
-            console.log(fileObj)    
-            console.log(previewBlobPhotos) 
-            console.log(imagesURLs)   
-        
-        
-        //     let reader = new FileReader();
-        //     reader.onload = (e) => {
-        //         console.log(e.target)
-        //       setImgURL(imgURL = e.target.result);
-        //     };
-        //     reader.readAsDataURL(event.target.files[0]);
+            setImagesURLs(imagesURLs = previewBlobPhotos)   
           }
         }
-
-        
+    
     return (
        <FormWrapper>
+           <h1>share some photos of your space!<br></br>It will be more appealing for people looking where to store their things</h1>
            {imagesURLs ? imagesURLs.map( (url, index) => <PhotoDisplay url ={url} key ={index}></PhotoDisplay>): <img src={Logo} alt="logo"></img>}
            <br></br>
            <form>
