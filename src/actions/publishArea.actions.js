@@ -1,0 +1,18 @@
+const CHANGE_DESCRIPTION = "CHANGE_DESCRIPTION";
+const CHANGE_WIDTH = "CHANGE_WIDTH";
+const CHANGE_LENGTH = "CHANGE_LENGTH";
+const  CHANGE_HEIGHT = "CHANGE_HEIGHT";
+const  CHANGE_CITY = "CHANGE_CITY";
+const  CHANGE_ADDRESS = "CHANGE_ADDRESS";
+const  CHANGE_PRICE = "CHANGE_PRICE";
+const  CHANGE_TAGS = "CHANGE_TAGS";
+const  CHANGE_TAGS_SUGGESTIONS = "CHANGE_TAGS_SUGGESTIONS";
+
+
+const changeDescription = (payload) => {
+    return {
+        type: CHANGE_DESCRIPTION,
+        payload
+    }
+}
+
