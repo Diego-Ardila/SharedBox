@@ -79,7 +79,7 @@ let tenant=[
 
 let scores=[
     {
-        id:"13241asf324",
+        _id:"13241asf324",
         userId: "1345asdfasd1",
         comments:"Excellent",
         score: 5
@@ -265,101 +265,10 @@ let spacesTags=[
 let datesReserved = [
     {
         _id:"13afdgafasdf",
-        dates: [
-            {
-                day: 19,
-                month: 0
-            },
-            {
-                day: 20,
-                month: 0
-            },
-            {
-                day: 21,
-                month: 0
-            },
-            {
-                day: 22,
-                month: 0
-            },
-            {
-                day: 23,
-                month: 0
-            },
-            {
-                day: 24,
-                month: 0
-            },
-            {
-                day: 25,
-                month: 0
-            },
-            {
-                day: 12,
-                month: 2
-            },
-            {
-                day: 13,
-                month: 2
-            },
-            {
-                day: 14,
-                month: 2
-            },
-            {
-                day: 15,
-                month: 2
-            },
-        ]
-    },
-    {
-        _id:"13afdgfddgfadfdf",
-        dates: [
-            {
-                day: 19,
-                month: 0
-            },
-            {
-                day: 20,
-                month: 0
-            },
-            {
-                day: 21,
-                month: 0
-            },
-            {
-                day: 22,
-                month: 0
-            },
-            {
-                day: 23,
-                month: 0
-            },
-            {
-                day: 24,
-                month: 0
-            },
-            {
-                day: 25,
-                month: 0
-            },
-            {
-                day: 12,
-                month: 2
-            },
-            {
-                day: 13,
-                month: 2
-            },
-            {
-                day: 14,
-                month: 2
-            },
-            {
-                day: 15,
-                month: 2
-            },
-        ]
+        spaceId: "afadfadffa33",
+        initalDate: obj_date, //unix epoch
+        finalDate: obj_date,
+        tenantId: "dfasdfadfa",
     },
     {
         _id:"14efre1jgd23",

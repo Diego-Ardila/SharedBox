@@ -4,19 +4,20 @@ import './App.css';
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import register from "./pages/register"
+import PublishSpaceArea from "./pages/PublishSpaceArea"
 
 function PrivateRoute(props) {
-const history = useHistory()
+  const history = useHistory()
 
-useEffect(() => {
-  const token = localStorage.getItem("token")
-  const isValid = true // an axios called to verify the token is required
-  if(!token && isValid) history.push("/lender/login")
-}, [])
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    const isValid = true // an axios called to verify the token is required
+    if(!token && isValid) history.push("/lender/login")
+  }, [])
 
-return(
-  <Route {...props}></Route>
-)
+  return(
+    <Route {...props}></Route>
+  )
 }
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Switch>
           <Route exact path="/lender/login" component={Login} />
           <Route exact path="/lender/register/" component={register} />
+          <Route exact path="/lender/createSpace" component={PublishSpaceArea} />
           <PrivateRoute exact path="/lender/profile" component={Profile} />
           <Redirect from="*" to="/lender/login" />
         </Switch>

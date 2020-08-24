@@ -1,38 +1,255 @@
 .App {
   text-align: center;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Montserrat";
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+  margin: 30px 0px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
 }
 
-.App-link {
-  color: #61dafb;
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+/*--------------------------------thumb config----------------------------------------------------------------------*/
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #005086;
+  cursor: pointer;
+  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+}
+
+/* All the same stuff for Firefox */
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #005086;
+  cursor: pointer;
+}
+
+/* All the same stuff for IE */
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #005086;
+  cursor: pointer;
+}
+
+/*---------------------------------------------------------slider Config----------------------*/
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #318FB5;
+  opacity: 0.4;
+  border-radius: 3px;
+  border: 0.2px solid #010101;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  opacity: 0.7;
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #318FB5;
+  opacity: 0.4;
+  border-radius: 3px;
+  border: 0.2px solid #010101;
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #318FB5;
+  opacity: 0.4;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]:focus::-ms-fill-lower {
+  opacity: 0.7;
+}
+input[type=range]::-ms-fill-upper {
+  background: #318FB5;
+  opacity: 0.4;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]:focus::-ms-fill-upper {
+  opacity: 0.4;
+}
+
+input[type=text]{
+  width: 310px;
+  height: 43px;
+  left: 455px;
+  top: 682px;
+  background: #318FB5;
+  opacity: 0.4;
+  border-radius: 40px;
+  text-align: center;
+  outline: none;
+  color: #001244;
+  font-weight: bold;
+}
+
+input[type=text]:focus {
+  box-shadow: 0 0 4pt 4pt #B0CAC7;
+  opacity: 0.7;
+}
+
+input[type=text]:hover {
+  box-shadow: 0 0 3pt 2pt #B0CAC7;
+  opacity: 0.7;
+}
+
+input[type=number]{
+  width: 310px;
+  height: 43px;
+  left: 455px;
+  top: 682px;
+  background: #318FB5;
+  opacity: 0.4;
+  border-radius: 40px;
+  text-align: center;
+  outline: none;
+  color: #001244;
+  font-weight: bold;
+}
+
+input[type=number]:focus {
+  box-shadow: 0 0 4pt 4pt #B0CAC7;
+  opacity: 0.7;
+}
+
+input[type=number]:hover {
+  box-shadow: 0 0 3pt 2pt #B0CAC7;
+  opacity: 0.7;
+}
+
+input[type=email]{
+  width: 310px;
+  height: 43px;
+  left: 455px;
+  top: 682px;
+  background: #318FB5;
+  opacity: 0.4;
+  border-radius: 40px;
+  text-align: center;
+  outline: none;
+  color: #001244;
+  font-weight: bold;
+}
+
+input[type=email]:focus {
+  box-shadow: 0 0 4pt 4pt #B0CAC7;
+  opacity: 0.7;
+}
+
+input[type=email]:hover {
+  box-shadow: 0 0 3pt 2pt #B0CAC7;
+  opacity: 0.7;
+}
+
+input[type=password]{
+  width: 310px;
+  height: 43px;
+  left: 455px;
+  top: 682px;
+  background: #318FB5;
+  opacity: 0.4;
+  border-radius: 40px;
+  text-align: center;
+  outline: none;
+  color: #001244;
+  font-weight: bold;
+}
+
+input[type=password]:focus {
+  box-shadow: 0 0 4pt 4pt #B0CAC7;
+  opacity: 0.7;
+}
+
+input[type=password]:hover {
+  box-shadow: 0 0 3pt 2pt #B0CAC7;
+  opacity: 0.7;
+}
+
+input[type=tel]{
+  width: 310px;
+  height: 43px;
+  left: 455px;
+  top: 682px;
+  background: #318FB5;
+  opacity: 0.4;
+  border-radius: 40px;
+  text-align: center;
+  outline: none;
+  color: #001244;
+  font-weight: bold;
+}
+
+input[type=tel]:focus {
+  box-shadow: 0 0 4pt 4pt #B0CAC7;
+  opacity: 0.7;
+}
+
+input[type=tel]:hover {
+  box-shadow: 0 0 3pt 2pt #B0CAC7;
+  opacity: 0.7;
+}
+
+.lenderAdminArea {
+  display: grid;
+  grid-template-columns: 30px 1fr 1fr 2fr;
+  grid-template-rows: 100px 35px 300px;
+  grid-auto-rows: 300px;
+  grid-template-areas: 
+  ". SpaceTitle SpaceTitle MainSpace"
+  ". WhiteSpace WhiteSpace MainSpace"
+  ". SpaceCard SpaceCard MainSpace"
 }

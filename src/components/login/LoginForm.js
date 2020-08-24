@@ -2,33 +2,6 @@ import React, {useState, useRef} from "react"
 import axios from "axios"
 import styled from "styled-components"
 
-const InputField = styled.input`
-    width: 310px;
-    height: 43px;
-    left: 455px;
-    top: 682px;
-    background: #318FB5;
-    opacity: 0.4;
-    border-radius: 40px;
-    text-align: center;
-    ::placeholder,
-  ::-webkit-input-placeholder {
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: bold;
-        line-height: 24px;
-        text-align: center;
-        color: #4D84AA;
-  }
-  :-ms-input-placeholder {
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: bold;
-        line-height: 24px;
-        text-align: center;
-        color: #4D84AA;
-  }
-`
 
 const LoginBotton = styled.button`
     background: #001244;
@@ -41,6 +14,12 @@ const LoginBotton = styled.button`
     line-height: 24px;
     text-align: center;
     color: #FFF9F4;
+    outline:none;
+    &:hover {
+        width: 153px;
+        height: 46px;
+        cursor: pointer;
+    }
 `
 
 const base = {
@@ -91,7 +70,10 @@ function LoginForm (props) {
              props.history.push("/lender/profile")
         }catch(error) {
             console.dir(error)
-            props.handleErrorLogin(error.response.data)
+            let errMessage
+            if(error.status === 400) errMessage = error.response.data
+            if(error.message === "Network Error") errMessage ="failed connection to dataServer, check your connection to the internet and try again later" 
+            props.handleErrorLogin(errMessage)
             clearFields([emailInput, passwordInput])
             clearState()
             setFocus()
@@ -104,13 +86,13 @@ function LoginForm (props) {
                 <label htmlFor={base.emailId}>
                     EMAIL:
                     <br></br>
-                    <InputField type ="email" ref={emailInput} id={base.emailId}  placeholder="me@email.com" onChange ={handleChange}></InputField>
+                    <input type ="email" ref={emailInput} id={base.emailId}  placeholder="me@email.com" onChange ={handleChange}></input>
                     <br></br>
                 </label>
                 <label htmlFor={base.passwordId}>
                     PASSWORD:
                     <br></br>
-                    <InputField type ="password" ref={passwordInput} id={base.passwordId}  placeholder="password" onChange ={handleChange}></InputField>
+                    <input type ="password" ref={passwordInput} id={base.passwordId}  placeholder="password" onChange ={handleChange}></input>
                     <br></br>
                     <br></br>
                 </label>
