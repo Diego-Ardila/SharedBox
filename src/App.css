@@ -242,3 +242,10 @@ input[type=tel]:hover {
   box-shadow: 0 0 3pt 2pt #B0CAC7;
   opacity: 0.7;
 }
+
+.lenderAdminArea {
+  display: grid;
+  grid-template-columns: 30px 1fr 1fr 2fr;
+  grid-template-rows: 100px 35px 300px;
+  grid-auto-rows: 300px;
+}
