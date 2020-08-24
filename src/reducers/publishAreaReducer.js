@@ -8,14 +8,14 @@ let initialState={
     price:0,
     tags:[
         { id: 1, name: "dark Space" },
-        { id: 2, name: "Heavy Load" },
         {id: 3, name: "Hot area"}
       ],
     suggestions:[
-        { id: 3, name: "Bananas" },
-        { id: 4, name: "Mangos" },
-        { id: 5, name: "Lemons" },
-        { id: 6, name: "Apricots" }
+        { id: 3, name: "In house" },
+        { id: 4, name: "Up high appartment" },
+        { id: 5, name: "Storage Room" },
+        { id: 6, name: "Apricots" },
+        { id: 2, name: "Heavy Load" }
     ],
     title:"",
     viewingForm: 1,
@@ -94,6 +94,12 @@ const publishAreaReducer = (state = initialState , action) => {
             return {
                 ...state,
                 viewingForm: action.payload
+            }
+        case ACTIONS.CHANGE_PHOTOS :
+        console.log(action.payload)    
+        return {
+                ...state,
+                photos: action.payload
             }
         default : return state
     }
