@@ -5,6 +5,31 @@ import PhotoUploadForm from "../components/publishArea/photosUploadForm"
 import LocationForm from "../components/publishArea/locationForm"
 import DescriptionForm from "../components/publishArea/descriptionForm"
 import PriceForm from "../components/publishArea/priceForm"
+import {useSelector} from "react-redux"
+
+
+
+const testing = 1;
+
+const viewSelector = (testing) => {
+    switch(testing) {
+        case 1 :{
+            return <DimensionsForm></DimensionsForm>
+        }
+        case 2 :{
+            return <LocationForm></LocationForm>
+        }
+        case 3 :{
+            return <DescriptionForm></DescriptionForm>
+        }
+        case 4 :{
+            return <PhotoUploadForm></PhotoUploadForm>
+        }
+        case 5 :{
+            return  <PriceForm></PriceForm>
+        }
+    }
+}
 
 const MainWraper = styled.section`
   display: flex;
@@ -17,14 +42,10 @@ const MainWraper = styled.section`
 `
 
 export default function PublishArea (props) {
-    //const [formToRender, setFormToRender] = useState("BasicSpaceForm")
+    const formToRender = useSelector(state => state.viewingForm)
     return (
         <MainWraper>
-            <DimensionsForm></DimensionsForm>
-            <LocationForm></LocationForm>
-            <DescriptionForm></DescriptionForm>
-            <PhotoUploadForm></PhotoUploadForm>
-            <PriceForm></PriceForm>
+            {viewSelector(formToRender)}
         </MainWraper>
     )
 }

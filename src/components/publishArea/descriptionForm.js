@@ -1,6 +1,8 @@
-import React from "react"
+import React, { useRef } from "react"
 import styled from "styled-components"
 import TagManager from "./tagsManager"
+import {useSelector, useDispatch} from "react-redux"
+import { changeDescription, changePublishAreaView } from "../../actions/publishArea.actions"
 
 const base = {
     formClass : "descriptionForm",
@@ -58,6 +60,20 @@ const NextButton = styled.button`
 `
 
 export default function DescriptionForm () {
+    
+    const dispatch = useDispatch()
+    const textAreaDesc = useSelector(state => state.textAreaDesc)
+    const textArea = useRef()
+
+    const handleChange = (action, input) => {
+        return (event) => dispatch(action(input.current.value))
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        dispatch(changePublishAreaView(4))
+    }
+    
     return (
        <FormWrapper>
            <h1>Now tell us more about what a tenant could expect:</h1>
@@ -65,8 +81,9 @@ export default function DescriptionForm () {
            <TagManager></TagManager>
            <p>{`________________________<o>________________________`}</p>
            <h5>something more to say? add any additional info <br></br> that can be useful for your clients</h5>
-           <form className = {base.formClass}>
-                <TextAreaDesc type="textarea" id={base.textAreaId}></TextAreaDesc>
+           <form className = {base.formClass} onSubmit = {handleSubmit}>
+                <TextAreaDesc type="textarea" ref = {textArea} id={base.textAreaId} value={textAreaDesc} onChange ={handleChange(changeDescription, textArea)}></TextAreaDesc>
+                <br></br>
                 <NextButton type="submit" value="submit">next</NextButton>
            </form>
        </FormWrapper> 

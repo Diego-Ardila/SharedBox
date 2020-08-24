@@ -1,5 +1,9 @@
-import React from "react"
+import React, { useRef } from "react"
 import styled from "styled-components"
+import {useDispatch} from "react-redux"
+import {changePublishAreaView,
+    changeCity,
+    changeAddress} from "../../actions/publishArea.actions"
 
 const base =  {
     locationCityId: "locationCity",
@@ -37,9 +41,19 @@ const NextButton = styled.button`
 `
 
 export default function LocationForm () {
+
+    const dispatch = useDispatch()
+
+    const city = useRef()
+    const address = useRef()
     
     const handleSubmit = event => {
         event.preventDefault()
+        dispatch(changePublishAreaView(3))
+    }
+
+    const handleChange = (action, input) => {
+        return (e) => dispatch(action(input.current.value))
     }
 
     return(
@@ -52,6 +66,8 @@ export default function LocationForm () {
                     id = {base.locationCityId}
                     name = {base.locationCityId}
                     type = "text"
+                    ref = {city}
+                    onChange = {handleChange(changeCity, city)}
                 ></input>
                 <br></br>
 
@@ -61,6 +77,8 @@ export default function LocationForm () {
                     id = {base.locationAddressId}
                     name = {base.locationAddressId}
                     type = "text"
+                    ref = {address}
+                    onChange = {handleChange(changeAddress, address)}
                 ></input>
                 <br></br>
                 <NextButton type="submit" id={base.submitId} value="submit">next</NextButton>

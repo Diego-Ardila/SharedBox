@@ -1,18 +1,96 @@
-const CHANGE_DESCRIPTION = "CHANGE_DESCRIPTION";
-const CHANGE_WIDTH = "CHANGE_WIDTH";
-const CHANGE_LENGTH = "CHANGE_LENGTH";
-const  CHANGE_HEIGHT = "CHANGE_HEIGHT";
-const  CHANGE_CITY = "CHANGE_CITY";
-const  CHANGE_ADDRESS = "CHANGE_ADDRESS";
-const  CHANGE_PRICE = "CHANGE_PRICE";
-const  CHANGE_TAGS = "CHANGE_TAGS";
-const  CHANGE_TAGS_SUGGESTIONS = "CHANGE_TAGS_SUGGESTIONS";
+import {ACTIONS} from "../reducers/publishAreaReducer"
 
 
 const changeDescription = (payload) => {
     return {
-        type: CHANGE_DESCRIPTION,
+        type: ACTIONS.CHANGE_DESCRIPTION,
         payload
     }
 }
+
+const changeArea = (payload) => {
+    return {
+        type: ACTIONS.CHANGE_AREA,
+        payload
+    }
+}
+
+const changePublishAreaView = (payload) => {
+    return {
+        type: ACTIONS.CHANGE_VIEWING_FORM,
+        payload
+    }
+}
+
+const changeWidth = (payload) => {
+    return {
+        type: ACTIONS.CHANGE_WIDTH,
+        payload
+    }
+}
+
+const changeLength = (payload) => {
+    return {
+        type: ACTIONS.CHANGE_LENGTH,
+        payload
+    }
+}
+
+const changeHeight = (payload) => {
+    return {
+        type: ACTIONS.CHANGE_HEIGHT,
+        payload
+    }
+}
+
+const changeCity = (payload) => {
+    return {
+        type: ACTIONS.CHANGE_CITY,
+        payload
+    }
+}
+
+const changeAddress = (payload) => {
+    return {
+        type: ACTIONS.CHANGE_ADDRESS,
+        payload
+    }
+}
+
+const changeTags = (payload) => {
+    return {
+        type: ACTIONS.CHANGE_TAGS,
+        payload
+    }
+}
+
+const changePhotos = (payload) => {
+    return {
+        type: ACTIONS.CHANGE_PHOTOS,
+        payload
+    }
+}
+
+const changePrice = (payload) => {
+    return {
+        type: ACTIONS.CHANGE_PRICE,
+        payload
+    }
+}
+
+
+export {
+    changeDescription,
+    changeArea,
+    changeLength,
+    changeHeight,
+    changeWidth,
+    changePublishAreaView,
+    changeCity,
+    changeAddress,
+    changeTags,
+    changePhotos,
+    changePrice
+}
+
 

@@ -1,5 +1,9 @@
-import React from "react"
+import React, { useRef } from "react"
 import styled from "styled-components"
+import {useSelector, useDispatch} from "react-redux"
+import {useHistory} from "react-router-dom"
+import {changePrice} from "../../actions/publishArea.actions"
+
 
 const base= {
     priceId : "priceForm_price"
@@ -34,12 +38,27 @@ const NextButton = styled.button`
     border-radius: 40px;
 `
 export default function PriceForm () {
+    const dispatch = useDispatch() 
+    const price = useSelector(state => state.price)
+    const pr = useRef()
+    const history = useHistory()
+
+    const handleChange = (action, input) => {
+        return (event) => dispatch(action(input.current.value))
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        history.push("/")
+    }
+
     return(
         <FormWrapper>
-        <form>
+        <form onSubmit={handleSubmit}>
             <h1>and finally... lets talk about money</h1>
             <label htmlFor = {base.priceId}>how much do you expect to earn daily with your space</label>
-            <input type="number" id = {base.priceId}></input>
+            <input type="number" ref={pr} style={{width:"150px"}} onChange={handleChange(changePrice, pr)} id = {base.priceId} value = {price}></input>
+            <br></br>
             <NextButton type="submit" id={base.submitId} value="submit">submit</NextButton>
         </form>
         </FormWrapper>
