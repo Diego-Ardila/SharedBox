@@ -2,7 +2,6 @@ import React, {Component}  from 'react'
 import ProfileForm from '../components/profile/ProfileForm';
 import DisplayProfile from '../components/profile/DisplayProfile';
 import axios from 'axios';
-import { useHistory } from "react-router-dom"
 
 class Profile extends Component{
     state = {
@@ -28,26 +27,7 @@ class Profile extends Component{
             this.setState({
                 error                
             })
-        })
-    }
-    componentDidUpdate = () => {        
-        axios({
-            method:"GET",
-            url: "http://127.0.0.1:4000/lender/",
-            headers:{
-                Authorization: 'Bearer '+localStorage.getItem('token')
-            }
-        })
-        .then( response => {
-            this.setState({
-                data: response.data                
-            })
-        })
-        .catch(error=>{
-            this.setState({
-                error                
-            })
-        })
+        }) 
     }
 
     handleClick = (event) => {
