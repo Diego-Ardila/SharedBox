@@ -43,7 +43,10 @@ const FormWrapper = styled.section`
 
 export default function PhotosUploadForm () {
     const dispatch = useDispatch()
-    const fileObj = useSelector(state => state.photos)
+    const fileObj = useSelector(state =>{
+        console.log(state.photos)
+        return state.photos
+    } ) 
     const previewBlobPhotos = []
     const files = []
     
@@ -53,8 +56,9 @@ export default function PhotosUploadForm () {
         if (event.target.files && event.target.files[0]) {
             Object.values(event.target.files).forEach(file =>{
                 files.push(file)
-                dispatch(changePhotos(files))
             })
+            dispatch(changePhotos(files))
+            
             files.forEach( file => previewBlobPhotos.push(URL.createObjectURL(file)))
             setImagesURLs(imagesURLs = previewBlobPhotos)   
           }

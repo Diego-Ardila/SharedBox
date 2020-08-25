@@ -2,7 +2,7 @@ import React, { useRef } from "react"
 import styled from "styled-components"
 import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
-import {changePrice} from "../../actions/publishArea.actions"
+import {changePrice, changePublishAreaView} from "../../actions/publishArea.actions"
 
 
 const base= {
@@ -49,7 +49,9 @@ export default function PriceForm () {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        history.push("/")
+        dispatch(changePublishAreaView(1))
+        
+        history.push("/lender/admin")
     }
 
     return(

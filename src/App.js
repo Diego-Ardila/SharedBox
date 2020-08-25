@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import register from "./pages/register"
 import PublishSpaceArea from "./pages/PublishSpaceArea"
+import LenderAdminArea from './pages/lenderAdminArea';
 
 function PrivateRoute(props) {
   const history = useHistory()
@@ -27,8 +28,9 @@ function App() {
         <Switch>
           <Route exact path="/lender/login" component={Login} />
           <Route exact path="/lender/register/" component={register} />
-          <Route exact path="/lender/createSpace" component={PublishSpaceArea} />
+          <PrivateRoute exact path="/lender/createSpace" component={PublishSpaceArea} />
           <PrivateRoute exact path="/lender/profile" component={Profile} />
+          <PrivateRoute exact path="/lender/admin" component={LenderAdminArea} />
           <Redirect from="*" to="/lender/login" />
         </Switch>
       </div>
