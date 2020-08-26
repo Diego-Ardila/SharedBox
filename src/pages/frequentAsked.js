@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
-import Form from '../components/FAQ/faq.Form';
-import Rendericer from '../components/FAQ/faq.rendericer'
+import FormFaq from '../components/FAQ/faq.Form';
+import Rendericer from '../components/FAQ/faq.rendericer';
+import {Container,
+    Button,
+    Form,
+    Row,
+    Col} from 'react-bootstrap';
 
 
-export default function FrequentAskedQuestions () {
+export default function FrequentAskedQuestions (props) {
 
     let [faqs , setFaqs] = useState([])
 
@@ -23,13 +28,20 @@ export default function FrequentAskedQuestions () {
             })
            setFaqs(newFaqs)
               } 
-       
     } 
 
     return (
         <div>
-            <Form handleNewFaq={handleNewFaq} />
-            <Rendericer faqs={faqs} deleteFaq= {deleteFaq} />
+            <Container className="FAQ">
+                <Form>
+                 <Row>
+                    <Col lg={6} md={6} xl={6}>  <FormFaq spaceId={props.spaceId} faqs={faqs} handleNewFaq={handleNewFaq} /> </Col>
+                    <Col lg={6} md={6} xl={6}> <Rendericer faqs={faqs} deleteFaq= {deleteFaq} /> </Col>
+                </Row>
+                </Form>
+            </Container>
+           
+            
         </div>
     )
 }

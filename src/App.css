@@ -249,3 +249,9 @@ input[type=tel]:hover {
   grid-template-rows: 100px 35px 300px;
   grid-auto-rows: 300px;
 }
+
+.FAQ {
+  background: linear-gradient(180deg, #FFF9F4 1.12%, #B0CAC7 100%);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25), -4px -8px 2px rgba(248, 239, 239, 0.25);
+  margin-top: 10%
+}
