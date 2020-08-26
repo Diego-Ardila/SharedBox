@@ -28,11 +28,29 @@ const postSpace=async (state)=>{
         })
         return(respose.data._id)
     }catch(err){
-        console.dir(err)
+        return err
     }
 }
-const postTag = async (spaceId, tagData)=>{
-    const {name} = tagData
+
+const updateSpaceTag = async (spaceId, name) => {
+    try{
+        const response = await axios({
+            method:"PUT",
+            url:"http://127.0.0.1:4000/spaceTags",
+            headers:{
+                Authorization: "Bearer "+localStorage.getItem('token')
+            },
+            data: {
+                name,
+                spaceId
+            }
+        })
+        return response.data
+    }catch(err) {
+        return err
+    }
+}
+const postTag = async (spaceId, name)=>{
     try {
         const respose = await axios({
             method:"POST",
@@ -54,5 +72,6 @@ const postTag = async (spaceId, tagData)=>{
 export {
     getSuggestions,
     postSpace,
-    postTag
+    postTag,
+    updateSpaceTag
 }

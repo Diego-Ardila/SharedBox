@@ -8,12 +8,13 @@ let initialState={
     price:0,
     tags:[
         { id: 1, name: "dark Space" },
-        {id: 3, name: "Hot area"}
+        {id: 3, name: "Hot area" },
+        {id:10, name: "In house" }
       ],
     suggestions:[
-        { id: 3, name: "In house" },
         { id: 4, name: "Up high appartment" },
         { id: 5, name: "Storage Room" },
+        { id: 3, name: "In house" },
         { id: 6, name: "Apricots" },
         { id: 2, name: "Heavy Load" }
     ],

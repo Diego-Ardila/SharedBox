@@ -3,7 +3,7 @@ import styled from "styled-components"
 import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
 import {changePrice, changePublishAreaView} from "../../actions/publishArea.actions"
-import {postSpace} from "../../utils/HTTPrequests"
+import {postSpace, updateSpaceTag, postTag} from "../../utils/HTTPrequests"
 
 
 const base= {
@@ -51,11 +51,15 @@ export default function PriceForm () {
     }
     const handleSubmit = async(event) => {
         event.preventDefault()
-        //dispatch(changePublishAreaView(1))
-        
-        await postSpace(state)
-        //history.push("/lender/admin")
+        const spaceId = await postSpace(state)
+        state.tags.forEach( ({name}) => {
+            if(state.suggestions.some( suggestion => suggestion.name.toUpperCase() === name.toUpperCase())) return updateSpaceTag(spaceId, name)   
+            postTag(spaceId, name)
+        })
+        dispatch(changePublishAreaView(1))
+        history.push("/lender/admin")
     }
+
     return(
         <FormWrapper>
         <form onSubmit={handleSubmit}>
