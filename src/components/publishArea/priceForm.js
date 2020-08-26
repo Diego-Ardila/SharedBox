@@ -9,6 +9,8 @@ const base= {
     priceId : "priceForm_price"
 }
 
+
+
 const FormWrapper = styled.section`
     background: linear-gradient(180deg, #FFF9F4 1.12%, #B0CAC7 100%);
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25), -4px -8px 2px rgba(248, 239, 239, 0.25);
@@ -47,10 +49,11 @@ export default function PriceForm () {
         return (event) => dispatch(action(input.current.value))
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
         dispatch(changePublishAreaView(1))
-        
+        // const response = await PostNewSpace(data)
+        // const responseTag  = await postPutTag(response.data._id, tag, suggestions)  
         history.push("/lender/admin")
     }
 

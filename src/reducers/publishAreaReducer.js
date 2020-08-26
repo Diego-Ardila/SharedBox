@@ -35,7 +35,7 @@ const ACTIONS = {
     CHANGE_TITLE : "CHANGE_ TITLE",
     CHANGE_VIEWING_FORM : "CHANGE_VIEWING_FORM",
     CHANGE_AREA : "CHANGE_AREA",
-    CHANGE_PHOTOS: "CHANGE_PHOTOS"
+    CHANGE_PHOTOS: "CHANGE_PHOTOS",
 }
 
 const publishAreaReducer = (state = initialState , action) => {
