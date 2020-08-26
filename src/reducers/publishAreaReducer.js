@@ -17,8 +17,9 @@ let initialState={
         { id: 6, name: "Apricots" },
         { id: 2, name: "Heavy Load" }
     ],
-    title:"",
+    title:"test",
     viewingForm: 1,
+    area:0,
     photos: []
 }
 
@@ -96,10 +97,14 @@ const publishAreaReducer = (state = initialState , action) => {
                 viewingForm: action.payload
             }
         case ACTIONS.CHANGE_PHOTOS :
-        console.log(action.payload)    
         return {
                 ...state,
                 photos: action.payload
+            }
+        case ACTIONS.CHANGE_AREA:
+            return {
+                ...state,
+                area: action.payload
             }
         default : return state
     }

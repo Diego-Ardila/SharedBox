@@ -3,6 +3,7 @@ import styled from "styled-components"
 import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
 import {changePrice, changePublishAreaView} from "../../actions/publishArea.actions"
+import {postSpace} from "../../utils/HTTPrequests"
 
 
 const base= {
@@ -41,28 +42,26 @@ const NextButton = styled.button`
 `
 export default function PriceForm () {
     const dispatch = useDispatch() 
-    const price = useSelector(state => state.price)
+    const state = useSelector(state => state)
     const pr = useRef()
     const history = useHistory()
 
     const handleChange = (action, input) => {
         return (event) => dispatch(action(input.current.value))
     }
-
-    const handleSubmit = async (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault()
-        dispatch(changePublishAreaView(1))
-        // const response = await PostNewSpace(data)
-        // const responseTag  = await postPutTag(response.data._id, tag, suggestions)  
-        history.push("/lender/admin")
+        //dispatch(changePublishAreaView(1))
+        
+        await postSpace(state)
+        //history.push("/lender/admin")
     }
-
     return(
         <FormWrapper>
         <form onSubmit={handleSubmit}>
             <h1>and finally... lets talk about money</h1>
             <label htmlFor = {base.priceId}>how much do you expect to earn daily with your space</label>
-            <input type="number" ref={pr} style={{width:"150px"}} onChange={handleChange(changePrice, pr)} id = {base.priceId} value = {price}></input>
+            <input type="number" ref={pr} style={{width:"150px"}} onChange={handleChange(changePrice, pr)} id = {base.priceId} value = {state.price}></input>
             <br></br>
             <NextButton type="submit" id={base.submitId} value="submit">submit</NextButton>
         </form>
