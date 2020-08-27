@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect, useHistory } from "react-router-dom";
 //import './App.css';
 import Login from "./pages/Login";
-import Profile from "./pages/Profile";
+import Profile from "./pages/profile";
 import register from "./pages/register"
 import PublishSpaceArea from "./pages/PublishSpaceArea"
 import LenderAdminArea from './pages/lenderAdminArea';
@@ -30,6 +30,7 @@ function App() {
       <div className="App">
         <Header />
         <Switch>
+          <Route path="/ViewSpaces" component={Home} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/lender/login" component={Login} />
           <Route exact path="/lender/register/" component={register} />

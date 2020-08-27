@@ -1,4 +1,4 @@
-import React, { useState, useRef,  } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Form, Col, Button, Container } from 'react-bootstrap';
 import { Search } from 'react-bootstrap-icons';
@@ -6,7 +6,7 @@ import Spaces from './Spaces';
 import axios from 'axios';
 import queryString from 'query-string';
 
-const spaces = [
+let spaces = [
   {
     id: 1,
     name: "Parqueadero",
@@ -47,13 +47,13 @@ const Home = () => {
 
   const locationQuery = useLocation();
   const history = useHistory();  
+  let queryStr = "";
 
   const areaInput = useRef();
   const locationInput = useRef();
   const initialDateInput = useRef();
   const finalDateInput = useRef();
 
-  
 
   const handleChange = (event) => {
     if(event.target.id === base.areaId ){
@@ -72,16 +72,15 @@ const Home = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let qs = queryString.parse(locationQuery.search)
+    let qs = {}
     let newArea = parseInt(area) + 15
     qs.area =  `${area}-${newArea}`
-    qs.location = location
+    qs.location = location.toUpperCase()
     qs.inDate = initialDate
     qs.finDate = finalDate 
-    let queryStr= queryString.stringify(qs)
+    queryStr= queryString.stringify(qs)
     locationQuery.search= queryStr
-    history.push(locationQuery);
-    
+    history.push("/viewSpaces?"+queryStr)
   }
 
   return (
