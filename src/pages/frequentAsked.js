@@ -17,16 +17,15 @@ export default function FrequentAskedQuestions (props) {
             id: faqs.length + 1,
             ...faq
         }
-        setFaqs(faqs = faqs.concat(newFaq),console.log(newFaq))
-        console.log(faqs)
+        setFaqs(faqs = faqs.concat(newFaq))
     }
 
     const deleteFaq = (id) =>{
        return () => {
-           let newFaqs = faqs.filter(faq=>{
-                return faq.id !== id
-            })
-           setFaqs(newFaqs)
+                let newFaqs = faqs.filter(faq=>{
+                    return faq.id !== id
+                })
+                setFaqs(newFaqs)
               } 
     } 
 
@@ -35,7 +34,7 @@ export default function FrequentAskedQuestions (props) {
             <Container className="FAQ">
                 <Form>
                  <Row>
-                    <Col lg={6} md={6} xl={6}>  <FormFaq spaceId={props.spaceId} faqs={faqs} handleNewFaq={handleNewFaq} /> </Col>
+                    <Col lg={6} md={6} xl={6}>  <FormFaq spaceId={/* props.spaceId */1231231231} faqs={faqs} handleNewFaq={handleNewFaq} /> </Col>
                     <Col lg={6} md={6} xl={6}> <Rendericer faqs={faqs} deleteFaq= {deleteFaq} /> </Col>
                 </Row>
                 </Form>

@@ -41,16 +41,18 @@ export default function FrequentAskedQuestionsForm (props) {
     }
 
     const handleSubmit = (event) => {
+       const newFaqs= props.faqs.map(faq=>{
+           return{
+               ...faq,
+               spaceId:props.spaceId
+           }
+       })
         event.preventDefault()
         Axios({
             method: "POST",
             url: "http://127.0.0.1:8000/queAns",
-            data: {
-               // spaceId: props.spaceId,
-                spaceId:123456789,
-                faqs:props.faqs
-            } 
-        },console.log(props.faqs))
+            data: {newFaqs}
+        },console.log(newFaqs))
         .then(({data})=> console.log(data))
         .catch((err)=>console.log(err))
     }
