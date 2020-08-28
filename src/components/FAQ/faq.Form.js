@@ -65,15 +65,13 @@ export default function FrequentAskedQuestionsForm (props) {
                                 name = {base.questionId}
                                 type = "textarea"
                                 value = {question}/>
-                            <br></br>
-                            <br></br>
+
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
                 <Form.Label >And what is your answer?</Form.Label>
                 <Form.Control  onChange={handleChange} name={base.responseId} type = "textarea" value={answer}/>
             </Form.Group>
                 <Button onClick={handleCreationFAQ} >Create FAQ</Button>
-                <br></br>
                 <Button onClick= {handleSubmit}>Submit FAQ's</Button>
         </Form>
     )
