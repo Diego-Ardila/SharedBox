@@ -13,7 +13,7 @@ class Profile extends Component{
     componentDidMount = () => {        
         axios({
             method:"GET",
-            url: "http://localhost:4000/lender/",
+            url: "http://127.0.0.1:4000/lender/",
             headers:{
                 Authorization: 'Bearer '+localStorage.getItem('token')
             }
