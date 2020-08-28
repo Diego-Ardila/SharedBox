@@ -9,6 +9,7 @@ class Profile extends Component{
         data:{},
         error: ''
     }
+
     componentDidMount = () => {        
         axios({
             method:"GET",
@@ -26,26 +27,7 @@ class Profile extends Component{
             this.setState({
                 error                
             })
-        })
-    }
-    componentDidUpdate = () => {        
-        axios({
-            method:"GET",
-            url: "http://127.0.0.1:4000/lender/",
-            headers:{
-                Authorization: 'Bearer '+localStorage.getItem('token')
-            }
-        })
-        .then( response => {
-            this.setState({
-                data: response.data                
-            })
-        })
-        .catch(error=>{
-            this.setState({
-                error                
-            })
-        })
+        }) 
     }
 
     handleClick = (event) => {
@@ -54,6 +36,9 @@ class Profile extends Component{
         })
     }   
 
+    handleCreateButton = () => {
+        this.props.history.push("/lender/createSpace")
+    }
     render(){
         return(
             <div>
@@ -62,7 +47,8 @@ class Profile extends Component{
                 <div>
                     <DisplayProfile data={this.state.data}/> <button onClick={this.handleClick}>Editar Datos</button> 
                 </div> :
-                 <ProfileForm data={this.state.data} handleClick={this.handleClick}/>}                    
+                 <ProfileForm data={this.state.data} handleClick={this.handleClick}/>}
+                 <button onClick ={this.handleCreateButton} >crear un espacio</button>                 
                 <p>footer to do </p>                
             </div>
         )

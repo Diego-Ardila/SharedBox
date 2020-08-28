@@ -33,6 +33,27 @@ function ProfileForm(props){
             setFormValid(false)
         };
     },[emailValid,phoneValid])
+    useEffect(() => {
+        axios({
+            method:"GET",
+            url: "http://127.0.0.1:4000/lender/",
+            headers:{
+                Authorization: 'Bearer '+localStorage.getItem('token')
+            }
+        })
+        .then( response => {
+            setName(response.data.name)
+            setEmail(response.data.email)
+            setPhoneNumber(response.data.phoneNumber)
+            setCountry(response.data.country)
+            setCity(response.data.city)
+            
+            
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+    },[])
 
     const handleSubmit = (event) => {
         event.preventDefault();

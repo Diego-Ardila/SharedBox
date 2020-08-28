@@ -2,6 +2,8 @@ import React, {useState} from "react"
 import styled from "styled-components"
 import PhotoDisplay from "./photoDisplay"
 import Logo from "../../logo.svg"
+import {useSelector, useDispatch} from "react-redux"
+import {changePhotos, changePublishAreaView} from "../../actions/publishArea.actions"
 
 const base = {
     formClass : "photoForm",
@@ -40,25 +42,39 @@ const FormWrapper = styled.section`
 
 
 export default function PhotosUploadForm () {
-    const fileObj = []
+    const dispatch = useDispatch()
+    const fileObj = useSelector(state =>{
+        console.log(state.photos)
+        return state.photos
+    } ) 
     const previewBlobPhotos = []
+    const files = []
     
     let [imagesURLs, setImagesURLs] = useState("")
     
     const handleChange = (event) => {
         if (event.target.files && event.target.files[0]) {
-            Object.values(event.target.files).forEach(file => fileObj.push(file))
-            fileObj.forEach( file => previewBlobPhotos.push(URL.createObjectURL(file)))
+            Object.values(event.target.files).forEach(file =>{
+                files.push(file)
+            })
+            dispatch(changePhotos(files))
+            
+            files.forEach( file => previewBlobPhotos.push(URL.createObjectURL(file)))
             setImagesURLs(imagesURLs = previewBlobPhotos)   
           }
         }
+    
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        dispatch(changePublishAreaView(5))
+    }
     
     return (
        <FormWrapper>
            <h1>share some photos of your space!<br></br>It will be more appealing for people looking where to store their things</h1>
            {imagesURLs ? imagesURLs.map( (url, index) => <PhotoDisplay url ={url} key ={index}></PhotoDisplay>): <img src={Logo} alt="logo"></img>}
            <br></br>
-           <form>
+           <form onSubmit = {handleSubmit}>
                <input type="file" accept="image/*" multiple = {true} onChange ={handleChange} ></input>
                <br></br>
                <NextButton type="submit" id={base.submitId} value="submit">next</NextButton>
