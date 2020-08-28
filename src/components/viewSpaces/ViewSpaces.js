@@ -1,11 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
+import { Container, Form, Col, Badge } from 'react-bootstrap';
+import Spaces from './Spaces';
 import { useLocation, useHistory } from 'react-router-dom';
-import { Form, Col, Button, Container } from 'react-bootstrap';
-import { Search } from 'react-bootstrap-icons';
-import { useSelector } from "react-redux"
-import Spaces from '../components/viewSpaces/Spaces';
 import queryString from 'query-string';
-import SearchForm from './SearchForm';
+import axios from 'axios';
+import SearchForm from '../../pages/SearchForm';
+import { useSelector, useDispatch} from "react-redux"
+import changeSpaces from '../../actions/viewSpaces.actions'
+import SearchAdvancedForm from '../../pages/SearchAdvancedForm'
+import SearchAdvancedForms from '../../pages/SearchAdvancedForm';
 
 let spaces = [
   {
@@ -33,17 +36,36 @@ let spaces = [
   }
 ]
 
-const Home = () => {
+
+const ViewSpaces = () => {   
+
+  const locationQuery = useLocation();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const area = useSelector(state => state.searchFormReducer.area)
   const location = useSelector(state => state.searchFormReducer.location)
   const initialDate = useSelector(state => state.searchFormReducer.initialDate)
   const finalDate = useSelector(state => state.searchFormReducer.finalDate)
-
-
+  const height = useSelector(state => state.searchFormReducer.height)
+  const width = useSelector(state => state.searchFormReducer.width)
+  const length = useSelector(state => state.searchFormReducer.length)
+  const pricePerDay = useSelector(state => state.searchFormReducer.pricePerDay)
+  const pricePerMonth= useSelector(state => state.searchFormReducer.pricePerMonth)
+  
   let range = 15
-
-  const history = useHistory();  
-  let queryStr = "";  
+ 
+  useEffect( () => {
+    const params = queryString.parse(locationQuery.search )
+    if (params !== {}){
+      axios({
+        method: "GET",
+        url: `http://localhost:4000/space/tenant?${locationQuery.search}`
+      })
+      .then(({data})=> dispatch(changeSpaces(data)))
+      .catch(err=>console.log(err))
+    }  
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -52,21 +74,23 @@ const Home = () => {
     qs.location = location.toUpperCase()
     qs.inDate = initialDate
     qs.finDate = finalDate 
-
-    queryStr= queryString.stringify(qs)
+    qs.height= height
+    qs.width= width
+    qs.length= length
+    qs.pricePerDay= pricePerDay
+    qs.pricePerMonth= pricePerMonth
+    let queryStr= queryString.stringify(qs)
     history.push("/viewSpaces?"+queryStr)
   }
+
 
   return (
     <Container>
       <SearchForm onSubmit={handleSubmit} />
-      
-    <h3>Best Rated Locations</h3>
-    <Spaces spaces={spaces}  />
-    
+      <SearchAdvancedForms />
+      <Spaces spaces={spaces}/>
     </Container>
-      
   );
 };
 
-export default Home;
+export default ViewSpaces;

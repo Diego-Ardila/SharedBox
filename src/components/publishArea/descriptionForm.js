@@ -62,7 +62,7 @@ const NextButton = styled.button`
 export default function DescriptionForm () {
     
     const dispatch = useDispatch()
-    const textAreaDesc = useSelector(state => state.textAreaDesc)
+    const textAreaDesc = useSelector(state => state.publishAreaReducer.textAreaDesc)
     const textArea = useRef()
 
     const handleChange = (action, input) => {

@@ -6,7 +6,7 @@ import Logo from "../logo.svg";
 const Header = () => {
   return (
     <Navbar collapseOnSelect bg="primary" expand="lg">      
-      <NavLink to="/home"><img src={Logo} width={100}/></NavLink>
+      <NavLink to="/home"><img src={Logo} alt="logo" width={100}/></NavLink>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ml-auto">
