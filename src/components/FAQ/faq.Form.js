@@ -52,9 +52,9 @@ export default function FrequentAskedQuestionsForm (props) {
             method: "POST",
             url: "http://127.0.0.1:8000/queAns",
             data: {newFaqs}
-        },console.log(newFaqs))
-        .then(({data})=> console.log(data))
-        .catch((err)=>console.log(err))
+        })
+        .then(({data})=> data)
+        .catch((err)=> err)
     }
 
     return(
