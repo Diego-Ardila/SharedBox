@@ -1,6 +1,8 @@
 import React, {useState, useRef} from "react"
 import axios from "axios"
 import styled from "styled-components"
+import {useLocation,useHistory} from "react-router-dom"
+import queryString from "query-string"
 
 
 const LoginBotton = styled.button`
@@ -33,6 +35,9 @@ function LoginForm (props) {
 
     let [email, setEmail] = useState("")
     let [password, setPassword] = useState("")
+
+    const location = useLocation()
+    const history = useHistory()
     
     const emailInput = useRef()
     const passwordInput = useRef()
@@ -57,6 +62,7 @@ function LoginForm (props) {
     
     const handleSubmit = async (event) =>  {
         event.preventDefault()
+        
         try{
             const response = await axios({
                  method:"POST",

@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import register from "./pages/register"
 import PublishSpaceArea from "./pages/PublishSpaceArea"
 import LenderAdminArea from './pages/lenderAdminArea';
+import frequentAsked from './pages/frequentAsked';
 
 function PrivateRoute(props) {
   const history = useHistory()
@@ -26,6 +27,7 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
+          <Route exact path="/lender/frequentAsked" component={frequentAsked} />
           <Route exact path="/lender/login" component={Login} />
           <Route exact path="/lender/register/" component={register} />
           <PrivateRoute exact path="/lender/createSpace" component={PublishSpaceArea} />
