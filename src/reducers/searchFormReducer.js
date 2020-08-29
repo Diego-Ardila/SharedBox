@@ -1,13 +1,20 @@
+const today = new Date()
+console.log(today)
+const todayString = `${today.getFullYear()}-${today.getMonth() < 10 ? "0"+today.getMonth(): today.getMonth()}-${today.getDate() < 10 ? "0"+today.getDate(): today.getDate()}`
+const tomorrowString = `${today.getFullYear()}-${today.getMonth() < 10 ? "0"+today.getMonth(): today.getMonth()}-${today.getDate() + 1 < 10 ? "0"+(today.getDate()+1): today.getDate()+1}`
+
+
 let initialState={
   area: 0,
   location:"",
-  initialDate: new Date(),
-  finalDate: new Date(),
+  initialDate: todayString,
+  finalDate: tomorrowString,
   height: 250,
   width: 250,
   length:250,
   pricePerDay: 0,
-  pricePerMonth:0
+  pricePerMonth:0,
+  rendering: false
 }
 
 const ACTIONS = {
@@ -19,7 +26,8 @@ const ACTIONS = {
   CHANGE_WIDTH : "CHANGE_WIDTH",
   CHANGE_LENGTH : "CHANGE_LENGTH",
   CHANGE_PRICE_PER_DAY : "CHANGE_PRICE_PER_DAY",
-  CHANGE_PRICE_PER_MONTH : "CHANGE_PRICE_PER_MONTH"
+  CHANGE_PRICE_PER_MONTH : "CHANGE_PRICE_PER_MONTH",
+  CHANGE_RENDERING : "CHANGE_RENDERING"
 }
 
 const searchFormReducer = (state = initialState, action) => {
@@ -68,6 +76,11 @@ const searchFormReducer = (state = initialState, action) => {
       return {
         ...state,
         pricePerMonth: action.payload
+      }                          
+    case ACTIONS.CHANGE_RENDERING:
+      return {
+        ...state,
+        rendering: !state.rendering
       }                          
     default : return state
   }  

@@ -7,9 +7,8 @@ import axios from 'axios';
 import SearchForm from '../../pages/SearchForm';
 import { useSelector, useDispatch} from "react-redux"
 import changeSpaces from '../../actions/viewSpaces.actions'
-import SearchAdvancedForm from '../../pages/SearchAdvancedForm'
 import SearchAdvancedForms from '../../pages/SearchAdvancedForm';
-
+import {changeRendering} from "../../actions/searchForm.actions"
 let spaces = [
   {
     id: 1,
@@ -52,6 +51,7 @@ const ViewSpaces = () => {
   const length = useSelector(state => state.searchFormReducer.length)
   const pricePerDay = useSelector(state => state.searchFormReducer.pricePerDay)
   const pricePerMonth= useSelector(state => state.searchFormReducer.pricePerMonth)
+  const rendering = useSelector(state => state.searchFormReducer.rendering)
   
   let range = 15
  
@@ -62,10 +62,12 @@ const ViewSpaces = () => {
         method: "GET",
         url: `http://localhost:4000/space/tenant?${locationQuery.search}`
       })
-      .then(({data})=> dispatch(changeSpaces(data)))
+      .then(({data})=>{
+        console.log(data)
+       dispatch(changeSpaces(data || []))})
       .catch(err=>console.log(err))
     }  
-  });
+  }, [rendering]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -80,6 +82,7 @@ const ViewSpaces = () => {
     qs.pricePerDay= pricePerDay
     qs.pricePerMonth= pricePerMonth
     let queryStr= queryString.stringify(qs)
+    dispatch(changeRendering())
     history.push("/viewSpaces?"+queryStr)
   }
 

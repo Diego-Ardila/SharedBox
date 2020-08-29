@@ -62,3 +62,9 @@ export const changePricePerMonth = (payload) => {
       payload
   }
 }
+
+export const changeRendering = (payload) => {
+  return {
+      type: ACTIONS.CHANGE_RENDERING
+  }
+}
