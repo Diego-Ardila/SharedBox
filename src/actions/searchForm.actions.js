@@ -68,3 +68,10 @@ export const changeRendering = (payload) => {
       type: ACTIONS.CHANGE_RENDERING
   }
 }
+
+export const changeSpecificSearch = (payload) => {
+  return {
+    type: ACTIONS.CHANGE_SPECIFIC_SEARCH,
+    payload
+  }
+}

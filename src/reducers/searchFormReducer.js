@@ -12,7 +12,8 @@ let initialState={
   length:20,
   pricePerDay: 0,
   pricePerMonth:0,
-  rendering: false
+  rendering: false,
+  specificSearch: false
 }
 
 const ACTIONS = {
@@ -25,7 +26,8 @@ const ACTIONS = {
   CHANGE_LENGTH : "CHANGE_LENGTH",
   CHANGE_PRICE_PER_DAY : "CHANGE_PRICE_PER_DAY",
   CHANGE_PRICE_PER_MONTH : "CHANGE_PRICE_PER_MONTH",
-  CHANGE_RENDERING : "CHANGE_RENDERING"
+  CHANGE_RENDERING : "CHANGE_RENDERING",
+  CHANGE_SPECIFIC_SEARCH: "SPECIFIC_SEARCH"
 }
 
 const searchFormReducer = (state = initialState, action) => {
@@ -79,6 +81,11 @@ const searchFormReducer = (state = initialState, action) => {
       return {
         ...state,
         rendering: !state.rendering
+      }
+    case ACTIONS.CHANGE_SPECIFIC_SEARCH:
+      return {
+        ...state,
+        specificSearch: action.payload
       }                          
     default : return state
   }  

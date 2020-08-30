@@ -10,7 +10,7 @@ import frequentAsked from './pages/frequentAsked';
 import Header from './pages/Header';
 import Footer from './pages/Footer';
 import Home from './pages/Home';
-import ViewSpaces from './components/viewSpaces/ViewSpaces';
+
 
 function PrivateRoute(props) {
   const history = useHistory()
@@ -33,7 +33,6 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/lender/frequentAsked" component={frequentAsked} />
-          <Route path="/viewSpaces" component={ViewSpaces} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/lender/login" component={Login} />
           <Route exact path="/lender/register/" component={register} />
