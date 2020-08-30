@@ -17,7 +17,9 @@ const SearchForm = (props) => {
     area: Yup.number().typeError('Value must be a number').required("Required Field"),
     location: Yup.string().required("Required Field"),
     initialDate: Yup.date().required("Required Field"),
-    finalDate: Yup.date().required("Required Field")    
+    finalDate: Yup.date().min(
+      Yup.ref('initialDate'), "Final Date can't be before Initial Date"
+    ).required("Required Field")    
   })
   const area = useSelector(state => state.searchFormReducer.area)
   const location = useSelector(state => state.searchFormReducer.location)
@@ -42,9 +44,6 @@ const SearchForm = (props) => {
               {touched.area && errors.area ? (
                 <div className="error-message">{errors.area}</div>
               ): null}
-              <Form.Control.Feedback>
-                {errors.area}
-              </Form.Control.Feedback>
             </Form.Group>            
           </Col>          
           <Col>
@@ -54,9 +53,6 @@ const SearchForm = (props) => {
               {touched.location && errors.location ? (
                 <div className="error-message">{errors.location}</div>
               ): null}
-              <Form.Control.Feedback>
-                {errors.location}
-              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col>
@@ -66,9 +62,6 @@ const SearchForm = (props) => {
               {touched.initialDate && errors.initialDate ? (
                 <div className="error-message">{errors.initialDate}</div>
               ): null}
-              <Form.Control.Feedback>
-                {errors.initialDate}
-              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col>
@@ -78,9 +71,6 @@ const SearchForm = (props) => {
               {touched.finalDate && errors.finalDate ? (
                 <div className="error-message">{errors.finalDate}</div>
               ): null}
-              <Form.Control.Feedback>
-                {errors.finalDate}
-              </Form.Control.Feedback>
             </Form.Group>            
           </Col>          
           <Button variant="primary" size="lg" type="submit">
