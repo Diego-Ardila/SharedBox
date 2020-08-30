@@ -8,7 +8,7 @@ import SearchForm from '../../pages/SearchForm';
 import { useSelector, useDispatch} from "react-redux"
 import changeSpaces from '../../actions/viewSpaces.actions'
 import SearchAdvancedForms from '../../pages/SearchAdvancedForm';
-import {changeRendering} from "../../actions/searchForm.actions"
+import { changeArea, changeLocation, changeInitialDate, changeFinalDate, changeRendering, changePricePerDay, changePricePerMonth, changeHeight, changeWidth, changeLength} from "../../actions/searchForm.actions"
 let spaces = [
   {
     id: 1,
@@ -44,14 +44,10 @@ const ViewSpaces = () => {
   const location = useSelector(state => state.searchFormReducer.location)
   const initialDate = useSelector(state => state.searchFormReducer.initialDate)
   const finalDate = useSelector(state => state.searchFormReducer.finalDate)
-  const height = useSelector(state => state.searchFormReducer.height)
-  const width = useSelector(state => state.searchFormReducer.width)
-  const length = useSelector(state => state.searchFormReducer.length)
-  const pricePerDay = useSelector(state => state.searchFormReducer.pricePerDay)
-  const pricePerMonth= useSelector(state => state.searchFormReducer.pricePerMonth)
+
   const rendering = useSelector(state => state.searchFormReducer.rendering)
   
-  let range = 15
+  let areaRange = 15
  
   useEffect( () => {
     const params = queryString.parse(locationQuery.search )
@@ -67,10 +63,11 @@ const ViewSpaces = () => {
     }  
   }, [rendering]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (values , errors) => {
+    const {height,width,length,pricePerDay,pricePerMonth} = values
+    console.log(values)
     let qs = {}
-    qs.area =  `${area}-${parseInt(area) + range}`
+    qs.area =  `${area}-${parseInt(area) + areaRange}`
     qs.location = location.toUpperCase()
     qs.inDate = initialDate
     qs.finDate = finalDate 
@@ -80,15 +77,25 @@ const ViewSpaces = () => {
     qs.pricePerDay= pricePerDay
     qs.pricePerMonth= pricePerMonth
     let queryStr= queryString.stringify(qs)
-    dispatch(changeRendering())
+    dispatch(changeArea(area));
+    dispatch(changeLocation(location));
+    dispatch(changeInitialDate(initialDate));
+    dispatch(changeFinalDate(finalDate));
+    dispatch(changeHeight(height));
+    dispatch(changeLength(length));
+    dispatch(changeWidth(width));
+    dispatch(changePricePerDay(pricePerDay));
+    dispatch(changePricePerMonth(pricePerMonth));
+    dispatch(changeRendering());
+
     history.push("/viewSpaces?"+queryStr)
   }
 
   return (
     <Container>
-      <SearchForm onSubmit={handleSubmit} />
+      <SearchForm showButton={false} />
       <h4>Other Filters:</h4>
-      <SearchAdvancedForms />
+      <SearchAdvancedForms onSubmit={handleSubmit} />
       <h5>Results:</h5>
       <Spaces spaces={spaces}/>
     </Container>

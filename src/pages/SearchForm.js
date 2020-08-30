@@ -82,10 +82,10 @@ const SearchForm = (props) => {
                 {errors.finalDate}
               </Form.Control.Feedback>
             </Form.Group>            
-          </Col>          
-          <Button variant="primary" size="lg" type="submit">
-            <Search />
-          </Button>{' '}
+          </Col> {props.showButton &&  <Button variant="primary" size="lg" type="submit">
+                                            <Search />
+                                       </Button> }          
+         
         </Form.Row>
       </Form>    
     )} 

@@ -35,8 +35,7 @@ const Home = () => {
 
   return (
     <Container>
-      <SearchForm  onSubmit={handleSubmit} />
-      
+      <SearchForm showButton={true} onSubmit={handleSubmit} />
       <h3>Best Rated Locations</h3>
     <Spaces spaces={spaces}  />
     
