@@ -1,26 +1,11 @@
 import React, {useState, useRef} from "react"
 import axios from "axios"
-import styled from "styled-components"
+import {Formik} from "formik"
+import * as Yup from "yup";
+import { Container, Card, Form, Button, Col, Image } from "react-bootstrap"
+import Logo from "../../logo.svg";
+import { useHistory } from "react-router-dom";
 
-
-const LoginBotton = styled.button`
-    background: #001244;
-    border-radius: 40px;
-    width: 155px;
-    height: 43px;
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: bold;
-    line-height: 24px;
-    text-align: center;
-    color: #FFF9F4;
-    outline:none;
-    &:hover {
-        width: 153px;
-        height: 46px;
-        cursor: pointer;
-    }
-`
 
 const base = {
     emailId: "login-email",
@@ -30,40 +15,29 @@ const base = {
 }
 
 function LoginForm (props) {
+    const history = useHistory()
+    const redirect = () => {
+        history.push("/lender/register/")
+    }
+
+    const formSchema = Yup.object().shape({
+        email: Yup.string().email().typeError('invalid Email').required("Required Field"),
+        password: Yup.string().required("Required Field")   
+      })
 
     let [email, setEmail] = useState("")
     let [password, setPassword] = useState("")
-    
-    const emailInput = useRef()
-    const passwordInput = useRef()
 
-    const handleChange = (event) => {
-            if(event.target.id === base.emailId ) setEmail(email = event.target.value)
-            if(event.target.id === base.passwordId ) setPassword(password = event.target.value)
-        }  
-
-    const clearFields = (arrFields = []) => {
-        arrFields.forEach(field => field.current.value ="")
-    }
     
-    const clearState = () => {
-        setEmail(email ="")
-        setPassword(password ="")
-    }
-
-    const setFocus = () => {
-        emailInput.current.focus()
-    }
     
-    const handleSubmit = async (event) =>  {
-        event.preventDefault()
+    const handleSubmit = async (values) =>  {
         try{
             const response = await axios({
                  method:"POST",
                  url: "http://127.0.0.1:4000/lender/login",
                  data:{
-                     email,
-                     password
+                     email: values.email,
+                     password: values.password
                  }
              })
              localStorage.setItem("token", response.data)
@@ -74,31 +48,57 @@ function LoginForm (props) {
             if(error.status === 400) errMessage = error.response.data
             if(error.message === "Network Error") errMessage ="failed connection to dataServer, check your connection to the internet and try again later" 
             props.handleErrorLogin(errMessage)
-            clearFields([emailInput, passwordInput])
-            clearState()
-            setFocus()
         }   
     }
 
     return (
-        <div>
-            <form className = {base.formClass} onSubmit = {handleSubmit}>
-                <label htmlFor={base.emailId}>
-                    EMAIL:
-                    <br></br>
-                    <input type ="email" ref={emailInput} id={base.emailId}  placeholder="me@email.com" onChange ={handleChange}></input>
-                    <br></br>
-                </label>
-                <label htmlFor={base.passwordId}>
-                    PASSWORD:
-                    <br></br>
-                    <input type ="password" ref={passwordInput} id={base.passwordId}  placeholder="password" onChange ={handleChange}></input>
-                    <br></br>
-                    <br></br>
-                </label>
-                <LoginBotton type="submit" id={base.submitId} value="submit">LOGIN</LoginBotton>
-            </form>
-        </div>
+
+        <Formik 
+            initialValues = {{email: email ,password: password}}
+            validationSchema = {formSchema}
+            onSubmit = {handleSubmit}>
+        {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors}) => (
+            <Container >
+                <Card md={8} className="p-5 mt-5">
+                    <Form onSubmit={handleSubmit} className="justify-content-center mt-3">
+                        <Form.Row className="justify-content-center">
+                            <Col sm={6} md={4} className="justify-content-center">
+                                <Image style= {{width: 187, height:64}} src={Logo} alt="logo"></Image>
+                            </Col>
+                        </Form.Row>
+                        <Form.Row className="justify-content-center" >
+                            <Col className="col-lg-6" >
+                                <Form.Group controlId={base.emailId}>
+                                <Form.Label>EMAIL</Form.Label>
+                                <Form.Control name="email" type="text" placeholder="me@email.com" onChange ={handleChange} value={values.email} className={touched.email && errors.email ? "is-invalid" : null}  />
+                                {touched.email && errors.email ? (
+                                    <div className="error-message">{errors.email}</div>
+                                ): null}
+                                </Form.Group>            
+                            </Col>      
+                        </Form.Row>
+                        <Form.Row className="justify-content-center">
+                            <Col className="col-lg-6">
+                                <Form.Group controlId={base.passwordId}>
+                                <Form.Label>PASSWORD</Form.Label>
+                                <Form.Control name="password" type="password" placeholder="xxxxxx" onChange ={handleChange} value={values.password} className={touched.password && errors.password ? "is-invalid" : null}  />
+                                {touched.password && errors.password ? (
+                                    <div className="error-message">{errors.password}</div>
+                                ): null}
+                                </Form.Group>            
+                            </Col>  
+                        </Form.Row>
+                        <Form.Row className="justify-content-center">
+                            <Button type ="submit">LOGIN</Button>
+                        </Form.Row>
+                        <Form.Row className="justify-content-center mt-5">
+                        <a href="#" onClick={redirect}>new user? create new account</a><br></br>
+                        </Form.Row>
+                    </Form>
+                </Card>
+            </Container>
+        )}
+        </Formik>       
     )
 }
 export default LoginForm
