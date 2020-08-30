@@ -33,7 +33,7 @@ const SearchAdvancedForms = (props) => {
         <Col >
           <Form.Group controlId={base.heightId}>
             <Form.Label>Height</Form.Label>
-            <Form.Control ref={heightInput} min={0} max={500} type="range" onChange ={handleChange(changeHeight, heightInput )} />
+            <Form.Control ref={heightInput} min={0} max={40} type="range" onChange ={handleChange(changeHeight, heightInput )} />
             <Badge pill variant="primary">
               {height || 0}
             </Badge>{' '}
@@ -42,7 +42,7 @@ const SearchAdvancedForms = (props) => {
         <Col>
           <Form.Group controlId={base.widthId}>
             <Form.Label>Width</Form.Label>
-            <Form.Control ref={widthInput} min={0} max={500} type="range" onChange ={handleChange(changeWidth, widthInput )} />
+            <Form.Control ref={widthInput} min={0} max={40} type="range" onChange ={handleChange(changeWidth, widthInput )} />
             <Badge pill variant="primary">
               {width || 0}
             </Badge>{' '}
@@ -51,7 +51,7 @@ const SearchAdvancedForms = (props) => {
         <Col>
           <Form.Group controlId={base.lengthId}>
             <Form.Label>Length</Form.Label>
-            <Form.Control ref={lengthInput} min={0} max={500} type="range" onChange ={handleChange(changeLength, lengthInput )} />
+            <Form.Control ref={lengthInput} min={0} max={40} type="range" onChange ={handleChange(changeLength, lengthInput )} />
             <Badge pill variant="primary">
               {length || 0}
             </Badge>{' '}

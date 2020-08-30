@@ -1,17 +1,16 @@
 const today = new Date()
-console.log(today)
 const todayString = `${today.getFullYear()}-${today.getMonth() < 10 ? "0"+today.getMonth(): today.getMonth()}-${today.getDate() < 10 ? "0"+today.getDate(): today.getDate()}`
 const tomorrowString = `${today.getFullYear()}-${today.getMonth() < 10 ? "0"+today.getMonth(): today.getMonth()}-${today.getDate() + 1 < 10 ? "0"+(today.getDate()+1): today.getDate()+1}`
 
 
 let initialState={
-  area: 0,
+  area: "",
   location:"",
   initialDate: todayString,
   finalDate: tomorrowString,
-  height: 250,
-  width: 250,
-  length:250,
+  height: 20,
+  width: 20,
+  length:20,
   pricePerDay: 0,
   pricePerMonth:0,
   rendering: false

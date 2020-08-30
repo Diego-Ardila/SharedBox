@@ -1,5 +1,5 @@
-import React, {useState, useRef, useEffect} from 'react';
-import { Container, Form, Col, Badge } from 'react-bootstrap';
+import React, {useState,  useEffect} from 'react';
+import { Container} from 'react-bootstrap';
 import Spaces from './Spaces';
 import { useLocation, useHistory } from 'react-router-dom';
 import queryString from 'query-string';
@@ -35,9 +35,7 @@ let spaces = [
   }
 ]
 
-
-const ViewSpaces = () => {   
-
+const ViewSpaces = () => {  
   const locationQuery = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -86,11 +84,12 @@ const ViewSpaces = () => {
     history.push("/viewSpaces?"+queryStr)
   }
 
-
   return (
     <Container>
       <SearchForm onSubmit={handleSubmit} />
+      <h4>Other Filters:</h4>
       <SearchAdvancedForms />
+      <h5>Results:</h5>
       <Spaces spaces={spaces}/>
     </Container>
   );
