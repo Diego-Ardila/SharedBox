@@ -10,8 +10,9 @@ export default function TagManager () {
     
     const dispatch = useDispatch()
 
-    const tags = useSelector(state => state.tags)
-    const suggestions = useSelector(state => state.suggestions)
+    const tags = useSelector(state => state.publishAreaReducer.tags)
+    const suggestions = useSelector(state => state.publishAreaReducer.suggestions)
+
 
     useEffect( ()=>{
         async function getSuggestionsFromDb () {
@@ -20,6 +21,7 @@ export default function TagManager () {
         }
         getSuggestionsFromDb()
     }, [])
+    
     
     const reactTags = React.createRef()
 

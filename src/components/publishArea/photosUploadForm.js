@@ -43,7 +43,10 @@ const FormWrapper = styled.section`
 
 export default function PhotosUploadForm () {
     const dispatch = useDispatch()
-    const fileObj = useSelector(state => state.photos) 
+    const fileObj = useSelector(state =>{
+        console.log(state.publishAreaReducer.photos)
+        return state.publishAreaReducer.photos
+    } ) 
     const previewBlobPhotos = []
     const files = []
     

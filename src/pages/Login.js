@@ -1,7 +1,8 @@
 import React from "react"
 import LoginForm from "../components/login/LoginForm"
 import styled from "styled-components"
-import Logo from "../logo.svg"
+import Logo from "../logo.svg";
+import Header from "./Header";
 
 
 const MainWraper = styled.section`
@@ -46,8 +47,7 @@ class Login extends React.Component{
         return(
             <MainWraper>
             <div className = "login-page">
-                <div>
-                    <p>LOGIN HEADER (TO DO)</p>
+                <div>                    
                     <br></br>
                     <br></br>
                     <br></br>

@@ -21,7 +21,9 @@ let initialState={
     title:"test",
     viewingForm: 1,
     area:0,
-    photos: []
+    photos: [],
+    
+
 }
 
 const ACTIONS = {
@@ -37,7 +39,7 @@ const ACTIONS = {
     CHANGE_TITLE : "CHANGE_ TITLE",
     CHANGE_VIEWING_FORM : "CHANGE_VIEWING_FORM",
     CHANGE_AREA : "CHANGE_AREA",
-    CHANGE_PHOTOS: "CHANGE_PHOTOS",
+    CHANGE_PHOTOS: "CHANGE_PHOTOS"
 }
 
 const publishAreaReducer = (state = initialState , action) => {
