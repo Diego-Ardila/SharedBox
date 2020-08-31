@@ -20,9 +20,9 @@ const base = {
 const SearchForm = (props) => {
 
   const dispatch = useDispatch()
+  
   const handleGeneralSubmit = (values, errors) => {
     dispatch(changeSpecificSearch(true));
-    dispatch(changeRendering());
     props.onSubmit()
   }
 
@@ -45,7 +45,6 @@ const SearchForm = (props) => {
         action = " "
     }
     let toUpdate = {...values}
-    console.log(eventTarget.name)
     toUpdate[eventTarget.name] = eventTarget.value
     dispatch(action(eventTarget.value))
     setValues(toUpdate)

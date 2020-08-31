@@ -47,7 +47,6 @@ const SearchAdvancedForms = (props) => {
         action = " "
     }
     let toUpdate = {...values}
-    console.log(eventTarget.name)
     toUpdate[eventTarget.name] = eventTarget.value
     dispatch(action(eventTarget.value))
     setValues(toUpdate)
