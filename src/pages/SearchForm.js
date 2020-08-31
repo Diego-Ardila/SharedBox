@@ -1,10 +1,15 @@
 import React, { useRef} from 'react';
 import { Form, Col, Button} from 'react-bootstrap';
 import { Search } from 'react-bootstrap-icons';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Formik } from 'formik';
 import * as Yup from "yup";
-
+import { changeArea, 
+  changeLocation, 
+  changeInitialDate, 
+  changeFinalDate, 
+  changeRendering, 
+  changeSpecificSearch} from '../actions/searchForm.actions';
 const base = {
   areaId: "home-area",
   locationId: "home-location",
@@ -13,6 +18,19 @@ const base = {
 }
 
 const SearchForm = (props) => {
+
+  const dispatch = useDispatch()
+  const handleGeneralSubmit = (values, errors) => {
+    let{area, location, initialDate, finalDate} = values;
+    dispatch(changeArea(area));
+    dispatch(changeLocation(location));
+    dispatch(changeInitialDate(initialDate));
+    dispatch(changeFinalDate(finalDate));
+    dispatch(changeSpecificSearch(true));
+    dispatch(changeRendering());
+    props.onSubmit()
+  }
+
   const formSchema = Yup.object().shape({
     area: Yup.number().typeError('Value must be a number').required("Required Field"),
     location: Yup.string().required("Required Field"),
@@ -30,7 +48,7 @@ const SearchForm = (props) => {
     <Formik
       initialValues={{ area: area, location: location, initialDate: initialDate,finalDate: finalDate}}
       validationSchema={formSchema}
-      onSubmit={props.onSubmit}>     
+      onSubmit={handleGeneralSubmit}>     
     {({
       handleSubmit, handleChange, handleBlur, values, touched, isValid, errors,
 
@@ -72,9 +90,10 @@ const SearchForm = (props) => {
                 <div className="error-message">{errors.finalDate}</div>
               ): null}
             </Form.Group>            
-          </Col> {props.showButton &&  <Button variant="primary" size="lg" type="submit">
-                                            <Search />
-                                       </Button> }          
+          </Col> 
+          <Button style={props.showButton ? {display:"none"} : {}} variant="primary" size="lg" type="submit">
+          <Search />
+          </Button>          
          
         </Form.Row>
       </Form>    
@@ -83,4 +102,4 @@ const SearchForm = (props) => {
   );
 };
 
-export default SearchForm;
+export default SearchForm

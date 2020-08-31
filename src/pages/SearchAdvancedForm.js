@@ -6,6 +6,7 @@ import { changeHeight, changeWidth, changeLength, changePricePerDay, changePrice
 import { Formik } from 'formik';
 import * as Yup from "yup";
 
+
 const base = {
   heightId: "view-height",
   widthId: "view-width",
@@ -14,7 +15,21 @@ const base = {
   pricePerMonthId: "view-price-month"
 }  
 
+
+
 const SearchAdvancedForms = (props) => {
+
+  const dispatch = useDispatch()
+
+  const handleInternalSubmit = (values, errors) => {
+    const {height,width,length,pricePerDay,pricePerMonth} = values
+    dispatch(changeHeight(height));
+    dispatch(changeLength(length));
+    dispatch(changeWidth(width));
+    dispatch(changePricePerDay(pricePerDay));
+    dispatch(changePricePerMonth(pricePerMonth));
+    props.handleSubmit()
+  }
 
   const FormSchema = Yup.object().shape({
     pricePerDay: Yup.number().typeError('Value must be a number').required("Required Field"),
@@ -31,7 +46,7 @@ const SearchAdvancedForms = (props) => {
     <Formik 
       initialValues = {{height:height, width: width, length: length}}
       validationSchema = {FormSchema}
-      onSubmit = {props.onSubmit} >
+      onSubmit = {handleInternalSubmit} >
     {({
       handleSubmit, handleChange, handleBlur, values, touched, isValid, errors
     }) => (
