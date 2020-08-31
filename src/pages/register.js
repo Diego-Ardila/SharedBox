@@ -20,12 +20,8 @@ class Register extends React.Component {
         let {error} = this.state;
         return(
             <div>
-<<<<<<< Updated upstream
                     <h4>{error}</h4> 
                 <RegisterForm history={this.props.history} handleError={this.handleError} />
-=======
-                <Form history={this.props.history} handleError={this.handleError} />
->>>>>>> Stashed changes
             </div>
         )
     }

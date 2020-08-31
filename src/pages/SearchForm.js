@@ -27,7 +27,6 @@ const SearchForm = (props) => {
   const finalDate = useSelector(state => state.searchFormReducer.finalDate)
 
   return (
-<<<<<<< Updated upstream
     <Formik
       initialValues={{ area: area, location: location, initialDate: initialDate,finalDate: finalDate}}
       validationSchema={formSchema}
@@ -81,39 +80,6 @@ const SearchForm = (props) => {
       </Form>    
     )} 
     </Formik>    
-=======
-    <Form className="row justify-content-center mt-3" onSubmit={props.onSubmit}>
-      <Form.Row className="col-lg-10">
-        <Col >
-          <Form.Input controlId={base.areaId}>
-            <Form.Label>Area</Form.Label>
-            <Form.Control ref={areaInput} type="text" placeholder="Enter Area" onChange ={handleChange(changeArea, areaInput )} value={area} />
-          </Form.Input>
-        </Col>
-        <Col>
-          <Form.Group controlId={base.locationId}>
-            <Form.Label>Location</Form.Label>
-            <Form.Control ref={locationInput} type="text" placeholder="Location" onChange ={handleChange(changeLocation, locationInput )} value={location} />
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId={base.initialDateId}>
-            <Form.Label>Initial Date</Form.Label>
-            <Form.Control ref={initialDateInput} type="date" placeholder="Initial Date" onChange ={handleChange(changeInitialDate, initialDateInput )} value={initialDate} />
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId={base.finalDateId}>
-          <Form.Label>Final Date</Form.Label>
-          <Form.Control ref={finalDateInput} type="date" placeholder="Final Date" onChange ={handleChange(changeFinalDate, finalDateInput )} value={finalDate} />
-          </Form.Group>
-        </Col>
-        <Button variant="primary" size="lg" type="submit">Submit
-          <Search />
-        </Button>{' '}
-      </Form.Row>
-    </Form>
->>>>>>> Stashed changes
   );
 };
 
