@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+<<<<<<< Updated upstream
 import { Form, Col,Row, Button, Container} from 'react-bootstrap';
 import {  useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
@@ -91,3 +92,139 @@ const RegisterForm = (props) => {
     )    
 }
 export default RegisterForm
+=======
+import { Container, Col, Card, Form, Button}from 'react-bootstrap'
+
+
+const emailRegex=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+class FormRegister extends React.Component {
+    state={
+        name:"",
+        email:"",
+        phoneNumber:"",
+        password:"",
+        v_password:"",
+        submitError: "",
+    }
+    base={
+        nameId:"name",
+        emailId:"email",
+        phoneId:"phoneNumber",
+        passwordId:"password",
+        v_passwordId:"v_password"
+    }
+    handleChange= (event) => {
+
+        const { name , value } = event.target
+
+        if("phoneNumber" === name){
+
+            if(/(\+[0-9])?[ -]*^[0-9\b]+$/.test(value) || value ===""){
+
+                this.setState({[name] : value})
+
+            }
+
+        } else if(name !== "phoneNumber") this.setState({ [name] : value })
+
+    }
+    handleSubmit = (event) => {
+
+        event.preventDefault();
+        this.setState ({
+            submitError: "",
+        }) 
+
+        if(this.state.password === this.state.v_password && emailRegex.test(this.state.email)){
+            axios({
+                url: "http://127.0.0.1:4000/lender",
+                method: "POST",
+                data: this.state,
+            }) 
+            .then(({data})=>{
+                localStorage.setItem('token', data); 
+                this.props.history.push('/lender/profile')
+            })
+            .catch((err)=>{
+                this.props.handleError(err.response.data)
+            })
+
+        }else if( 
+                !emailRegex.test(this.state.email) && 
+                this.state.password !== this.state.v_password 
+                    
+                ){
+
+                this.setState({submitError : "Your password and your Email are not valid"}); 
+
+        }else if(
+                this.state.password !== this.state.v_password && 
+                emailRegex.test(this.state.email)
+                    
+                ){
+                this.setState({submitError : "Your passwords didn't match"})
+        }else if(
+                !emailRegex.test(this.state.email) && 
+                this.state.password === this.state.v_password
+                    
+                ){
+                this.setState({submitError : "your Email is not valid"})
+        }
+
+    }
+    render(){
+        return(
+            <Container className="container-fluid p-3"  onSubmit={this.handleSubmit}>
+                <Card className="p-3">
+                    <Form >
+                        <Form.Row className="justify-content-center">
+                            <Col className="col-lg-10">
+                                <Form.Group>
+                                    <Form.Label>Name</Form.Label>
+                                    <Form.Control id={this.base.nameID} name={this.base.nameId} type="name" value={this.state.name} onChange = {this.handleChange} required/>
+                                </Form.Group>
+                            </Col>
+                        </Form.Row>
+                        <Form.Row className="justify-content-center">
+                            <Col md  className="col-lg-5">
+                                <Form.Group>
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control id={this.base.emailId} name={this.base.emailId} type="email" value={this.state.email} onChange={this.handleChange} required/>
+                                </Form.Group>
+                            </Col>                    
+                            <Col className="col-lg-5">
+                                <Form.Group>
+                                    <Form.Label>Phone</Form.Label>
+                                    <Form.Control id={this.base.phoneID} name={this.base.phoneId} type="tel" value={this.state.phoneNumber}  onChange = {this.handleChange}  required/>
+                                </Form.Group>
+                            </Col>
+                        </Form.Row>
+                        <Form.Row className="justify-content-center">
+                            <Col md  className="col-lg-5">
+                                <Form.Group>
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control id={this.base.passwordId} name={this.base.passwordId} type="password" value={this.state.password} onChange = {this.handleChange}  required/>
+                                </Form.Group>
+                            </Col>                    
+                            <Col className="col-lg-5">
+                                <Form.Group>
+                                    <Form.Label>Validate Password:</Form.Label>
+                                    <Form.Control id={this.base.v_passwordId} name={this.base.v_passwordId} type="password" value={this.state.v_password}  onChange = {this.handleChange}  required/>
+                                </Form.Group>
+                            </Col>
+                        </Form.Row>
+                        <Form.Row className=" justify-content-center">
+                            <Col className="col-lg-5 ">
+                                <Button  id = {this.base.submitId} type="submit" variant="primary" value = "Submit"  block>Save</Button>
+                            </Col>
+                        </Form.Row>
+                        <p>{this.state.submitError}</p>
+                    </Form>
+                </Card>
+            </Container>
+        )
+    }
+}
+export default FormRegister
+>>>>>>> Stashed changes
