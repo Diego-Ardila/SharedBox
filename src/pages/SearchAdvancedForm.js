@@ -22,13 +22,35 @@ const SearchAdvancedForms = (props) => {
   const dispatch = useDispatch()
 
   const handleInternalSubmit = (values, errors) => {
-    const {height,width,length,pricePerDay,pricePerMonth} = values
-    dispatch(changeHeight(height));
-    dispatch(changeLength(length));
-    dispatch(changeWidth(width));
-    dispatch(changePricePerDay(pricePerDay));
-    dispatch(changePricePerMonth(pricePerMonth));
-    props.handleSubmit()
+    props.onSubmit()
+  }
+
+  const customChange= (eventTarget, setValues, values, dispatch) =>{
+    let action
+    switch(eventTarget.name) {
+      case "height" :
+        action = changeHeight
+        break
+      case "length" :
+        action = changeLength
+        break
+      case "width" :
+        action = changeWidth
+        break
+      case "pricePerDay" :
+        action = changePricePerDay
+        break
+      case "pricePerMonth" :
+        action = changePricePerMonth
+        break
+      default : 
+        action = " "
+    }
+    let toUpdate = {...values}
+    console.log(eventTarget.name)
+    toUpdate[eventTarget.name] = eventTarget.value
+    dispatch(action(eventTarget.value))
+    setValues(toUpdate)
   }
 
   const FormSchema = Yup.object().shape({
@@ -48,14 +70,14 @@ const SearchAdvancedForms = (props) => {
       validationSchema = {FormSchema}
       onSubmit = {handleInternalSubmit} >
     {({
-      handleSubmit, handleChange, handleBlur, values, touched, isValid, errors
+      handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setValues
     }) => (
         <Form className="row justify-content-center mt-3" onSubmit={handleSubmit} noValidate>
           <Form.Row className="col-lg-10">
             <Col >
               <Form.Group controlId={base.heightId}>
                 <Form.Label>Height</Form.Label>
-                <Form.Control name="height" min={0} max={10} type="range" onChange ={handleChange} value ={values.height} />
+                <Form.Control name="height" min={0} max={10} type="range" onChange ={(e) => customChange(e.target,setValues,values,dispatch)} value ={values.height} />
                 <Badge pill variant="primary">
                   {values.height || 0}
                 </Badge>{' '}
@@ -64,7 +86,7 @@ const SearchAdvancedForms = (props) => {
             <Col>
               <Form.Group controlId={base.widthId}>
                 <Form.Label>Width</Form.Label>
-                <Form.Control name= "width" min={0} max={40} type="range" onChange ={handleChange} value ={values.width} />
+                <Form.Control name= "width" min={0} max={40} type="range" onChange ={(e) => customChange(e.target,setValues,values,dispatch)} value ={values.width} />
                 <Badge pill variant="primary">
                   {values.width || 0}
                 </Badge>{' '}
@@ -73,7 +95,7 @@ const SearchAdvancedForms = (props) => {
             <Col>
               <Form.Group controlId={base.lengthId}>
                 <Form.Label>Length</Form.Label>
-                <Form.Control name= "length" min={0} max={40} type="range" onChange ={handleChange} value ={values.length} />
+                <Form.Control name= "length" min={0} max={40} type="range" onChange ={(e) => customChange(e.target,setValues,values,dispatch)} value ={values.length} />
                 <Badge pill variant="primary">
                   {values.length || 0}
                 </Badge>{' '}
@@ -82,7 +104,7 @@ const SearchAdvancedForms = (props) => {
             <Col>
               <Form.Group controlId={base.pricePerDayId}>
               <Form.Label>Price per Day</Form.Label>
-              <Form.Control name = "pricePerDay" type="text" placeholder="Price per Day" onChange ={handleChange} value ={values.pricePerDay} className={touched.pricePerDay && errors.pricePerDay ? "is-invalid" : null} />
+              <Form.Control name = "pricePerDay" type="text" placeholder="Price per Day" onChange ={(e) => customChange(e.target,setValues,values,dispatch)} value ={values.pricePerDay} className={touched.pricePerDay && errors.pricePerDay ? "is-invalid" : null} />
               {touched.pricePerDay && errors.pricePerDay ? (
                 <div className="error-message">{errors.pricePerDay}</div>
               ): null}
@@ -91,7 +113,7 @@ const SearchAdvancedForms = (props) => {
             <Col>
               <Form.Group controlId={base.pricePerMonthId}>
               <Form.Label>Price per Month</Form.Label>
-              <Form.Control name = "pricePerMonth" type="text" placeholder="Price per Month" onChange ={handleChange} value ={values.pricePerMonth} className={touched.pricePerMonth && errors.pricePerMonth ? "is-invalid" : null}/>
+              <Form.Control name = "pricePerMonth" type="text" placeholder="Price per Month" onChange ={(e) => customChange(e.target,setValues,values,dispatch)} value ={values.pricePerMonth} className={touched.pricePerMonth && errors.pricePerMonth ? "is-invalid" : null}/>
               {touched.pricePerMonth && errors.pricePerMonth ? (
                 <div className="error-message">{errors.pricePerMonth}</div>
               ): null}

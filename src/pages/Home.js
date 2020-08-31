@@ -19,7 +19,7 @@ const Home = () => {
   let queryStr = "";  
   
   const handleSubmit = () => {
-      const {area, location, initialDate, finalDate, height, width, length, pricePerDay, pricePerMonth, specificSearch} = search  
+      const {area, location, initialDate, finalDate, height, width, length, pricePerDay, pricePerMonth, specificSearch} = search 
       let qs = {}
               qs.area =  `${area}-${parseInt(area) + range}`
               qs.location = location.toUpperCase()
