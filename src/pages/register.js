@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../components/register/RegisterForm';
+import RegisterForm from '../components/register/RegisterForm';
 
 
 
@@ -21,9 +21,7 @@ class Register extends React.Component {
         return(
             <div>
                     <h4>{error}</h4> 
-                <p>REGISTER HEADER (TO DO)</p>
-                <Form history={this.props.history} handleError={this.handleError} />
-                <p>REGISTER FOOTER (TO DO)</p>
+                <RegisterForm history={this.props.history} handleError={this.handleError} />
             </div>
         )
     }

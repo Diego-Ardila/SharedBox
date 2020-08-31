@@ -42,7 +42,7 @@ const MainWraper = styled.section`
 `
 
 export default function PublishArea (props) {
-    const formToRender = useSelector(state => state.viewingForm)
+    const formToRender = useSelector(state => state.publishAreaReducer.viewingForm)
     return (
         <MainWraper>
             {viewSelector(formToRender)}

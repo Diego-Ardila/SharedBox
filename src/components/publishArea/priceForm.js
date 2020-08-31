@@ -42,7 +42,7 @@ const NextButton = styled.button`
 `
 export default function PriceForm () {
     const dispatch = useDispatch() 
-    const state = useSelector(state => state.changePublishAreaReducer)
+    const state = useSelector(state => state.publishAreaReducer)
     const price = state.price
     const pr = useRef()
     const history = useHistory()
