@@ -54,9 +54,9 @@ const NextButton = styled.button`
 export default function BasicSpaceInfo (){
 
     
-    const width = useSelector(state => state.width)
-    const length = useSelector(state => state.length)
-    const height = useSelector(state => state.height)
+    const width = useSelector(state => state.publishAreaReducer.width)
+    const length = useSelector(state => state.publishAreaReducer.length)
+    const height = useSelector(state => state.publishAreaReducer.height)
     const dispatch = useDispatch()
 
 
