@@ -66,7 +66,7 @@ const SearchForm = (props) => {
 
   return (
     <Formik
-      initialValues={{ area: area, location: location, initialDate: initialDate,finalDate: finalDate}}
+      initialValues={{ area, location, initialDate ,finalDate}}
       validationSchema={formSchema}
       onSubmit={handleGeneralSubmit}>     
     {({
