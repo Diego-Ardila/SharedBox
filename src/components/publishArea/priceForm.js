@@ -43,7 +43,6 @@ const NextButton = styled.button`
 export default function PriceForm () {
     const dispatch = useDispatch() 
     const state = useSelector(state => state.publishAreaReducer)
-    const price = state.price
     const pr = useRef()
     const history = useHistory()
 
@@ -66,7 +65,7 @@ export default function PriceForm () {
         <form onSubmit={handleSubmit}>
             <h1>and finally... lets talk about money</h1>
             <label htmlFor = {base.priceId}>how much do you expect to earn daily with your space</label>
-            <input type="number" ref={pr} style={{width:"150px"}} onChange={handleChange(changePrice, pr)} id = {base.priceId} value = {price}></input>
+            <input type="number" ref={pr} style={{width:"150px"}} onChange={handleChange(changePrice, pr)} id = {base.priceId} value = {state.price}></input>
             <br></br>
             <NextButton type="submit" id={base.submitId} value="submit">submit</NextButton>
         </form>
