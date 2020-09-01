@@ -1,6 +1,12 @@
 const today = new Date()
-const todayString = `${today.getFullYear()}-${today.getMonth() < 10 ? "0"+ today.getMonth(): today.getMonth()}-${today.getDate() < 10 ? "0"+today.getDate(): today.getDate()}`
-const tomorrowString = `${today.getFullYear()}-${today.getMonth() < 10 ? "0"+ today.getMonth() : today.getMonth()}-${today.getDate() + 1 < 10 ? "0"+(today.getDate()+1): today.getDate()+1}`
+const todayMonth = (today.getMonth() + 1)
+const tomorrow= new Date(today)
+tomorrow.setDate(tomorrow.getDate() + 1)
+const tomorrowMonth = (tomorrow.getMonth() + 1)
+
+const todayString = `${today.getFullYear()}-${todayMonth < 10 ? "0" + todayMonth : todayMonth}-${today.getDate() < 10 ? "0"+today.getDate(): today.getDate()}`
+const tomorrowString =  `${tomorrow.getFullYear()}-${tomorrowMonth < 10 ? "0"+ tomorrowMonth: tomorrowMonth}-${tomorrow.getDate() < 10 ? "0"+tomorrow.getDate(): tomorrow.getDate()}`
+
 
 let initialState={
   area: "",
