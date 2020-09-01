@@ -25,11 +25,11 @@ const Space = ({ space }) => {
     <Card className="mt-4">
       <Row>
         <Col lg={4} md={4}>
-        <Carousel 
-        activeIndex={index}
-				onSelect={handleSelect} >
-          {carouselImages}
-        </Carousel>
+	   <Carousel 
+	   activeIndex={index}
+	   onSelect={handleSelect} >
+           {carouselImages}
+	   </Carousel>
         </Col>
         <Col lg={8} md={8}>
           <Card.Body>
