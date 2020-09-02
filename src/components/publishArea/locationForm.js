@@ -47,8 +47,8 @@ export default function LocationForm () {
     const city = useRef()
     const address = useRef()
     
-    const cityInput = useSelector(state => state.city)
-    const addressInput = useSelector(state => state.address)
+    const cityInput = useSelector(state => state.publishAreaReducer.city)
+    const addressInput = useSelector(state => state.publishAreaReducer.address)
     
     const handleSubmit = event => {
         event.preventDefault()
