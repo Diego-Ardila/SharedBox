@@ -4,6 +4,7 @@ import PhotoDisplay from "./photoDisplay"
 import Logo from "../../logo.svg"
 import {useSelector, useDispatch} from "react-redux"
 import {changePhotos, changePublishAreaView} from "../../actions/publishArea.actions"
+import Axios from "axios"
 
 const base = {
     formClass : "photoForm",
@@ -43,25 +44,21 @@ const FormWrapper = styled.section`
 
 export default function PhotosUploadForm () {
     const dispatch = useDispatch()
-    const fileObj = useSelector(state =>{
-        console.log(state.publishAreaReducer.photos)
-        return state.publishAreaReducer.photos
-    } ) 
+    //const fileObj = useSelector(state => state.publishAreaReducer.photos) 
     const previewBlobPhotos = []
-    const files = []
-    
+    const arrFiles = []
     let [imagesURLs, setImagesURLs] = useState("")
     
-    const handleChange = (event) => {
+    const handleChange =  (event) => {
         if (event.target.files && event.target.files[0]) {
             Object.values(event.target.files).forEach(file =>{
-                files.push(file)
+                arrFiles.push(file);
             })
-            dispatch(changePhotos(files))
-            
-            files.forEach( file => previewBlobPhotos.push(URL.createObjectURL(file)))
-            setImagesURLs(imagesURLs = previewBlobPhotos)   
+            dispatch(changePhotos(arrFiles))
+            arrFiles.forEach( file => previewBlobPhotos.push(URL.createObjectURL(file)))
+            setImagesURLs(imagesURLs = previewBlobPhotos) 
           }
+          
         }
     
     const handleSubmit = (event) => {
