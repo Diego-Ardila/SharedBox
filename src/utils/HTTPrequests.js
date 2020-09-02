@@ -69,9 +69,27 @@ const postTag = async (spaceId, name)=>{
     }
 }
 
+const postPhotosFiles = async (data) => {
+    try {
+        const response = await axios({
+            method: "POST",
+            url:"http://127.0.0.1:4000/space/photos",
+            data,
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        return (response.data)
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
 export {
     getSuggestions,
     postSpace,
     postTag,
-    updateSpaceTag
+    updateSpaceTag,
+    postPhotosFiles
 }

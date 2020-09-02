@@ -66,7 +66,11 @@ const SearchForm = (props) => {
 
   return (
     <Formik
+<<<<<<< HEAD
       initialValues={{ area, location, initialDate ,finalDate}}
+=======
+      initialValues={{ area: area, location: location, initialDate: initialDate,finalDate: finalDate}}
+>>>>>>> S2_SEARCH_SPACES_FULL_COMPONENT_TEAM
       validationSchema={formSchema}
       onSubmit={handleGeneralSubmit}>     
     {({
@@ -122,4 +126,8 @@ const SearchForm = (props) => {
   );
 };
 
+<<<<<<< HEAD
 export default SearchForm
+=======
+export default SearchForm
+>>>>>>> S2_SEARCH_SPACES_FULL_COMPONENT_TEAM
