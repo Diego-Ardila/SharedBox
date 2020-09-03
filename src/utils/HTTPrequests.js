@@ -59,7 +59,8 @@ const postTag = async (spaceId, name)=>{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
             data:{
-                name,spaces:spaceId
+                name,
+                spaces:spaceId
             }
         })
         return(respose.data)
