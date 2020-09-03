@@ -78,6 +78,13 @@ const changePrice = (payload) => {
     }
 }
 
+const changeSuggestions = (payload) => {
+    return {
+        type: ACTIONS.CHANGE_TAGS_SUGGESTIONS,
+        payload
+    }
+}
+
 
 export {
     changeDescription,
@@ -90,7 +97,8 @@ export {
     changeAddress,
     changeTags,
     changePhotos,
-    changePrice
+    changePrice,
+    changeSuggestions
 }
 
 

@@ -2,12 +2,15 @@ import React, { useRef } from "react"
 import styled from "styled-components"
 import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
-import {changePrice} from "../../actions/publishArea.actions"
+import {changePrice, changePublishAreaView} from "../../actions/publishArea.actions"
+import {postSpace, updateSpaceTag, postTag} from "../../utils/HTTPrequests"
 
 
 const base= {
     priceId : "priceForm_price"
 }
+
+
 
 const FormWrapper = styled.section`
     background: linear-gradient(180deg, #FFF9F4 1.12%, #B0CAC7 100%);
@@ -39,17 +42,22 @@ const NextButton = styled.button`
 `
 export default function PriceForm () {
     const dispatch = useDispatch() 
-    const price = useSelector(state => state.price)
+    const state = useSelector(state => state.publishAreaReducer)
     const pr = useRef()
     const history = useHistory()
 
     const handleChange = (action, input) => {
         return (event) => dispatch(action(input.current.value))
     }
-
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault()
-        history.push("/")
+        const spaceId = await postSpace(state)
+        state.tags.forEach( ({name}) => {
+            if(state.suggestions.some( suggestion => suggestion.name.toUpperCase() === name.toUpperCase())) return updateSpaceTag(spaceId, name)   
+            postTag(spaceId, name)
+        })
+        dispatch(changePublishAreaView(1))
+        history.push("/lender/admin")
     }
 
     return(
@@ -57,7 +65,7 @@ export default function PriceForm () {
         <form onSubmit={handleSubmit}>
             <h1>and finally... lets talk about money</h1>
             <label htmlFor = {base.priceId}>how much do you expect to earn daily with your space</label>
-            <input type="number" ref={pr} style={{width:"150px"}} onChange={handleChange(changePrice, pr)} id = {base.priceId} value = {price}></input>
+            <input type="number" ref={pr} style={{width:"150px"}} onChange={handleChange(changePrice, pr)} id = {base.priceId} value = {state.price}></input>
             <br></br>
             <NextButton type="submit" id={base.submitId} value="submit">submit</NextButton>
         </form>

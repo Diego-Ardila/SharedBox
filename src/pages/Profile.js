@@ -2,6 +2,7 @@ import React, {Component}  from 'react'
 import ProfileForm from '../components/profile/ProfileForm';
 import DisplayProfile from '../components/profile/DisplayProfile';
 import axios from 'axios';
+import {Button, Container, Row}from 'react-bootstrap'
 
 class Profile extends Component{
     state = {
@@ -9,6 +10,7 @@ class Profile extends Component{
         data:{},
         error: ''
     }
+
     componentDidMount = () => {        
         axios({
             method:"GET",
@@ -26,26 +28,7 @@ class Profile extends Component{
             this.setState({
                 error                
             })
-        })
-    }
-    componentDidUpdate = () => {        
-        axios({
-            method:"GET",
-            url: "http://127.0.0.1:4000/lender/",
-            headers:{
-                Authorization: 'Bearer '+localStorage.getItem('token')
-            }
-        })
-        .then( response => {
-            this.setState({
-                data: response.data                
-            })
-        })
-        .catch(error=>{
-            this.setState({
-                error                
-            })
-        })
+        }) 
     }
 
     handleClick = (event) => {
@@ -54,17 +37,23 @@ class Profile extends Component{
         })
     }   
 
+    handleCreateButton = () => {
+        this.props.history.push("/lender/createSpace")
+    }
     render(){
         return(
-            <div>
-                <p>header to do </p>
+            <Container >
+                
                 {this.state.showProfile ? 
-                <div>
-                    <DisplayProfile data={this.state.data}/> <button onClick={this.handleClick}>Editar Datos</button> 
-                </div> :
-                 <ProfileForm data={this.state.data} handleClick={this.handleClick}/>}                    
-                <p>footer to do </p>                
-            </div>
+                <Container className="container-fluid text-center"> 
+                    <DisplayProfile data={this.state.data}/> 
+                    <Button onClick={this.handleClick}>Edit profile</Button>
+                </Container>:
+                <ProfileForm data={this.state.data} handleClick={this.handleClick}/>}
+                <Container className="p-2 text-center ">
+                <Button onClick ={this.handleCreateButton} variant="primary">Create a new space</Button>                 
+                </Container>                
+            </Container>
         )
     }
 }
