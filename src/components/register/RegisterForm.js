@@ -1,9 +1,9 @@
 import React from 'react';
-import axios from 'axios';
 import { Form, Col,Row, Button, Container} from 'react-bootstrap';
 import {  useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import {userRegister} from "../../utils/HTTPrequests"
 
 const base={
     nameId:"name",
@@ -21,27 +21,22 @@ const RegisterForm = (props) => {
         password: Yup.string().required("Required Field"),
         v_password: Yup.string().oneOf([Yup.ref('password')], "Passwords must match").required("Required Field")
     })     
-    const handleSubmit = (values) => {
-        console.log(values)
-        axios({
-            url: "http://127.0.0.1:4000/lender",
-            method: "POST",
-            data: values,
-        }) 
-        .then(({data})=>{
-            localStorage.setItem('token', data); 
-            history.push('/lender/profile')
-        })
-        .catch((err)=>{
+    const handleSubmit = async (values) => {
+        try{
+        const userToken = await userRegister(props.typeUser,values)
+        localStorage.setItem("token", userToken.data)
+        history.push(props.typeUser==="lender" ? `/user/profile`: '/tenant/admin')
+        }catch(err){
+            console.dir(err)
             props.handleError(err.response.data)
-        })
+        }
     }  
     return(
         <Container>
             <Row className="justify-content-md-center mt-5">
             <Col md={4} sm={12}>
             <h4 class="text-center">Register User</h4>
-            <Formik initialValues={{ name:"", email:"", phoneNumber:"",        password:"", v_password:""}} validationSchema={formSchema} onSubmit={ handleSubmit} >
+            <Formik initialValues={{ name:"", email:"", phoneNumber:"", password:"", v_password:""}} validationSchema={formSchema} onSubmit={ handleSubmit} >
             {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors }) => (
                 <Form onSubmit={handleSubmit}  noValidate>
                     <Form.Group controlId={base.nameId}>

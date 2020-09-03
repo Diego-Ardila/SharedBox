@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from "axios"
 import { Container, Card, Col, Image, Row } from 'react-bootstrap';
-import { createStore } from 'redux';
+import {getDataUser} from '../../utils/HTTPrequests'
 
 function DisplayProfile(props){
   
@@ -14,35 +13,29 @@ function DisplayProfile(props){
   const date = new Date(props.data.createdAt)
   let [createdAt,setCreatedAt]=useState(date.getUTCDay() + "-" + date.getMonth()+ "-" + date.getFullYear()||"");     
 
-
-  useEffect(() => {
-      axios({
-        method:"GET",
-        url: "http://127.0.0.1:4000/lender/",
-        headers:{
-            Authorization: 'Bearer '+localStorage.getItem('token')
-        }
-    })
-    .then( response => {
-        setName(response.data.name)
-        setEmail(response.data.email)
-        setPhoneNumber(response.data.phoneNumber)
-        setCountry(response.data.country)
-        setCity(response.data.city)
-        setAverageScore(response.data.averageScore)
-        const date = new Date(response.data.createdAt)
-        setCreatedAt(date.getUTCDay() + "-" + date.getMonth() + "-" + date.getFullYear())
-    })
-    .catch(error=>{
-        console.log(error)
-    })
+  useEffect( async () => {
+    try{
+      const userData = await getDataUser(props.typeUser)
+      const date = new Date(userData.data.createdAt)
+      setName(userData.data.name)
+      setEmail(userData.data.email)
+      setPhoneNumber(userData.data.phoneNumber)
+      setCountry(userData.data.country)
+      setCity(userData.data.city)
+      setAverageScore(userData.data.averageScore)      
+      setCreatedAt(date.getUTCDay() + "-" + date.getMonth() + "-" + date.getFullYear())
+    }
+    catch(error){
+      console.dir(error)
+    }
   }, [])
+
   return(
     <Container className="p-3">
       <Card className="p-3">
         <Row>
           <Col className="text-center">
-            <Image src="https://imageog.flaticon.com/icons/png/512/16/16480.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF" width={200} h />
+            <Image src="https://imageog.flaticon.com/icons/png/512/16/16480.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF" width={200} />
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -65,7 +58,6 @@ function DisplayProfile(props){
         </Row>
       </Card>
     </Container>
-
   );
 }
 export default DisplayProfile;
