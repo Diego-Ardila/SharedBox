@@ -33,7 +33,7 @@ const RegisterForm = (props) => {
             history.push('/lender/profile')
         })
         .catch((err)=>{
-            props.handleError(err.response.data)
+            props.handleError(err.response)
         })
     }  
     return(
