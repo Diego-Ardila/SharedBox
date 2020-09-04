@@ -1,6 +1,6 @@
 FROM node:latest
-WORKDIR /usr/src/
-COPY ..
+WORKDIR /usr/src
+COPY . .
 COPY package*.json ./
 RUN npm install
 EXPOSE 80
