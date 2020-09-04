@@ -10,7 +10,6 @@ import SearchAdvancedForms from './SearchAdvancedForm';
 import axios from 'axios';
 import { changeRendering, changeSpecificSearch } from '../actions/searchForm.actions'
 import  changeSpaces  from '../actions/viewSpaces.actions'
-import TenantAdmin from '../components/transactions/TenantAdmin';
 
 
 const Home = () => {
@@ -66,7 +65,6 @@ const Home = () => {
 
   return (
     <Container>
-      <TenantAdmin />
       <SearchForm showButton={search.specificSearch} onSubmit={handleSubmit} />
         {search.specificSearch && <SearchAdvancedForms onSubmit={handleSubmit} />}
         <h3>Best Rated Locations</h3>
