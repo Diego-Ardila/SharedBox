@@ -1,8 +1,11 @@
 FROM node:latest
-WORKDIR /usr/src
+
+WORKDIR /usr/src/
+
 COPY . .
-COPY package*.json ./
+
 RUN npm install
-EXPOSE 80
-#VOLUME /usr/src/
+
+EXPOSE 3000
+
 CMD ["npm", "start"]
