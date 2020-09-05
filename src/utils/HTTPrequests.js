@@ -59,7 +59,8 @@ const postTag = async (spaceId, name)=>{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
             data:{
-                name,spaces:spaceId
+                name,
+                spaces:spaceId
             }
         })
         return(respose.data)
@@ -68,6 +69,7 @@ const postTag = async (spaceId, name)=>{
         console.dir(err)
     }
 }
+
 
 const getUserSpaces = async () => {
     try{
@@ -84,10 +86,28 @@ const getUserSpaces = async () => {
     }
 }
 
+const postPhotosFiles = async (data) => {
+    try {
+        const response = await axios({
+            method: "POST",
+            url:"http://127.0.0.1:4000/space/photos",
+            data,
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        return (response.data)
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
 export {
     getSuggestions,
     postSpace,
     postTag,
     updateSpaceTag,
-    getUserSpaces
+    getUserSpaces,
+    postPhotosFiles,
 }
