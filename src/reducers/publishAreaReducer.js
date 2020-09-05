@@ -21,7 +21,7 @@ let initialState={
     title:"test",
     viewingForm: 1,
     area:0,
-    photos: [],
+    photos: null,
     
 
 }

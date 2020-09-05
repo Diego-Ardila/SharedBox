@@ -45,7 +45,7 @@ function LoginForm (props) {
         }catch(error) {
             console.dir(error)
             let errMessage
-            if(error.status === 400) errMessage = error.response.data
+            if(error.response.status === 400 || error.response.status ===401) errMessage = error.response.data
             if(error.message === "Network Error") errMessage ="failed connection to dataServer, check your connection to the internet and try again later" 
             props.handleErrorLogin(errMessage)
         }   

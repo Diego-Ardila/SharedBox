@@ -59,7 +59,8 @@ const postTag = async (spaceId, name)=>{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
             data:{
-                name,spaces:spaceId
+                name,
+                spaces:spaceId
             }
         })
         return(respose.data)
@@ -69,9 +70,83 @@ const postTag = async (spaceId, name)=>{
     }
 }
 
+const getUserSpaces = async () => {
+    try{
+        const response = await axios({
+            method: "GET",
+            url: "http://127.0.0.1:4000/space",
+            headers:{
+                Authorization: "Bearer "+localStorage.getItem('token')
+            },
+        })
+        return response.data
+    }catch(err) {
+        throw err
+    }
+}
+
+const postScore = async(values) => {
+    const {rating} = values
+    try{
+        const response = await axios({
+            method:"POST",
+            url:"http://127.0.0.1:4000/score",
+            headers:{
+                Authorization: "Bearer "+localStorage.getItem('token')
+            },
+            data:{
+                score: rating
+            }
+        })
+        return(response.data._id)
+    }catch(err){
+        return err
+    }    
+}
+
+const postComment = async(values) => {
+    const {comment} = values
+    try{
+        const response = await axios({
+            method:"POST",
+            url:"http://127.0.0.1:4000/score",
+            headers:{
+                Authorization: "Bearer "+localStorage.getItem('token')
+            },
+            data:{
+                comment
+            }
+        })
+        return(response.data._id)
+    }catch(err){
+        return err
+    }    
+}
+
+const postPhotosFiles = async (data) => {
+    try {
+        const response = await axios({
+            method: "POST",
+            url:"http://127.0.0.1:4000/space/photos",
+            data,
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        return (response.data)
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
 export {
     getSuggestions,
     postSpace,
     postTag,
-    updateSpaceTag
+    updateSpaceTag,
+    getUserSpaces,
+    postScore,
+    postComment,
+    postPhotosFiles,
 }

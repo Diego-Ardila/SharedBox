@@ -2,8 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import { Form, Col,Row, Button, Container} from 'react-bootstrap';
 import {  useHistory } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import { changeLogin } from '../../actions/loginUser.actions'
 
 const base={
     nameId:"name",
@@ -14,6 +16,7 @@ const base={
 }
 const RegisterForm = (props) => {  
     const history = useHistory(); 
+    const dispatch = useDispatch()
     const formSchema = Yup.object().shape({   
         name: Yup.string().required("Required Field"),
         email: Yup.string().email().required("Required Field"),
@@ -30,10 +33,11 @@ const RegisterForm = (props) => {
         }) 
         .then(({data})=>{
             localStorage.setItem('token', data); 
+            dispatch(changeLogin(true))
             history.push('/lender/profile')
         })
         .catch((err)=>{
-            props.handleError(err.response.data)
+            props.handleError(err.response)
         })
     }  
     return(
