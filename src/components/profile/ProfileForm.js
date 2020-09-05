@@ -1,6 +1,6 @@
 import React, {useState , useEffect} from 'react';
 import {Form,Container,Image,Card,Col,Button} from 'react-bootstrap'
-import {getDataUser, UpdateDatauser} from '../../utils/HTTPrequests'
+import {getDataUser, updateDatauser} from '../../utils/HTTPrequests'
 import { Formik } from 'formik';
 import * as Yup from 'yup'
 import {useHistory} from 'react-router-dom'
@@ -50,7 +50,7 @@ function ProfileForm(props){
         
         if (stateView){
             try{
-                const dataUser = await UpdateDatauser(props.typeUser,values)
+                const dataUser = await updateDatauser(props.typeUser,values)
                 setStateView(!stateView)
             }
             catch(err){

@@ -33,7 +33,7 @@ const getDataUser = async (typeUser)=>{
     }
 }
 
-const UpdateDatauser = async (typeUser,values) => {
+const updateDatauser = async (typeUser,values) => {
     const user = (typeUser === "tenant" ? `"${typeUser}"`:``)
     try{
         const updateData = await axios({
@@ -183,7 +183,7 @@ const postPhotosFiles = async (data) => {
 export {
     userRegister,
     getDataUser,
-    UpdateDatauser,
+    updateDatauser,
     getSuggestions,
     postSpace,
     postTag,
