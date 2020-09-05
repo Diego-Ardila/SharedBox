@@ -10,7 +10,8 @@ import frequentAsked from './pages/frequentAsked';
 import Header from './pages/Header';
 import Footer from './pages/Footer';
 import Home from './pages/Home';
-
+import Logout from './pages/Logout';
+ 
 
 function PrivateRoute(props) {
   const history = useHistory()
@@ -39,6 +40,7 @@ function App() {
           <PrivateRoute exact path="/lender/createSpace" component={PublishSpaceArea} />
           <PrivateRoute exact path="/lender/profile" component={Profile} />
           <PrivateRoute exact path="/lender/admin" component={LenderAdminArea} />
+          <PrivateRoute exact path="/lender/logout" component={Logout} />
           <Redirect from="*" to="/home" />
         </Switch>
         <Footer />
