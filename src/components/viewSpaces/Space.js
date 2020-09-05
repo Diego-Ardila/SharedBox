@@ -3,7 +3,7 @@ import { Card, Col, Row, Badge, Carousel, Button } from 'react-bootstrap';
 
 const images= ["https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80","https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80","https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"];
 
-const Space = ({ space }) => {
+const Space = ({ space, infoFunction }) => {
   let [ index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex, e) => {
@@ -19,17 +19,17 @@ const Space = ({ space }) => {
     </Carousel.Item>
   );
   const carouselBadges = space.spaceTags.map(element => 
-    <Badge variant="info">{element}</Badge>
+    <Badge variant="info">{element.name}</Badge>
   );
   return (
     <Card className="mt-4">
       <Row>
         <Col lg={4} md={4}>
-	   <Carousel 
-	   activeIndex={index}
-	   onSelect={handleSelect} >
-           {carouselImages}
-	   </Carousel>
+          <Carousel 
+          activeIndex={index}
+          onSelect={handleSelect} >
+                {carouselImages}
+          </Carousel>
         </Col>
         <Col lg={8} md={8}>
           <Card.Body>
@@ -43,7 +43,7 @@ const Space = ({ space }) => {
             <Card.Footer>
               {carouselBadges}
             </Card.Footer>
-            <Button variant="secondary">Info</Button>
+            <Button variant="secondary" onClick={infoFunction(space._id)}>Info</Button>
           </Card.Body>
         </Col>
       </Row>

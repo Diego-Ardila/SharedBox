@@ -1,11 +1,11 @@
 import React from 'react';
 import  Space from './Space';
 
-function Spaces({ spaces }) {
+function Spaces({ spaces, infoFunction }) {
   return (
     <div>
       {spaces.map(space => (
-        <Space key={space.id} space={space} className="mb-5" />
+        <Space key={space._id} space={space} className="mb-5" infoFunction={infoFunction} />
       ))}
     </div>
   )
