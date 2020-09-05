@@ -16,7 +16,7 @@ const userRegister = async (typeUser,values)=>{
 }
 
 const getDataUser = async (typeUser)=>{
-    const user = (typeUser === "tenant" ? `"${typeUser}"`:``)
+    const user = typeUser === "tenant" ? `"${typeUser}"`:``
     try{
         const dataUser = await axios({
             method:"GET",
@@ -34,8 +34,19 @@ const getDataUser = async (typeUser)=>{
 }
 
 const UpdateDatauser = async (typeUser,values) => {
+    const user = (typeUser === "tenant" ? `"${typeUser}"`:``)
     try{
-
+        const updateData = await axios({
+            method:'PUT',
+            baseURL:"http://127.0.0.1:4000/",
+            url: typeUser,
+            headers:{
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : user
+            },
+            data:values
+        })
+        return updateData 
     }
     catch(error){
         throw error
@@ -102,13 +113,31 @@ const postTag = async (spaceId, name)=>{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
             data:{
-                name,spaces:spaceId
+                name,
+                spaces:spaceId
             }
         })
         return(respose.data)
     }
     catch(err){
         console.dir(err)
+    }
+}
+
+const postPhotosFiles = async (data) => {
+    try {
+        const response = await axios({
+            method: "POST",
+            url:"http://127.0.0.1:4000/space/photos",
+            data,
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        return (response.data)
+    }
+    catch(err){
+        console.log(err)
     }
 }
 
@@ -120,5 +149,5 @@ export {
     postSpace,
     postTag,
     updateSpaceTag,
-    
+    postPhotosFiles
 }

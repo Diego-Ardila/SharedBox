@@ -14,7 +14,7 @@ class Register extends React.Component {
         return(
             <div>
                 <h4>{this.state.error}</h4> 
-                <RegisterForm history={this.props.history} handleError={this.handleError} typeUser={this.state.typeUser} />
+                <RegisterForm  handleError={this.handleError} typeUser={this.state.typeUser} />
             </div>
         )
     }

@@ -21,6 +21,7 @@ const RegisterForm = (props) => {
         password: Yup.string().required("Required Field"),
         v_password: Yup.string().oneOf([Yup.ref('password')], "Passwords must match").required("Required Field")
     })     
+    
     const handleSubmit = async (values) => {
         try{
         const userToken = await userRegister(props.typeUser,values)
@@ -31,6 +32,7 @@ const RegisterForm = (props) => {
             props.handleError(err.response.data)
         }
     }  
+    
     return(
         <Container>
             <Row className="justify-content-md-center mt-5">
