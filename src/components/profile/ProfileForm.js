@@ -1,4 +1,5 @@
 import React, {useState , useEffect} from 'react';
+import {Form,Container,Image,Card,Col,Button} from 'react-bootstrap'
 import axios from 'axios';
 
 const base = {
@@ -33,6 +34,27 @@ function ProfileForm(props){
             setFormValid(false)
         };
     },[emailValid,phoneValid])
+    useEffect(() => {
+        axios({
+            method:"GET",
+            url: "http://127.0.0.1:4000/lender/",
+            headers:{
+                Authorization: 'Bearer '+localStorage.getItem('token')
+            }
+        })
+        .then( response => {
+            setName(response.data.name)
+            setEmail(response.data.email)
+            setPhoneNumber(response.data.phoneNumber)
+            setCountry(response.data.country)
+            setCity(response.data.city)
+            
+            
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+    },[])
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -96,23 +118,58 @@ function ProfileForm(props){
     }
 
     return(
-        <div>  
-            <form className= {base.formID} onSubmit = {handleSubmit}>
-                <img id ={base.imageID} src={imageProfile}  height="100" />
-                <br/>
-                Name: <input id={base.nameID} type="name" value={name} onChange= {handleChange} required/>
-                <br/>
-                Email: <input id={base.emailID} type="email" value={email} onChange= {handleChange} required style={{borderBottomColor:emailValid ? "" : "red"}}/>
-                <br/>
-                phone: <input id={base.phoneID} type="tel"  value={phoneNumber} maxLength={15} onChange= {handleChange} required style={{borderBottomColor:phoneValid ? "" : "red"}}/>
-                <br/>
-                country: <input id={base.countryID} type="string" value={country} onChange= {handleChange} required/>
-                <br/>
-                city: <input id={base.cityID} type="string" value={city} onChange= {handleChange} required/>
-                <br/>
-                <input type="submit" id={base.submitId} value="submit" disabled={!formValid} />
-            </form>          
-        </div>
+        <Container className="container-fluid p-3" onSubmit={handleSubmit}>
+            <Card className="p-3">
+                <Form >
+                    <Form.Row  className="justify-content-center">
+                        <Col className=" text-center "   >
+                            <Image  src={imageProfile} height ={100} />
+                        </Col>                       
+                    </Form.Row>
+                    <Form.Row className="justify-content-center">
+                        <Col className="col-lg-10">
+                            <Form.Group>
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control id={base.nameID} type="name" value={name} onChange = {handleChange} required/>
+                            </Form.Group>
+                        </Col>
+                    </Form.Row>
+                    <Form.Row className="justify-content-center">
+                        <Col md  className="col-lg-5">
+                            <Form.Group>
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control id={base.emailID} type="email" value={email} onChange = {handleChange} style={{borderColor:emailValid ? "" : "red"}} required/>
+                            </Form.Group>
+                        </Col>                    
+                        <Col className="col-lg-5">
+                            <Form.Group>
+                                <Form.Label>Phone</Form.Label>
+                                <Form.Control id={base.phoneID} type="tel" value={phoneNumber}  onChange = {handleChange} required style={{borderColor:phoneValid ? "" : "red"}} required/>
+                            </Form.Group>
+                        </Col>
+                    </Form.Row>
+                    <Form.Row className="justify-content-center">
+                        <Col md className="col-lg-5">
+                            <Form.Group>
+                                <Form.Label>Country</Form.Label>
+                                <Form.Control id={base.countryID} type="String" value={country} onChange = {handleChange} required/>
+                            </Form.Group>
+                        </Col>                    
+                        <Col className="col-lg-5">
+                            <Form.Group>
+                                <Form.Label>City</Form.Label>
+                                <Form.Control id={base.cityID} type="String" value={city} onChange = {handleChange} required/>
+                            </Form.Group>
+                        </Col>
+                    </Form.Row >
+                    <Form.Row className=" justify-content-center">
+                        <Col className="col-lg-5 ">
+                            <Button  id = {base.submitId} type="submit" variant={formValid?"primary":"secondary"} value = "Submit" disabled= {!formValid} block>Save</Button>
+                        </Col>
+                    </Form.Row>
+                </Form>
+            </Card>
+        </Container>
     )
 }
 export default ProfileForm;

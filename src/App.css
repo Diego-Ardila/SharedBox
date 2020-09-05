@@ -248,8 +248,4 @@ input[type=tel]:hover {
   grid-template-columns: 30px 1fr 1fr 2fr;
   grid-template-rows: 100px 35px 300px;
   grid-auto-rows: 300px;
-  grid-template-areas: 
-  ". SpaceTitle SpaceTitle MainSpace"
-  ". WhiteSpace WhiteSpace MainSpace"
-  ". SpaceCard SpaceCard MainSpace"
 }

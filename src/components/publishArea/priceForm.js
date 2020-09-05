@@ -2,12 +2,15 @@ import React, { useRef } from "react"
 import styled from "styled-components"
 import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
-import {changePrice} from "../../actions/publishArea.actions"
+import {changePrice, changePublishAreaView} from "../../actions/publishArea.actions"
+import {postSpace, updateSpaceTag, postTag, postPhotosFiles} from "../../utils/HTTPrequests"
 
 
 const base= {
     priceId : "priceForm_price"
 }
+
+
 
 const FormWrapper = styled.section`
     background: linear-gradient(180deg, #FFF9F4 1.12%, #B0CAC7 100%);
@@ -39,17 +42,33 @@ const NextButton = styled.button`
 `
 export default function PriceForm () {
     const dispatch = useDispatch() 
-    const price = useSelector(state => state.price)
+    const state = useSelector(state => state.publishAreaReducer)
+    const price = state.price
+    const files = state.photos
     const pr = useRef()
     const history = useHistory()
 
     const handleChange = (action, input) => {
-        return (event) => dispatch(action(input.current.value))
+        return (event) => dispatch(action(event.target.value))
     }
-
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault()
-        history.push("/")
+
+        const spaceId = await postSpace(state)
+        state.tags.forEach( ({name}) => {
+            if(state.suggestions.some( suggestion => suggestion.name.toUpperCase() === name.toUpperCase())) return updateSpaceTag(spaceId, name)   
+            postTag(spaceId, name)
+        })
+
+        const data = new FormData();
+        data.append('spaceId', spaceId)
+        files.forEach(file => {
+            data.append('file', file, file.name)
+        });
+        const postedPhotos = await postPhotosFiles(data)
+
+        dispatch(changePublishAreaView(1))
+        history.push("/lender/admin")
     }
 
     return(

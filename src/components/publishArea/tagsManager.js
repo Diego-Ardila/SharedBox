@@ -1,17 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactTags from 'react-tag-autocomplete'
 import TagButton from './tagButton';
 import "./tagsManager.css"
 import {useSelector, useDispatch} from "react-redux"
-import {changeTags} from "../../actions/publishArea.actions"
+import {changeTags, changeSuggestions} from "../../actions/publishArea.actions"
+import {getSuggestions} from "../../utils/HTTPrequests"
 
 export default function TagManager () {
     
     const dispatch = useDispatch()
 
-    const tags = useSelector(state => state.tags)
-    const suggestions = useSelector(state => state.suggestions)
+    const tags = useSelector(state => state.publishAreaReducer.tags)
+    const suggestions = useSelector(state => state.publishAreaReducer.suggestions)
 
+
+    useEffect( ()=>{
+        async function getSuggestionsFromDb () {
+            const baseSuggestions = await getSuggestions()
+            dispatch(changeSuggestions(baseSuggestions))
+        }
+        getSuggestionsFromDb()
+    }, [])
+    
+    
     const reactTags = React.createRef()
 
     const onDelete = (i) => {
