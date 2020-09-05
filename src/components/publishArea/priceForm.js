@@ -2,7 +2,7 @@ import React, { useRef } from "react"
 import styled from "styled-components"
 import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
-import {changePrice, changePublishAreaView} from "../../actions/publishArea.actions"
+import {changePrice, changePublishAreaView, changePhotos} from "../../actions/publishArea.actions"
 import {postSpace, updateSpaceTag, postTag, postPhotosFiles} from "../../utils/HTTPrequests"
 
 
@@ -66,7 +66,7 @@ export default function PriceForm () {
             data.append('file', file, file.name)
         });
         const postedPhotos = await postPhotosFiles(data)
-
+        dispatch(changePhotos(postedPhotos))
         dispatch(changePublishAreaView(1))
         history.push("/lender/admin")
     }
