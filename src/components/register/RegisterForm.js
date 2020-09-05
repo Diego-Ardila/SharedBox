@@ -1,9 +1,11 @@
 import React from 'react';
 import { Form, Col,Row, Button, Container} from 'react-bootstrap';
 import {  useHistory } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import {userRegister} from "../../utils/HTTPrequests"
+import { changeLogin } from '../../actions/loginUser.actions'
 
 const base={
     nameId:"name",
@@ -14,6 +16,7 @@ const base={
 }
 const RegisterForm = (props) => {  
     const history = useHistory(); 
+    const dispatch = useDispatch()
     const formSchema = Yup.object().shape({   
         name: Yup.string().required("Required Field"),
         email: Yup.string().email().required("Required Field"),

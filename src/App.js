@@ -11,7 +11,8 @@ import adminTenant from './pages/adminTenant'
 import Header from './pages/Header';
 import Footer from './pages/Footer';
 import Home from './pages/Home';
-
+import Logout from './pages/Logout';
+ 
 
 function PrivateRoute(props) {
   const history = useHistory()
@@ -40,6 +41,7 @@ function App() {
           <PrivateRoute exact path="/tenant/admin" component={adminTenant} />
           <PrivateRoute exact path="/user/profile" component={Profile} />
           <PrivateRoute exact path="/lender/admin" component={LenderAdminArea} />
+          <PrivateRoute exact path="/lender/logout" component={Logout} />
           <Redirect from="*" to="/home" />
         </Switch>
         <Footer />
