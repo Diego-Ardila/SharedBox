@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import {getUserSpaces} from "../utils/HTTPrequests"
@@ -35,5 +36,20 @@ export default function LenderAdminArea () {
       <Container className="container-fluid mt-5 mb-5">
         {moreInfoDisplay ? <SpecificSpaceView spaces={spaces} spaceId={spaceId}></SpecificSpaceView> : <MainView error={error} spaces={spaces} displayMoreInfo={displayMoreInfo}></MainView> }
         </Container>
+=======
+import React, {useState} from 'react';
+import { Container, Button } from 'react-bootstrap';
+import PhotosEditor from '../components/lenderAdminArea/photosEditor'
+
+export default function LenderAdminArea () {
+
+  const [showPhotos,setShowPhotos] = useState(false)
+
+    return (
+      <Container>
+        <Button onClick={()=>setShowPhotos(true)}>Add or Delete Photos</Button>
+        <PhotosEditor show={showPhotos} onHide={()=>setShowPhotos(false)} />
+      </Container>
+>>>>>>> S3_BOX_126_DIEGO_ARDILA
     )
 }
