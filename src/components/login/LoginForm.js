@@ -1,10 +1,12 @@
-import React, {useState, useRef} from "react"
+import React from "react"
 import axios from "axios"
 import {Formik} from "formik"
 import * as Yup from "yup";
 import { Container, Card, Form, Button, Col, Image } from "react-bootstrap"
 import Logo from "../../logo.svg";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { changeLogin } from '../../actions/loginUser.actions'
+import { Link, useHistory } from 'react-router-dom';
 
 
 const base = {
@@ -15,23 +17,16 @@ const base = {
 }
 
 function LoginForm (props) {
-    const history = useHistory()
-    const redirect = () => {
-        history.push("/lender/register/")
-    }
+    const dispatch = useDispatch()
+    let history = useHistory();
 
     const formSchema = Yup.object().shape({
         email: Yup.string().email().typeError('invalid Email').required("Required Field"),
         password: Yup.string().required("Required Field")   
-      })
-
-    let [email, setEmail] = useState("")
-    let [password, setPassword] = useState("")
-
+      })    
     
-    
-    const handleSubmit = async (values) =>  {
-        try{
+    const handleSubmit = async (values, {setErrors}) =>  {
+        try {            
             const response = await axios({
                  method:"POST",
                  url: "http://127.0.0.1:4000/lender/login",
@@ -41,20 +36,26 @@ function LoginForm (props) {
                  }
              })
              localStorage.setItem("token", response.data)
-             props.history.push("/lender/profile")
+             dispatch(changeLogin(true))
+             history.push("/lender/profile")
         }catch(error) {
             console.dir(error)
-            let errMessage
-            if(error.status === 400) errMessage = error.response.data
-            if(error.message === "Network Error") errMessage ="failed connection to dataServer, check your connection to the internet and try again later" 
-            props.handleErrorLogin(errMessage)
+            if(error.response.status === 400) {
+                setErrors({"password": error.response.data , "email": error.response.data})  
+            }  
+            if (error.response.status === 401){
+                setErrors({"password": "Failed Authentication" , "email": "Failed Authentication"})     
+            }
+            if(error.message === "Network Error") { 
+                setErrors({"password": "Failed connection to dataServer, check your connection to the internet and try again later"  , "email": "Failed connection to dataServer, check your connection to the internet and try again later" })
+            }            
         }   
     }
 
     return (
 
         <Formik 
-            initialValues = {{email: email ,password: password}}
+            initialValues = {{email: "" ,password: ""}}
             validationSchema = {formSchema}
             onSubmit = {handleSubmit}>
         {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors}) => (
@@ -92,7 +93,7 @@ function LoginForm (props) {
                             <Button type ="submit">LOGIN</Button>
                         </Form.Row>
                         <Form.Row className="justify-content-center mt-5">
-                        <a href="#" onClick={redirect}>new user? create new account</a><br></br>
+                            <Link to="/lender/register" >Create account</Link>
                         </Form.Row>
                     </Form>
                 </Card>

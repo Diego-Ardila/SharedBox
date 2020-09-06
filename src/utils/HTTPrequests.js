@@ -70,6 +70,21 @@ const postTag = async (spaceId, name)=>{
     }
 }
 
+const getUserSpaces = async () => {
+    try{
+        const response = await axios({
+            method: "GET",
+            url: "http://127.0.0.1:4000/space",
+            headers:{
+                Authorization: "Bearer "+localStorage.getItem('token')
+            },
+        })
+        return response.data
+    }catch(err) {
+        throw err
+    }
+}
+
 const postScore = async(values) => {
     const {rating} = values
     try{
@@ -121,18 +136,38 @@ const postPhotosFiles = async (data) => {
         return (response.data)
     }
     catch(err){
-        console.log(err)
+        throw err
     }
 }
 
+const updateSpace = async (spaceId, values) =>{
+    try{
+        const response = await axios ({
+            method: "PUT",
+            baseURL: "http://127.0.0.1:4000/",
+            url:"/space",
+            data:{
+                spaceId,
+                fields: {...values},
+            },
+            headers:{
+                Authorization: "Bearer "+localStorage.getItem('token')
+            },
+        })
+        return response 
+    }catch(error){
+        throw error
+    }
+}
 
 export {
     getSuggestions,
     postSpace,
     postTag,
     updateSpaceTag,
+    getUserSpaces,
     postScore,
     postComment,
-    postPhotosFiles
-
+    postPhotosFiles,
+    updateSpace,
 }
