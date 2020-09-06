@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
-import { postScore, postComment } from '../../utils/HTTPrequests';
+//import { postScore, postComment } from '../../utils/HTTPrequests';
 import Rating from 'react-rating';
 import swal from 'sweetalert';
 import { Star, StarFill } from 'react-bootstrap-icons';

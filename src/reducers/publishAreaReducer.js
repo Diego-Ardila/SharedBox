@@ -21,13 +21,7 @@ let initialState={
     title:"test",
     viewingForm: 1,
     area:0,
-<<<<<<< HEAD
-    photos: null,
-    
-
-=======
     photos: [],
->>>>>>> S3_BOX_126_DIEGO_ARDILA
 }
 
 const ACTIONS = {

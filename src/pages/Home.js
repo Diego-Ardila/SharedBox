@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import { Form, Col, Button, Container } from 'react-bootstrap';
-import { Search } from 'react-bootstrap-icons';
+import {  Container } from 'react-bootstrap';
 import { useSelector, useDispatch } from "react-redux"
 import Spaces from '../components/viewSpaces/Spaces';
 import queryString from 'query-string';
@@ -35,7 +34,7 @@ const Home = () => {
     if(params){
       axios({
         method: "GET",
-        url: `http://localhost:8000/space/tenant?${locationQuery.search}`
+        url: `http://localhost:4000/space/tenant?${locationQuery.search}`
       })
       .then(({data}) => { dispatch(changeSpaces(data || []))} )
       .catch(err=> console.log(err))
@@ -63,12 +62,15 @@ const Home = () => {
       dispatch(changeRendering())
   }  
 
+  const infoFunction = () => {
+  
+  }
   return (
     <Container>
       <SearchForm showButton={search.specificSearch} onSubmit={handleSubmit} />
         {search.specificSearch && <SearchAdvancedForms onSubmit={handleSubmit} />}
         <h3>Best Rated Locations</h3>
-      <Spaces spaces={spaces}  />
+      <Spaces spaces={spaces} infoFunction={infoFunction} />
     </Container>
       
   );

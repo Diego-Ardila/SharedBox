@@ -1,11 +1,7 @@
 import React, {useState} from "react";
-import styled from "styled-components";
-import Logo from "../../logo.svg";
-import {Container,
+import {
         Button,
-        Form,
-        Row,
-        Col       } from 'react-bootstrap';
+        Form  } from 'react-bootstrap';
 import Axios from "axios";
 
 

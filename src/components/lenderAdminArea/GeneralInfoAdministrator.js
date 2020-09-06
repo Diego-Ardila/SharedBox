@@ -3,13 +3,23 @@ import {Card, Button, Accordion, Badge, Form} from "react-bootstrap"
 import { Pencil } from "react-bootstrap-icons"
 import { Formik } from "formik"
 import * as Yup from "yup";
+import { updateSpace } from "../../utils/HTTPrequests";
+import swal from 'sweetalert';
 
 export default function GeneralInfoAdministrator ({space}) {
-    const [isUpdatingSate, setIsUpdatingState] = useState(false)
+    const [isUpdatingState, setIsUpdatingState] = useState(false)
     
-    const handleSubmit = values => {
-        console.log(values)
-        console.log("saving")
+    const handleSubmit = async values => {
+        try{
+            await updateSpace(space._id, values)
+            swal("udpate successful","your changes to your space were saved succesfully","success")
+        }catch(error){
+            swal("update error", "something went wrong, please try again", "error")
+        }
+    }
+
+    const buttonBehavior = () => {
+        setIsUpdatingState(!isUpdatingState)
     }
     const eventKeyUpdatingState = "0"
 
@@ -27,32 +37,32 @@ export default function GeneralInfoAdministrator ({space}) {
                     <Card.Body>
                     <Card.Title><Form.Label>SPACE DESCRIPTION</Form.Label></Card.Title>
                     <Card.Text>
-                        {isUpdatingSate ? (
+                        {isUpdatingState ? (
                         <Form.Control 
                             name="additionalInfo" 
                             type="textArea" 
-                            placeholder={space.additionalInfo || "i am a testing test"}
+                            placeholder={values.additionalInfo || "i am a testing test"}
                             value={values.additionalInfo}
                             onChange={handleChange}    
                         />
-                        ) : space.additionalInfo || "I am a testing text"}
+                        ) : values.additionalInfo || "I am a testing text"}
                     </Card.Text>
-                    <Accordion defaultActiveKey={isUpdatingSate ? "0" : ""}>
+                    <Accordion defaultActiveKey={isUpdatingState ? "0" : ""}>
                         <Card>
                             <Card.Header>
-                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingSate ? eventKeyUpdatingState : "0"}>
+                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "0"}>
                                 <h6>DIMENSIONS</h6>
                             </Accordion.Toggle>
                             </Card.Header>
-                            <Accordion.Collapse eventKey={isUpdatingSate ? eventKeyUpdatingState : "0"}>
+                            <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "0"}>
                             <Card.Body>
-                                {isUpdatingSate ? (
+                                {isUpdatingState ? (
                                     <React.Fragment>
                                         <Form.Label>WIDTH</Form.Label>
                                         <Form.Control 
                                         name="width" 
                                         type="text" 
-                                        placeholder={space.width}
+                                        placeholder={values.width}
                                         value={values.width}
                                         onChange={handleChange}    
                                         />
@@ -60,7 +70,7 @@ export default function GeneralInfoAdministrator ({space}) {
                                         <Form.Control 
                                         name="length" 
                                         type="text" 
-                                        placeholder={space.length}
+                                        placeholder={values.length}
                                         value={values.length}
                                         onChange={handleChange}    
                                         />
@@ -68,30 +78,30 @@ export default function GeneralInfoAdministrator ({space}) {
                                         <Form.Control 
                                         name="height" 
                                         type="text" 
-                                        placeholder={space.height}
+                                        placeholder={values.height}
                                         value={values.height}
                                         onChange={handleChange}    
                                         />
                                     </React.Fragment>
-                                ) : `width: ${space.width}mts length: ${space.length}mts height: ${space.height}mts `} 
+                                ) : `width: ${values.width}mts length: ${values.length}mts height: ${values.height}mts `} 
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>
                         <Card>
                             <Card.Header>
-                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingSate ? eventKeyUpdatingState : "1"}>
+                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "1"}>
                                 <h6>PRICES</h6>
                             </Accordion.Toggle>
                             </Card.Header>
-                            <Accordion.Collapse eventKey={isUpdatingSate ? eventKeyUpdatingState : "1"}>
+                            <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "1"}>
                             <Card.Body>
-                            {isUpdatingSate ? (
+                            {isUpdatingState ? (
                                     <React.Fragment>
                                         <Form.Label>PRICE PER DAY</Form.Label>
                                         <Form.Control 
                                         name="pricePerDay" 
                                         type="number" 
-                                        placeholder={space.pricePerDay}
+                                        placeholder={values.pricePerDay}
                                         value={values.pricePerDay}
                                         onChange={handleChange}    
                                         />
@@ -99,22 +109,22 @@ export default function GeneralInfoAdministrator ({space}) {
                                         <Form.Control 
                                         name="pricePermonth" 
                                         type="number" 
-                                        placeholder={space.pricePermonth}
+                                        placeholder={values.pricePermonth}
                                         value={values.pricePermonth}
                                         onChange={handleChange}    
                                         />
                                     </React.Fragment>
-                                ) : `price per day: ${space.pricePerDay} price per month: ${space.pricePermonth}` }
+                                ) : `price per day: ${values.pricePerDay} price per month: ${values.pricePermonth}` }
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>
                         <Card>
                             <Card.Header>
-                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingSate ? eventKeyUpdatingState : "2"}>
+                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "2"}>
                                 <h6>TAGS</h6>
                             </Accordion.Toggle>
                             </Card.Header>
-                            <Accordion.Collapse eventKey={isUpdatingSate ? eventKeyUpdatingState : "2"}>
+                            <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "2"}>
                             <Card.Body>
                                 {space.spaceTags.map(({name}) => <Badge variant="secondary">{name}</Badge>)}
                             </Card.Body>
@@ -122,19 +132,19 @@ export default function GeneralInfoAdministrator ({space}) {
                         </Card>
                         <Card>
                             <Card.Header>
-                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingSate ? eventKeyUpdatingState : "3"}>
+                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "3"}>
                                 <h6>LOCATION</h6>
                             </Accordion.Toggle>
                             </Card.Header>
-                            <Accordion.Collapse eventKey={isUpdatingSate ? eventKeyUpdatingState : "3"}>
+                            <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "3"}>
                             <Card.Body>
-                            {isUpdatingSate ? (
+                            {isUpdatingState ? (
                                     <React.Fragment>
                                         <Form.Label>CITY</Form.Label>
                                         <Form.Control 
                                         name="city" 
                                         type="text" 
-                                        placeholder={space.city}
+                                        placeholder={values.city}
                                         value={values.city}
                                         onChange={handleChange}    
                                         />
@@ -142,17 +152,17 @@ export default function GeneralInfoAdministrator ({space}) {
                                         <Form.Control 
                                         name="address" 
                                         type="text" 
-                                        placeholder={space.address}
+                                        placeholder={values.address}
                                         value={values.address}
                                         onChange={handleChange}    
                                         />
                                     </React.Fragment>
-                                ) : `city: ${space.city} address: ${space.address}` }
+                                ) : `city: ${values.city} address: ${values.address}` }
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>
                         </Accordion>
-                    <Button  type={isUpdatingSate ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => setIsUpdatingState(!isUpdatingSate)} >{isUpdatingSate? "save" : "edit"}<Pencil></Pencil></Button>
+                    <Button  type={isUpdatingState ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => buttonBehavior()} >{isUpdatingState? "save" : "edit"}<Pencil></Pencil></Button>
                     </Card.Body>
                     <Card.Footer className="text-muted">{`created ${Date(space.createdAt)}`}</Card.Footer>
                 </Card>

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React from "react"
 import styled from "styled-components"
 import DimensionsForm from "../components/publishArea/dimensionsForm"
 import PhotoUploadForm from "../components/publishArea/photosUploadForm"
@@ -9,8 +9,8 @@ import {useSelector} from "react-redux"
 
 
 
-const testing = 1;
 
+const defaultValue = 1;
 const viewSelector = (testing) => {
     switch(testing) {
         case 1 :{
@@ -28,6 +28,8 @@ const viewSelector = (testing) => {
         case 5 :{
             return  <PriceForm></PriceForm>
         }
+        default: 
+        return <></>
     }
 }
 
@@ -45,7 +47,7 @@ export default function PublishArea (props) {
     const formToRender = useSelector(state => state.publishAreaReducer.viewingForm)
     return (
         <MainWraper>
-            {viewSelector(formToRender)}
+            {viewSelector(formToRender || defaultValue)}
         </MainWraper>
     )
 }

@@ -2,10 +2,9 @@ import React, {useState} from "react"
 import styled from "styled-components"
 import PhotoDisplay from "./photoDisplay"
 import Logo from "../../logo.svg"
-import {useSelector, useDispatch} from "react-redux"
+import {useDispatch} from "react-redux"
 import {changePhotos, changePublishAreaView} from "../../actions/publishArea.actions"
 import Axios from "axios"
-
 
 const base = {
     formClass : "photoForm",

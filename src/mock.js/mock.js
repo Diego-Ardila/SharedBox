@@ -266,8 +266,8 @@ let datesReserved = [
     {
         _id:"13afdgafasdf",
         spaceId: "afadfadffa33",
-        initalDate: obj_date, //unix epoch
-        finalDate: obj_date,
+        initalDate: "obj_date", //unix epoch
+        finalDate: "obj_date",
         tenantId: "dfasdfadfa",
     },
     {

@@ -1,4 +1,4 @@
-import React, { useRef} from 'react';
+import React from 'react';
 import { Form, Col, Button} from 'react-bootstrap';
 import { Search } from 'react-bootstrap-icons';
 import { useSelector, useDispatch } from "react-redux";
@@ -8,7 +8,6 @@ import { changeArea,
   changeLocation, 
   changeInitialDate, 
   changeFinalDate, 
-  changeRendering, 
   changeSpecificSearch} from '../actions/searchForm.actions';
 const base = {
   areaId: "home-area",

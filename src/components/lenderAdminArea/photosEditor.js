@@ -9,7 +9,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import styled from "styled-components"
 import { Trash } from 'react-bootstrap-icons';
 import {changePhotos} from '../../actions/publishArea.actions'
-import {postPhotosFiles} from "../../utils/HTTPrequests"
+import {postPhotosFiles, deletePhoto} from "../../utils/HTTPrequests"
 
 
 const Photos = styled.div`
@@ -32,29 +32,35 @@ const AddPhotos = styled.button`
 
 
 
-export default function PhotosEditor({spaceId,show,onHide}) {
+export default function PhotosEditor({space,show,onHide}) {
 
-
-    const photos = useSelector(state => state.publishAreaReducer.photos)
-    const filesToUpload = []
-    const hiddenFileInput = useRef()
     const dispatch = useDispatch()
+    let photos = useSelector(state=> state.publishAreaReducer.photos)
+    let filesToUpload = []
+    const [files,setFiles] = useState()
+    const hiddenFileInput = useRef()
     let newPhotosArray=[]
+    
 
-    const deletePhoto = (photo) => {
-      return ()=>{
-      const newPhotos = photos.filter((photoDb)=>{
-         return photoDb !== photo
-        })
+    const deletePhotos = async (photo) => {
+      try{
+        const newPhotos = photos.filter((photoDb)=> photoDb !== photo)
         dispatch(changePhotos(newPhotos))
+        const result = await deletePhoto(photo,space._id)
+        console.log(result)
+      }
+      catch(err){
+        console.dir(err)
       }
     }
 
     const handleChange = (e)=>{
+      console.log(photos)
       if(photos.length > 0) newPhotosArray=[...photos]
 
       Object.values(e.target.files).forEach(file => {filesToUpload.push(file); newPhotosArray.push(URL.createObjectURL(file))})
       dispatch(changePhotos(newPhotosArray))
+      setFiles(filesToUpload)
     }
 
     
@@ -62,13 +68,15 @@ export default function PhotosEditor({spaceId,show,onHide}) {
       hiddenFileInput.current.click()
     }
 
-    const handleSubmit = ()=>{
+    const handleSubmit =async (space)=>{
+      console.log(files)
+      console.log(space)
       const data= new FormData()
-      data.append("spaceId",spaceId)
-      filesToUpload.forEach(file =>{
+      data.append('spaceId', space._id)
+      files.forEach(file =>{
         data.append('file', file, file.name)
       })
-       postPhotosFiles(data)
+      await postPhotosFiles(data)
     }
 
     return (
@@ -86,7 +94,7 @@ export default function PhotosEditor({spaceId,show,onHide}) {
                     <Col className="mb-3" sm={6} md={3} xl={3} >
                         <Photos>
                             <Image key={photo} src={photo} fluid/>
-                            <Button size="sm" onClick={deletePhoto(photo)} className="position-absolute" >
+                            <Button size="sm" onClick={()=> deletePhotos(photo) } className="position-absolute" >
                                 <Trash/>
                             </Button>
                         </Photos>
@@ -95,15 +103,15 @@ export default function PhotosEditor({spaceId,show,onHide}) {
               <Col sm={4} md={1} xl={1} >
                 <Photos>
                   <input ref={hiddenFileInput} style={{display:"none"}} type="file" accept="image/*" multiple = {true} onChange ={handleChange} ></input>
-                  <AddPhotos title="Add a new picture " onClick={handleClick} >+</AddPhotos>
+                  <AddPhotos title="Add a new picture " onClick={()=> handleClick()} >+</AddPhotos>
                 </Photos>
               </Col>
             </Row>
           </Container>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={handleSubmit}>Save</Button>
-          <Button onClick={props.onHide}>Close</Button>
+          <Button onClick={() => handleSubmit(space)}>Save</Button>
+          <Button onClick={onHide}>Close</Button>
         </Modal.Footer>
       </Modal>
     );

@@ -1,5 +1,57 @@
 import axios from "axios"
 
+const userRegister = async (typeUser,values)=>{
+    try{
+        const userToken = await axios ({
+            baseURL: "http://127.0.0.1:4000/",
+            url: typeUser,
+            method: "POST",
+            data: values,
+        }) 
+        return userToken
+    }
+     catch(error){
+        throw error
+    }
+}
+
+const getDataUser = async (typeUser)=>{
+    const user = typeUser === "tenant" ? `"${typeUser}"`:``
+    try{
+        const dataUser = await axios({
+            method:"GET",
+            baseURL: "http://127.0.0.1:4000/",
+            url: typeUser,
+            headers:{
+                Authorization: 'Bearer '+ localStorage.getItem('token'),
+                'x-UserType' : user
+            }
+        })
+        return dataUser
+    }catch(error){
+        throw error
+    }
+}
+
+const updateDatauser = async (typeUser,values) => {
+    const user = (typeUser === "tenant" ? `"${typeUser}"`:``)
+    try{
+        const updateData = await axios({
+            method:'PUT',
+            baseURL:"http://127.0.0.1:4000/",
+            url: typeUser,
+            headers:{
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : user
+            },
+            data:values
+        })
+        return updateData 
+    }
+    catch(error){
+        throw error
+    }
+}
 
 const getSuggestions = async () => {
     try{
@@ -12,6 +64,7 @@ const getSuggestions = async () => {
         return error
     }
 }
+
 const postSpace=async (state)=>{
     const {textAreaDesc,width,length,height,city,address,price,title,area} = state
     
@@ -28,7 +81,7 @@ const postSpace=async (state)=>{
         })
         return(respose.data._id)
     }catch(err){
-        return err
+        throw err
     }
 }
 
@@ -50,6 +103,7 @@ const updateSpaceTag = async (spaceId, name) => {
         return err
     }
 }
+
 const postTag = async (spaceId, name)=>{
     try {
         const respose = await axios({
@@ -136,11 +190,52 @@ const postPhotosFiles = async (data) => {
         return (response.data)
     }
     catch(err){
-        console.log(err)
+        throw err
+    }
+}
+
+const updateSpace = async (spaceId, values) =>{
+    try{
+        const response = await axios ({
+            method: "PUT",
+            baseURL: "http://127.0.0.1:4000/",
+            url:"/space",
+            data:{
+                spaceId,
+                fields: {...values},
+            },
+            headers:{
+                Authorization: "Bearer "+localStorage.getItem('token')
+            },
+        })
+        return response 
+    }catch(error){
+        throw error
+       throw err 
+    }
+}
+
+const deletePhoto = async (photo, spaceId) => {
+    try {
+        const response = await axios({
+            method: "DELETE",
+            url: "http://127.0.0.1:4000/space/photos",
+            data: {
+                photo,
+                spaceId
+            }
+        })
+        return response.data
+    }
+    catch(err){
+        throw err
     }
 }
 
 export {
+    userRegister,
+    getDataUser,
+    updateDatauser,
     getSuggestions,
     postSpace,
     postTag,
@@ -149,4 +244,6 @@ export {
     postScore,
     postComment,
     postPhotosFiles,
+    updateSpace,
+    deletePhoto
 }
