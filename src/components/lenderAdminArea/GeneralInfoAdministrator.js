@@ -4,6 +4,7 @@ import { Pencil } from "react-bootstrap-icons"
 import { Formik } from "formik"
 import * as Yup from "yup";
 import { updateSpace } from "../../utils/HTTPrequests";
+import swal from 'sweetalert';
 
 export default function GeneralInfoAdministrator ({space}) {
     const [isUpdatingSate, setIsUpdatingState] = useState(false)
