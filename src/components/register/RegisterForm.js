@@ -28,11 +28,11 @@ const RegisterForm = (props) => {
     
     const handleSubmit = async (values) => {
         try{
-        const userToken = await userRegister(props.typeUser,values)
-        localStorage.setItem("token", userToken.data)
-        dispatch(changeLogin(true))
-        swal("register successful","your registred were saved succesfully","success")
-        history.push(props.typeUser==="lender" ? `/user/profile`: '/tenant/admin')
+            const userToken = await userRegister(props.typeUser,values)
+            localStorage.setItem("token", userToken.data)
+            dispatch(changeLogin(true))
+            swal("register successful","your registred were saved succesfully","success")
+            history.push(props.typeUser==="lender" ? `/user/profile`: '/tenant/admin')
         }catch(err){
             swal("update error", "something went wrong, please try again", "error")
         }
@@ -42,7 +42,7 @@ const RegisterForm = (props) => {
         <Container>
             <Row className="justify-content-md-center mt-5">
             <Col md={4} sm={12}>
-            <h4 class="text-center">Register User</h4>
+            <h4 className="text-center">Register User</h4>
             <Formik initialValues={{ name:"", email:"", phoneNumber:"", password:"", v_password:""}} validationSchema={formSchema} onSubmit={ handleSubmit} >
             {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors }) => (
                 <Form onSubmit={handleSubmit}  noValidate>
@@ -81,7 +81,7 @@ const RegisterForm = (props) => {
                             <div className="error-message">{errors.v_password}</div>
                         ): null}
                     </Form.Group> 
-                    <Button variant="primary" variant={isValid?"primary":"secondary"} disabled= {!isValid} size="md" type="submit">
+                    <Button variant={isValid?"primary":"secondary"} disabled= {!isValid} size="md" type="submit">
                         Send
                     </Button>
                 </Form>
