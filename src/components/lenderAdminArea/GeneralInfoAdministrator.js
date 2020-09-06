@@ -3,13 +3,17 @@ import {Card, Button, Accordion, Badge, Form} from "react-bootstrap"
 import { Pencil } from "react-bootstrap-icons"
 import { Formik } from "formik"
 import * as Yup from "yup";
+import { updateSpace } from "../../utils/HTTPrequests";
 
 export default function GeneralInfoAdministrator ({space}) {
     const [isUpdatingSate, setIsUpdatingState] = useState(false)
     
-    const handleSubmit = values => {
-        console.log(values)
-        console.log("saving")
+    const handleSubmit = async values => {
+        try{
+            const response = await updateSpace(space._id, values)
+        }catch(error){
+            console.dir(error)
+        }
     }
     const eventKeyUpdatingState = "0"
 
@@ -31,11 +35,11 @@ export default function GeneralInfoAdministrator ({space}) {
                         <Form.Control 
                             name="additionalInfo" 
                             type="textArea" 
-                            placeholder={space.additionalInfo || "i am a testing test"}
+                            placeholder={values.additionalInfo || "i am a testing test"}
                             value={values.additionalInfo}
                             onChange={handleChange}    
                         />
-                        ) : space.additionalInfo || "I am a testing text"}
+                        ) : values.additionalInfo || "I am a testing text"}
                     </Card.Text>
                     <Accordion defaultActiveKey={isUpdatingSate ? "0" : ""}>
                         <Card>
@@ -52,7 +56,7 @@ export default function GeneralInfoAdministrator ({space}) {
                                         <Form.Control 
                                         name="width" 
                                         type="text" 
-                                        placeholder={space.width}
+                                        placeholder={values.width}
                                         value={values.width}
                                         onChange={handleChange}    
                                         />
@@ -60,7 +64,7 @@ export default function GeneralInfoAdministrator ({space}) {
                                         <Form.Control 
                                         name="length" 
                                         type="text" 
-                                        placeholder={space.length}
+                                        placeholder={values.length}
                                         value={values.length}
                                         onChange={handleChange}    
                                         />
@@ -68,12 +72,12 @@ export default function GeneralInfoAdministrator ({space}) {
                                         <Form.Control 
                                         name="height" 
                                         type="text" 
-                                        placeholder={space.height}
+                                        placeholder={values.height}
                                         value={values.height}
                                         onChange={handleChange}    
                                         />
                                     </React.Fragment>
-                                ) : `width: ${space.width}mts length: ${space.length}mts height: ${space.height}mts `} 
+                                ) : `width: ${values.width}mts length: ${values.length}mts height: ${values.height}mts `} 
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>
@@ -91,7 +95,7 @@ export default function GeneralInfoAdministrator ({space}) {
                                         <Form.Control 
                                         name="pricePerDay" 
                                         type="number" 
-                                        placeholder={space.pricePerDay}
+                                        placeholder={values.pricePerDay}
                                         value={values.pricePerDay}
                                         onChange={handleChange}    
                                         />
@@ -99,12 +103,12 @@ export default function GeneralInfoAdministrator ({space}) {
                                         <Form.Control 
                                         name="pricePermonth" 
                                         type="number" 
-                                        placeholder={space.pricePermonth}
+                                        placeholder={values.pricePermonth}
                                         value={values.pricePermonth}
                                         onChange={handleChange}    
                                         />
                                     </React.Fragment>
-                                ) : `price per day: ${space.pricePerDay} price per month: ${space.pricePermonth}` }
+                                ) : `price per day: ${values.pricePerDay} price per month: ${values.pricePermonth}` }
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>
@@ -134,7 +138,7 @@ export default function GeneralInfoAdministrator ({space}) {
                                         <Form.Control 
                                         name="city" 
                                         type="text" 
-                                        placeholder={space.city}
+                                        placeholder={values.city}
                                         value={values.city}
                                         onChange={handleChange}    
                                         />
@@ -142,12 +146,12 @@ export default function GeneralInfoAdministrator ({space}) {
                                         <Form.Control 
                                         name="address" 
                                         type="text" 
-                                        placeholder={space.address}
+                                        placeholder={values.address}
                                         value={values.address}
                                         onChange={handleChange}    
                                         />
                                     </React.Fragment>
-                                ) : `city: ${space.city} address: ${space.address}` }
+                                ) : `city: ${values.city} address: ${values.address}` }
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>

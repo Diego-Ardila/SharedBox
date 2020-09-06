@@ -35,7 +35,7 @@ const Home = () => {
     if(params){
       axios({
         method: "GET",
-        url: `http://localhost:8000/space/tenant?${locationQuery.search}`
+        url: `http://localhost:4000/space/tenant?${locationQuery.search}`
       })
       .then(({data}) => { dispatch(changeSpaces(data || []))} )
       .catch(err=> console.log(err))
@@ -63,12 +63,15 @@ const Home = () => {
       dispatch(changeRendering())
   }  
 
+  const infoFunction = () => {
+  
+  }
   return (
     <Container>
       <SearchForm showButton={search.specificSearch} onSubmit={handleSubmit} />
         {search.specificSearch && <SearchAdvancedForms onSubmit={handleSubmit} />}
         <h3>Best Rated Locations</h3>
-      <Spaces spaces={spaces}  />
+      <Spaces spaces={spaces} infoFunction={infoFunction} />
     </Container>
       
   );

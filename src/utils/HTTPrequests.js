@@ -136,7 +136,27 @@ const postPhotosFiles = async (data) => {
         return (response.data)
     }
     catch(err){
-        console.log(err)
+        throw err
+    }
+}
+
+const updateSpace = async (spaceId, values) =>{
+    try{
+        const response = await axios ({
+            method: "PUT",
+            baseURL: "http://127.0.0.1:4000/",
+            url:"/space",
+            data:{
+                spaceId,
+                fields: {...values},
+            },
+            headers:{
+                Authorization: "Bearer "+localStorage.getItem('token')
+            },
+        })
+        return response 
+    }catch(error){
+        throw error
     }
 }
 
@@ -149,4 +169,5 @@ export {
     postScore,
     postComment,
     postPhotosFiles,
+    updateSpace,
 }
