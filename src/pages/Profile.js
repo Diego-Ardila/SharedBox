@@ -2,7 +2,7 @@ import React, {Component}  from 'react'
 import ProfileForm from '../components/profile/ProfileForm';
 import DisplayProfile from '../components/profile/DisplayProfile';
 import axios from 'axios';
-import {Button, Container, Row}from 'react-bootstrap'
+import {Button, Container}from 'react-bootstrap'
 
 class Profile extends Component{
     state = {

@@ -132,7 +132,7 @@ export {
     postTag,
     updateSpaceTag,
     postScore,
-    postComment
+    postComment,
     postPhotosFiles
 
 }
