@@ -25,7 +25,6 @@ function ProfileForm(props){
     let [country,setCountry]=useState("");    
     let [city,setCity]=useState("");     
     let [stateView,setStateView]=useState(false);
-    let [error,setError]=useState('');
     const history = useHistory()
     
     

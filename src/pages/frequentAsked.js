@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import FormFaq from '../components/FAQ/faq.Form';
 import Rendericer from '../components/FAQ/faq.rendericer';
 import {Container,
-    Button,
     Form,
     Row,
     Col} from 'react-bootstrap';

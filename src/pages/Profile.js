@@ -1,7 +1,7 @@
 import React, {Component}  from 'react'
 import ProfileForm from '../components/profile/ProfileForm';
 import {Button, Container}from 'react-bootstrap'
-import {getDataUser}from '../utils/HTTPrequests'
+
 
 class Profile extends Component{
     state = {

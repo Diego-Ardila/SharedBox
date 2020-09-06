@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import { Form, Col, Button, Container } from 'react-bootstrap';
-import { Search } from 'react-bootstrap-icons';
+import {  Container } from 'react-bootstrap';
 import { useSelector, useDispatch } from "react-redux"
 import Spaces from '../components/viewSpaces/Spaces';
 import queryString from 'query-string';
