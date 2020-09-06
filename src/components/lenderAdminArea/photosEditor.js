@@ -10,6 +10,7 @@ import styled from "styled-components"
 import { Trash } from 'react-bootstrap-icons';
 import {changePhotos} from '../../actions/publishArea.actions'
 import {postPhotosFiles, deletePhoto} from "../../utils/HTTPrequests"
+import swal from 'sweetalert'
 
 
 const Photos = styled.div`
@@ -69,14 +70,20 @@ export default function PhotosEditor({space,show,onHide}) {
     }
 
     const handleSubmit =async (space)=>{
-      console.log(files)
-      console.log(space)
-      const data= new FormData()
-      data.append('spaceId', space._id)
-      files.forEach(file =>{
-        data.append('file', file, file.name)
-      })
-      await postPhotosFiles(data)
+      try{
+        console.log(files)
+        console.log(space)
+        const data= new FormData()
+        data.append('spaceId', space._id)
+        files.forEach(file =>{
+          data.append('file', file, file.name)
+        })
+        await postPhotosFiles(data)
+        swal("register successful","your photos were saved succesfully","success")
+      }
+      catch(err){
+        swal("update photos error", "something went wrong, please try again", "error")
+      }
     }
 
     return (

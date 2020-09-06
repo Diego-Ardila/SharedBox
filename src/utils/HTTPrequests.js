@@ -211,7 +211,6 @@ const updateSpace = async (spaceId, values) =>{
         return response 
     }catch(error){
         throw error
-       throw err 
     }
 }
 
