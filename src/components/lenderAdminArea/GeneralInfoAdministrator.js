@@ -7,14 +7,19 @@ import { updateSpace } from "../../utils/HTTPrequests";
 import swal from 'sweetalert';
 
 export default function GeneralInfoAdministrator ({space}) {
-    const [isUpdatingSate, setIsUpdatingState] = useState(false)
+    const [isUpdatingState, setIsUpdatingState] = useState(false)
     
     const handleSubmit = async values => {
         try{
-            const response = await updateSpace(space._id, values)
+            await updateSpace(space._id, values)
+            swal("udpate successful","your changes to your space were saved succesfully","success")
         }catch(error){
-            console.dir(error)
+            swal("update error", "something went wrong, please try again", "error")
         }
+    }
+
+    const buttonBehavior = () => {
+        setIsUpdatingState(!isUpdatingState)
     }
     const eventKeyUpdatingState = "0"
 
@@ -32,7 +37,7 @@ export default function GeneralInfoAdministrator ({space}) {
                     <Card.Body>
                     <Card.Title><Form.Label>SPACE DESCRIPTION</Form.Label></Card.Title>
                     <Card.Text>
-                        {isUpdatingSate ? (
+                        {isUpdatingState ? (
                         <Form.Control 
                             name="additionalInfo" 
                             type="textArea" 
@@ -42,16 +47,16 @@ export default function GeneralInfoAdministrator ({space}) {
                         />
                         ) : values.additionalInfo || "I am a testing text"}
                     </Card.Text>
-                    <Accordion defaultActiveKey={isUpdatingSate ? "0" : ""}>
+                    <Accordion defaultActiveKey={isUpdatingState ? "0" : ""}>
                         <Card>
                             <Card.Header>
-                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingSate ? eventKeyUpdatingState : "0"}>
+                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "0"}>
                                 <h6>DIMENSIONS</h6>
                             </Accordion.Toggle>
                             </Card.Header>
-                            <Accordion.Collapse eventKey={isUpdatingSate ? eventKeyUpdatingState : "0"}>
+                            <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "0"}>
                             <Card.Body>
-                                {isUpdatingSate ? (
+                                {isUpdatingState ? (
                                     <React.Fragment>
                                         <Form.Label>WIDTH</Form.Label>
                                         <Form.Control 
@@ -84,13 +89,13 @@ export default function GeneralInfoAdministrator ({space}) {
                         </Card>
                         <Card>
                             <Card.Header>
-                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingSate ? eventKeyUpdatingState : "1"}>
+                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "1"}>
                                 <h6>PRICES</h6>
                             </Accordion.Toggle>
                             </Card.Header>
-                            <Accordion.Collapse eventKey={isUpdatingSate ? eventKeyUpdatingState : "1"}>
+                            <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "1"}>
                             <Card.Body>
-                            {isUpdatingSate ? (
+                            {isUpdatingState ? (
                                     <React.Fragment>
                                         <Form.Label>PRICE PER DAY</Form.Label>
                                         <Form.Control 
@@ -115,11 +120,11 @@ export default function GeneralInfoAdministrator ({space}) {
                         </Card>
                         <Card>
                             <Card.Header>
-                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingSate ? eventKeyUpdatingState : "2"}>
+                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "2"}>
                                 <h6>TAGS</h6>
                             </Accordion.Toggle>
                             </Card.Header>
-                            <Accordion.Collapse eventKey={isUpdatingSate ? eventKeyUpdatingState : "2"}>
+                            <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "2"}>
                             <Card.Body>
                                 {space.spaceTags.map(({name}) => <Badge variant="secondary">{name}</Badge>)}
                             </Card.Body>
@@ -127,13 +132,13 @@ export default function GeneralInfoAdministrator ({space}) {
                         </Card>
                         <Card>
                             <Card.Header>
-                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingSate ? eventKeyUpdatingState : "3"}>
+                            <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "3"}>
                                 <h6>LOCATION</h6>
                             </Accordion.Toggle>
                             </Card.Header>
-                            <Accordion.Collapse eventKey={isUpdatingSate ? eventKeyUpdatingState : "3"}>
+                            <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "3"}>
                             <Card.Body>
-                            {isUpdatingSate ? (
+                            {isUpdatingState ? (
                                     <React.Fragment>
                                         <Form.Label>CITY</Form.Label>
                                         <Form.Control 
@@ -157,7 +162,7 @@ export default function GeneralInfoAdministrator ({space}) {
                             </Accordion.Collapse>
                         </Card>
                         </Accordion>
-                    <Button  type={isUpdatingSate ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => setIsUpdatingState(!isUpdatingSate)} >{isUpdatingSate? "save" : "edit"}<Pencil></Pencil></Button>
+                    <Button  type={isUpdatingState ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => buttonBehavior()} >{isUpdatingState? "save" : "edit"}<Pencil></Pencil></Button>
                     </Card.Body>
                     <Card.Footer className="text-muted">{`created ${Date(space.createdAt)}`}</Card.Footer>
                 </Card>
