@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup'
 import {useHistory} from 'react-router-dom'
 import { ArrowLeft } from 'react-bootstrap-icons'
+import swal from 'sweetalert'
 
 const base = {
     imageID: "profile-image",
@@ -17,21 +18,22 @@ const base = {
     submitId: "profile-submit",    
 }
 
-function ProfileForm(props){
-    let [imageProfile,setImageProfile]=useState("https://imageog.flaticon.com/icons/png/512/16/16480.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF");
+function ProfileForm(){
+    let imageProfile = "https://imageog.flaticon.com/icons/png/512/16/16480.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"
     let [name,setName]=useState("");
     let [email,setEmail]=useState("");
     let [phoneNumber,setPhoneNumber]=useState("");
     let [country,setCountry]=useState("");    
     let [city,setCity]=useState("");     
     let [stateView,setStateView]=useState(false);
+    let typeUser = localStorage.getItem("typeUser")
     const history = useHistory()
     
     
     useEffect(() => {
         async function getDatesUser (){
             try{
-                const userData = await getDataUser(props.typeUser)
+                const userData = await getDataUser(typeUser)
                 setName(userData.data.name)            
                 setEmail(userData.data.email)
                 setPhoneNumber(userData.data.phoneNumber)
@@ -39,7 +41,7 @@ function ProfileForm(props){
                 setCity(userData.data.city)
             }
             catch(err){
-                console.dir(err)
+                swal("profile error", "something went wrong, please try again", "error")
             }
         }
         getDatesUser()
@@ -49,11 +51,12 @@ function ProfileForm(props){
         
         if (stateView){
             try{
-                const dataUser = await updateDatauser(props.typeUser,values)
+                await updateDatauser(typeUser,values)
+                swal("udpate successful","your changes to your profile were saved succesfully","success")
                 setStateView(!stateView)
             }
             catch(err){
-                console.dir(err)                   
+                swal("update error", "something went wrong, please try again", "error")                 
             }
         }else{
             setStateView(!stateView)
@@ -78,7 +81,7 @@ function ProfileForm(props){
                         <Form  onSubmit={handleSubmit} noValidate>
                             <Form.Row className="justify-content-left" >
                                 <Col className=" text-left ">
-                                    {props.typeUser==="tenant"?
+                                    {typeUser==="tenant"?
                                     (<Button type="" onClick={()=>history.push("/tenant/admin")} ><ArrowLeft/></Button>):null}
                                 </Col>
                             </Form.Row>
@@ -126,7 +129,7 @@ function ProfileForm(props){
                                     <Form.Group controlId={base.countryID}>
                                         <Form.Label>Country</Form.Label>
                                         {stateView ?
-                                            (<Form.Control  name="country"type="text" value={values.country} onChange = {handleChange} 
+                                            (<Form.Control  name="country" type="text" value={values.country} onChange = {handleChange} 
                                                             className={touched.country && errors.country ? "is-invalid" : null}/>)
                                             :(<Col md className="col-lg-5 text-left "><label>{values.country}</label></Col>)}
                                         {touched.country && errors.country ? (<div className="error-message">{errors.country}</div>): null}

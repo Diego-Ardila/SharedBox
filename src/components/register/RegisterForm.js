@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import {userRegister} from "../../utils/HTTPrequests"
 import { changeLogin } from '../../actions/loginUser.actions'
+import swal from 'sweetalert'
 
 const base={
     nameId:"name",
@@ -29,10 +30,11 @@ const RegisterForm = (props) => {
         try{
         const userToken = await userRegister(props.typeUser,values)
         localStorage.setItem("token", userToken.data)
+        dispatch(changeLogin(true))
+        swal("register successful","your registred were saved succesfully","success")
         history.push(props.typeUser==="lender" ? `/user/profile`: '/tenant/admin')
         }catch(err){
-            console.dir(err)
-            props.handleError(err.response.data)
+            swal("update error", "something went wrong, please try again", "error")
         }
     }  
     
@@ -79,7 +81,7 @@ const RegisterForm = (props) => {
                             <div className="error-message">{errors.v_password}</div>
                         ): null}
                     </Form.Group> 
-                    <Button variant="primary" size="md" type="submit">
+                    <Button variant="primary" variant={isValid?"primary":"secondary"} disabled= {!isValid} size="md" type="submit">
                         Send
                     </Button>
                 </Form>
