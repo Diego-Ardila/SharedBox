@@ -71,8 +71,6 @@ export default function PhotosEditor({space,show,onHide}) {
 
     const handleSubmit =async (space)=>{
       try{
-        console.log(files)
-        console.log(space)
         const data= new FormData()
         data.append('spaceId', space._id)
         files.forEach(file =>{
