@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect, useHistory } from "react-router-dom";
 //import './App.css';
+import { useDispatch } from "react-redux";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import register from "./pages/register"
@@ -12,6 +13,7 @@ import Header from './pages/Header';
 import Footer from './pages/Footer';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
+import { changeLogin } from './actions/loginUser.actions'
  
 
 function PrivateRoute(props) {
@@ -25,9 +27,20 @@ function PrivateRoute(props) {
   return(
     <Route {...props}></Route>
   )
-}
+}  
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() =>{
+  const token = localStorage.getItem("token")  
+  if(token){
+    dispatch(changeLogin(true))
+  } else {
+    dispatch(changeLogin(false))
+  }
+  })
+
   return (
     <Router>
       <div className="App">

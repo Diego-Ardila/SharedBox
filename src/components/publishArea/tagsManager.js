@@ -28,7 +28,6 @@ export default function TagManager () {
     const onDelete = (i) => {
         const newTags = tags.slice(0)
         newTags.splice(i, 1)
-        console.log(newTags)
         dispatch(changeTags(newTags))
     }
 
