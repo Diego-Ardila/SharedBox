@@ -4,7 +4,6 @@ import PhotoDisplay from "./photoDisplay"
 import Logo from "../../logo.svg"
 import {useDispatch} from "react-redux"
 import {changePhotos, changePublishAreaView} from "../../actions/publishArea.actions"
-import Axios from "axios"
 
 const base = {
     formClass : "photoForm",
