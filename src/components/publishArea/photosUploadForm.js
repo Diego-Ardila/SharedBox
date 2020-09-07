@@ -1,79 +1,91 @@
-import React, {useState} from "react"
-import styled from "styled-components"
-import PhotoDisplay from "./photoDisplay"
-import Logo from "../../logo.svg"
+import React from "react"
+
+import { FilePond, registerPlugin } from 'react-filepond'
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+
 import {useDispatch} from "react-redux"
 import {changePhotos, changePublishAreaView} from "../../actions/publishArea.actions"
+import {Container, Form, Row,  Button} from 'react-bootstrap'
+import {ArrowLeft} from 'react-bootstrap-icons';
+import { Formik } from 'formik';
+import * as Yup from "yup";
+
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 const base = {
     formClass : "photoForm",
     uploadId : "photoUpload"
 }
 
-const NextButton = styled.button`
-    background: #001244;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25), -2px -4px 2px rgba(243, 240, 240, 0.4);
-    width: 155px;
-    height: 43px;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    line-height: 24px;
-    text-align: center;
-    color: #FFF9F4;
-    margin: 24px;
-    border-radius: 40px;
-`
-
-const FormWrapper = styled.section`
-    background: linear-gradient(180deg, #FFF9F4 1.12%, #B0CAC7 100%);
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25), -4px -8px 2px rgba(248, 239, 239, 0.25);
-    width: 528px;
-    height: 701px;
-    left: 74px;
-    top: 133px;
-    display: flex ;
-    justify-content: center;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-    font-weight: bold;
-`
-
+const FormSchema = Yup.object().shape({  
+    files: Yup.array().required("Required Field").min(1,"At least one photo is required").max(5,"The maximum amount of photos allowed are 5")
+})
 
 export default function PhotosUploadForm () {
     const dispatch = useDispatch()
-    const previewBlobPhotos = []
     const arrFiles = []
-    let [imagesURLs, setImagesURLs] = useState("")
     
-    const handleChange =  (event) => {
-        if (event.target.files && event.target.files[0]) {
-            Object.values(event.target.files).forEach(file =>{
-                arrFiles.push(file);
-            })
-            dispatch(changePhotos(arrFiles))
-            arrFiles.forEach( file => previewBlobPhotos.push(URL.createObjectURL(file)))
-            setImagesURLs(imagesURLs = previewBlobPhotos) 
-          }
-          
-        }
-    
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const handleSubmit = (values) => {
+        let { files } = values
+        console.log(values)
+        console.log(files)
+        files.forEach(file =>{
+            arrFiles.push(file.file);
+        })
+        console.log(arrFiles)            
+        dispatch(changePhotos(arrFiles))   
         dispatch(changePublishAreaView(5))
     }
+
+    const redirectBack = () => dispatch(changePublishAreaView(2))
     
-    return (
-       <FormWrapper>
-           <h1>share some photos of your space!<br></br>It will be more appealing for people looking where to store their things</h1>
-           {imagesURLs ? imagesURLs.map( (url, index) => <PhotoDisplay url ={url} key ={index}></PhotoDisplay>): <img src={Logo} alt="logo"></img>}
-           <br></br>
-           <form onSubmit = {handleSubmit}>
-               <input type="file" accept="image/*" multiple = {true} onChange ={handleChange} ></input>
-               <br></br>
-               <NextButton type="submit" id={base.submitId} value="submit">next</NextButton>
-           </form>
-       </FormWrapper>
-   ) 
+    return(
+        <Formik 
+        initialValues = {{files: []}}
+        validationSchema = {FormSchema}
+        onSubmit = {handleSubmit} >   
+        {({
+        handleSubmit, handleChange, values, touched, isValid, errors, setFieldValue
+        }) => (  
+            <>            
+            <Container>    
+                <Row className="justify-content-center">
+                    <h1>Register Photos</h1>         
+                </Row>
+                <Row md={{span: 4, offset: 4}} lg={{span: 4, offset: 4}}>
+                    <Button variant="primary" size="lg" onClick={redirectBack}>
+                        <ArrowLeft />
+                    </Button>
+                </Row>
+                <Row className="justify-content-center">                    
+                    <Form className="justify-content-center mt-3" onSubmit={handleSubmit} noValidate>
+                        <h3>Share some photos of your space! 
+                            It will be mote appealing for people looking where to store their things
+                        </h3>
+                        <Form.Group controlId={base.uploadId}>
+                            <FilePond
+                                files={values.files}
+                                onupdatefiles={fileItems => setFieldValue("files", fileItems)}
+                                allowMultiple={true}
+                                maxFiles={3}
+                                name="files"
+                                labelIdle='Drag & Drop your files or Browse'
+                            />
+                            {touched.files && errors.files ? (
+                                <div className="error-message">{errors.files}</div>
+                            ): null}
+                        </Form.Group>                      
+                        <Button variant="primary" size="lg" type="submit">
+                            Next
+                        </Button>
+                    </Form>        
+                </Row>                     
+            </Container>
+            </>
+        )}           
+        </Formik>
+        
+    )
 }
