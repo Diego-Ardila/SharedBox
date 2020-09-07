@@ -21,39 +21,30 @@ const Home = () => {
   const search = useSelector(state => state.searchFormReducer);
   const {area, location, initialDate, finalDate, height, width, length, pricePerDay, pricePerMonth, specificSearch, rendering} = search; 
   const params = queryString.parse(locationQuery.search)
-  let range = 15
-
-  useEffect(() => {
-     dispatch(changeRendering())
-    if(Object.keys(params).length > 0){
-      dispatch(changeSpecificSearch(true))
-    }
-  },[])
-
+  
   useEffect(()=>{
     if(params){
       axios({
         method: "GET",
-        url: `http://localhost:4000/space/tenant?${locationQuery.search}`
+        baseURL: `http://localhost:4000/space/tenant`,
+        url: `${locationQuery.search}`
       })
       .then(({data}) => { dispatch(changeSpaces(data || []))} )
       .catch(err=> console.log(err))
     }
   },[rendering])
   
-
-  
   const handleSubmit = () => {
       let qs = {}
-        qs.area =  `${area}-${parseInt(area) + range}`
+        qs.area = `${parseInt(area) - parseInt(area)}-${area}`
         qs.location = location.toUpperCase()
         qs.inDate = initialDate
         qs.finDate = finalDate 
         dispatch(changeSpaces([]))
       if (specificSearch) {
-        qs.height= `${height}-${parseInt(height) + range}`
-        qs.width= `${width}-${parseInt(width) + range}`
-        qs.length= `${length}-${parseInt(length)+ range}`
+        qs.height= `${parseInt(height) - parseInt(height)}-${height}`
+        qs.width= `${parseInt(width) - parseInt(width)}-${width}`
+        qs.length= `${parseInt(length)-parseInt(length)}-${length}`
         qs.pricePerDay= pricePerDay
         qs.pricePerMonth= pricePerMonth
       }           
