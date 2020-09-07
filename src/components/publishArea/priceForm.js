@@ -1,85 +1,103 @@
-import React, { useRef } from "react"
-import styled from "styled-components"
+import React from "react"
 import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
 import {changePrice, changePublishAreaView} from "../../actions/publishArea.actions"
 import {postSpace, updateSpaceTag, postTag, postPhotosFiles} from "../../utils/HTTPrequests"
+import {Container, Form, Row,  Button, InputGroup} from 'react-bootstrap'
+import {ArrowLeft} from 'react-bootstrap-icons';
+import { Formik } from 'formik';
+import * as Yup from "yup";
+import swal from 'sweetalert'
 
 
 const base= {
     priceId : "priceForm_price"
 }
 
+const FormSchema = Yup.object().shape({  
+    price: Yup.number().typeError('Value must be a number').min(1,"Value must to be greater than 0").required('Required Field')
+})
 
-
-const FormWrapper = styled.section`
-    background: linear-gradient(180deg, #FFF9F4 1.12%, #B0CAC7 100%);
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25), -4px -8px 2px rgba(248, 239, 239, 0.25);
-    width: 528px;
-    height: 701px;
-    left: 74px;
-    top: 133px;
-    display: flex ;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    font-weight: bold;
-    flex-direction: column;
-`
-const NextButton = styled.button`
-    background: #001244;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25), -2px -4px 2px rgba(243, 240, 240, 0.4);
-    width: 155px;
-    height: 43px;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    line-height: 24px;
-    text-align: center;
-    color: #FFF9F4;
-    margin: 24px;
-    border-radius: 40px;
-`
 export default function PriceForm () {
     const dispatch = useDispatch() 
     const state = useSelector(state => state.publishAreaReducer)
-    const price = state.price
+    
+    
     const files = state.photos
-    const pr = useRef()
     const history = useHistory()
 
-    const handleChange = (action, input) => {
-        return (event) => dispatch(action(event.target.value))
+    const redirectBack = () => dispatch(changePublishAreaView(4))
+
+    const customChange = (eventTarget, setValues, values, dispatch) => {
+        let toUpdate = {...values}
+        toUpdate[eventTarget.name] = eventTarget.value
+        dispatch(changePrice(eventTarget.value))
+        setValues(toUpdate)
     }
-    const handleSubmit = async(event) => {
-        event.preventDefault()
+    
+    const handleSubmit = async(values) => {
+        try {
+            const spaceId = await postSpace(state)
+            state.tags.forEach( ({name}) => {
+                if(state.suggestions.some( suggestion => suggestion.name.toUpperCase() === name.toUpperCase())) return updateSpaceTag(spaceId, name)   
+                postTag(spaceId, name)
+            })
 
-        const spaceId = await postSpace(state)
-        state.tags.forEach( ({name}) => {
-            if(state.suggestions.some( suggestion => suggestion.name.toUpperCase() === name.toUpperCase())) return updateSpaceTag(spaceId, name)   
-            postTag(spaceId, name)
-        })
+            const data = new FormData();
+            data.append('spaceId', spaceId)
+            files.forEach(file => {
+                data.append('file', file, file.name)
+            });
+            const postedPhotos = await postPhotosFiles(data)
 
-        const data = new FormData();
-        data.append('spaceId', spaceId)
-        files.forEach(file => {
-            data.append('file', file, file.name)
-        });
-        const postedPhotos = await postPhotosFiles(data)
-
-        dispatch(changePublishAreaView(1))
-        history.push("/lender/admin")
+            dispatch(changePublishAreaView(1))
+            swal("Space Created!","Your space was created successfully","success")
+            history.push("/lender/admin")
+        } catch(err){
+            swal("Task failed!","There was an error with your registration","error")
+        }
+        
     }
 
     return(
-        <FormWrapper>
-        <form onSubmit={handleSubmit}>
-            <h1>and finally... lets talk about money</h1>
-            <label htmlFor = {base.priceId}>how much do you expect to earn daily with your space</label>
-            <input type="number" ref={pr} style={{width:"150px"}} onChange={handleChange(changePrice, pr)} id = {base.priceId} value = {price}></input>
-            <br></br>
-            <NextButton type="submit" id={base.submitId} value="submit">submit</NextButton>
-        </form>
-        </FormWrapper>
+        <Formik 
+        initialValues = {{price: 0}}
+        validationSchema = {FormSchema}
+        onSubmit = {handleSubmit} >   
+        {({
+        handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setValues
+        }) => (  
+            <>            
+            <Container>    
+                <Row className="justify-content-center">
+                    <h1>Register Price</h1>         
+                </Row>
+                <Row md={{span: 4, offset: 4}} lg={{span: 4, offset: 4}}>
+                    <Button variant="primary" size="lg" onClick={redirectBack}>
+                        <ArrowLeft />
+                    </Button>
+                </Row>
+                <Row className="justify-content-center">                    
+                    <Form className="justify-content-center mt-3" onSubmit={handleSubmit} noValidate>
+                        <h3>Finally... lets talk about money:</h3>
+                        <InputGroup>
+                        <Form.Group controlId={base.priceId}>
+                            <Form.Label>Expected Price</Form.Label>               
+                            <Form.Control className={touched.price && errors.price ? "is-invalid" : null} name="price" type="text" placeholder="price" onChange ={(e) => customChange(e.target, setValues, values, dispatch)} value={values.price} />
+                            {touched.price && errors.price ? (
+                                <div className="error-message">{errors.price}</div>
+                            ): null}
+                        </Form.Group>  
+                        </InputGroup>                     
+                        <Button variant="primary" size="lg" type="submit">
+                            Next
+                        </Button>
+                    </Form>        
+                </Row>                     
+            </Container>
+            </>
+        )}           
+        </Formik>
+        
     )
 }

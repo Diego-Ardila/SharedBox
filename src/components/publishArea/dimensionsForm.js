@@ -44,10 +44,6 @@ export default function BasicSpaceInfo (){
         dispatch(changePublishAreaView(2))
         localStorage.setItem("viewState1",JSON.stringify({width, length, height}))
     }
-    
-    const HandleChange = (action, input) => {
-        return e => dispatch(action(input.current.value))  
-    }
 
     return(
         <Formik 
@@ -69,7 +65,7 @@ export default function BasicSpaceInfo (){
                             <Form.Label>Width</Form.Label>
                             <Form.Control name="width" min={0} max={200} type="range" onChange ={handleChange} value ={values.width} />
                             <Badge pill variant="primary">
-                            {values.width || 0}
+                            {(values.width || 0) + ' mts'}
                             </Badge>{' '}
                             {touched.width && errors.width ? (
                             <div className="error-message">{errors.width}</div>
@@ -79,8 +75,8 @@ export default function BasicSpaceInfo (){
                             <Form.Label>Length</Form.Label>
                             <Form.Control name="length" min={0} max={200} type="range" onChange ={handleChange} value ={values.length} />
                             <Badge pill variant="primary">
-                            {values.length || 0}
-                            </Badge>{'mts '}
+                            {(values.length || 0) + ' mts'}
+                            </Badge>
                             {touched.length && errors.length ? (
                             <div className="error-message">{errors.length}</div>
                             ): null}
@@ -89,7 +85,7 @@ export default function BasicSpaceInfo (){
                             <Form.Label>Height</Form.Label>
                             <Form.Control name="height" min={0} max={10} step={0.1}type="range" onChange ={handleChange} value ={values.height} />
                             <Badge pill variant="primary">
-                            {values.height || 0}
+                            {(values.height || 0) + ' mts'}
                             </Badge>{' '}
                             {touched.height && errors.height ? (
                             <div className="error-message">{errors.height}</div>
