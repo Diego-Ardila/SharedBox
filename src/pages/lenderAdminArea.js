@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import {getUserSpaces} from "../utils/HTTPrequests"
-
 import MainView from '../components/lenderAdminArea/mainView';
 import SpecificSpaceView from '../components/lenderAdminArea/specificSpaceView';
 

@@ -22,8 +22,6 @@ let initialState={
     viewingForm: 1,
     area:0,
     photos: [],
-    
-
 }
 
 const ACTIONS = {

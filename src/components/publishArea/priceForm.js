@@ -50,7 +50,6 @@ export default function PriceForm () {
                 if(state.suggestions.some( suggestion => suggestion.name.toUpperCase() === name.toUpperCase())) return updateSpaceTag(spaceId, name)   
                 postTag(spaceId, name)
             })
-
             const data = new FormData();
             data.append('spaceId', spaceId)
             files.forEach(file => {
@@ -74,7 +73,6 @@ export default function PriceForm () {
         } catch(err){
             swal("Task failed!","There was an error with your registration","error")
         }
-        
     }
 
     return(
