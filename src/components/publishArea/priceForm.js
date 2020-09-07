@@ -2,8 +2,8 @@ import React, { useRef } from "react"
 import styled from "styled-components"
 import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
-import {changePrice, changePublishAreaView} from "../../actions/publishArea.actions"
-import {postSpace, updateSpaceTag, postTag} from "../../utils/HTTPrequests"
+import {changePrice, changePublishAreaView, changePhotos} from "../../actions/publishArea.actions"
+import {postSpace, updateSpaceTag, postTag, postPhotosFiles} from "../../utils/HTTPrequests"
 
 
 const base= {
@@ -43,19 +43,30 @@ const NextButton = styled.button`
 export default function PriceForm () {
     const dispatch = useDispatch() 
     const state = useSelector(state => state.publishAreaReducer)
+    const price = state.price
+    const files = state.photos
     const pr = useRef()
     const history = useHistory()
 
     const handleChange = (action, input) => {
-        return (event) => dispatch(action(input.current.value))
+        return (event) => dispatch(action(event.target.value))
     }
     const handleSubmit = async(event) => {
         event.preventDefault()
+
         const spaceId = await postSpace(state)
         state.tags.forEach( ({name}) => {
             if(state.suggestions.some( suggestion => suggestion.name.toUpperCase() === name.toUpperCase())) return updateSpaceTag(spaceId, name)   
             postTag(spaceId, name)
         })
+
+        const data = new FormData();
+        data.append('spaceId', spaceId)
+        files.forEach(file => {
+            data.append('file', file, file.name)
+        });
+        const postedPhotos = await postPhotosFiles(data)
+        dispatch(changePhotos(postedPhotos))
         dispatch(changePublishAreaView(1))
         history.push("/lender/admin")
     }
@@ -65,7 +76,7 @@ export default function PriceForm () {
         <form onSubmit={handleSubmit}>
             <h1>and finally... lets talk about money</h1>
             <label htmlFor = {base.priceId}>how much do you expect to earn daily with your space</label>
-            <input type="number" ref={pr} style={{width:"150px"}} onChange={handleChange(changePrice, pr)} id = {base.priceId} value = {state.price}></input>
+            <input type="number" ref={pr} style={{width:"150px"}} onChange={handleChange(changePrice, pr)} id = {base.priceId} value = {price}></input>
             <br></br>
             <NextButton type="submit" id={base.submitId} value="submit">submit</NextButton>
         </form>

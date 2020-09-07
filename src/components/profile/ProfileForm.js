@@ -1,6 +1,11 @@
 import React, {useState , useEffect} from 'react';
 import {Form,Container,Image,Card,Col,Button} from 'react-bootstrap'
-import axios from 'axios';
+import {getDataUser, updateDatauser} from '../../utils/HTTPrequests'
+import { Formik } from 'formik';
+import * as Yup from 'yup'
+import {useHistory} from 'react-router-dom'
+import { ArrowLeft } from 'react-bootstrap-icons'
+import swal from 'sweetalert'
 
 const base = {
     imageID: "profile-image",
@@ -9,165 +14,149 @@ const base = {
     phoneID: "profile-phone",    
     countryID: "profile-country",
     cityID: "profile-city",
-
     formID: "profile-form",
     submitId: "profile-submit",    
 }
 
-function ProfileForm(props){
+function ProfileForm(){
+    let imageProfile = "https://imageog.flaticon.com/icons/png/512/16/16480.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"
+    let [name,setName]=useState("");
+    let [email,setEmail]=useState("");
+    let [phoneNumber,setPhoneNumber]=useState("");
+    let [country,setCountry]=useState("");    
+    let [city,setCity]=useState("");     
+    let [stateView,setStateView]=useState(false);
+    let typeUser = localStorage.getItem("typeUser")
+    const history = useHistory()
     
-    let [imageProfile,setImageProfile]=useState("https://imageog.flaticon.com/icons/png/512/16/16480.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF");
-    let [name,setName]=useState(props.data.name);
-    let [email,setEmail]=useState(props.data.email);
-    let [phoneNumber,setPhoneNumber]=useState(props.data.phoneNumber);
-    let [country,setCountry]=useState(props.data.country);    
-    let [city,setCity]=useState(props.data.city||"");     
-    let [emailValid,setEmailValid]=useState(true);
-    let [phoneValid,setPhoneValid]=useState(true);      
-    let [formValid,setFormValid]=useState(true);  
-    let [error,setError]=useState('');
     
     useEffect(() => {
-        if (emailValid && phoneValid ){
-            setFormValid(true);
-        } else {
-            setFormValid(false)
-        };
-    },[emailValid,phoneValid])
-    useEffect(() => {
-        axios({
-            method:"GET",
-            url: "http://127.0.0.1:4000/lender/",
-            headers:{
-                Authorization: 'Bearer '+localStorage.getItem('token')
+        async function getDatesUser (){
+            try{
+                const userData = await getDataUser(typeUser)
+                setName(userData.data.name)            
+                setEmail(userData.data.email)
+                setPhoneNumber(userData.data.phoneNumber)
+                setCountry(userData.data.country)
+                setCity(userData.data.city)
             }
-        })
-        .then( response => {
-            setName(response.data.name)
-            setEmail(response.data.email)
-            setPhoneNumber(response.data.phoneNumber)
-            setCountry(response.data.country)
-            setCity(response.data.city)
-            
-            
-        })
-        .catch(error=>{
-            console.log(error)
-        })
-    },[])
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        axios({
-            method:'PUT',
-            url: "http://127.0.0.1:4000/lender/",
-            headers:{
-                Authorization: "Bearer "+localStorage.getItem('token')
-            },
-            data:{
-                name,
-                email,
-                phoneNumber,            
-                country,
-                city
+            catch(err){
+                swal("profile error", "something went wrong, please try again", "error")
             }
-        })
-        .then( response => { 
-             props.handleClick();
-        })
-        .catch(error=>{
-            setError(error)
-        })
-    }   
-    const handleChange = (event) => {
-        const regexPhone = /^[\s0-9]{10}$/;
-        const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        const regexNumber = /([0-9][ ,-]?)$/;
-        const regexletters = /([a-zA-Z\s])$/;
-        
-        if (event.target.id === base.nameID && (regexletters.test(event.target.value)||event.target.value==="")){
-            setName(name = event.target.value);
-        }  
-        
-        if (event.target.id === base.emailID){            
-            setEmail(email= event.target.value);
-            if (!regexEmail.test(event.target.value)){
-                setEmailValid(false)
-            } else {
-                setEmailValid(true)
-            }
-        } 
-
-        if (event.target.id === base.phoneID && (regexNumber.test(event.target.value)||event.target.value ==="")){            
-            setPhoneNumber(phoneNumber = event.target.value);
-            if (!regexPhone.test(event.target.value)){   
-                setPhoneValid(false); 
-            }
-            else {                
-                setPhoneValid(true); 
-            }
-        }  
-        
-        if (event.target.id === base.countryID && (regexletters.test(event.target.value)||event.target.value==="")){
-            setCountry(country = event.target.value);   
         }
+        getDatesUser()
+    },[stateView])
+
+    const handleSubmit = async (values) => {
         
-        if (event.target.id === base.cityID && (regexletters.test(event.target.value)||event.target.value==="")){
-            setCity(city = event.target.value);   
+        if (stateView){
+            try{
+                await updateDatauser(typeUser,values)
+                swal("udpate successful","your changes to your profile were saved succesfully","success")
+                setStateView(!stateView)
+            }
+            catch(err){
+                swal("update error", "something went wrong, please try again", "error")                 
+            }
+        }else{
+            setStateView(!stateView)
         }
     }
 
+    const formSchema = Yup.object().shape({
+        name : Yup.string().required("Required Field"),
+        email: Yup.string().email().required("Required Field"),
+        phoneNumber : Yup.number().test('len', 'Must be exactly 10 characters', val => val && val.toString().length === 10 ),
+        country : Yup.string().required("Required Field"),
+        city : Yup.string().required("Required Field")
+    })
     return(
-        <Container className="container-fluid p-3" onSubmit={handleSubmit}>
+        <Container className="container-fluid p-3">
             <Card className="p-3">
-                <Form >
-                    <Form.Row  className="justify-content-center">
-                        <Col className=" text-center "   >
-                            <Image  src={imageProfile} height ={100} />
-                        </Col>                       
-                    </Form.Row>
-                    <Form.Row className="justify-content-center">
-                        <Col className="col-lg-10">
-                            <Form.Group>
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control id={base.nameID} type="name" value={name} onChange = {handleChange} required/>
-                            </Form.Group>
-                        </Col>
-                    </Form.Row>
-                    <Form.Row className="justify-content-center">
-                        <Col md  className="col-lg-5">
-                            <Form.Group>
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control id={base.emailID} type="email" value={email} onChange = {handleChange} style={{borderColor:emailValid ? "" : "red"}} required/>
-                            </Form.Group>
-                        </Col>                    
-                        <Col className="col-lg-5">
-                            <Form.Group>
-                                <Form.Label>Phone</Form.Label>
-                                <Form.Control id={base.phoneID} type="tel" value={phoneNumber}  onChange = {handleChange} required style={{borderColor:phoneValid ? "" : "red"}} required/>
-                            </Form.Group>
-                        </Col>
-                    </Form.Row>
-                    <Form.Row className="justify-content-center">
-                        <Col md className="col-lg-5">
-                            <Form.Group>
-                                <Form.Label>Country</Form.Label>
-                                <Form.Control id={base.countryID} type="String" value={country} onChange = {handleChange} required/>
-                            </Form.Group>
-                        </Col>                    
-                        <Col className="col-lg-5">
-                            <Form.Group>
-                                <Form.Label>City</Form.Label>
-                                <Form.Control id={base.cityID} type="String" value={city} onChange = {handleChange} required/>
-                            </Form.Group>
-                        </Col>
-                    </Form.Row >
-                    <Form.Row className=" justify-content-center">
-                        <Col className="col-lg-5 ">
-                            <Button  id = {base.submitId} type="submit" variant={formValid?"primary":"secondary"} value = "Submit" disabled= {!formValid} block>Save</Button>
-                        </Col>
-                    </Form.Row>
-                </Form>
+                <Formik initialValues={{name,email,phoneNumber,country,city}}  
+                        validationSchema={stateView?formSchema:""}  
+                        onSubmit={handleSubmit} 
+                        enableReinitialize={true}>
+                    {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors })=>(
+                        <Form  onSubmit={handleSubmit} noValidate>
+                            <Form.Row className="justify-content-left" >
+                                <Col className=" text-left ">
+                                    {typeUser==="tenant"?
+                                    (<Button type="" onClick={()=>history.push("/tenant/admin")} ><ArrowLeft/></Button>):null}
+                                </Col>
+                            </Form.Row>
+                            <Form.Row  className="justify-content-center">
+                                <Col className=" text-center "   >
+                                    <Image  src={imageProfile} height ={100} />
+                                </Col>                       
+                            </Form.Row>
+                            <Form.Row className="justify-content-center">
+                                <Col className="col-lg-10">
+                                    <Form.Group controlId={base.nameID}>
+                                        <Form.Label>Name</Form.Label>
+                                        {stateView ?
+                                            (<Form.Control  name="name" type="text" value={values.name} onChange = {handleChange} 
+                                                            className={touched.name && errors.name ? "is-invalid" : null}/>)
+                                            :(<Col md className="col-lg-5 text-left "> <label>{values.name}</label> </Col>)}
+                                        {touched.name && errors.name ? (<div className="error-message">{errors.name}</div>): null}
+                                    </Form.Group>
+                                </Col>
+                            </Form.Row>
+                            <Form.Row className="justify-content-center">
+                                <Col md  className="col-lg-5">
+                                    <Form.Group controlId={base.emailID}>
+                                        <Form.Label>Email</Form.Label>
+                                        {stateView ?
+                                            (<Form.Control  name = "email" type="email" value={values.email} onChange = {handleChange}  
+                                                            className={touched.email && errors.email ? "is-invalid" : null} />)
+                                            :(<Col md className="col-lg-5 text-left"><label>{values.email}</label></Col>)}
+                                        {touched.email && errors.email ? (<div className="error-message">{errors.email}</div>): null}
+                                    </Form.Group>
+                                </Col>                    
+                                <Col className="col-lg-5">
+                                    <Form.Group controlId={base.phoneID}>
+                                        <Form.Label>Phone</Form.Label>
+                                        {stateView ?
+                                            (<Form.Control  name="phoneNumber" type="tel" value={values.phoneNumber}  onChange = {handleChange} 
+                                                            className={touched.phoneNumber && errors.phoneNumber ? "is-invalid" : null} />)
+                                            :(<Col md className="col-lg-5 text-left"><label>{values.phoneNumber}</label></Col>)}
+                                        {touched.phoneNumber && errors.phoneNumber ? (<div className="error-message">{errors.phoneNumber}</div>): null}
+                                    </Form.Group>
+                                </Col>
+                            </Form.Row>
+                            <Form.Row className="justify-content-center">
+                                <Col md className="col-lg-5">
+                                    <Form.Group controlId={base.countryID}>
+                                        <Form.Label>Country</Form.Label>
+                                        {stateView ?
+                                            (<Form.Control  name="country" type="text" value={values.country} onChange = {handleChange} 
+                                                            className={touched.country && errors.country ? "is-invalid" : null}/>)
+                                            :(<Col md className="col-lg-5 text-left "><label>{values.country}</label></Col>)}
+                                        {touched.country && errors.country ? (<div className="error-message">{errors.country}</div>): null}
+                                    </Form.Group>
+                                </Col>                    
+                                <Col className="col-lg-5">
+                                    <Form.Group controlId={base.cityID}>
+                                        <Form.Label>City</Form.Label>
+                                        {stateView ?
+                                            (<Form.Control  name="city" type="text" value={values.city} onChange = {handleChange} 
+                                                            className={touched.city && errors.city ? "is-invalid" : null}/>)
+                                            :(<Col md className="col-lg-5 text-left"><label>{values.city}</label></Col>)}
+                                        {touched.city && errors.city ? (<div className="error-message">{errors.city}</div>): null}
+                                    </Form.Group>
+                                </Col>
+                            </Form.Row >
+                            <Form.Row className=" justify-content-center">
+                                <Col className="col-lg-5 ">
+                                    {stateView? 
+                                    (<Button    id = {base.submitId} variant={isValid?"primary":"secondary"} type = "submit"  
+                                                disabled= {!isValid} block>Save</Button>)
+                                    :(<Button type="submit"  block>Edit profile</Button>)}
+                                </Col>
+                            </Form.Row>
+                        </Form>
+                    )}
+                </Formik>
             </Card>
         </Container>
     )
