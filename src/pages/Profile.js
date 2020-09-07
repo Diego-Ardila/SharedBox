@@ -12,7 +12,6 @@ class Profile extends Component{
     render(){
         return(
             <Container>
-                <h3></h3>
                 <ProfileForm />
                 {localStorage.getItem("typeUser") === "lender" ?
                 <Container className="p-2 text-center ">
