@@ -1,7 +1,15 @@
 import React from "react"
 import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
-import {changePrice, changePublishAreaView} from "../../actions/publishArea.actions"
+import {changePrice, changePublishAreaView, changeArea,
+    changeLength,
+    changeHeight,
+    changeWidth,
+    changeCity,
+    changeAddress,
+    changeDescription,
+    changeTitle,
+    changePhotos} from "../../actions/publishArea.actions"
 import {postSpace, updateSpaceTag, postTag, postPhotosFiles} from "../../utils/HTTPrequests"
 import {Container, Form, Row,  Button, InputGroup} from 'react-bootstrap'
 import {ArrowLeft} from 'react-bootstrap-icons';
@@ -51,6 +59,16 @@ export default function PriceForm () {
             const postedPhotos = await postPhotosFiles(data)
 
             dispatch(changePublishAreaView(1))
+            dispatch(changeArea(0))
+            dispatch(changeWidth(0))
+            dispatch(changeHeight(0))
+            dispatch(changeLength(0))
+            dispatch(changeCity(""))
+            dispatch(changeAddress(""))
+            dispatch(changeDescription(""))
+            dispatch(changeTitle(""))
+            dispatch(changePhotos([]))
+            dispatch(changePrice(0))
             swal("Space Created!","Your space was created successfully","success")
             history.push("/lender/admin")
         } catch(err){

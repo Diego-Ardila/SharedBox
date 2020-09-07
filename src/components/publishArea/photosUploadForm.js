@@ -29,12 +29,9 @@ export default function PhotosUploadForm () {
     
     const handleSubmit = (values) => {
         let { files } = values
-        console.log(values)
-        console.log(files)
         files.forEach(file =>{
             arrFiles.push(file.file);
-        })
-        console.log(arrFiles)            
+        })          
         dispatch(changePhotos(arrFiles))   
         dispatch(changePublishAreaView(5))
     }
