@@ -47,24 +47,20 @@ export default function PhotosEditor({space,show,onHide}) {
       try{
         const newPhotos = photos.filter((photoDb)=> photoDb !== photo)
         dispatch(changePhotos(newPhotos))
-        const result = await deletePhoto(photo,space._id)
-        console.log(result)
+        await deletePhoto(photo,space._id)
       }
       catch(err){
-        console.dir(err)
+       console.dir(err)
       }
     }
 
     const handleChange = (e)=>{
-      console.log(photos)
       if(photos.length > 0) newPhotosArray=[...photos]
-
       Object.values(e.target.files).forEach(file => {filesToUpload.push(file); newPhotosArray.push(URL.createObjectURL(file))})
       dispatch(changePhotos(newPhotosArray))
       setFiles(filesToUpload)
     }
 
-    
     const handleClick = ()=>{
       hiddenFileInput.current.click()
     }
@@ -82,6 +78,7 @@ export default function PhotosEditor({space,show,onHide}) {
       catch(err){
         swal("update photos error", "something went wrong, please try again", "error")
       }
+      swal("deleted successfully","your photos were deleting succesfully","success")
     }
 
     return (
@@ -115,7 +112,7 @@ export default function PhotosEditor({space,show,onHide}) {
           </Container>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => handleSubmit(space)}>Save</Button>
+          <Button onClick={() =>{handleSubmit(space); onHide()}}>Save</Button>
           <Button onClick={onHide}>Close</Button>
         </Modal.Footer>
       </Modal>

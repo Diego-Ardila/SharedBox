@@ -93,7 +93,7 @@ function LoginForm (props) {
                             <Button type ="submit">LOGIN</Button>
                         </Form.Row>
                         <Form.Row className="justify-content-center mt-5">
-                            <Link to="/lender/register" >Create account</Link>
+                            <Link to="/user/register" onClick={()=>localStorage.setItem("userType","tenant")}>Create account</Link>
                         </Form.Row>
                     </Form>
                 </Card>
