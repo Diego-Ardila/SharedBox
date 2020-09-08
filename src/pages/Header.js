@@ -2,16 +2,26 @@ import React from 'react';
 import { Navbar, Nav} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import Logo from "../logo.svg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { changeRendering, changeSpecificSearch } from '../actions/searchForm.actions'
+
+
 
 
 
 const Header = () => {
-  const isLogged = useSelector(state => state.loginUserReducer.isLogged)  
+  const isLogged = useSelector(state => state.loginUserReducer.isLogged) 
+  const dispatch = useDispatch()
+
+  const homecoming =()=>{
+    dispatch(changeRendering())
+    dispatch(changeSpecificSearch())
+
+  }
 
   return (
     <Navbar collapseOnSelect bg="primary" expand="lg">      
-      <NavLink to="/home"><img src={Logo} alt="logo" width={100}/></NavLink>
+      <NavLink to="/home" onClick={()=>homecoming()}><img src={Logo} alt="logo" width={100}/></NavLink>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ml-auto">

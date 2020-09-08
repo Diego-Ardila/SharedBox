@@ -1,23 +1,26 @@
-import React from "react"
+import React, { useState } from "react"
 import {Carousel} from "react-bootstrap"
+import { useSelector } from "react-redux"
 
 export default function PhotosAdministrator ({space, children}) {
-    const spacePhotos = space.photos.map( link =>
+    const photos = useSelector(state => state.publishAreaReducer.photos)
+
+    const spacePhotos = photos.map( link =>
         <Carousel.Item key={link}>
-            <img
+            <img 
                 className="d-block w-100"
-                src={link}
+                src={link} width={300} height={300}
                 alt="photo"   
             >
             </img>   
         </Carousel.Item>
     ) 
     return(
-        <React.Fragment>
-            <Carousel className="position-relative">
+        <div className="position-relative">
+            <Carousel >
                 {spacePhotos}
-                {children}
             </Carousel>
-        </React.Fragment>
+            {children}
+        </div>
     )
 }

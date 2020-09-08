@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+  import React, { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import {  Container } from 'react-bootstrap';
 import { useSelector, useDispatch } from "react-redux"
@@ -6,9 +6,10 @@ import Spaces from '../components/viewSpaces/Spaces';
 import queryString from 'query-string';
 import SearchForm from './SearchForm';
 import SearchAdvancedForms from './SearchAdvancedForm';
-import axios from 'axios';
-import { changeRendering, changeSpecificSearch } from '../actions/searchForm.actions'
+import { changeRendering } from '../actions/searchForm.actions'
 import  changeSpaces  from '../actions/viewSpaces.actions'
+import { getFilterSpaces} from '../utils/HTTPrequests'
+import swal from 'sweetalert'
 
 
 const Home = () => {
@@ -20,40 +21,32 @@ const Home = () => {
   const spaces = useSelector(state => state.viewSpacesReducer.spaces);
   const search = useSelector(state => state.searchFormReducer);
   const {area, location, initialDate, finalDate, height, width, length, pricePerDay, pricePerMonth, specificSearch, rendering} = search; 
-  const params = queryString.parse(locationQuery.search)
-  let range = 15
-
-  useEffect(() => {
-     dispatch(changeRendering())
-    if(Object.keys(params).length > 0){
-      dispatch(changeSpecificSearch(true))
-    }
-  },[])
-
+  
+  
   useEffect(()=>{
-    if(params){
-      axios({
-        method: "GET",
-        url: `http://localhost:4000/space/tenant?${locationQuery.search}`
-      })
-      .then(({data}) => { dispatch(changeSpaces(data || []))} )
-      .catch(err=> console.log(err))
+    async function getspaces () {
+      try{
+        const spaces = await getFilterSpaces(locationQuery.search)
+        dispatch(changeSpaces(spaces || []))
+      }
+      catch(err){
+        swal("upss something is wrong", "something went wrong, please try again", "error")
+      }
     }
+    getspaces()
   },[rendering])
   
-
-  
-  const handleSubmit = () => {
+   const handleSubmit = () => {
       let qs = {}
-        qs.area =  `${area}-${parseInt(area) + range}`
+        qs.area =  `${area}-1600`
         qs.location = location.toUpperCase()
         qs.inDate = initialDate
         qs.finDate = finalDate 
         dispatch(changeSpaces([]))
       if (specificSearch) {
-        qs.height= `${height}-${parseInt(height) + range}`
-        qs.width= `${width}-${parseInt(width) + range}`
-        qs.length= `${length}-${parseInt(length)+ range}`
+        qs.height= `${height}-20`
+        qs.width= `${width}-40`
+        qs.length= `${length}-40`
         qs.pricePerDay= pricePerDay
         qs.pricePerMonth= pricePerMonth
       }           
