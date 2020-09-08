@@ -18,12 +18,10 @@ let initialState={
         { id: 6, name: "Apricots" },
         { id: 2, name: "Heavy Load" }
     ],
-    title:"test",
+    title:"",
     viewingForm: 1,
     area:0,
-    photos: null,
-    
-
+    photos: [],
 }
 
 const ACTIONS = {
@@ -36,7 +34,7 @@ const ACTIONS = {
     CHANGE_PRICE : "CHANGE_PRICE",
     CHANGE_TAGS : "CHANGE_TAGS",
     CHANGE_TAGS_SUGGESTIONS : "CHANGE_TAGS_SUGGESTIONS",
-    CHANGE_TITLE : "CHANGE_ TITLE",
+    CHANGE_TITLE : "CHANGE_TITLE",
     CHANGE_VIEWING_FORM : "CHANGE_VIEWING_FORM",
     CHANGE_AREA : "CHANGE_AREA",
     CHANGE_PHOTOS: "CHANGE_PHOTOS"

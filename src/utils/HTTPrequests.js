@@ -214,6 +214,23 @@ const updateSpace = async (spaceId, values) =>{
     }
 }
 
+const deletePhoto = async (photo, spaceId) => {
+    try {
+        const response = await axios({
+            method: "DELETE",
+            url: "http://127.0.0.1:4000/space/photos",
+            data: {
+                photo,
+                spaceId
+            }
+        })
+        return response.data
+    }
+    catch(err){
+        throw err
+    }
+}
+
 export {
     userRegister,
     getDataUser,
@@ -227,4 +244,5 @@ export {
     postComment,
     postPhotosFiles,
     updateSpace,
+    deletePhoto
 }

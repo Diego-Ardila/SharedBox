@@ -1,91 +1,96 @@
-import React, { useRef } from "react"
-import styled from "styled-components"
+import React from "react"
 import TagManager from "./tagsManager"
 import {useSelector, useDispatch} from "react-redux"
-import { changeDescription, changePublishAreaView } from "../../actions/publishArea.actions"
+import { changeDescription, changePublishAreaView, changeTitle } from "../../actions/publishArea.actions"
+import { Container, Row,  Form, Button } from "react-bootstrap"
+import {ArrowLeft} from 'react-bootstrap-icons';
+import { Formik } from "formik"
+import * as Yup from "yup"; 
 
-const base = {
-    formClass : "descriptionForm",
-    textAreaId: "descriptionTextArea"
-}
-
-const FormWrapper = styled.section`
-    background: linear-gradient(180deg, #FFF9F4 1.12%, #B0CAC7 100%);
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25), -4px -8px 2px rgba(248, 239, 239, 0.25);
-    width: 528px;
-    height: 701px;
-    left: 74px;
-    top: 133px;
-    display: flex ;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    font-weight: bold;
-    flex-direction: column;
-`
-const TextAreaDesc = styled.input`
-    width: 310px;
-    height: 210px;
-    left: 455px;
-    top: 682px;
-    background: #318FB5;
-    opacity: 0.4;
-    border-radius: 40px;
-    text-align: center;
-    outline: none;
-    color: #001244;
-    font-weight: bold;
-    &:hover{
-        box-shadow: 0 0 3pt 2pt #B0CAC7;
-        opacity: 0.7;
-    }
-    &:focus{
-        box-shadow: 0 0 3pt 2pt #B0CAC7;
-        opacity: 0.7;
-    }
-`
-const NextButton = styled.button`
-    background: #001244;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25), -2px -4px 2px rgba(243, 240, 240, 0.4);
-    width: 155px;
-    height: 43px;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    line-height: 24px;
-    text-align: center;
-    color: #FFF9F4;
-    margin: 24px;
-    border-radius: 40px;
-`
+const FormSchema = Yup.object().shape({  
+    additionalInfo: Yup.string()
+    .required("Required Field")
+    .min(10,"your description must be at least 10 characters")
+    .max(200, "your description cannot be longer than 200 characters"),
+    title: Yup.string()
+    .required("required field")
+    .min(10, "your title should be at least 10 characters")
+    .max(100, "isn´t to long? your title should")
+})
 
 export default function DescriptionForm () {
     
     const dispatch = useDispatch()
-    const textAreaDesc = useSelector(state => state.publishAreaReducer.textAreaDesc)
-    const textArea = useRef()
-
-    const handleChange = (action, input) => {
-        return (event) => dispatch(action(input.current.value))
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const additionalInfo = useSelector(state => state.publishAreaReducer.textAreaDesc)
+    const title = useSelector(state => state.publishAreaReducer.title)
+    
+    const handleSubmit = (values) => {
+        dispatch(changeDescription(values.additionalInfo))
+        dispatch(changeTitle(values.title))
         dispatch(changePublishAreaView(4))
     }
-    
+
+    const redirectBack = () => dispatch(changePublishAreaView(2))
+
     return (
-       <FormWrapper>
-           <h1>Now tell us more about what a tenant could expect:</h1>
-           <h5>add some tags that describes your space! <br></br> it will be easier for tenants to find you<br></br>psst... pro tip, add at least 3</h5>
-           <TagManager></TagManager>
-           <p>{`________________________<o>________________________`}</p>
-           <h5>something more to say? add any additional info <br></br> that can be useful for your clients</h5>
-           <form className = {base.formClass} onSubmit = {handleSubmit}>
-                <TextAreaDesc type="textarea" ref = {textArea} id={base.textAreaId} value={textAreaDesc} onChange ={handleChange(changeDescription, textArea)}></TextAreaDesc>
-                <br></br>
-                <NextButton type="submit" value="submit">next</NextButton>
-           </form>
-       </FormWrapper> 
+        <Formik
+            initialValues= {{additionalInfo, title}}
+            onSubmit = {handleSubmit}
+            validationSchema = {FormSchema}
+        >
+        {({
+        handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setValues
+            }) => ( 
+                <Container>
+                    <Form onSubmit = {handleSubmit} noValidate>
+                        <Row md={{span: 4, offset: 4}} lg={{span: 4, offset: 4}}>
+                            <Button variant="primary" size="lg" onClick={redirectBack}>
+                                <ArrowLeft />
+                            </Button>
+                        </Row>
+                        <Row className="justify-content-center">
+                            <h3>
+                                <p className="text-center">Now tell us more about what a tenant could expect:
+                                </p>
+                            </h3>
+                            <h6>
+                                <p className="text-center">
+                                add some tags that describes your space! it will be easier for tenants to find you psst... pro tip, add at least 3
+                                </p>
+                            </h6>
+                            <TagManager></TagManager>
+                        </Row>
+                        <Row className="justify-content-center">
+                            <Form.Group controlId="title">
+                                <Form.Label>TITLE</Form.Label>
+                                <Form.Control name="title" type="text" placeholder="a cool title for your space"  value={values.title} onChange ={handleChange} />
+                                <Form.Text className="text-muted">
+                                    an appealing title enhance your changes of being selected.
+                                </Form.Text>
+                                {touched.title && errors.title ? (
+                                <div className="error-message">{errors.title}</div>
+                            ): null}
+                            </Form.Group>
+                            <Form.Group controlId="additionalInfo">
+                                <Form.Label>ADDITIONAL INFO</Form.Label>
+                                <Form.Control name="additionalInfo" type="textarea" placeholder="a short description"  value={values.additionalInfo} onChange ={handleChange} />
+                                <Form.Text className="text-muted">
+                                    this description will be used as keywords for users to find you. You should Think with which words do you want your users to be able to find you. 
+                                </Form.Text>
+                                {touched.additionalInfo && errors.additionalInfo ? (
+                                <div className="error-message">{errors.additionalInfo}</div>
+                            ): null}
+                            </Form.Group>                                
+                        </Row>
+                        <Row className="justify-content-center">
+                            <Button variant="primary" size="md" type="submit">
+                                Next
+                            </Button>
+                        </Row>
+                    </Form>
+                </Container>
+            )
+        }
+        </Formik>
     )
 }
