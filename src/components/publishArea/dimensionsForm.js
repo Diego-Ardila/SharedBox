@@ -63,7 +63,7 @@ export default function BasicSpaceInfo (){
                         <h3>Tell us a little more about your space:</h3>
                         <Form.Group controlId={base.widthId}>
                             <Form.Label>Width</Form.Label>
-                            <Form.Control name="width" min={0} max={200} type="range" onChange ={handleChange} value ={values.width} />
+                            <Form.Control name="width" min={0} max={40} type="range" onChange ={handleChange} value ={values.width} />
                             <Badge pill variant="primary">
                             {(values.width || 0) + ' mts'}
                             </Badge>{' '}
@@ -73,7 +73,7 @@ export default function BasicSpaceInfo (){
                         </Form.Group>
                         <Form.Group controlId={base.lengthId}>
                             <Form.Label>Length</Form.Label>
-                            <Form.Control name="length" min={0} max={200} type="range" onChange ={handleChange} value ={values.length} />
+                            <Form.Control name="length" min={0} max={40} type="range" onChange ={handleChange} value ={values.length} />
                             <Badge pill variant="primary">
                             {(values.length || 0) + ' mts'}
                             </Badge>

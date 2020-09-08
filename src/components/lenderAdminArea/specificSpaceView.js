@@ -8,6 +8,7 @@ import { ArrowLeftShort } from "react-bootstrap-icons"
 import styled from "styled-components"
 import {useDispatch} from 'react-redux'
 import {changePhotos} from '../../actions/publishArea.actions'
+import { useEffect } from "react";
 
 const RoundedBttn = styled.button`
     cursor: pointer;
@@ -23,7 +24,11 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
     const dispatch = useDispatch()
     const [showModal,setShowModal] = useState(false)
     const renderingSpace = spaces.find( space => space._id === spaceId)
-    dispatch(changePhotos(renderingSpace.photos))
+    useEffect(()=>{
+      dispatch(changePhotos(renderingSpace.photos))
+    },[])
+    
+    
     
     return(
         <React.Fragment>
