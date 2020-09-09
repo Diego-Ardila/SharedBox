@@ -18,7 +18,7 @@ const Space = ({ space, infoFunction }) => {
     </Carousel.Item>
   );
   const carouselBadges = space.spaceTags.map(element => 
-    <Badge variant="info">{element.name}</Badge>
+    <Badge key={element.name} variant="info">{element.name}</Badge>
   );
   return (
     <Card className="mt-4">
