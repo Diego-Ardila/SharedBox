@@ -38,8 +38,6 @@ export default function FrequentAskedQuestions (props) {
                 </Row>
                 </Form>
             </Container>
-           
-            
         </div>
     )
 }
