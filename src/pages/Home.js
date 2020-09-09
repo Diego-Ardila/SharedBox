@@ -24,6 +24,7 @@ const Home = () => {
   
   
   useEffect(()=>{
+    console.log(locationQuery.search)
     async function getspaces () {
       try{
         const spaces = await getFilterSpaces(locationQuery.search)
@@ -55,9 +56,11 @@ const Home = () => {
       dispatch(changeRendering())
   }  
 
-  const infoFunction = () => {
-  
+  const infoFunction = (spaceId) => {
+    console.log(spaceId)
+    return ()  => window.open(`http://localhost:3000/space?_id=${spaceId}`)
   }
+
   return (
     <Container>
       <SearchForm showButton={search.specificSearch} onSubmit={handleSubmit} />

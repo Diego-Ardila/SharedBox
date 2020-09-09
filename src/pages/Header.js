@@ -16,7 +16,6 @@ const Header = () => {
   const homecoming =()=>{
     dispatch(changeRendering())
     dispatch(changeSpecificSearch())
-
   }
 
   return (

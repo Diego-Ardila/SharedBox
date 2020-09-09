@@ -2,11 +2,10 @@ import React, {useState} from "react"
 import {Card, Button, Accordion, Badge, Form} from "react-bootstrap"
 import { Pencil } from "react-bootstrap-icons"
 import { Formik } from "formik"
-import * as Yup from "yup";
 import { updateSpace } from "../../utils/HTTPrequests";
 import swal from 'sweetalert';
 
-export default function GeneralInfoAdministrator ({space}) {
+export default function GeneralInfoAdministrator ({space, edit}) {
     const [isUpdatingState, setIsUpdatingState] = useState(false)
     
     const handleSubmit = async values => {
@@ -162,7 +161,7 @@ export default function GeneralInfoAdministrator ({space}) {
                             </Accordion.Collapse>
                         </Card>
                         </Accordion>
-                    <Button  type={isUpdatingState ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => buttonBehavior()} >{isUpdatingState? "save" : "edit"}<Pencil></Pencil></Button>
+                    {edit ? <Button  type={isUpdatingState ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => buttonBehavior()} >{isUpdatingState? "save" : "edit"}<Pencil></Pencil></Button> : null}
                     </Card.Body>
                     <Card.Footer className="text-muted">{`created ${Date(space.createdAt)}`}</Card.Footer>
                 </Card>
