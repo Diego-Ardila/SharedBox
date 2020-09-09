@@ -1,9 +1,10 @@
 import React from 'react';
 import { Form, Col, Button, Badge} from 'react-bootstrap';
+import {X} from 'react-bootstrap-icons'
 import { Search } from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from "react-redux";
-import { changeHeight, changeWidth, changeLength, changePricePerDay, changePricePerMonth} from '../actions/searchForm.actions';
-import { Formik } from 'formik';
+import { changeHeight, changeWidth, changeLength, changeTags, changePricePerDay, changePricePerMonth } from '../actions/searchForm.actions';
+import { Formik, Field } from 'formik';
 import * as Yup from "yup";
 
 
@@ -11,6 +12,7 @@ const base = {
   heightId: "view-height",
   widthId: "view-width",
   lengthId: "view-length",
+  tagsId: "view-tags",
   pricePerDayId: "view-price-day",
   pricePerMonthId: "view-price-month"
 }  
@@ -20,6 +22,7 @@ const base = {
 const SearchAdvancedForms = (props) => {
 
   const dispatch = useDispatch()
+  
 
   const handleInternalSubmit = (values, errors) => {
     props.onSubmit()
@@ -52,6 +55,37 @@ const SearchAdvancedForms = (props) => {
     setValues(toUpdate)
   }
 
+  const handleKeyDown = (e, setFieldValue) => {
+    if (["Enter", "Tab", ","].includes(e.key)) {
+      e.preventDefault();
+      let tag = {};
+      var value = e.target.value.trim();
+      if (value){
+        tag['name'] = value;      
+        const newTags = [].concat(tags, {id: tags.length + 1, ...tag });
+        dispatch(changeTags(newTags));
+        setFieldValue("tags","")
+      }
+    }
+  };
+  
+  const handleDelete = item => {
+    const newTags = tags.filter(elem => elem.id !== item)
+    dispatch(changeTags(newTags))
+  };
+
+  const handlePaste = e => {
+    e.preventDefault();
+    var paste = e.clipboardData.getData("text");  
+    let tag = {};
+      var value = paste.trim();
+      if (value){
+        tag['name'] = value;      
+        const newTags = [].concat(tags, {id: tags.length + 1, ...tag });
+        dispatch(changeTags(newTags));
+      }
+  };
+
   const FormSchema = Yup.object().shape({
     pricePerDay: Yup.number().typeError('Value must be a number').required("Required Field"),
     pricePerMonth: Yup.number().typeError('Value must be a number').required("Required Field")    
@@ -61,18 +95,19 @@ const SearchAdvancedForms = (props) => {
   const height = useSelector(state => state.searchFormReducer.height)
   const width = useSelector(state => state.searchFormReducer.width)
   const length = useSelector(state => state.searchFormReducer.length)
+  const tags = useSelector(state => state.searchFormReducer.tags)
   
   
   return (
     <Formik 
-      initialValues = {{height:height, width: width, length: length}}
+      initialValues = {{tags: tags, height:height, width: width, length: length}}
       validationSchema = {FormSchema}
       onSubmit = {handleInternalSubmit} >
     {({
       handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setValues
     }) => (
         <Form className="row justify-content-center mt-3" onSubmit={handleSubmit} noValidate>
-          <Form.Row className="col-lg-10">
+          <Form.Row className="col-lg-12">
             <Col >
               <Form.Group controlId={base.heightId}>
                 <Form.Label>Height</Form.Label>
@@ -90,6 +125,30 @@ const SearchAdvancedForms = (props) => {
                   {values.width || 0}
                 </Badge>{' '}
               </Form.Group>
+            </Col>
+            <Col>
+              <Field name="tags" type="text" id="tags">
+                {({ field: {value}, form: {handleChange, setFieldValue} }) => (
+                  <>                  
+                  <Form.Group controlId={base.tagsId}>
+                    <Form.Label>Tags</Form.Label>
+                    <Form.Row>
+                    {tags && tags.length > 0 ? tags.map(item => (                     
+                      <Col>
+                        <div key={item.id}>
+                          <Badge variant="info">
+                            <h6>{item.name}</h6>
+                            <Button size="sm" onClick={() => handleDelete(item.id)}><X size={10} /></Button>
+                          </Badge>
+                        </div>
+                      </Col>                 
+                     )) : null} 
+                    </Form.Row>
+                    <Form.Control name = "tags" type="text" className={"input " + (errors.tags && " has-error")} value={values.tags} placeholder="Type tags" onKeyDown={(e) => handleKeyDown(e,setFieldValue)} onChange={handleChange}onPaste={handlePaste} />                  
+                  </Form.Group>            
+                  </>
+                )}              
+              </Field> 
             </Col>
             <Col>
               <Form.Group controlId={base.lengthId}>

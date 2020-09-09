@@ -9,6 +9,7 @@ const tomorrowString =  `${tomorrow.getFullYear()}-${tomorrowMonth < 10 ? "0"+ t
 
 
 let initialState={
+  title: "",
   area: "",
   location:"",
   initialDate: todayString,
@@ -16,6 +17,7 @@ let initialState={
   height: 20,
   width: 20,
   length:20,
+  tags: [],
   pricePerDay: 0,
   pricePerMonth:0,
   rendering: false,
@@ -23,6 +25,7 @@ let initialState={
 }
 
 const ACTIONS = {
+  CHANGE_TITLE : "CHANGE_TITLE",
   CHANGE_AREA : "CHANGE_AREA",
   CHANGE_LOCATION : "CHANGE_LOCATION",
   CHANGE_INITIAL_DATE : "CHANGE_INITIAL_DATE",
@@ -30,6 +33,7 @@ const ACTIONS = {
   CHANGE_HEIGHT : "CHANGE_HEIGHT",
   CHANGE_WIDTH : "CHANGE_WIDTH",
   CHANGE_LENGTH : "CHANGE_LENGTH",
+  CHANGE_TAGS : "CHANGE_TAGS",
   CHANGE_PRICE_PER_DAY : "CHANGE_PRICE_PER_DAY",
   CHANGE_PRICE_PER_MONTH : "CHANGE_PRICE_PER_MONTH",
   CHANGE_RENDERING : "CHANGE_RENDERING",
@@ -38,6 +42,11 @@ const ACTIONS = {
 
 const searchFormReducer = (state = initialState, action) => {
   switch(action.type){
+    case ACTIONS.CHANGE_TITLE:
+      return {
+        ...state,
+        title: action.payload
+      }
     case ACTIONS.CHANGE_AREA:
       return {
         ...state,
@@ -72,6 +81,11 @@ const searchFormReducer = (state = initialState, action) => {
       return {
         ...state,
         length: action.payload
+      } 
+    case ACTIONS.CHANGE_TAGS:
+      return {
+        ...state,
+        tags: action.payload
       } 
     case ACTIONS.CHANGE_PRICE_PER_DAY:
       return {
