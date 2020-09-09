@@ -32,7 +32,7 @@ const Space = ({ space, infoFunction }) => {
         </Col>
         <Col lg={8} md={8}>
           <Card.Body>
-            <Card.Title>{space.title.toUpperCase()}</Card.Title>
+            <Card.Title>{`${space.title.toUpperCase()} ${space.area}mts2`}</Card.Title>
               <Card.Subtitle>Dimensions</Card.Subtitle>
               <Card.Text>Width: {space.width} Length:{space.length} Height:{space.height}</Card.Text>
               <Card.Subtitle>Location</Card.Subtitle>
