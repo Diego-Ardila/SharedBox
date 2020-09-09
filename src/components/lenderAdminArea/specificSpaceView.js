@@ -44,7 +44,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
             <Row className="row justify-content-center p-3">
               <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
                 <h2>{renderingSpace.title}</h2>
-                <PhotosAdministrator className =" position-relative" space={renderingSpace}>
+                <PhotosAdministrator className =" position-relative">
                   {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
                 </PhotosAdministrator>
                 <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
@@ -56,7 +56,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               </Row>
               <Row className="row justify-content-center p-3">
                 <Col className="col-12 d-inline-flex flex-column justify-content-center">
-                  <FAQadministrator></FAQadministrator>
+                  <FAQadministrator space={renderingSpace}></FAQadministrator>
                 </Col>
               </Row>
             </React.Fragment>

@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import {Carousel} from "react-bootstrap"
 import { useSelector } from "react-redux"
 
-export default function PhotosAdministrator ({space, children}) {
+export default function PhotosAdministrator ({ children }) {
     const photos = useSelector(state => state.publishAreaReducer.photos)
 
     const spacePhotos = photos.map( link =>

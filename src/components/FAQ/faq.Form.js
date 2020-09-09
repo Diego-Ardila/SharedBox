@@ -46,7 +46,7 @@ export default function FrequentAskedQuestionsForm (props) {
         event.preventDefault()
         Axios({
             method: "POST",
-            url: "http://127.0.0.1:8000/queAns",
+            url: "http://127.0.0.1:4000/queAns",
             data: {newFaqs}
         })
         .then(({data})=> data)

@@ -1,8 +1,9 @@
 import React, { useState } from "react"
 
-export default function FAQadministrator({frequentlyAskedQuestions}) {
-    const [FAQarr, setFAQarr] = useState(frequentlyAskedQuestions)
+export default function FAQadministrator({ space }) {
+    const [FAQarr, setFAQarr] = useState(space.faqs)
+
     return (
-        <h1>testing</h1>
+        <h1>test</h1>
     )
 }
