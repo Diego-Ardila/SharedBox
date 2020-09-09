@@ -1,5 +1,5 @@
-import React from "react"
-import axios from "axios"
+import React,{ useState } from "react"
+import { loginUser } from "../../utils/HTTPrequests"
 import {Formik} from "formik"
 import * as Yup from "yup";
 import { Container, Card, Form, Button, Col, Image } from "react-bootstrap"
@@ -7,6 +7,8 @@ import Logo from "../../logo.svg";
 import { useDispatch } from "react-redux";
 import { changeLogin } from '../../actions/loginUser.actions'
 import { Link, useHistory } from 'react-router-dom';
+import swal from 'sweetalert'
+
 
 
 const base = {
@@ -16,44 +18,59 @@ const base = {
     submitId: "login-submit"
 }
 
-function LoginForm (props) {
+function LoginForm () {
     const dispatch = useDispatch()
     let history = useHistory();
-
+    const [typeUser,setTypeUser]= useState(localStorage.getItem("typeUser")||"tenant")
+    
     const formSchema = Yup.object().shape({
         email: Yup.string().email().typeError('invalid Email').required("Required Field"),
         password: Yup.string().required("Required Field")   
       })    
+
+    const changeTypeUser = (event,errors) =>{
+        
+        switch (event.target.name){
+            case "changeTenant":
+                localStorage.setItem("typeUser","tenant")
+                setTypeUser(localStorage.getItem("typeUser"))
+                errors.email = false
+                errors.password = false
+                break
+            
+            case "changeLender":
+                localStorage.setItem("typeUser","lender")
+                setTypeUser(localStorage.getItem("typeUser"))
+                errors.email = false
+                errors.password = false
+                break
+        }
+    } 
     
     const handleSubmit = async (values, {setErrors}) =>  {
-        try {            
-            const response = await axios({
-                 method:"POST",
-                 url: "http://127.0.0.1:4000/lender/login",
-                 data:{
-                     email: values.email,
-                     password: values.password
-                 }
-             })
-             localStorage.setItem("token", response.data)
-             dispatch(changeLogin(true))
-             history.push("/lender/profile")
-        }catch(error) {
-            console.dir(error)
+        try { 
+        const token = await loginUser(values,typeUser)
+        localStorage.setItem("typeUser",typeUser)
+        localStorage.setItem("token",token)
+        dispatch(changeLogin(true))
+        history.push("/home")
+        }
+        catch(error) {
             if(error.response.status === 400) {
-                setErrors({"password": error.response.data , "email": error.response.data})  
+                setErrors({"password":  "Password Incorrect", "email":"Email Incorrect"})
             }  
             if (error.response.status === 401){
-                setErrors({"password": "Failed Authentication" , "email": "Failed Authentication"})     
+                setErrors({"password": " " , "email": " "})
+                swal("Login Failed", "Failed authentication, please try again", "error")     
             }
             if(error.message === "Network Error") { 
-                setErrors({"password": "Failed connection to dataServer, check your connection to the internet and try again later"  , "email": "Failed connection to dataServer, check your connection to the internet and try again later" })
-            }            
-        }   
+                setErrors({"password": " "  , "email": " " })
+                swal("Login Failed", "Failed connection to dataServer, check your connection to the internet and try again later", "error")  
+            } 
+        }
     }
 
     return (
-
         <Formik 
             initialValues = {{email: "" ,password: ""}}
             validationSchema = {formSchema}
@@ -65,6 +82,14 @@ function LoginForm (props) {
                         <Form.Row className="justify-content-center">
                             <Col sm={6} md={4} className="justify-content-center">
                                 <Image style= {{width: 187, height:64}} src={Logo} alt="logo"></Image>
+                            </Col>
+                        </Form.Row>
+                        <Form.Row className="justify-content-center m-4">
+                            <Col className="col-lg-3">
+                                <Button name="changeLender" variant={typeUser==="lender"?"secondary":"primary"} disabled={typeUser==="lender"} onClick={(e)=>changeTypeUser(e,errors)} block>As a lender</Button>
+                            </Col>
+                            <Col className="col-lg-3">
+                            <Button name="changeTenant" variant={typeUser==="tenant"?"secondary":"primary"} disabled={typeUser==="tenant"} onClick={(e)=>changeTypeUser(e,errors)} block>As a tenant</Button>
                             </Col>
                         </Form.Row>
                         <Form.Row className="justify-content-center" >

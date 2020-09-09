@@ -1,5 +1,12 @@
 import { ACTIONS } from '../reducers/searchFormReducer';
 
+export const changeTitle = (payload) => {
+  return {
+      type: ACTIONS.CHANGE_TITLE,
+      payload
+  }
+}
+
 export const changeArea = (payload) => {
   return {
       type: ACTIONS.CHANGE_AREA,
@@ -45,6 +52,13 @@ export const changeWidth = (payload) => {
 export const changeLength = (payload) => {
   return {
       type: ACTIONS.CHANGE_LENGTH,
+      payload
+  }
+}
+
+export const changeTags = (payload) => {
+  return {
+      type: ACTIONS.CHANGE_TAGS,
       payload
   }
 }
