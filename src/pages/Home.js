@@ -37,7 +37,6 @@ const Home = () => {
   },[rendering])
   
    const handleSubmit = () => {
-     console.log(tags.flatMap(elem => [elem.name]).join('-'))
       let qs = {}
         qs.title = title
         qs.area =  `${area}-${parseInt(area)+1000}`
