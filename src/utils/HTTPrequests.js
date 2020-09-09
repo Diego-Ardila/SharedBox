@@ -15,6 +15,20 @@ const userRegister = async (typeUser,values)=>{
     }
 }
 
+const loginUser = async(values,typeUser) => {    
+    try{
+        const response = await axios({
+            method:"POST",
+            url: `http://127.0.0.1:4000/${typeUser}/login`,
+            data:values
+        })
+        return response.data
+    }
+    catch(err){
+        throw err
+    }
+}
+
 const getDataUser = async (typeUser)=>{
     const user = typeUser === "tenant" ? `"${typeUser}"`:``
     try{
@@ -247,6 +261,7 @@ const getFilterSpaces = async (queryString) => {
 
 export {
     userRegister,
+    loginUser,
     getDataUser,
     updateDatauser,
     getSuggestions,
