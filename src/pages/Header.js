@@ -34,7 +34,7 @@ const Header = () => {
               <NavLink to="/lender/logout" className="nav-link">Logout</NavLink>   
                                
             </> 
-          : <NavLink to="/lender/login" className="nav-link">Login</NavLink> }          
+          : <NavLink to="/user/login" className="nav-link">Login</NavLink> }          
         </Nav>
       </Navbar.Collapse>
     </Navbar>

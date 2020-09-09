@@ -3,7 +3,8 @@ import { FilePond, registerPlugin } from 'react-filepond'
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import {useDispatch} from "react-redux"
+
+import {useSelector, useDispatch} from "react-redux"
 import {changePhotos, changePublishAreaView} from "../../actions/publishArea.actions"
 import {Container, Form, Row,  Button} from 'react-bootstrap'
 import {ArrowLeft} from 'react-bootstrap-icons';
@@ -23,6 +24,7 @@ const FormSchema = Yup.object().shape({
 
 export default function PhotosUploadForm () {
     const dispatch = useDispatch()
+    const photos = useSelector(state => state.publishAreaReducer.photos)
     const arrFiles = []
     
     const handleSubmit = (values) => {
@@ -38,7 +40,7 @@ export default function PhotosUploadForm () {
     
     return(
         <Formik 
-        initialValues = {{files: []}}
+        initialValues = {{files: photos}}
         validationSchema = {FormSchema}
         onSubmit = {handleSubmit} >   
         {({

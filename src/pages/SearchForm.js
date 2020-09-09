@@ -4,12 +4,14 @@ import { Search } from 'react-bootstrap-icons';
 import { useSelector, useDispatch } from "react-redux";
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import { changeArea, 
+import { changeTitle, 
+  changeArea, 
   changeLocation, 
   changeInitialDate, 
   changeFinalDate, 
   changeSpecificSearch} from '../actions/searchForm.actions';
 const base = {
+  titleId: "home-title",
   areaId: "home-area",
   locationId: "home-location",
   initialDateId: "home-initial-date",
@@ -28,6 +30,9 @@ const SearchForm = (props) => {
   const customChange= (eventTarget, setValues, values, dispatch) =>{
     let action
     switch(eventTarget.name) {
+      case "title" :
+        action = changeTitle
+        break
       case "area" :
         action = changeArea
         break
@@ -50,6 +55,7 @@ const SearchForm = (props) => {
   }
 
   const formSchema = Yup.object().shape({
+    title: Yup.string().required("Required Field"),
     area: Yup.number().typeError('Value must be a number').required("Required Field"),
     location: Yup.string().required("Required Field"),
     initialDate: Yup.date().required("Required Field"),
@@ -58,6 +64,7 @@ const SearchForm = (props) => {
     ).required("Required Field")    
   })
 
+  const title = useSelector(state => state.searchFormReducer.title)
   const area = useSelector(state => state.searchFormReducer.area)
   const location = useSelector(state => state.searchFormReducer.location)
   const initialDate = useSelector(state => state.searchFormReducer.initialDate)
@@ -65,7 +72,7 @@ const SearchForm = (props) => {
 
   return (
     <Formik
-      initialValues={{ area, location, initialDate ,finalDate}}
+      initialValues={{ title, area, location, initialDate ,finalDate}}
       validationSchema={formSchema}
       onSubmit={handleGeneralSubmit}>     
     {({
@@ -74,6 +81,15 @@ const SearchForm = (props) => {
     }) => (
       <Form className="row justify-content-center mt-3" onSubmit={handleSubmit}  noValidate >
         <Form.Row className="col-lg-10">
+          <Col>
+            <Form.Group controlId={base.titleId}>
+              <Form.Label>Title</Form.Label>
+              <Form.Control className={touched.title && errors.title ? "is-invalid" : null} name="title" type="text" placeholder="Title" onChange ={(e) => customChange(e.target, setValues, values, dispatch) } value={values.title} />
+              {touched.title && errors.title ? (
+                <div className="error-message">{errors.title}</div>
+              ): null}
+            </Form.Group>
+          </Col>
           <Col >
             <Form.Group controlId={base.areaId}>
               <Form.Label>Area</Form.Label>

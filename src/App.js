@@ -22,7 +22,7 @@ function PrivateRoute(props) {
   useEffect(() => {
     const token = localStorage.getItem("token")
     const isValid = true // an axios called to verify the token is required
-    if(!token && isValid) history.push("/lender/login")
+    if(!token && isValid) history.push("/user/login")
   }, [])
 
   return(
@@ -49,7 +49,7 @@ function App() {
         <Switch>
           <Route exact path="/lender/frequentAsked" component={frequentAsked} />
           <Route exact path="/home" component={Home} />
-          <Route exact path="/lender/login" component={Login} />
+          <Route exact path="/user/login" component={Login} />
           <Route exact path="/user/register/" component={register} />
           <Route exact path="/space/" component={Space} />
           <PrivateRoute exact path="/lender/createSpace" component={PublishSpaceArea} />
