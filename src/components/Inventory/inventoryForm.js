@@ -35,7 +35,7 @@ export default function InventoryForm(){
         <Formik initialValues={{object,description,quantity,category}} onSubmit={handleSubmit} validationSchema={validatorForm} >
         {({handleSubmit,handleChange,handleBlur,values,isValid,errors})=>(
             <Form>
-                <Card className = "justify-content-center col-lg-12">
+                <Card className = "justify-content-center col-lg-12 mb-5">
                     <Form.Row  className="justify-content-center">
                         <Col>
                             <Form.Group>
