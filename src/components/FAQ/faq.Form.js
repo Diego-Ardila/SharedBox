@@ -2,7 +2,9 @@ import React, {useState} from "react";
 import {
         Button,
         Form  } from 'react-bootstrap';
-import Axios from "axios";
+import { postFAQs } from "../../utils/HTTPrequests";
+import swal from "sweetalert";
+
 
 
 
@@ -36,21 +38,21 @@ export default function FrequentAskedQuestionsForm (props) {
         setAnswer("");
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
+        event.preventDefault()
        const newFaqs= props.faqs.map(faq=>{
            return{
                ...faq,
                spaceId:props.spaceId
            }
        })
-        event.preventDefault()
-        Axios({
-            method: "POST",
-            url: "http://127.0.0.1:4000/queAns",
-            data: {newFaqs}
-        })
-        .then(({data})=> data)
-        .catch((err)=> err)
+       try{
+           await postFAQs(newFaqs)
+           swal("FAQs saved correctly","your FAQs were saved succesfully","success")
+           props.hideEditFAQ()
+       }catch(err){
+           swal("Upss something went wrong",`${err.message}`,"error")
+       }
     }
 
     return(

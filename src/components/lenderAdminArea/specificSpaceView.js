@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import PhotosAdministrator from './PhotosAdministrator';
 import EditButton from "./EditButton";
 import GeneralInfoAdministrator from "./GeneralInfoAdministrator";
@@ -10,6 +10,7 @@ import {useDispatch} from 'react-redux'
 import {changePhotos} from '../../actions/publishArea.actions'
 import { useEffect } from "react";
 import FAQadministrator from "./FAQadminstrator";
+import FrequentAskedQuestions from "../../pages/frequentAsked";
 
 const RoundedBttn = styled.button`
     cursor: pointer;
@@ -25,6 +26,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   const dispatch = useDispatch()
     const [showModal,setShowModal] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [editFAQ, setEditFAQ] = useState(false)
     const renderingSpace = spaces.find( space => space._id === spaceId)
     
     useEffect(()=>{
@@ -32,7 +34,9 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
       setLoading(false)
     },[])
     
-    
+    const hideEditFAQ = () => {
+      setEditFAQ(false)
+    }
     
     return(
       <React.Fragment>
@@ -57,6 +61,12 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               <Row className="row justify-content-center p-3">
                 <Col className="col-12 d-inline-flex flex-column justify-content-center">
                   <FAQadministrator space={renderingSpace}></FAQadministrator>
+                  {edit && <Button onClick = {() => setEditFAQ(true) }>add FAQ questions</Button>}
+                </Col>
+              </Row>
+              <Row>
+                <Col className="col-12 d-inline-flex flex-column justify-content-center">
+                  {editFAQ && <FrequentAskedQuestions setEditFAQ ={hideEditFAQ} spaceId ={spaceId}></FrequentAskedQuestions>}
                 </Col>
               </Row>
             </React.Fragment>

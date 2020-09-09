@@ -259,6 +259,19 @@ const getFilterSpaces = async (queryString) => {
     }
 } 
 
+const postFAQs = async (newFAQs) => {
+    try{
+        const response = await axios({
+            method: "POST",
+            url: "http://127.0.0.1:4000/queAns",
+            data: {newFAQs}
+        })
+        return response.data
+    }catch(err){
+        throw err
+    }
+}
+
 export {
     userRegister,
     loginUser,
@@ -274,5 +287,6 @@ export {
     postPhotosFiles,
     updateSpace,
     deletePhoto,
-    getFilterSpaces
+    getFilterSpaces,
+    postFAQs,
 }
