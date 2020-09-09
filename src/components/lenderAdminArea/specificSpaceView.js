@@ -11,6 +11,7 @@ import {changePhotos} from '../../actions/publishArea.actions'
 import { useEffect } from "react";
 import FAQadministrator from "./FAQadminstrator";
 import FrequentAskedQuestions from "../../pages/frequentAsked";
+import ModalInventory from "../Inventory/inventoryModal"
 
 const RoundedBttn = styled.button`
     cursor: pointer;
@@ -20,11 +21,10 @@ const RoundedBttn = styled.button`
     z-index:1040;
 `
 
-
-
 export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit}){  
   const dispatch = useDispatch()
-    const [showModal,setShowModal] = useState(false)
+    const [showModalEdit,setShowModalEdit] = useState(false)
+    const [showModalInventory,setShowModalInventory] = useState(false)
     const [loading, setLoading] = useState(true)
     const [editFAQ, setEditFAQ] = useState(false)
     const renderingSpace = spaces.find( space => space._id === spaceId)
@@ -47,11 +47,12 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
             </Row>
             <Row className="row justify-content-center p-3">
               <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
-                <h2>{renderingSpace.title}</h2>
-                <PhotosAdministrator className =" position-relative">
-                  {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
+                <h2>{renderingSpace.title}</h2> {!edit && <Button onClick={()=> setShowModalInventory(true)} >Inventory</Button>}
+                <PhotosAdministrator className =" position-relative" >
+                  {edit ? <EditButton onClick={()=>setShowModalEdit(true)} className="z-index-3"></EditButton> : null}
                 </PhotosAdministrator>
-                <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
+                <ModalInventory show={showModalInventory} onHide={()=>setShowModalInventory(false)} ></ModalInventory>
+                <PhotosEditor show={showModalEdit} onHide={()=>setShowModalEdit(false)}  space={renderingSpace} ></PhotosEditor>
                 <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
               </Col>
               <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">

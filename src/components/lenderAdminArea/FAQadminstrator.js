@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Card, Accordion } from "react-bootstrap"
 
 export default function FAQadministrator({ space }) {
-    const [FAQarr] = useState( space.faqs )
+    const [FAQarr] = useState( space.faqs || [] )
 
     return (
         <React.Fragment>
