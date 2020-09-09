@@ -9,6 +9,7 @@ import styled from "styled-components"
 import {useDispatch} from 'react-redux'
 import {changePhotos} from '../../actions/publishArea.actions'
 import { useEffect } from "react";
+import FAQadministrator from "./FAQadminstrator";
 
 const RoundedBttn = styled.button`
     cursor: pointer;
@@ -27,7 +28,6 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
     const renderingSpace = spaces.find( space => space._id === spaceId)
     
     useEffect(()=>{
-      console.log(spaces,spaceId)
       dispatch(changePhotos(renderingSpace.photos))
       setLoading(false)
     },[])
@@ -52,8 +52,12 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               </Col>
               <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
                 <h1>calendar</h1>
-                <h1>QA</h1>
               </Col>
+              </Row>
+              <Row className="row justify-content-center p-3">
+                <Col className="col-12 d-inline-flex flex-column justify-content-center">
+                  <FAQadministrator></FAQadministrator>
+                </Col>
               </Row>
             </React.Fragment>
         )}

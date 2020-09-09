@@ -125,7 +125,7 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                             </Card.Header>
                             <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "2"}>
                             <Card.Body>
-                                {space.spaceTags.map(({name}) => <Badge variant="secondary">{name}</Badge>)}
+                                {space.spaceTags.map(({name}) => <Badge key={name} variant="secondary">{name}</Badge>)}
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>
