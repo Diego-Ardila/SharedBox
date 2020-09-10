@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Container } from 'react-bootstrap';
 import PhotosAdministrator from './PhotosAdministrator';
 import EditButton from "./EditButton";
 import GeneralInfoAdministrator from "./GeneralInfoAdministrator";
@@ -11,6 +11,7 @@ import {changePhotos} from '../../actions/publishArea.actions'
 import { useEffect } from "react";
 import FAQadministrator from "./FAQadminstrator";
 import FrequentAskedQuestions from "../../pages/frequentAsked";
+import Calendar from "../viewSpaces/calendar";
 
 const RoundedBttn = styled.button`
     cursor: pointer;
@@ -32,17 +33,21 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
     useEffect(()=>{
       dispatch(changePhotos(renderingSpace.photos))
       setLoading(false)
+      // document.getElementById("start_date_id").click()
     },[])
     
     const hideEditFAQ = () => {
       setEditFAQ(false)
+    }
+    const setReservationDates = () => {
+
     }
     
     return(
       <React.Fragment>
         {loading ? "loading" : (
           <React.Fragment>
-            <Row>
+            <Row className="m-2">
                 <RoundedBttn className="ml-4" onClick={changeViewToDisplay()}><ArrowLeftShort size={30}></ArrowLeftShort></RoundedBttn>
             </Row>
             <Row className="row justify-content-center p-3">
@@ -54,12 +59,14 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
                 <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
                 <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
               </Col>
-              <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
-                <h1>calendar</h1>
+              <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column justify-content-center">
+                <Container style={{float: 'right', padding: 10, display:"absolute", top:0, right:0}}>
+                  <Calendar space={renderingSpace} setReservationDates={setReservationDates}></Calendar>
+                </Container>
               </Col>
               </Row>
               <Row className="row justify-content-center p-3">
-                <Col className="col-12 d-inline-flex flex-column justify-content-center">
+                <Col className="col-12 d-inline-flex flex-column">
                   <FAQadministrator space={renderingSpace}></FAQadministrator>
                   {edit && <Button onClick = {() => setEditFAQ(true) }>add FAQ questions</Button>}
                 </Col>
