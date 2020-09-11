@@ -20,7 +20,7 @@ const Home = () => {
   const locationQuery = useLocation();
   const spaces = useSelector(state => state.viewSpacesReducer.spaces);
   const search = useSelector(state => state.searchFormReducer);
-  const {area, location, initialDate, finalDate, height, width, length, pricePerDay, pricePerMonth, specificSearch, rendering} = search; 
+  const {title, area, location, initialDate, finalDate, height, width, length, tags, pricePerDay, pricePerMonth, specificSearch, rendering} = search; 
   
   
   useEffect(()=>{
@@ -38,7 +38,8 @@ const Home = () => {
   
    const handleSubmit = () => {
       let qs = {}
-        qs.area =  `${area}-1600`
+        qs.title = title
+        qs.area =  `${area}-${parseInt(area)+1000}`
         qs.location = location.toUpperCase()
         qs.inDate = initialDate
         qs.finDate = finalDate 
@@ -47,6 +48,7 @@ const Home = () => {
         qs.height= `${height}-20`
         qs.width= `${width}-40`
         qs.length= `${length}-40`
+        qs.tag= tags.flatMap(elem => [elem.name]).join('-')      
         qs.pricePerDay= pricePerDay
         qs.pricePerMonth= pricePerMonth
       }           
