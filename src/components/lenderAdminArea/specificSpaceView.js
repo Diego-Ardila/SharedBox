@@ -23,69 +23,69 @@ const RoundedBttn = styled.button`
 
 
 
-export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit}){  
+export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit, instartDate, inendDate}){  
   const dispatch = useDispatch()
-    const [showModal,setShowModal] = useState(false)
-    const [loading, setLoading] = useState(true)
-    const [editFAQ, setEditFAQ] = useState(false)
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
-    const renderingSpace = spaces.find( space => space._id === spaceId)
+  const [showModal,setShowModal] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [editFAQ, setEditFAQ] = useState(false)
+  const [startDate, setStartDate] = useState(instartDate)
+  const [endDate, setEndDate] = useState(inendDate)
+  const renderingSpace = spaces.find( space => space._id === spaceId)
     
-    useEffect(()=>{
-      dispatch(changePhotos(renderingSpace.photos))
-      setLoading(false)
-    },[])
-    
-    const hideEditFAQ = () => {
-      setEditFAQ(false)
-    }
+  useEffect(()=>{
+    dispatch(changePhotos(renderingSpace.photos))
+    setLoading(false)
+  },[])
+  
+  const hideEditFAQ = () => {
+    setEditFAQ(false)
+  }
 
-    const settingDates = (startDate, endDate) => {
-      setStartDate(startDate)
-      setEndDate(endDate)
-    }
-    
-    return(
-      <React.Fragment>
-        {loading ? "loading" : (
-          <React.Fragment>
-            <Row className="m-2">
-                <RoundedBttn className="ml-4" onClick={changeViewToDisplay()}><ArrowLeftShort size={30}></ArrowLeftShort></RoundedBttn>
+  const settingDates = (startDate, endDate) => {
+    setStartDate(startDate)
+    setEndDate(endDate)
+  }
+  
+  return(
+    <React.Fragment>
+      {loading ? "loading" : (
+        <React.Fragment>
+          <Row className="m-2">
+              <RoundedBttn className="ml-4" onClick={changeViewToDisplay()}><ArrowLeftShort size={30}></ArrowLeftShort></RoundedBttn>
+          </Row>
+          <Row className="row justify-content-center p-3">
+            <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
+              <h2>{renderingSpace.title}</h2>
+              <PhotosAdministrator className =" position-relative">
+                {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
+              </PhotosAdministrator>
+              <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
+              <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
+            </Col>
+            <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column justify-content-center">
+              <Container className="text-center m-3">
+                <Calendar 
+                space={renderingSpace} 
+                startDate={startDate}
+                endDate={endDate}
+                settingDates = {settingDates}
+                ></Calendar>
+              </Container>
+            </Col>
             </Row>
             <Row className="row justify-content-center p-3">
-              <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
-                <h2>{renderingSpace.title}</h2>
-                <PhotosAdministrator className =" position-relative">
-                  {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
-                </PhotosAdministrator>
-                <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
-                <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
+              <Col className="col-12 d-inline-flex flex-column">
+                <FAQadministrator space={renderingSpace}></FAQadministrator>
+                {edit && <Button onClick = {() => setEditFAQ(true) }>add FAQ questions</Button>}
               </Col>
-              <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column justify-content-center">
-                <Container className="text-center m-3">
-                  <Calendar 
-                  space={renderingSpace} 
-                  startDate={startDate}
-                  endDate={endDate}
-                  settingDates = {settingDates}
-                  ></Calendar>
-                </Container>
+            </Row>
+            <Row>
+              <Col className="col-12 d-inline-flex flex-column justify-content-center">
+                {editFAQ && <FrequentAskedQuestions setEditFAQ ={hideEditFAQ} spaceId ={spaceId}></FrequentAskedQuestions>}
               </Col>
-              </Row>
-              <Row className="row justify-content-center p-3">
-                <Col className="col-12 d-inline-flex flex-column">
-                  <FAQadministrator space={renderingSpace}></FAQadministrator>
-                  {edit && <Button onClick = {() => setEditFAQ(true) }>add FAQ questions</Button>}
-                </Col>
-              </Row>
-              <Row>
-                <Col className="col-12 d-inline-flex flex-column justify-content-center">
-                  {editFAQ && <FrequentAskedQuestions setEditFAQ ={hideEditFAQ} spaceId ={spaceId}></FrequentAskedQuestions>}
-                </Col>
-              </Row>
-            </React.Fragment>
-        )}
-      </React.Fragment>
+            </Row>
+          </React.Fragment>
+      )}
+    </React.Fragment>
   )
 }
