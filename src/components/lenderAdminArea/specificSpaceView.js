@@ -63,7 +63,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
                 <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
               </Col>
               <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column justify-content-center">
-                <Container style={{float: 'right', padding: 10, display:"absolute", top:0, right:0}}>
+                <Container className="text-center m-3">
                   <Calendar 
                   space={renderingSpace} 
                   startDate={startDate}
