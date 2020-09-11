@@ -57,9 +57,10 @@ const Home = () => {
       dispatch(changeRendering())
   }  
 
-  const infoFunction = () => {
-  
+  const infoFunction = (spaceId) => {
+    return ()  => window.open(`/space?_id=${spaceId}&startDate=${initialDate}&endDate=${finalDate}`)
   }
+
   return (
     <Container>
       <SearchForm showButton={search.specificSearch} onSubmit={handleSubmit} />

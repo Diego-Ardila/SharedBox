@@ -34,7 +34,7 @@ const RegisterForm = (props) => {
             swal("register successful","your registred were saved succesfully","success")
             history.push(props.typeUser==="lender" ? `/user/profile`: '/tenant/admin')
         }catch(err){
-            swal("update error", "something went wrong, please try again", "error")
+            swal("error", `${err.response.data}`, "error")
         }
     }  
     
