@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const userRegister = async (typeUser,values)=>{
+export const userRegister = async (typeUser,values)=>{
     try{
         const userToken = await axios ({
             baseURL: "http://127.0.0.1:4000/",
@@ -15,7 +15,7 @@ const userRegister = async (typeUser,values)=>{
     }
 }
 
-const loginUser = async(values,typeUser) => {    
+export const loginUser = async(values,typeUser) => {    
     try{
         const response = await axios({
             method:"POST",
@@ -29,7 +29,7 @@ const loginUser = async(values,typeUser) => {
     }
 }
 
-const getDataUser = async (typeUser)=>{
+export const getDataUser = async (typeUser)=>{
     const user = typeUser === "tenant" ? `"${typeUser}"`:``
     try{
         const dataUser = await axios({
@@ -47,7 +47,7 @@ const getDataUser = async (typeUser)=>{
     }
 }
 
-const updateDatauser = async (typeUser,values) => {
+export const updateDatauser = async (typeUser,values) => {
     const user = (typeUser === "tenant" ? `"${typeUser}"`:``)
     try{
         const updateData = await axios({
@@ -67,7 +67,7 @@ const updateDatauser = async (typeUser,values) => {
     }
 }
 
-const getSuggestions = async () => {
+export const getSuggestions = async () => {
     try{
         const tags = await axios({
             method: "GET",
@@ -79,7 +79,7 @@ const getSuggestions = async () => {
     }
 }
 
-const postSpace=async (state)=>{
+export const postSpace =async (state)=>{
     const {textAreaDesc,width,length,height,city,address,price,title,area} = state
     
     try{
@@ -99,7 +99,7 @@ const postSpace=async (state)=>{
     }
 }
 
-const updateSpaceTag = async (spaceId, name) => {
+export const updateSpaceTag = async (spaceId, name) => {
     try{
         const response = await axios({
             method:"PUT",
@@ -118,7 +118,7 @@ const updateSpaceTag = async (spaceId, name) => {
     }
 }
 
-const postTag = async (spaceId, name)=>{
+export const postTag = async (spaceId, name)=>{
     try {
         const respose = await axios({
             method:"POST",
@@ -138,7 +138,7 @@ const postTag = async (spaceId, name)=>{
     }
 }
 
-const getUserSpaces = async () => {
+export const getUserSpaces = async () => {
     try{
         const response = await axios({
             method: "GET",
@@ -153,7 +153,7 @@ const getUserSpaces = async () => {
     }
 }
 
-const postScore = async(values) => {
+export const postScore = async(values) => {
     const {rating} = values
     try{
         const response = await axios({
@@ -172,7 +172,7 @@ const postScore = async(values) => {
     }    
 }
 
-const postComment = async(values) => {
+export const postComment = async(values) => {
     const {comment} = values
     try{
         const response = await axios({
@@ -191,7 +191,7 @@ const postComment = async(values) => {
     }    
 }
 
-const postPhotosFiles = async (data) => {
+export const postPhotosFiles = async (data) => {
     try {
         const response = await axios({
             method: "POST",
@@ -208,7 +208,7 @@ const postPhotosFiles = async (data) => {
     }
 }
 
-const updateSpace = async (spaceId, values) =>{
+export const updateSpace = async (spaceId, values) =>{
     try{
         const response = await axios ({
             method: "PUT",
@@ -228,7 +228,7 @@ const updateSpace = async (spaceId, values) =>{
     }
 }
 
-const deletePhoto = async (photo, spaceId) => {
+export const deletePhoto = async (photo, spaceId) => {
     try {
         const response = await axios({
             method: "DELETE",
@@ -245,7 +245,7 @@ const deletePhoto = async (photo, spaceId) => {
     }
 }
 
-const getFilterSpaces = async (queryString) => {
+export const getFilterSpaces = async (queryString) => {
     try {
         const response = await axios({
             method: "GET",
@@ -259,7 +259,7 @@ const getFilterSpaces = async (queryString) => {
     }
 } 
 
-const postFAQs = async (newFAQs) => {
+export const postFAQs = async (newFAQs) => {
     try{
         const response = await axios({
             method: "POST",
@@ -272,21 +272,22 @@ const postFAQs = async (newFAQs) => {
     }
 }
 
-export {
-    userRegister,
-    loginUser,
-    getDataUser,
-    updateDatauser,
-    getSuggestions,
-    postSpace,
-    postTag,
-    updateSpaceTag,
-    getUserSpaces,
-    postScore,
-    postComment,
-    postPhotosFiles,
-    updateSpace,
-    deletePhoto,
-    getFilterSpaces,
-    postFAQs,
+export const deleteTenant = async(tenantId, typeUser) => {
+    const user = (typeUser === "tenant" ? `"${typeUser}"`:``)
+    try{
+        const response = await axios({
+            method: "DELETE",
+            url: "http://127.0.0.1:4000/tenant",
+            headers:{
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : user
+            },
+            data: {
+                tenantId
+            }
+        })
+        return response
+    } catch(err){
+        throw(err)
+    }
 }
