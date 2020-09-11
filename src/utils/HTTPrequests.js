@@ -80,7 +80,7 @@ const getSuggestions = async () => {
 }
 
 const postSpace=async (state)=>{
-    const {textAreaDesc,width,length,height,city,address,price,title,area} = state
+    const {additionalInfo,width,length,height,city,address,price,title,area} = state
     
     try{
         const respose = await axios({
@@ -90,7 +90,7 @@ const postSpace=async (state)=>{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
             data:{
-                title,width,length,height,textAreaDesc,city,address,pricePerDay:price,area
+                title,width,length,height,additionalInfo,city,address,pricePerDay:price,area
             }
         })
         return(respose.data._id)
