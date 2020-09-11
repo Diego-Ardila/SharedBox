@@ -14,7 +14,6 @@ class Calendar extends React.Component {
 
     componentDidMount() {
         this.setState({startDate : this.props.startDate, endDate: this.props.endDate })
-        console.log("im working bitch")
     }
 
     blockedDatesFromDb = this.props.space.dateReservedId
