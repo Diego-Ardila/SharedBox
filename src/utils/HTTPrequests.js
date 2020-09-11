@@ -79,8 +79,8 @@ export const getSuggestions = async () => {
     }
 }
 
-export const postSpace =async (state)=>{
-    const {textAreaDesc,width,length,height,city,address,price,title,area} = state
+const postSpace=async (state)=>{
+    const {additionalInfo,width,length,height,city,address,price,title,area} = state
     
     try{
         const respose = await axios({
@@ -90,7 +90,7 @@ export const postSpace =async (state)=>{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
             data:{
-                title,width,length,height,textAreaDesc,city,address,pricePerDay:price,area
+                title,width,length,height,additionalInfo,city,address,pricePerDay:price,area
             }
         })
         return(respose.data._id)
@@ -114,7 +114,7 @@ export const updateSpaceTag = async (spaceId, name) => {
         })
         return response.data
     }catch(err) {
-        return err
+        throw err
     }
 }
 
@@ -134,7 +134,7 @@ export const postTag = async (spaceId, name)=>{
         return(respose.data)
     }
     catch(err){
-        console.dir(err)
+        throw err
     }
 }
 

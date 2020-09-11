@@ -21,7 +21,7 @@ const FormSchema = Yup.object().shape({
 export default function DescriptionForm () {
     
     const dispatch = useDispatch()
-    const additionalInfo = useSelector(state => state.publishAreaReducer.textAreaDesc)
+    const additionalInfo = useSelector(state => state.publishAreaReducer.additionalInfo)
     const title = useSelector(state => state.publishAreaReducer.title)
     
     const handleSubmit = (values) => {
