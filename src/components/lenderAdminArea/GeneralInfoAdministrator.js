@@ -2,11 +2,10 @@ import React, {useState} from "react"
 import {Card, Button, Accordion, Badge, Form} from "react-bootstrap"
 import { Pencil } from "react-bootstrap-icons"
 import { Formik } from "formik"
-import * as Yup from "yup";
 import { updateSpace } from "../../utils/HTTPrequests";
 import swal from 'sweetalert';
 
-export default function GeneralInfoAdministrator ({space}) {
+export default function GeneralInfoAdministrator ({space, edit}) {
     const [isUpdatingState, setIsUpdatingState] = useState(false)
     
     const handleSubmit = async values => {
@@ -83,7 +82,10 @@ export default function GeneralInfoAdministrator ({space}) {
                                         onChange={handleChange}    
                                         />
                                     </React.Fragment>
-                                ) : `width: ${values.width}mts length: ${values.length}mts height: ${values.height}mts `} 
+                                ) : 
+                                    `width: ${values.width}mts \n
+                                    length: ${values.length}mts 
+                                    height: ${values.height}mts `} 
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>
@@ -126,7 +128,7 @@ export default function GeneralInfoAdministrator ({space}) {
                             </Card.Header>
                             <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "2"}>
                             <Card.Body>
-                                {space.spaceTags.map(({name}) => <Badge variant="secondary">{name}</Badge>)}
+                                {space.spaceTags.map(({name}) => <Badge key={name} variant="secondary">{name}</Badge>)}
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>
@@ -162,7 +164,7 @@ export default function GeneralInfoAdministrator ({space}) {
                             </Accordion.Collapse>
                         </Card>
                         </Accordion>
-                    <Button  type={isUpdatingState ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => buttonBehavior()} >{isUpdatingState? "save" : "edit"}<Pencil></Pencil></Button>
+                    {edit ? <Button  type={isUpdatingState ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => buttonBehavior()} >{isUpdatingState? "save" : "edit"}<Pencil></Pencil></Button> : null}
                     </Card.Body>
                     <Card.Footer className="text-muted">{`created ${Date(space.createdAt)}`}</Card.Footer>
                 </Card>
