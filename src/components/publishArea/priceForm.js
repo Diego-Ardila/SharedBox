@@ -71,7 +71,6 @@ export default function PriceForm () {
             swal("Space Created!","Your space was created successfully","success")
             history.push("/lender/admin")
         } catch(err){
-            console.dir(err)
             swal("Task failed!",`error: ${err.response.data.message}`,"error")
         }
     }
