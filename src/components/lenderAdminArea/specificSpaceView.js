@@ -28,19 +28,22 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
     const [showModal,setShowModal] = useState(false)
     const [loading, setLoading] = useState(true)
     const [editFAQ, setEditFAQ] = useState(false)
+    const [startDate, setStartDate] = useState(null)
+    const [endDate, setEndDate] = useState(null)
     const renderingSpace = spaces.find( space => space._id === spaceId)
     
     useEffect(()=>{
       dispatch(changePhotos(renderingSpace.photos))
       setLoading(false)
-      // document.getElementById("start_date_id").click()
     },[])
     
     const hideEditFAQ = () => {
       setEditFAQ(false)
     }
-    const setReservationDates = () => {
 
+    const settingDates = (startDate, endDate) => {
+      setStartDate(startDate)
+      setEndDate(endDate)
     }
     
     return(
@@ -61,7 +64,12 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               </Col>
               <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column justify-content-center">
                 <Container style={{float: 'right', padding: 10, display:"absolute", top:0, right:0}}>
-                  <Calendar space={renderingSpace} setReservationDates={setReservationDates}></Calendar>
+                  <Calendar 
+                  space={renderingSpace} 
+                  startDate={startDate}
+                  endDate={endDate}
+                  settingDates = {settingDates}
+                  ></Calendar>
                 </Container>
               </Col>
               </Row>

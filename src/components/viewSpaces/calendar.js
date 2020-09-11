@@ -12,6 +12,11 @@ class Calendar extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({startDate : this.props.startDate, endDate: this.props.endDate })
+        console.log("im working bitch")
+    }
+
     blockedDatesFromDb = this.props.space.dateReservedId
 
     blockDays = []
@@ -52,10 +57,8 @@ class Calendar extends React.Component {
                     verticalHeight={400}
                     isDayBlocked={this.isDayBlocked}
                     navPosition="navPositionBottom"
-                    keepOpenOnDateSelect
                     displayFormat="MMM D"
-                    onClose={() => console.log(this.state.endDate)}
-                    autoFocus
+                    onClose={() => this.props.settingDates(this.state.startDate, this.state.endDate)}
                     />
         )
     }
