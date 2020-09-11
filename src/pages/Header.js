@@ -29,10 +29,11 @@ const Header = () => {
           <NavLink to="/user/register" onClick={()=>localStorage.setItem("typeUser","tenant")} className="nav-link">Register</NavLink>  
           { isLogged ? 
             <>
-              <NavLink to="/lender/profile" className="nav-link">Profile</NavLink>    
+              <NavLink to="/user/profile" className="nav-link">Profile</NavLink>    
               <NavLink to="/lender/admin" className="nav-link">Admin</NavLink>    
               <NavLink to="/lender/createSpace" className="nav-link">Create Space</NavLink> 
-              <NavLink to="/lender/logout" className="nav-link">Logout</NavLink>   
+              <NavLink to={{pathname: "/lender/logout",
+              fromMenu: true }} className="nav-link">Logout</NavLink>   
                                
             </> 
           : <NavLink to="/user/login" className="nav-link">Login</NavLink> }          
