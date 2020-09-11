@@ -82,7 +82,10 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                                         onChange={handleChange}    
                                         />
                                     </React.Fragment>
-                                ) : `width: ${values.width}mts length: ${values.length}mts height: ${values.height}mts `} 
+                                ) : 
+                                    `width: ${values.width}mts \n
+                                    length: ${values.length}mts 
+                                    height: ${values.height}mts `} 
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>

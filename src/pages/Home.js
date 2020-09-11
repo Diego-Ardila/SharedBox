@@ -58,7 +58,7 @@ const Home = () => {
   }  
 
   const infoFunction = (spaceId) => {
-    return ()  => window.open(`http://localhost:3000/space?_id=${spaceId}`)
+    return ()  => window.open(`/space?_id=${spaceId}&startDate=${initialDate}&endDate=${finalDate}`)
   }
 
   return (

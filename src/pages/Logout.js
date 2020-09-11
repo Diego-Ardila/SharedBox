@@ -4,10 +4,10 @@ import {  useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { changeLogin } from '../actions/loginUser.actions'
 
-const Logout = () => {
+const Logout = (props) => {
   const history = useHistory(); 
-  const dispatch = useDispatch()
-  const execAlert = () => {
+  const dispatch = useDispatch()  
+  const logoutConfirmation = () => {
     swal({
       title: "Are you sure?", 
       text: "Do you want to logout?",
@@ -22,20 +22,28 @@ const Logout = () => {
     }).then((value) => {
       switch(value){
         case "confirm":
-          localStorage.removeItem('token'); 
+          localStorage.removeItem('token');
+          localStorage.removeItem('typeUser'); 
           dispatch(changeLogin(false))
           history.push('/home')
           swal("Good job","Logged Out Successfully", "success")
           break;
         default:
-          history.goBack();
-          
+          history.goBack();          
       }
-    });
+    })
+  }
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('typeUser')
+    dispatch(changeLogin(false))
+    history.push('/home')    
   }
   return (
     <div>
-      {execAlert()}
+      {props.location.fromMenu ? logoutConfirmation() : logout()
+       }
     </div>
   );
 };
