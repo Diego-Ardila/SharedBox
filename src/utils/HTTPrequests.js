@@ -114,7 +114,8 @@ const updateSpaceTag = async (spaceId, name) => {
         })
         return response.data
     }catch(err) {
-        return err
+        console.dir(err)
+        throw err
     }
 }
 
@@ -134,7 +135,7 @@ const postTag = async (spaceId, name)=>{
         return(respose.data)
     }
     catch(err){
-        console.dir(err)
+        throw err
     }
 }
 

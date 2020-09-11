@@ -46,10 +46,10 @@ export default function PriceForm () {
     const handleSubmit = async(values) => {
         try {
             const spaceId = await postSpace(state)
-            state.tags.forEach( ({name}) => {
-                if(state.suggestions.some( suggestion => suggestion.name.toUpperCase() === name.toUpperCase())) return updateSpaceTag(spaceId, name)   
-                postTag(spaceId, name)
-            })
+            Promise.all(state.tags.map( async ({name}) => {
+                if(state.suggestions.some( suggestion => suggestion.name.toUpperCase() === name.toUpperCase())) return await updateSpaceTag(spaceId, name)   
+                await postTag(spaceId, name)
+            }))
             const data = new FormData();
             data.append('spaceId', spaceId)
             files.forEach(file => {
