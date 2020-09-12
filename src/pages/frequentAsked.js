@@ -7,7 +7,7 @@ import {Container,
     Col} from 'react-bootstrap';
 
 
-export default function FrequentAskedQuestions (props) {
+export default function FrequentAskedQuestions ({spaceId, setEditFAQ}) {
 
     let [faqs , setFaqs] = useState([])
 
@@ -20,20 +20,20 @@ export default function FrequentAskedQuestions (props) {
     }
 
     const deleteFaq = (id) =>{
-       return () => {
-                let newFaqs = faqs.filter(faq=>{
-                    return faq.id !== id
-                })
-                setFaqs(newFaqs)
-              } 
+        return () => {
+            let newFaqs = faqs.filter(faq=>{
+                return faq.id !== id
+            })
+            setFaqs(newFaqs)
+        } 
     } 
-
+    
     return (
         <div>
             <Container className="FAQ">
                 <Form>
                  <Row>
-                    <Col lg={6} md={6} xl={6}>  <FormFaq spaceId={/* props.spaceId */1231231231} faqs={faqs} handleNewFaq={handleNewFaq} /> </Col>
+                    <Col lg={6} md={6} xl={6}>  <FormFaq className="mb-5" hideEditFAQ={ setEditFAQ } spaceId={ spaceId } faqs={faqs} handleNewFaq={handleNewFaq} /> </Col>
                     <Col lg={6} md={6} xl={6}> <Rendericer faqs={faqs} deleteFaq= {deleteFaq} /> </Col>
                 </Row>
                 </Form>
