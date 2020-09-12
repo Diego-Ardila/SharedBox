@@ -17,7 +17,6 @@ import { changeLogin } from './actions/loginUser.actions'
  
 
 function PrivateRoute(props) {
-  console.log(props.typeUser)
   const history = useHistory()
   useEffect(() => {
     const token = props.typeUser ? false : localStorage.getItem("token")

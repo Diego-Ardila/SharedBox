@@ -29,7 +29,6 @@ function LoginForm () {
       })    
 
     const changeTypeUser = (event, resetForm) =>{
-        console.log(event.target.name)
         switch (event.target.name){
             case "changeTenant":
                 localStorage.setItem("typeUser","tenant")
@@ -48,7 +47,6 @@ function LoginForm () {
     } 
     
     const handleSubmit = async (values, {setErrors}) =>  {
-        console.log("submit")
         try { 
             
         const token = await loginUser(values,typeUser)
