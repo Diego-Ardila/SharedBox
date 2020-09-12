@@ -46,10 +46,10 @@ export default function PriceForm () {
     const handleSubmit = async(values, actions) => {
         try {
             const spaceId = await postSpace(state)
-            state.tags.forEach( ({name}) => {
-                if(state.suggestions.some( suggestion => suggestion.name.toUpperCase() === name.toUpperCase())) return updateSpaceTag(spaceId, name)   
-                postTag(spaceId, name)
-            })
+            Promise.all(state.tags.map( async ({name}) => {
+                if(state.suggestions.some( suggestion => suggestion.name.toUpperCase() === name.toUpperCase())) return await updateSpaceTag(spaceId, name)   
+                await postTag(spaceId, name)
+            }))
             const data = new FormData();
             data.append('spaceId', spaceId)
             files.forEach(file => {
@@ -72,7 +72,7 @@ export default function PriceForm () {
             swal("Space Created!","Your space was created successfully","success")
             history.push("/lender/admin")
         } catch(err){
-            swal("Task failed!","There was an error with your registration","error")
+            swal("Task failed!",`error: ${err.response.data.message}`,"error")
         }
     }
 

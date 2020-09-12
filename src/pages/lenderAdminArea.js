@@ -42,6 +42,7 @@ export default function LenderAdminArea () {
             spaces={spaces} 
             spaceId={spaceId} 
             changeViewToDisplay={changeViewToDisplay}
+            edit={true}
           ></SpecificSpaceView>
           ) : (
           <MainView 

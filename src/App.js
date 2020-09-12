@@ -14,6 +14,7 @@ import Footer from './pages/Footer';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
 import { changeLogin } from './actions/loginUser.actions'
+import Space from "./pages/Space"
  
 
 function PrivateRoute(props) {
@@ -56,6 +57,7 @@ function App() {
           <Route exact path="/user/register/" component={register} />
           <PrivateRoute exact path="/lender/createSpace" component={PublishSpaceArea} typeUser="lender" />
           <PrivateRoute exact path="/tenant/admin" component={adminTenant} typeUser="tenant" />
+          <Route exact path="/space/" component={Space} />
           <PrivateRoute exact path="/user/profile" component={Profile} />
           <PrivateRoute exact path="/lender/admin" component={LenderAdminArea} typeUser="lender" />
           <PrivateRoute exact path="/user/logout" component={Logout} />

@@ -16,7 +16,6 @@ const Header = () => {
   const homecoming =()=>{
     dispatch(changeRendering())
     dispatch(changeSpecificSearch())
-
   }
 
   return (
@@ -28,12 +27,12 @@ const Header = () => {
           
           { isLogged ? 
             <>
-              <NavLink to="/user/profile" className="nav-link">Profile</NavLink>    
+              <NavLink to="/user/profile" className="nav-link">Profile</NavLink> 
               <NavLink to="/lender/admin" className="nav-link">Admin Lender</NavLink>    
               <NavLink to="/tenant/admin" className="nav-link">Admin Tenant</NavLink>  
               <NavLink to="/lender/createSpace" className="nav-link">Create Space</NavLink> 
-              <NavLink to="/user/logout" className="nav-link">Logout</NavLink>   
-                               
+              <NavLink to={{pathname: "/user/logout",
+              fromMenu: true }} className="nav-link">Logout</NavLink>                                  
             </> 
           : <>
             <NavLink to="/user/login" className="nav-link">Login</NavLink> 
