@@ -24,32 +24,37 @@ const RoundedBttn = styled.button`
 
 export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit, instartDate, inendDate}){  
   const dispatch = useDispatch()
-  const calendarContainer = createRef()
   const [showModal,setShowModal] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editFAQ, setEditFAQ] = useState(false)
   const [startDate, setStartDate] = useState(instartDate)
   const [endDate, setEndDate] = useState(inendDate)
+  const [calendarIsOpen, setCalendarIsOpen] = useState(false)
   const renderingSpace = spaces.find( space => space._id === spaceId)
     
   useEffect(()=>{
     dispatch(changePhotos(renderingSpace.photos))
     setLoading(false)
-    movePriceCard(calendarContainer)
   },[])
   
   const hideEditFAQ = () => {
     setEditFAQ(false)
   }
-
+  
+  const closeCalendar = () => {
+    setCalendarIsOpen(false)
+  }
+  
   const settingDates = (startDate, endDate) => {
     setStartDate(startDate)
     setEndDate(endDate)
+    closeCalendar()
   }
   
-  const movePriceCard = (ref) =>{
-    console.log(ref)
+  const openCalendar = (e) =>{
+    if(e.target.id) setCalendarIsOpen(true)
   }
+
 
   return(
     <React.Fragment>
@@ -68,14 +73,16 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
             </Col>
             <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column justify-content-center">
-              <Container className="text-center" ref={calendarContainer}>
-                <Calendar 
+              <Container className="text-center"  onClick={(e) => openCalendar(e)} >
+                <Calendar
                 space={renderingSpace} 
                 startDate={startDate}
                 endDate={endDate}
                 settingDates = {settingDates}
+                closeCalendar = {closeCalendar}
                 ></Calendar>
               </Container>
+              {calendarIsOpen && <div style={{height:370}}></div>}
               <PriceAdministrator
                 space={renderingSpace} 
                 startDate={startDate}

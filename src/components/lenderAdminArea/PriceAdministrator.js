@@ -19,7 +19,7 @@ export default function PriceAdministrator ({space, startDate, endDate}) {
    
     return(
         <React.Fragment>
-            <div className="sticky-top pt-3">
+            <div className="sticky-top pt-3" onClick ={ (e) => console.log(e.target, "im working")}>
             <Card bg="secondary" text="white" className="text-center">
             <Card.Header as="h5">PRICE</Card.Header>
             <Card.Body>
