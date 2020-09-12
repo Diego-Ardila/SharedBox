@@ -73,7 +73,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
             </Col>
             <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column justify-content-center">
-              <Container className="text-center"  onClick={(e) => openCalendar(e)} >
+              <Container className={`text-center mt-2 ${edit? "sticky-top": ""}`}  onClick={(e) => openCalendar(e)} >
                 <Calendar
                 space={renderingSpace} 
                 startDate={startDate}
@@ -83,12 +83,12 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
                 ></Calendar>
               </Container>
               {calendarIsOpen && <div style={{height:370}}></div>}
-              <PriceAdministrator
+              {edit ? null : (<PriceAdministrator
                 space={renderingSpace} 
                 startDate={startDate}
                 endDate={endDate}
               >
-              </PriceAdministrator>
+              </PriceAdministrator>)}
             </Col>
             </Row>
             <Row className="row justify-content-center p-3">
