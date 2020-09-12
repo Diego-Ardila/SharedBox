@@ -56,11 +56,11 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
             </Row>
             <Row className="row justify-content-center p-3">
               <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
-                <h2>{renderingSpace.title}</h2> {!edit && <Button onClick={()=> setShowModalInventory(true)} >Inventory</Button>}
+                <h2>{renderingSpace.title}</h2> {!edit && <Button onClick={()=> setShowModalInventory(true)} >Reserve this space!!</Button>}
                 <PhotosAdministrator className =" position-relative">
                 {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
                 </PhotosAdministrator>
-                <ModalInventory show={showModalInventory} onHide={()=>setShowModalInventory(false)} ></ModalInventory>
+                <ModalInventory space={renderingSpace} show={showModalInventory} onHide={()=>setShowModalInventory(false)} ></ModalInventory>
                 <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
                 <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
               </Col>

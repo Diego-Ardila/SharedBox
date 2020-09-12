@@ -291,3 +291,44 @@ export const deleteTenant = async(tenantId, typeUser) => {
         throw(err)
     }
 }
+
+export const createElements = async(elements,spaceId) => {
+    try{
+        const response = await axios({
+            method: "POST",
+            url: "http://127.0.0.1:4000/element",
+            headers:{
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem('typeUser')
+            },
+            data:{
+                elements,
+                spaceId
+            }
+        })
+        return response.data
+    } catch(err){
+        throw (err)
+    }
+}
+
+export const createNotification = async(inventoryId,tenantId,lenderId) => {
+    try{
+        const response = await axios({
+            method: "POST",
+            url: "http://127.0.0.1:4000/notification",
+            headers:{
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem('typeUser')
+            },
+            data:{
+                inventoryId,
+                tenantId,
+                lenderId
+            }
+        })
+        return response
+    } catch(err){
+        throw (err)
+    }
+}
