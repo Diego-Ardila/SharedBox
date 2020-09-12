@@ -1,4 +1,3 @@
-export default  {
-    tax : 0.19,
-    services: 0.25,
-}
+
+export const tax = 0.19
+export const services = 0.25

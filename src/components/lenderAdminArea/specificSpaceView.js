@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {createRef, useState} from "react"
 import { Row, Col, Button, Container } from 'react-bootstrap';
 import PhotosAdministrator from './PhotosAdministrator';
 import EditButton from "./EditButton";
@@ -22,10 +22,9 @@ const RoundedBttn = styled.button`
     z-index:1040;
 `
 
-
-
 export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit, instartDate, inendDate}){  
   const dispatch = useDispatch()
+  const calendarContainer = createRef()
   const [showModal,setShowModal] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editFAQ, setEditFAQ] = useState(false)
@@ -36,6 +35,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   useEffect(()=>{
     dispatch(changePhotos(renderingSpace.photos))
     setLoading(false)
+    movePriceCard(calendarContainer)
   },[])
   
   const hideEditFAQ = () => {
@@ -43,17 +43,19 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   }
 
   const settingDates = (startDate, endDate) => {
-    console.log(startDate)
-    console.log(endDate)
     setStartDate(startDate)
     setEndDate(endDate)
   }
   
+  const movePriceCard = (ref) =>{
+    console.log(ref)
+  }
+
   return(
     <React.Fragment>
       {loading ? "loading" : (
         <React.Fragment>
-          <Row className="m-2">
+          <Row className="m-2 mt-4">
               <RoundedBttn className="ml-4" onClick={changeViewToDisplay()}><ArrowLeftShort size={30}></ArrowLeftShort></RoundedBttn>
           </Row>
           <Row className="row justify-content-center p-3">
@@ -66,7 +68,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
             </Col>
             <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column justify-content-center">
-              <Container className="text-center m-3">
+              <Container className="text-center" ref={calendarContainer}>
                 <Calendar 
                 space={renderingSpace} 
                 startDate={startDate}

@@ -54,7 +54,7 @@ class Calendar extends React.Component {
                     orientation="vertical"
                     anchorDirection="right" 
                     numberOfMonths={1}
-                    verticalHeight={400}
+                    verticalHeight={350}
                     isDayBlocked={this.isDayBlocked}
                     navPosition="navPositionBottom"
                     displayFormat="MMM D"
