@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import FAQadministrator from "./FAQadminstrator";
 import FrequentAskedQuestions from "../../pages/frequentAsked";
 import Calendar from "../viewSpaces/calendar";
+import PriceAdministrator from "./PriceAdministrator";
 
 const RoundedBttn = styled.button`
     cursor: pointer;
@@ -42,6 +43,8 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   }
 
   const settingDates = (startDate, endDate) => {
+    console.log(startDate)
+    console.log(endDate)
     setStartDate(startDate)
     setEndDate(endDate)
   }
@@ -71,6 +74,12 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
                 settingDates = {settingDates}
                 ></Calendar>
               </Container>
+              <PriceAdministrator
+                space={renderingSpace} 
+                startDate={startDate}
+                endDate={endDate}
+              >
+              </PriceAdministrator>
             </Col>
             </Row>
             <Row className="row justify-content-center p-3">

@@ -7,19 +7,21 @@ class Calendar extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            startDate: null,
-            endDate: null,
+
         }
     }
+    startDate = null
+    endDate = null
 
-    componentDidMount() {
-        this.setState({startDate : this.props.startDate, endDate: this.props.endDate })
+    componentWillMount() {
+        this.startDate = this.props.startDate
+        this.endDate = this.props.endDate  
     }
 
     blockedDatesFromDb = this.props.space.dateReservedId
 
     blockDays = []
-    
+
     setBlockDays = () => {
         this.blockedDatesFromDb.forEach( ({initialDate, finalDate}) => {
             const inDate = moment(initialDate,"YYYY-MM-DD")
@@ -35,20 +37,19 @@ class Calendar extends React.Component {
         })
     }
     
-
     isDayBlocked = (day) => this.blockDays.includes(moment(day).format("YYYY-MM-DD")) 
 
     render() {
         this.setBlockDays()
         return (
                 <DateRangePicker
-                    startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-                    startDateId="start_date_id" // PropTypes.string.isRequired,
-                    endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-                    endDateId="end_date_id" // PropTypes.string.isRequired,
-                    onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
-                    focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                    onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                    startDate={this.startDate} 
+                    startDateId="start_date_id"
+                    endDate={this.endDate} 
+                    endDateId="end_date_id"
+                    onDatesChange={({ startDate, endDate }) => {this.startDate = startDate ; this.endDate = endDate} } 
+                    focusedInput={this.state.focusedInput} 
+                    onFocusChange={focusedInput => this.setState({ focusedInput })} 
                     openDirection="down"
                     orientation="vertical"
                     anchorDirection="right" 
@@ -57,8 +58,8 @@ class Calendar extends React.Component {
                     isDayBlocked={this.isDayBlocked}
                     navPosition="navPositionBottom"
                     displayFormat="MMM D"
-                    onClose={() => this.props.settingDates(this.state.startDate, this.state.endDate)}
-                    />
+                    onClose={() => this.props.settingDates(this.startDate, this.endDate) } 
+                />
         )
     }
 }

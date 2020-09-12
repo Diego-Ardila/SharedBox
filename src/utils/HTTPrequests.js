@@ -79,7 +79,7 @@ export const getSuggestions = async () => {
     }
 }
 
-const postSpace=async (state)=>{
+export const postSpace=async (state)=>{
     const {additionalInfo,width,length,height,city,address,price,title,area} = state
     
     try{
