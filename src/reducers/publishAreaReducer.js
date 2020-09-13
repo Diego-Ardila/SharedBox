@@ -1,5 +1,5 @@
 let initialState={
-    textAreaDesc: "",
+    additionalInfo: "",
     width:0,
     length:0,
     height:0,
@@ -45,7 +45,7 @@ const publishAreaReducer = (state = initialState , action) => {
         case ACTIONS.CHANGE_DESCRIPTION :
             return {
                 ...state,
-                textAreaDesc: action.payload
+                additionalInfo: action.payload
             }
         case ACTIONS.CHANGE_WIDTH :
             return {
