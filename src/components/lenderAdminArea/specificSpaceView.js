@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {createRef, useState} from "react"
 import { Row, Col, Button, Container } from 'react-bootstrap';
 import PhotosAdministrator from './PhotosAdministrator';
 import EditButton from "./EditButton";
@@ -13,6 +13,7 @@ import FAQadministrator from "./FAQadminstrator";
 import FrequentAskedQuestions from "../../pages/frequentAsked";
 import ModalInventory from "../Inventory/inventoryModal"
 import Calendar from "../viewSpaces/calendar";
+import PriceAdministrator from "./PriceAdministrator";
 
 const RoundedBttn = styled.button`
     cursor: pointer;
@@ -22,58 +23,76 @@ const RoundedBttn = styled.button`
     z-index:1040;
 `
 
-export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit, instartDate, inendDate}){   
+export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit, instartDate, inendDate}){  
   const dispatch = useDispatch()
   const [showModal,setShowModal] = useState(false)
   const [showModalInventory,setShowModalInventory] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editFAQ, setEditFAQ] = useState(false)
   const [startDate, setStartDate] = useState(instartDate)
-  const [endDate, setEndDate] = useState(inendDate)  
+  const [endDate, setEndDate] = useState(inendDate)
+  const [calendarIsOpen, setCalendarIsOpen] = useState(false)
   const renderingSpace = spaces.find( space => space._id === spaceId)
     
-    useEffect(()=>{
-      dispatch(changePhotos(renderingSpace.photos))
-      setLoading(false)
-      // document.getElementById("start_date_id").click()
-    },[])
-    
-    const hideEditFAQ = () => {
-      setEditFAQ(false)
-    }
+  useEffect(()=>{
+    dispatch(changePhotos(renderingSpace.photos))
+    setLoading(false)
+  },[])
+  
+  const hideEditFAQ = () => {
+    setEditFAQ(false)
+  }
+  
+  const closeCalendar = () => {
+    setCalendarIsOpen(false)
+  }
+  
+  const settingDates = (startDate, endDate) => {
+    setStartDate(startDate)
+    setEndDate(endDate)
+    closeCalendar()
+  }
+  
+  const openCalendar = (e) =>{
+    if(e.target.id) setCalendarIsOpen(true)
+  }
 
-    const settingDates = (startDate, endDate) => {
-      setStartDate(startDate)
-      setEndDate(endDate)
-    }
-    
-    return(
-      <React.Fragment>
-        {loading ? "loading" : (
-          <React.Fragment>
-            <Row  className="m-2">
-                <RoundedBttn className="ml-4" onClick={changeViewToDisplay()}><ArrowLeftShort size={30}></ArrowLeftShort></RoundedBttn>
-            </Row>
-            <Row className="row justify-content-center p-3">
-              <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
-                <h2>{renderingSpace.title}</h2> {!edit && <Button onClick={()=> setShowModalInventory(true)} >Reserve this space!!</Button>}
-                <PhotosAdministrator className =" position-relative">
+
+  return(
+    <React.Fragment>
+      {loading ? "loading" : (
+        <React.Fragment>
+          <Row className="m-2 mt-4">
+              <RoundedBttn className="ml-4" onClick={changeViewToDisplay()}><ArrowLeftShort size={30}></ArrowLeftShort></RoundedBttn>
+          </Row>
+          <Row className="row justify-content-center p-3">
+            <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
+              <h2>{renderingSpace.title}</h2>  {!edit && <Button onClick={()=> setShowModalInventory(true)} >Reserve this space!!</Button>}
+              <PhotosAdministrator className =" position-relative">
                 {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
-                </PhotosAdministrator>
-                <ModalInventory space={renderingSpace} show={showModalInventory} onHide={()=>setShowModalInventory(false)} ></ModalInventory>
-                <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
-                <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
-              </Col>
-                <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column justify-content-center">
-                <Container className="text-center m-3">
-                  <Calendar 
-                  space={renderingSpace} 
-                  startDate={startDate}
-                  endDate={endDate}
-                  settingDates = {settingDates}
-                  ></Calendar>
-                </Container>
-              </Col>
+              </PhotosAdministrator>
+              <ModalInventory space={renderingSpace} show={showModalInventory} onHide={()=>setShowModalInventory(false)} ></ModalInventory>
+              <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
+              <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
+            </Col>
+            <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column justify-content-center">
+              <Container className={`text-center mt-2 ${edit? "sticky-top": ""}`}  onClick={(e) => openCalendar(e)} >
+                <Calendar
+                space={renderingSpace} 
+                startDate={startDate}
+                endDate={endDate}
+                settingDates = {settingDates}
+                closeCalendar = {closeCalendar}
+                ></Calendar>
+              </Container>
+              {calendarIsOpen && <div style={{height:370}}></div>}
+              {edit ? null : (<PriceAdministrator
+                space={renderingSpace} 
+                startDate={startDate}
+                endDate={endDate}
+              >
+              </PriceAdministrator>)}
+            </Col>
               </Row>
               <Row className="row justify-content-center p-3">
               <Col className="col-12 d-inline-flex flex-column">
