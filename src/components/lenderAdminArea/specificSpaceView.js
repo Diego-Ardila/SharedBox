@@ -71,7 +71,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               <PhotosAdministrator className =" position-relative">
                 {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
               </PhotosAdministrator>
-              <ModalInventory space={renderingSpace} show={showModalInventory} onHide={()=>setShowModalInventory(false)} ></ModalInventory>
+              <ModalInventory finalDate={endDate} initialDate={startDate} space={renderingSpace} show={showModalInventory} onHide={()=>setShowModalInventory(false)} ></ModalInventory>
               <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
               <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
             </Col>

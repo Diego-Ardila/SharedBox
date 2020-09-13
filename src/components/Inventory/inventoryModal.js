@@ -4,7 +4,7 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import InventoryRendericer from './inventoryRendericer'
 import {Question} from 'react-bootstrap-icons'
-import {createElements, createNotification} from '../../utils/HTTPrequests'
+import {createElements, createNotification, createDates} from '../../utils/HTTPrequests'
 
 export default function ModalInventory(props){
 
@@ -14,7 +14,6 @@ export default function ModalInventory(props){
     
 
     const handleSubmit = (values,{resetForm}) => {
-        
         let newObj = {
             id : elements.length + 1,
             ...values 
@@ -32,11 +31,10 @@ export default function ModalInventory(props){
         } 
     }
 
-    const handleToAxios = async (elements, spaceId,lenderId) => {
+    const handleToAxios = async (finalDate,initialDate,elements,spaceId,lenderId) => {
         const {inventoryId,tenantId} = await createElements(elements,spaceId)
-        console.log(inventoryId)
-        console.log(tenantId)
         const notification = await createNotification(inventoryId,tenantId,lenderId)
+        const dates = await createDates(finalDate,initialDate,spaceId,tenantId)
     }
 
     const validatorForm = Yup.object().shape({
@@ -215,7 +213,7 @@ return(
             </Container>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={()=>handleToAxios(elements,spaceId,lenderId)}>save</Button>
+            <Button onClick={()=>handleToAxios(props.finalDate._d,props.initialDate._d,elements,spaceId,lenderId)}>save</Button>
         </Modal.Footer>
     </Modal>
 )

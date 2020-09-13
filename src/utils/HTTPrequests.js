@@ -332,3 +332,26 @@ export const createNotification = async(inventoryId,tenantId,lenderId) => {
         throw (err)
     }
 }
+
+export const createDates = async(finalDate,initialDate,spaceId,tenantId) => {
+    try{
+        const response = await axios({
+            method: "POST",
+            url: "http://127.0.0.1:4000/dates",
+            headers:{
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem('typeUser')
+            },
+            data:{
+                spaceId,
+                tenantId,
+                initialDate,
+                finalDate
+            }
+        })
+        return response.data
+    } catch(err){
+        throw (err)
+    }
+}
+
