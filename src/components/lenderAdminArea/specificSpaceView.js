@@ -33,8 +33,8 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   const [showModalInventory,setShowModalInventory] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editFAQ, setEditFAQ] = useState(false)
-  const [startDate, setStartDate] = useState(moment(locationQuery.search.slice(40,50),"YYYY-MM-DD"))
-  const [endDate, setEndDate] = useState(moment(locationQuery.search.slice(59),"YYYY-MM-DD"))
+  const [startDate, setStartDate] = useState(edit ? null : moment(locationQuery.search.slice(40,50),"YYYY-MM-DD"))
+  const [endDate, setEndDate] = useState(edit ? null : moment(locationQuery.search.slice(59),"YYYY-MM-DD"))
   const [calendarIsOpen, setCalendarIsOpen] = useState(false)
   const renderingSpace = spaces.find( space => space._id === spaceId)
     
