@@ -14,6 +14,8 @@ import FrequentAskedQuestions from "../../pages/frequentAsked";
 import ModalInventory from "../Inventory/inventoryModal"
 import Calendar from "../viewSpaces/calendar";
 import PriceAdministrator from "./PriceAdministrator";
+import { useLocation } from "react-router-dom";
+import moment from "moment"
 
 const RoundedBttn = styled.button`
     cursor: pointer;
@@ -23,14 +25,16 @@ const RoundedBttn = styled.button`
     z-index:1040;
 `
 
-export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit, instartDate, inendDate}){  
+export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit}){  
+  
+  const locationQuery = useLocation()  
   const dispatch = useDispatch()
   const [showModal,setShowModal] = useState(false)
   const [showModalInventory,setShowModalInventory] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editFAQ, setEditFAQ] = useState(false)
-  const [startDate, setStartDate] = useState(instartDate)
-  const [endDate, setEndDate] = useState(inendDate)
+  const [startDate, setStartDate] = useState(moment(locationQuery.search.slice(40,50),"YYYY-MM-DD"))
+  const [endDate, setEndDate] = useState(moment(locationQuery.search.slice(59),"YYYY-MM-DD"))
   const [calendarIsOpen, setCalendarIsOpen] = useState(false)
   const renderingSpace = spaces.find( space => space._id === spaceId)
     
@@ -90,6 +94,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
                 space={renderingSpace} 
                 startDate={startDate}
                 endDate={endDate}
+                setShowModalInventory={setShowModalInventory}
               >
               </PriceAdministrator>)}
             </Col>
