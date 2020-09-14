@@ -21,40 +21,34 @@ const base = {
 function LoginForm () {
     const dispatch = useDispatch()
     let history = useHistory();
-    const [typeUser,setTypeUser]= useState(localStorage.getItem("typeUser")||"tenant")
+    const [typeUser,setTypeUser]= useState(localStorage.getItem("typeUser")||"lender")
     
     const formSchema = Yup.object().shape({
         email: Yup.string().email().typeError('invalid Email').required("Required Field"),
         password: Yup.string().required("Required Field")   
       })    
 
-    const changeTypeUser = (event,errors) =>{
-        
+    const changeTypeUser = (event, resetForm) =>{
         switch (event.target.name){
             case "changeTenant":
                 localStorage.setItem("typeUser","tenant")
                 setTypeUser(localStorage.getItem("typeUser"))
-                errors.email = false
-                errors.password = false
+                resetForm()
                 break
             
             case "changeLender":
                 localStorage.setItem("typeUser","lender")
                 setTypeUser(localStorage.getItem("typeUser"))
-                errors.email = false
-                errors.password = false
+                resetForm()
                 break
-            default :
-                localStorage.setItem("typeUser","tenant")
-                setTypeUser(localStorage.getItem("typeUser"))
-                errors.email = false
-                errors.password = false
-                break
+            default:
+                break    
         }
     } 
     
     const handleSubmit = async (values, {setErrors}) =>  {
         try { 
+            
         const token = await loginUser(values,typeUser)
         localStorage.setItem("typeUser",typeUser)
         localStorage.setItem("token",token)
@@ -64,9 +58,10 @@ function LoginForm () {
         catch(error) {
             if(error.response.status === 400) {
                 setErrors({"password":  "Password Incorrect", "email":"Email Incorrect"})
+                swal("Login Failed", "Failed authentication, please try again", "error") 
             }  
             if (error.response.status === 401){
-                setErrors({"password": " " , "email": " "})
+                setErrors({"password": "Password Incorrect" , "email": "Email Incorrect"})
                 swal("Login Failed", "Failed authentication, please try again", "error")     
             }
             if(error.message === "Network Error") { 
@@ -81,7 +76,7 @@ function LoginForm () {
             initialValues = {{email: "" ,password: ""}}
             validationSchema = {formSchema}
             onSubmit = {handleSubmit}>
-        {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors}) => (
+        {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, resetForm}) => (
             <Container >
                 <Card md={8} className="p-5 mt-5">
                     <Form onSubmit={handleSubmit} className="justify-content-center mt-3">
@@ -92,10 +87,10 @@ function LoginForm () {
                         </Form.Row>
                         <Form.Row className="justify-content-center m-4">
                             <Col className="col-lg-3">
-                                <Button name="changeLender" variant={typeUser==="lender"?"secondary":"primary"} disabled={typeUser==="lender"} onClick={(e)=>changeTypeUser(e,errors)} block>As a lender</Button>
+                                <Button name="changeLender" variant={typeUser==="lender"?"secondary":"primary"} disabled={typeUser==="lender"} onClick={(e)=>changeTypeUser(e,resetForm)} block>As a lender</Button>
                             </Col>
                             <Col className="col-lg-3">
-                            <Button name="changeTenant" variant={typeUser==="tenant"?"secondary":"primary"} disabled={typeUser==="tenant"} onClick={(e)=>changeTypeUser(e,errors)} block>As a tenant</Button>
+                            <Button name="changeTenant" variant={typeUser==="tenant"?"secondary":"primary"} disabled={typeUser==="tenant"} onClick={(e)=>changeTypeUser(e,resetForm)} block>As a tenant</Button>
                             </Col>
                         </Form.Row>
                         <Form.Row className="justify-content-center" >
