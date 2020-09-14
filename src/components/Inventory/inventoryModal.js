@@ -12,10 +12,12 @@ export default function ModalInventory(props){
     let [elements,setElements] = useState([])
     const spaceId = props.space._id
     const lenderId = props.space.lenderId
+    const initialDate = props.initialDate
+    const finalDate = props.finalDate
     
 
     const handleSubmit = (values,{resetForm}) => {
-        console.log(typeof(moment(props.initialDate).format("YYYY-MM-DD")))
+        console.log(initialDate, finalDate)
         let newObj = {
             id : elements.length + 1,
             ...values 
@@ -50,7 +52,7 @@ export default function ModalInventory(props){
     })
 
 return(
-    <Modal {...props} size="xl" aria-labelledby="contained-modal-title-vcenter">
+    <Modal show= {props.show} onHide= {props.onHide} size="xl" aria-labelledby="contained-modal-title-vcenter">
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             The Lender wants to know what are you going to store
@@ -65,7 +67,7 @@ return(
                         onSubmit={handleSubmit} >
                         <Card className = "justify-content-center p-3">
                             <Form.Row  className="justify-content-center">
-                                <Col mb >
+                                <Col >
                                     <Form.Group>
                                         <OverlayTrigger placement="right"
                                             overlay={
@@ -115,7 +117,7 @@ return(
                                 </Col>
                             </Form.Row>
                             <Form.Row  className="justify-content-left">   
-                                <Col mb>
+                                <Col>
                                     <Form.Group>
                                     <OverlayTrigger placement="right"
                                                 overlay={
@@ -217,7 +219,7 @@ return(
             </Container>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={()=>handleToAxios(props.finalDate._d,props.initialDate._d,elements,spaceId,lenderId)}>save</Button>
+            <Button onClick={()=>handleToAxios(finalDate,initialDate,elements,spaceId,lenderId)}>save</Button>
         </Modal.Footer>
     </Modal>
 )
