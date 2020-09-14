@@ -14,20 +14,25 @@ import Footer from './pages/Footer';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
 import { changeLogin } from './actions/loginUser.actions'
+import Space from "./pages/Space"
  
 
 function PrivateRoute(props) {
   const history = useHistory()
   useEffect(() => {
-    const token = localStorage.getItem("token")
+    const token = props.typeUser ? false : localStorage.getItem("token")
+    const typeUser = props.typeUser ? (props.typeUser === "lender" ? "lender" : "tenant") : true
+    const typeValid = props.typeUser ? (localStorage.getItem("typeUser") === typeUser) : true
     const isValid = true // an axios called to verify the token is required
-    if(!token && isValid) history.push("/lender/login")
-  }, [])
+    if(!token && !typeValid && isValid) history.push("/user/login") 
+  }, )
 
   return(
     <Route {...props}></Route>
   )
 }  
+
+
 
 function App() {
   const dispatch = useDispatch()
@@ -48,13 +53,14 @@ function App() {
         <Switch>
           <Route exact path="/lender/frequentAsked" component={frequentAsked} />
           <Route exact path="/home" component={Home} />
-          <Route exact path="/lender/login" component={Login} />
+          <Route exact path="/user/login" component={Login} />
           <Route exact path="/user/register/" component={register} />
-          <PrivateRoute exact path="/lender/createSpace" component={PublishSpaceArea} />
-          <PrivateRoute exact path="/tenant/admin" component={adminTenant} />
+          <PrivateRoute exact path="/lender/createSpace" component={PublishSpaceArea} typeUser="lender" />
+          <PrivateRoute exact path="/tenant/admin" component={adminTenant} typeUser="tenant" />
+          <Route exact path="/space/" component={Space} />
           <PrivateRoute exact path="/user/profile" component={Profile} />
-          <PrivateRoute exact path="/lender/admin" component={LenderAdminArea} />
-          <PrivateRoute exact path="/lender/logout" component={Logout} />
+          <PrivateRoute exact path="/lender/admin" component={LenderAdminArea} typeUser="lender" />
+          <PrivateRoute exact path="/user/logout" component={Logout} />
           <Redirect from="*" to="/home" />
         </Switch>
         <Footer />

@@ -1,6 +1,6 @@
 import React, {useState , useEffect} from 'react';
 import {Form,Container,Image,Card,Col,Button} from 'react-bootstrap'
-import {getDataUser, updateDatauser} from '../../utils/HTTPrequests'
+import {getDataUser, updateDatauser, deleteTenant} from '../../utils/HTTPrequests'
 import { Formik } from 'formik';
 import * as Yup from 'yup'
 import {useHistory} from 'react-router-dom'
@@ -15,10 +15,12 @@ const base = {
     countryID: "profile-country",
     cityID: "profile-city",
     formID: "profile-form",
-    submitId: "profile-submit",    
+    submitId: "profile-submit",  
+    deleteId: "profile-delete"  
 }
 
 function ProfileForm(){
+    const history = useHistory()
     let imageProfile = "https://imageog.flaticon.com/icons/png/512/16/16480.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"
     let [name,setName]=useState("");
     let [email,setEmail]=useState("");
@@ -26,8 +28,9 @@ function ProfileForm(){
     let [country,setCountry]=useState("");    
     let [city,setCity]=useState("");     
     let [stateView,setStateView]=useState(false);
+    let [userId, setUserId] = useState("")
     let typeUser = localStorage.getItem("typeUser")
-    const history = useHistory()
+    
     
     
     useEffect(() => {
@@ -39,6 +42,7 @@ function ProfileForm(){
                 setPhoneNumber(userData.data.phoneNumber)
                 setCountry(userData.data.country)
                 setCity(userData.data.city)
+                setUserId(userData.data._id)
             }
             catch(err){
                 swal("profile error", "something went wrong, please try again", "error")
@@ -52,7 +56,7 @@ function ProfileForm(){
         if (stateView){
             try{
                 await updateDatauser(typeUser,values)
-                swal("udpate successful","your changes to your profile were saved succesfully","success")
+                swal("update successful","your changes to your profile were saved succesfully","success")
                 setStateView(!stateView)
             }
             catch(err){
@@ -70,11 +74,28 @@ function ProfileForm(){
         country : Yup.string().required("Required Field"),
         city : Yup.string().required("Required Field")
     })
+
+    const deleteUser = async () => {
+        swal("Are you sure to delete your profile?",
+        "All of your registered resources will be deleted", {
+            dangerMode: true,
+            buttons: true,
+        }).then((value) => {
+            if(value) {
+                deleteTenant(userId, localStorage.getItem("typeUser")).then(() => {
+                    swal("Good job", "User deleted successfully", "success").then(() => {
+                    history.push({ pathname: '/lender/logout', fromMenu : false})
+                    })
+                })
+                .catch(() => swal("Oops..", "Something went wrong, please try again", "error") )                
+            }
+        });
+    }
     return(
         <Container className="container-fluid p-3">
             <Card className="p-3">
                 <Formik initialValues={{name,email,phoneNumber,country,city}}  
-                        validationSchema={stateView?formSchema:""}  
+                        validationSchema={stateView ? formSchema: ""}  
                         onSubmit={handleSubmit} 
                         enableReinitialize={true}>
                     {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors })=>(
@@ -152,6 +173,17 @@ function ProfileForm(){
                                     (<Button    id = {base.submitId} variant={isValid?"primary":"secondary"} type = "submit"  
                                                 disabled= {!isValid} block>Save</Button>)
                                     :(<Button type="submit"  block>Edit profile</Button>)}
+                                </Col>
+                            </Form.Row>
+                            <Form.Row className=" justify-content-center mt-3">
+                                <Col className="col-lg-5 ">
+                                    <Button    
+                                    id = {base.deleteId} 
+                                    variant="danger" 
+                                    onClick={()=>deleteUser()} block
+                                    >
+                                        Delete Profile
+                                    </Button>
                                 </Col>
                             </Form.Row>
                         </Form>

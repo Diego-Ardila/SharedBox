@@ -9,7 +9,7 @@ const Space = ({ space, infoFunction }) => {
       setIndex(index = selectedIndex)
   }
   const carouselImages = space.photos.map( element => 
-    <Carousel.Item>
+    <Carousel.Item key={element}>
       <img
         className="d-block w-100"
         src={element} width={300} height={300}
@@ -18,7 +18,7 @@ const Space = ({ space, infoFunction }) => {
     </Carousel.Item>
   );
   const carouselBadges = space.spaceTags.map(element => 
-    <Badge variant="info">{element.name}</Badge>
+    <Badge key={element.name} variant="info">{element.name}</Badge>
   );
   return (
     <Card className="mt-4">
