@@ -36,8 +36,8 @@ export default function ModalInventory(props){
 
     const handleToAxios = async (finalDate,initialDate,elements,spaceId,lenderId) => {
         const {inventoryId,tenantId} = await createElements(elements,spaceId)
-        const notification = await createNotification(inventoryId,tenantId,lenderId)
-        const dates = await createDates(finalDate,initialDate,spaceId,tenantId)
+        await createNotification(inventoryId,tenantId,lenderId)
+        await createDates(finalDate,initialDate,spaceId,tenantId)
     }
 
     const validatorForm = Yup.object().shape({

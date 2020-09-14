@@ -44,6 +44,12 @@ function LoginForm () {
                 errors.email = false
                 errors.password = false
                 break
+            default :
+                localStorage.setItem("typeUser","tenant")
+                setTypeUser(localStorage.getItem("typeUser"))
+                errors.email = false
+                errors.password = false
+                break
         }
     } 
     

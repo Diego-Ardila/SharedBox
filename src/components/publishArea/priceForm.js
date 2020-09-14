@@ -55,7 +55,7 @@ export default function PriceForm () {
             files.forEach(file => {
                 data.append('file', file, file.name)
             });
-            const postedPhotos = await postPhotosFiles(data)
+            await postPhotosFiles(data)
 
             dispatch(changePublishAreaView(1))
             dispatch(changeArea(0))
