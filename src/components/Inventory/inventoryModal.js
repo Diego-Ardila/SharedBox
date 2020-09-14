@@ -11,11 +11,12 @@ export default function ModalInventory(props){
     let [elements,setElements] = useState([])
     const spaceId = props.space._id
     const lenderId = props.space.lenderId
-    console.log(props.initialDate)
+    const initialDate = props.initialDate
+    const finalDate = props.finalDate
     
 
     const handleSubmit = (values,{resetForm}) => {
-        console.log(props.initialDate)
+        console.log(initialDate, finalDate)
         let newObj = {
             id : elements.length + 1,
             ...values 
@@ -215,7 +216,7 @@ return(
             </Container>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={()=>handleToAxios(props.finalDate._d,props.initialDate._d,elements,spaceId,lenderId)}>save</Button>
+            <Button onClick={()=>handleToAxios(finalDate,initialDate,elements,spaceId,lenderId)}>save</Button>
         </Modal.Footer>
     </Modal>
 )

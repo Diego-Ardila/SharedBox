@@ -10,7 +10,7 @@ export default function RendericerElement ({elements,deleteObj}){
             {
                 elements.map(({id,object,quantity,description,category,value})=>{
                     return(
-                        <Toast show={true} onClose={deleteObj(id)}>
+                        <Toast key={id} show={true} onClose={deleteObj(id)}>
                             <Toast.Header>
                                 <strong className="mr-auto" >{object}</strong>
                             </Toast.Header>
