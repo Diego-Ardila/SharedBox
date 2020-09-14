@@ -11,9 +11,11 @@ export default function ModalInventory(props){
     let [elements,setElements] = useState([])
     const spaceId = props.space._id
     const lenderId = props.space.lenderId
+    console.log(props.initialDate)
     
 
     const handleSubmit = (values,{resetForm}) => {
+        console.log(props.initialDate)
         let newObj = {
             id : elements.length + 1,
             ...values 
@@ -46,7 +48,7 @@ export default function ModalInventory(props){
     })
 
 return(
-    <Modal {...props} size="xl" aria-labelledby="contained-modal-title-vcenter">
+    <Modal show= {props.show} onHide= {props.onHide} size="xl" aria-labelledby="contained-modal-title-vcenter">
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             The Lender wants to know what are you going to store
@@ -61,7 +63,7 @@ return(
                         onSubmit={handleSubmit} >
                         <Card className = "justify-content-center p-3">
                             <Form.Row  className="justify-content-center">
-                                <Col mb >
+                                <Col >
                                     <Form.Group>
                                         <OverlayTrigger placement="right"
                                             overlay={
@@ -111,7 +113,7 @@ return(
                                 </Col>
                             </Form.Row>
                             <Form.Row  className="justify-content-left">   
-                                <Col mb>
+                                <Col>
                                     <Form.Group>
                                     <OverlayTrigger placement="right"
                                                 overlay={
