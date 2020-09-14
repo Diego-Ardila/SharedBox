@@ -1,7 +1,8 @@
-import React from "react"
+import React, {useState} from "react"
 import { tax, services } from "../../utils/FinanceVariables"
 import { Card, Button } from "react-bootstrap"
 import NumberFormat from "react-number-format"
+import ModalInventory from "../Inventory/inventoryModal"
 
 const calcFinalPrice = ( basePrice, tax, services ) => {
     return {
@@ -12,7 +13,7 @@ const calcFinalPrice = ( basePrice, tax, services ) => {
 }
 
 export default function PriceAdministrator ({space, startDate, endDate}) {
-    
+    const [showModalInventory,setShowModalInventory] = useState(false)
     const daysToPay = endDate.diff(startDate,"days") + 1
     const basePrice = daysToPay * space.pricePerDay
     const finalPrices = calcFinalPrice(basePrice, tax, services)
@@ -41,7 +42,8 @@ export default function PriceAdministrator ({space, startDate, endDate}) {
                 <Card.Title>
                     {`TOTAL: $ `}<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={finalPrices.finalPrice}/>
                 </Card.Title>
-                <Button variant="primary">RESERVE</Button>
+                <Button onClick={()=> setShowModalInventory(true)} >Reserve this space!!</Button>
+                <ModalInventory space={space} show={showModalInventory} onHide={()=>setShowModalInventory(false)} ></ModalInventory>
             </Card.Body>
             </Card>
             </div>

@@ -11,6 +11,7 @@ import {changePhotos} from '../../actions/publishArea.actions'
 import { useEffect } from "react";
 import FAQadministrator from "./FAQadminstrator";
 import FrequentAskedQuestions from "../../pages/frequentAsked";
+import ModalInventory from "../Inventory/inventoryModal"
 import Calendar from "../viewSpaces/calendar";
 import PriceAdministrator from "./PriceAdministrator";
 
@@ -25,6 +26,7 @@ const RoundedBttn = styled.button`
 export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit, instartDate, inendDate}){  
   const dispatch = useDispatch()
   const [showModal,setShowModal] = useState(false)
+  const [showModalInventory,setShowModalInventory] = useState(false)
   const [loading, setLoading] = useState(true)
   const [editFAQ, setEditFAQ] = useState(false)
   const [startDate, setStartDate] = useState(instartDate)
@@ -65,10 +67,11 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
           </Row>
           <Row className="row justify-content-center p-3">
             <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
-              <h2>{renderingSpace.title}</h2>
+              <h2>{renderingSpace.title}</h2>  {!edit && <Button onClick={()=> setShowModalInventory(true)} >Reserve this space!!</Button>}
               <PhotosAdministrator className =" position-relative">
                 {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
               </PhotosAdministrator>
+              <ModalInventory finalDate={endDate} initialDate={startDate} space={renderingSpace} show={showModalInventory} onHide={()=>setShowModalInventory(false)} ></ModalInventory>
               <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
               <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
             </Col>
@@ -90,20 +93,20 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               >
               </PriceAdministrator>)}
             </Col>
-            </Row>
-            <Row className="row justify-content-center p-3">
+              </Row>
+              <Row className="row justify-content-center p-3">
               <Col className="col-12 d-inline-flex flex-column">
-                <FAQadministrator space={renderingSpace}></FAQadministrator>
-                {edit && <Button onClick = {() => setEditFAQ(true) }>add FAQ questions</Button>}
-              </Col>
-            </Row>
-            <Row>
-              <Col className="col-12 d-inline-flex flex-column justify-content-center">
-                {editFAQ && <FrequentAskedQuestions setEditFAQ ={hideEditFAQ} spaceId ={spaceId}></FrequentAskedQuestions>}
-              </Col>
-            </Row>
-          </React.Fragment>
-      )}
-    </React.Fragment>
+                  <FAQadministrator space={renderingSpace}></FAQadministrator>
+                  {edit && <Button onClick = {() => setEditFAQ(true) }>add FAQ questions</Button>}
+                </Col>
+              </Row>
+              <Row>
+                <Col className="col-12 d-inline-flex flex-column justify-content-center">
+                  {editFAQ && <FrequentAskedQuestions setEditFAQ ={hideEditFAQ} spaceId ={spaceId}></FrequentAskedQuestions>}
+                </Col>
+              </Row>
+            </React.Fragment>
+        )}
+      </React.Fragment>
   )
 }
