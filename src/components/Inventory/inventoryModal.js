@@ -5,15 +5,17 @@ import * as Yup from 'yup'
 import InventoryRendericer from './inventoryRendericer'
 import {Question} from 'react-bootstrap-icons'
 import {createElements, createNotification, createDates} from '../../utils/HTTPrequests'
+import moment from "moment"
 
 export default function ModalInventory(props){
-
+    
     let [elements,setElements] = useState([])
     const spaceId = props.space._id
     const lenderId = props.space.lenderId
     
 
     const handleSubmit = (values,{resetForm}) => {
+        console.log(typeof(moment(props.initialDate).format("YYYY-MM-DD")))
         let newObj = {
             id : elements.length + 1,
             ...values 
@@ -32,9 +34,11 @@ export default function ModalInventory(props){
     }
 
     const handleToAxios = async (finalDate,initialDate,elements,spaceId,lenderId) => {
+        const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
+        const newinitialDate = moment(initialDate).format("YYYY-MM-DD")
         const {inventoryId,tenantId} = await createElements(elements,spaceId)
         const notification = await createNotification(inventoryId,tenantId,lenderId)
-        const dates = await createDates(finalDate,initialDate,spaceId,tenantId)
+        const dates = await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
     }
 
     const validatorForm = Yup.object().shape({
