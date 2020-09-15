@@ -8,12 +8,12 @@ export default function AdminTenantView (){
         <Container className="p-3">
             <Card className="p-3">
                 <Row className="justify-content-center">
-                    <Button className="col-lg-5 m-3 " onClick={()=>history.push("/user/profile")} >Personal Information</Button>
-                    <Button className="col-lg-5 m-3">History Transactions</Button>
+                    <Button data-testid="lender_admin-button" className="col-lg-5 m-3 " onClick={()=>history.push("/user/profile")} >Personal Information</Button>
+                    <Button data-testid="lender_admin-button" className="col-lg-5 m-3">History Transactions</Button>
                 </Row>
                 <Row className="justify-content-center">
-                    <Button className="col-lg-5 m-3">Scores</Button>
-                    <Button className="col-lg-5 m-3">Incoming reservations</Button>
+                    <Button data-testid="lender_admin-button" className="col-lg-5 m-3">Scores</Button>
+                    <Button data-testid="lender_admin-button" className="col-lg-5 m-3">Incoming reservations</Button>
                 </Row>
             </Card>
         </Container>
