@@ -38,8 +38,6 @@ export default function FrequentAskedQuestions ({spaceId, setEditFAQ}) {
                 </Row>
                 </Form>
             </Container>
-           
-            
         </div>
     )
 }

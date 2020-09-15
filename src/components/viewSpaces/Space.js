@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { Card, Col, Row, Badge, Carousel, Button } from 'react-bootstrap';
 
-const images= ["https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80","https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80","https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"];
 
 const Space = ({ space, infoFunction }) => {
   let [ index, setIndex] = useState(0);
@@ -10,7 +9,7 @@ const Space = ({ space, infoFunction }) => {
       setIndex(index = selectedIndex)
   }
   const carouselImages = space.photos.map( element => 
-    <Carousel.Item>
+    <Carousel.Item key={element}>
       <img
         className="d-block w-100"
         src={element} width={300} height={300}
