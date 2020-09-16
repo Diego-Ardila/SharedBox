@@ -47,9 +47,9 @@ describe("Especific Space View", () => {
                     ></SpecificSpaceView>
             </Provider>
         )
-        const { getActions } = mockStore()
+        const { getActions } = store
         const actions = getActions()
-        expect(actions).toBe(ACTIONS.CHANGE_PHOTOS)
+        expect(actions[0].type).toBe(ACTIONS.CHANGE_PHOTOS)
 
     })
 

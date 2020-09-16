@@ -3,7 +3,7 @@ import { render, fireEvent, cleanup } from '@testing-library/react'
 import FrequentAskedQuestionsForm  from './faq.Form'
 import moxios from "moxios"
 
-describe("FAQ form", () => {
+describe.only("FAQ form", () => {
     beforeEach(()=>{
         moxios.install()
         cleanup()
@@ -14,7 +14,7 @@ describe("FAQ form", () => {
         cleanup()
     })
 
-    it("should create a new FAQ and send it to the server", (done) => {
+    it.only("should create a new FAQ and send it to the server", (done) => {
         const faqs = [
             {
                 question: "test 1",
@@ -44,13 +44,15 @@ describe("FAQ form", () => {
         fireEvent.change(questionInput, {
             target: {
               value: newFaq.question,
+              name: "question"
             }
         }); 
-        debug()
+
         const answerInput = getByLabelText(/answer/i)
         fireEvent.change(answerInput, {
             target: {
               value: newFaq.answer,
+              name: "response"
             }
         });
         
@@ -64,7 +66,6 @@ describe("FAQ form", () => {
             const req = moxios.requests.mostRecent();
             expect(req.config.method).toEqual("post")
             const arrReq = JSON.parse(req.config.data)
-            console.log(arrReq)
             expect(arrReq[1]).toMatchObject({...newFaq, spaceID})
             expect(arrReq).toHaveLength(2)
             req.respondWith({
