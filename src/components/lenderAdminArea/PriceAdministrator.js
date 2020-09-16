@@ -1,22 +1,11 @@
-import React, {useState} from "react"
-import { tax, services } from "../../utils/FinanceVariables"
+import React from "react"
+import { calcPrices } from "../../utils/FinanceVariables"
 import { Card, Button } from "react-bootstrap"
 import NumberFormat from "react-number-format"
-import ModalInventory from "../Inventory/inventoryModal"
 
-const calcFinalPrice = ( basePrice, tax, services ) => {
-    return {
-        taxes: basePrice * tax,
-        services: basePrice * services,
-        finalPrice: basePrice * (1 + (tax + services))
-    }
-}
 
 export default function PriceAdministrator ({space, startDate, endDate, setShowModalInventory}) {
-    const daysToPay = endDate.diff(startDate,"days") + 1
-    const basePrice = daysToPay * space.pricePerDay
-    const finalPrices = calcFinalPrice(basePrice, tax, services)
-   
+    const finalPrices = calcPrices(startDate, endDate, space.pricePerDay)
     return(
         <React.Fragment>
             <div className="sticky-top pt-3">
@@ -24,19 +13,19 @@ export default function PriceAdministrator ({space, startDate, endDate, setShowM
             <Card.Header as="h5">PRICE</Card.Header>
             <Card.Body>
                 <Card.Text>
-                    {`reservation for ${daysToPay} days`}
+                    {`reservation for ${finalPrices.daysToPay} days`}
                 </Card.Text>
                 <Card.Text>
                     {`price per day `}<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={space.pricePerDay}/>
                 </Card.Text>
                 <Card.Text>
-                    {`base price.......`}<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={basePrice}/>
+                    {`base price.......`}<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={finalPrices.basePrice}/>
                 </Card.Text>
                 <Card.Text>
                     {`+ taxes...............`}<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={finalPrices.taxes}/>
                 </Card.Text>
                 <Card.Text>
-                    {`+ services..............`}<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={finalPrices.services}/>
+                    {`+ services..............`}<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={finalPrices.serviceExp}/>
                 </Card.Text>
                 <Card.Title>
                     {`TOTAL: `}<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={finalPrices.finalPrice}/>
