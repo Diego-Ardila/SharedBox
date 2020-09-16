@@ -15,7 +15,7 @@ export default function MainView ({error, spaces, displayMoreInfo}) {
             </Row>
             <Row>
               <Col>
-                {error && <h2>{error.response.data}</h2>}
+                {/* Crear un swal para el error */}
               <Spaces spaces = {spaces} infoFunction={displayMoreInfo}></Spaces>
               </Col>
             </Row>
