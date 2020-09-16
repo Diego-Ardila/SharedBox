@@ -5,15 +5,10 @@ import {
 import { postFAQs } from "../../utils/HTTPrequests";
 import swal from "sweetalert";
 
-
-
-
 const base = {
     questionId : "question",
     responseId : "response"
 }
-
-
 
 export default function FrequentAskedQuestionsForm (props) {
 
