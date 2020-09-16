@@ -1,12 +1,13 @@
 import React, {useState , useEffect} from 'react';
 import {Form,Container,Image,Card,Col,Button} from 'react-bootstrap'
-import {getDataUser, updateDatauser, deleteTenant} from '../../utils/HTTPrequests'
-import { Formik } from 'formik';
+import {getDataUser, updateDatauser, deleteTenant} from '../../utils/HTTPrequests' 
+import { Field, Formik } from 'formik';
 import * as Yup from 'yup'
 import {useHistory} from 'react-router-dom'
 import { useDispatch } from "react-redux";
 import { ArrowLeft } from 'react-bootstrap-icons'
 import swal from 'sweetalert'
+import usePushNotifications from '../notifications/usePushNotifications'
 
 const base = {
     imageID: "profile-image",
@@ -32,8 +33,17 @@ function ProfileForm(){
     let [stateView,setStateView]=useState(false);
     let [userId, setUserId] = useState("")
     let typeUser = localStorage.getItem("typeUser")
-    
-    
+
+    const {
+        userConsent,
+        pushNotificationSupported,
+        onClickSubscribeToNotifications,
+        onClickCancelSubscriptionToPushServer,
+        onClickSendNotification,
+        error,
+        loading
+    } = usePushNotifications();
+    const isConsentGranted = userConsent === "granted";       
     
     useEffect(() => {
         async function getDatesUser (){
@@ -54,7 +64,7 @@ function ProfileForm(){
     },[stateView])
 
     const handleSubmit = async (values) => {
-        
+        console.log(values)
         if (stateView){
             try{
                 await updateDatauser(typeUser,values)
@@ -93,6 +103,13 @@ function ProfileForm(){
             }
         });
     }
+
+    const handleCheckbox = (name, target, setFieldValue) => {
+        target ?
+        onClickSubscribeToNotifications() : onClickCancelSubscriptionToPushServer()
+        target ?
+        setFieldValue("notifications",true) : setFieldValue("notifications",false)
+    }
     return(
         <Container className="container-fluid p-3">
             <Card className="p-3">
@@ -100,7 +117,7 @@ function ProfileForm(){
                         validationSchema={stateView ? formSchema: ""}  
                         onSubmit={handleSubmit} 
                         enableReinitialize={true}>
-                    {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors })=>(
+                    {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, field, setFieldValue })=>(
                         <Form  onSubmit={handleSubmit} noValidate>
                             <Form.Row className="justify-content-left" >
                                 <Col className=" text-left ">
@@ -169,6 +186,26 @@ function ProfileForm(){
                                     </Form.Group>
                                 </Col>
                             </Form.Row >
+                            <Form.Row className="justify-content-center">
+                                {pushNotificationSupported ?
+                                <Col md lg>
+                                <Field name="notifications" type="checkbox" className="justify-content-center" >
+                                {({ field: {value}, form: {setFieldValue} }) => (
+                                    
+                                    <Form.Check className="justify-content-center"  label="Activate Notifications" onChange={(e) => handleCheckbox("notifications", e.target.checked, setFieldValue) } />
+                                )}
+                                </Field>   
+                                </Col>  
+                                : <p>Push notifications are not supported by the browser</p> }                                                  
+                            </Form.Row>  
+                            <Form.Row>
+                            <p>
+                            User consent to recieve push notificaitons is <strong>{userConsent}</strong>.
+                            </p>                            
+                            <Button onClick={onClickSendNotification}>Send a notification</Button>                       
+                            </Form.Row>                              
+                            
+                            
                             <Form.Row className=" justify-content-center">
                                 <Col className="col-lg-5 ">
                                     {stateView? 

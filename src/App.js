@@ -15,6 +15,7 @@ import Home from './pages/Home';
 import Logout from './pages/Logout';
 import { changeLogin } from './actions/loginUser.actions'
 import Space from "./pages/Space"
+import PushNotificationDemo from './components/notifications/pushNotificationDemo';
  
 
 function PrivateRoute(props) {
@@ -48,6 +49,7 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/lender/frequentAsked" component={frequentAsked} />
+          <Route exact path="/subscribe" component={PushNotificationDemo} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/user/login" component={Login} />
           <Route exact path="/user/register/" component={register} />

@@ -2,11 +2,12 @@ import React from 'react';
 import { Form, Col,Row, Button, Container} from 'react-bootstrap';
 import {  useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 import * as Yup from "yup";
 import {userRegister} from "../../utils/HTTPrequests"
 import { changeLogin } from '../../actions/loginUser.actions'
 import swal from 'sweetalert'
+import usePushNotifications from '../notifications/usePushNotifications'
 
 const base={
     nameId:"name",
@@ -25,6 +26,16 @@ const RegisterForm = (props) => {
         password: Yup.string().required("Required Field"),
         v_password: Yup.string().oneOf([Yup.ref('password')], "Passwords must match").required("Required Field")
     })     
+
+    const {
+        userConsent,
+        pushNotificationSupported,
+        onClickSubscribeToNotifications,
+        onClickCancelSubscriptionToPushServer,
+        onClickSendNotification,
+        error,
+        loading
+    } = usePushNotifications();
     
     const handleSubmit = async (values) => {
         try{
@@ -37,13 +48,19 @@ const RegisterForm = (props) => {
             swal("error", `${err.response.data}`, "error")
         }
     }  
+    const handleCheckbox = (name, target, setFieldValue) => {
+        //target ?
+        //onClickSubscribeToNotifications() : onClickCancelSubscriptionToPushServer()
+        target ?
+        setFieldValue("isSubscribed",true) : setFieldValue("isSubscribed",false)
+    }
     
     return(
         <Container>
             <Row className="justify-content-md-center mt-5">
             <Col md={4} sm={12}>
             <h4 className="text-center">Register User</h4>
-            <Formik initialValues={{ name:"", email:"", phoneNumber:"", password:"", v_password:""}} validationSchema={formSchema} onSubmit={ handleSubmit} >
+            <Formik initialValues={{ name:"", email:"", phoneNumber:"", password:"", v_password:"", isSubscribed: false}} validationSchema={formSchema} onSubmit={ handleSubmit} >
             {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors }) => (
                 <Form onSubmit={handleSubmit}  noValidate>
                     <Form.Group controlId={base.nameId}>
@@ -81,6 +98,14 @@ const RegisterForm = (props) => {
                             <div className="error-message">{errors.v_password}</div>
                         ): null}
                     </Form.Group> 
+                    <Form.Group>
+                        <Field name="isSubscribed" type="checkbox" className="justify-content-center" >
+                        {({ field: {value}, form: {setFieldValue} }) => (
+                            
+                            <Form.Check className="justify-content-center"  label="Activate Notifications" onChange={(e) => handleCheckbox("isSubscribed", e.target.checked, setFieldValue) } />
+                        )}
+                        </Field>          
+                    </Form.Group>
                     <Button variant={isValid?"primary":"secondary"} disabled= {!isValid} size="md" type="submit">
                         Send
                     </Button>

@@ -79,7 +79,7 @@ export const getSuggestions = async () => {
     }
 }
 
-const postSpace=async (state)=>{
+export const postSpace=async (state)=>{
     const {additionalInfo,width,length,height,city,address,price,title,area} = state
     
     try{
@@ -285,6 +285,58 @@ export const deleteTenant = async(tenantId, typeUser) => {
             data: {
                 tenantId
             }
+        })
+        return response
+    } catch(err){
+        throw(err)
+    }
+}
+
+const host = "http://localhost:4000";
+
+export const registerSubscription = async(path, body) => {
+    try {
+        const response = await axios({
+            method: "POST",
+            url: `${host}${path}`,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem("typeUser")
+            },
+            data: body              
+        })
+        return response
+    } catch(err){
+        throw(err)
+    }
+}
+export const cancelSubscription = async(path, body) => {
+    try {
+        const response = await axios({
+            method: "DELETE",
+            url: `${host}${path}`,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem("typeUser")
+            },
+            data: body              
+        })
+        return response
+    } catch(err){
+        throw(err)
+    }
+}
+
+export const sendNotification = async(path, body) => {
+    try {
+        const response = await axios({
+            method: "GET",
+            url: `${host}${path}`,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem("typeUser")
+            },
+            data: body              
         })
         return response
     } catch(err){
