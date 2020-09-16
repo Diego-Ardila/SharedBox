@@ -41,7 +41,7 @@ export default function PriceAdministrator ({space, startDate, endDate, setShowM
                 <Card.Title>
                     {`TOTAL: `}<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={finalPrices.finalPrice}/>
                 </Card.Title>
-                <Button onClick={()=> setShowModalInventory(true)} >Reserve this space!!</Button>
+                <Button data-testid="edit-ModeOff" onClick={()=> setShowModalInventory(true)} >Reserve this space!!</Button>
             </Card.Body>
             </Card>
             </div>

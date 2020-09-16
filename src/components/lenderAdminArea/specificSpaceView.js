@@ -71,9 +71,9 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
           </Row>
           <Row className="row justify-content-center p-3">
             <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
-              <h2>{renderingSpace.title}</h2>  {!edit && <Button onClick={()=> setShowModalInventory(true)} >Reserve this space!!</Button>}
+              <h2>{renderingSpace.title}</h2>  {!edit && <Button data-testid="edit-ModeOff" onClick={()=> setShowModalInventory(true)} >Reserve this space!!</Button>}
               <PhotosAdministrator className =" position-relative">
-                {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
+                {edit ? <EditButton data-testid="edit-ModeOn" onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
               </PhotosAdministrator>
               <ModalInventory finalDate={endDate} initialDate={startDate} space={renderingSpace} show={showModalInventory} onHide={()=>setShowModalInventory(false)} ></ModalInventory>
               <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
@@ -102,7 +102,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               <Row className="row justify-content-center p-3">
               <Col className="col-12 d-inline-flex flex-column">
                   <FAQadministrator space={renderingSpace}></FAQadministrator>
-                  {edit && <Button onClick = {() => setEditFAQ(true) }>add FAQ questions</Button>}
+                  {edit && <Button data-testid="edit-ModeOn" onClick = {() => setEditFAQ(true) }>add FAQ questions</Button>}
                 </Col>
               </Row>
               <Row>

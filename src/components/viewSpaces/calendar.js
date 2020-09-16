@@ -18,11 +18,6 @@ class Calendar extends React.Component {
         this.endDate = this.props.endDate  
     }
 
-    componentDidMount() {
-        console.log("from calendar",this.startDate)
-        console.log("from calendar", this.endDate)
-    }
-
     blockedDatesFromDb = this.props.space.dateReservedId
 
     blockDays = []

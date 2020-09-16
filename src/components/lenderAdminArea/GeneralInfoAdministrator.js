@@ -178,7 +178,7 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                             </Accordion.Collapse>
                         </Card>
                         </Accordion>
-                    {edit ? <Button  type={isUpdatingState ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => buttonBehavior()} >{isUpdatingState? "save" : "edit"}<Pencil></Pencil></Button> : null}
+                    {edit ? <Button data-testid="edit-ModeOn" type={isUpdatingState ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => buttonBehavior()} >{isUpdatingState? "save" : "edit"}<Pencil></Pencil></Button> : null}
                     </Card.Body>
                     <Card.Footer className="text-muted">{`created ${Date(space.createdAt)}`}</Card.Footer>
                 </Card>
