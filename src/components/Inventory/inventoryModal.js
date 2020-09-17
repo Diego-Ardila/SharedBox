@@ -39,8 +39,9 @@ export default function ModalInventory(props){
         const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
         const newinitialDate = moment(initialDate).format("YYYY-MM-DD")
         const {inventoryId,tenantId} = await createElements(elements,spaceId)
-        await createNotification(inventoryId,tenantId,lenderId)
-        await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
+        const date = await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
+        await createNotification(inventoryId,tenantId,lenderId,date._id)
+        
     }
 
     const validatorForm = Yup.object().shape({
