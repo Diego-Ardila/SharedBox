@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Card, Col, Row, Badge, Carousel, Button } from 'react-bootstrap';
+import "./Space.css"
 
 
 const Space = ({ space, infoFunction }) => {
@@ -21,7 +22,7 @@ const Space = ({ space, infoFunction }) => {
     <Badge key={element.name} variant="info">{element.name}</Badge>
   );
   return (
-    <Card className="mt-4">
+    <Card className="mt-4 space_card">
       <Row>
         <Col lg={4} md={4}>
           <Carousel 
