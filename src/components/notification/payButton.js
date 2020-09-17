@@ -2,7 +2,7 @@ import React from "react"
 import { Button } from "react-bootstrap"
 import { BagCheck } from "react-bootstrap-icons"
 
-export default function PayButton ({finalPrice, tax, tax_base, spaceTitle, tenantName, tenantPhoneNum, numDays, inDate, finDate}) {
+export default function PayButton ({finalPrice, tax, tax_base, spaceTitle, tenantName, tenantPhoneNum, numDays, inDate, finDate, tenantId}) {
     const handlePayment= () => {
         const paymentHandler = window.ePayco.checkout.configure({
         key: process.env.REACT_APP_EPAYCO_PUBLIC_KEY,
@@ -19,7 +19,7 @@ export default function PayButton ({finalPrice, tax, tax_base, spaceTitle, tenan
             currency: 'cop',
             country: 'CO',
             lang: 'es',
-            invoice: '12345',
+            invoice: tenantId,
             extra1: `reservation warehouse for ${numDays}`,
             extra2: `initial Date: ${inDate}`,
             extra3: `final Date: ${finDate}`,
