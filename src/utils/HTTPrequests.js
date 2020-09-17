@@ -312,7 +312,7 @@ export const createElements = async(elements,spaceId) => {
     }
 }
 
-export const createNotification = async(inventoryId,tenantId,lenderId) => {
+export const createNotification = async(inventoryId,tenantId,lenderId,datesReservedId) => {
     try{
         const response = await axios({
             method: "POST",
@@ -324,7 +324,8 @@ export const createNotification = async(inventoryId,tenantId,lenderId) => {
             data:{
                 inventoryId,
                 tenantId,
-                lenderId
+                lenderId,
+                datesReservedId
             }
         })
         return response
@@ -355,3 +356,19 @@ export const createDates = async(finalDate,initialDate,spaceId,tenantId) => {
     }
 }
 
+export const getNotificationUser = async()=>{
+    const user = localStorage.getItem("typeUser") === "tenant" ? localStorage.getItem("typeUser"):``
+    try{
+        const response = await axios({
+            method:"GET",
+            url:"http://127.0.0.1:4000/notification",
+            headers:{
+                Authorization: 'Bearer '+ localStorage.getItem('token'),
+                "x-UserType":user                        
+            }
+        })
+        return response
+    }catch(err){
+        throw err
+    }
+}
