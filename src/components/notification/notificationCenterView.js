@@ -5,6 +5,7 @@ import Logo from "../../logo.svg";
 import {calcPrices} from '../../utils/FinanceVariables'
 import moment from "moment" 
 import NotificationCard from './notificationCard'
+import PayButton from './payButton';
 
 export default function NotificationCenterView (){
     const [arrNotifications,setArrNotifications] = useState([])
@@ -85,7 +86,7 @@ export default function NotificationCenterView (){
                             <Card.Footer className="text-right">
                                 {localStorage.getItem("typeUser")==="lender"?
                                 <div><Button className="mr-2">Reject</Button><Button>Accept</Button></div>
-                                :<Button className="col-lg-3 ml-auto" block={true} >Pay</Button>}
+                                :<PayButton className="col-lg-3 ml-auto" block={true}></PayButton>}
                             </Card.Footer>
                         </Card> : <Image className="pt-5 m-5 w-50" src={Logo} alt="logo"></Image> }
                     </div>
