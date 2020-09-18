@@ -13,6 +13,7 @@ const base={
     nameId:"name",
     emailId:"email",
     phoneId:"phoneNumber",
+    isSubscribedId: "isSubscribed",
     passwordId:"password",
     v_passwordId:"v_password"
 }
@@ -32,14 +33,13 @@ const RegisterForm = (props) => {
         pushNotificationSupported,
         onClickSubscribeToNotifications,
         onClickCancelSubscriptionToPushServer,
-        onClickSendNotification,
-        error,
-        loading
+        onClickSendNotification
     } = usePushNotifications();
     
     const handleSubmit = async (values) => {
         try{
             const userToken = await userRegister(props.typeUser,values)
+            if (values.isSubscribed) onClickSubscribeToNotifications()
             localStorage.setItem("token", userToken.data)
             dispatch(changeLogin(true))
             swal("register successful","your registred were saved succesfully","success")
@@ -47,21 +47,14 @@ const RegisterForm = (props) => {
         }catch(err){
             swal("error", `${err.response.data}`, "error")
         }
-    }  
-    const handleCheckbox = (name, target, setFieldValue) => {
-        //target ?
-        //onClickSubscribeToNotifications() : onClickCancelSubscriptionToPushServer()
-        target ?
-        setFieldValue("isSubscribed",true) : setFieldValue("isSubscribed",false)
-    }
-    
+    }     
     return(
         <Container>
             <Row className="justify-content-md-center mt-5">
             <Col md={4} sm={12}>
             <h4 className="text-center">Register User</h4>
             <Formik initialValues={{ name:"", email:"", phoneNumber:"", password:"", v_password:"", isSubscribed: false}} validationSchema={formSchema} onSubmit={ handleSubmit} >
-            {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors }) => (
+            {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setFieldValue }) => (
                 <Form onSubmit={handleSubmit}  noValidate>
                     <Form.Group controlId={base.nameId}>
                         <Form.Label>Name</Form.Label>
@@ -69,7 +62,7 @@ const RegisterForm = (props) => {
                         {touched.name && errors.name ? (
                             <div className="error-message">{errors.name}</div>
                         ): null}
-                    </Form.Group>  
+                    </Form.Group>                      
                     <Form.Group controlId={base.emailId}>
                         <Form.Label>User E-mail</Form.Label>
                         <Form.Control name="email" type="text" placeholder="Enter Email" onChange ={handleChange} value={values.email} className={touched.email && errors.email ? "is-invalid" : null}  />
@@ -98,14 +91,14 @@ const RegisterForm = (props) => {
                             <div className="error-message">{errors.v_password}</div>
                         ): null}
                     </Form.Group> 
-                    <Form.Group>
+                    <Form.Group controlId={base.isSubscribedId}>
                         <Field name="isSubscribed" type="checkbox" className="justify-content-center" >
-                        {({ field: {value}, form: {setFieldValue} }) => (
-                            
-                            <Form.Check className="justify-content-center"  label="Activate Notifications" onChange={(e) => handleCheckbox("isSubscribed", e.target.checked, setFieldValue) } />
+                        {({ field: {value}, form: {setFieldValue} }) => (                            
+                            <Form.Check className="justify-content-center"  label="Activate Notifications" checked={values.isSubscribed} onClick={() => setFieldValue('isSubscribed',!values.isSubscribed)} />
                         )}
                         </Field>          
                     </Form.Group>
+                    
                     <Button variant={isValid?"primary":"secondary"} disabled= {!isValid} size="md" type="submit">
                         Send
                     </Button>

@@ -15,11 +15,8 @@ const options = {
   event.waitUntil(this.registration.showNotification(title, options));
 }
 function openPushNotification(event) {
-  console.log(event.notification.data)
-  console.log("Notification click Received.",    event.notification.data);
   clients.openWindow(event.notification.data)
    event.notification.close();
-  //do something
 }
 this.addEventListener("notificationclick", openPushNotification);
 this.addEventListener("push", receivePushNotification);

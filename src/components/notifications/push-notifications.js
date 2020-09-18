@@ -29,9 +29,7 @@ function registerServiceWorker() {
 }
 
 async function createNotificationSubscription() {
-  //wait for service worker installation to be ready
   const serviceWorker = await navigator.serviceWorker.ready;
-  // subscribe and return the subscription
   return await serviceWorker.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: process.env.REACT_APP_VAPID_PUBLIC_KEY
@@ -39,7 +37,6 @@ async function createNotificationSubscription() {
 }
 
 function getUserSubscription() {
-  //wait for service worker installation to be ready, and then
   return navigator.serviceWorker.ready
     .then(function(serviceWorker) {
       return serviceWorker.pushManager.getSubscription();

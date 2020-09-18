@@ -47,9 +47,8 @@ export default function usePushNotifications() {
       if (permission !== "granted"){  
         throw new Error('User did not granted the permission');
       } 
-      const response = await createNotificationSubscription()
-      console.log(userSubscription)
-      const post = await registerSubscription("/subscription", userSubscription)
+      await createNotificationSubscription()
+      await registerSubscription("/subscription", userSubscription)
       setPushServerSubscriptionId(true);
       setError(false);
     } catch(err){
@@ -64,7 +63,7 @@ export default function usePushNotifications() {
     try {
       setLoading(true);
       setError(false);
-      const request = await cancelSubscription("/subscription", userSubscription)
+      await cancelSubscription("/subscription", userSubscription)
       setPushServerSubscriptionId(false);
     } catch(err){      
       setError(err);
@@ -77,7 +76,7 @@ export default function usePushNotifications() {
     try {
       setLoading(true);
       setError(false);
-      const response = await sendNotification("/subscription")
+      await sendNotification("/subscription")
       setLoading(false);
     } catch (err){
       setLoading(false);

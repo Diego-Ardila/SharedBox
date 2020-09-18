@@ -31,7 +31,8 @@ function ProfileForm(){
     let [country,setCountry]=useState("");    
     let [city,setCity]=useState("");     
     let [stateView,setStateView]=useState(false);
-    let [userId, setUserId] = useState("")
+    let [userId, setUserId] = useState("");
+    let [isSubscribed, setIsSubscribed] = useState(false)
     let typeUser = localStorage.getItem("typeUser")
 
     const {
@@ -55,6 +56,7 @@ function ProfileForm(){
                 setCountry(userData.data.country)
                 setCity(userData.data.city)
                 setUserId(userData.data._id)
+                setIsSubscribed(userData.data.isSubscribed)
             }
             catch(err){
                 swal("profile error", "something went wrong, please try again", "error")
@@ -64,10 +66,10 @@ function ProfileForm(){
     },[stateView])
 
     const handleSubmit = async (values) => {
-        console.log(values)
         if (stateView){
             try{
                 await updateDatauser(typeUser,values)
+                values.isSubscribed ? await onClickSubscribeToNotifications() : await onClickCancelSubscriptionToPushServer()
                 swal("update successful","your changes to your profile were saved succesfully","success")
                 setStateView(!stateView)
             }
@@ -104,16 +106,16 @@ function ProfileForm(){
         });
     }
 
-    const handleCheckbox = (name, target, setFieldValue) => {
+    /*const handleCheckbox = (name, target, setFieldValue) => {
         target ?
         onClickSubscribeToNotifications() : onClickCancelSubscriptionToPushServer()
         target ?
-        setFieldValue("notifications",true) : setFieldValue("notifications",false)
-    }
+        setFieldValue(name,false) : setFieldValue(name,true)
+    }*/
     return(
         <Container className="container-fluid p-3">
             <Card className="p-3">
-                <Formik initialValues={{name,email,phoneNumber,country,city}}  
+                <Formik initialValues={{name,email,phoneNumber,country,city, isSubscribed}}  
                         validationSchema={stateView ? formSchema: ""}  
                         onSubmit={handleSubmit} 
                         enableReinitialize={true}>
@@ -186,17 +188,18 @@ function ProfileForm(){
                                     </Form.Group>
                                 </Col>
                             </Form.Row >
-                            <Form.Row className="justify-content-center">
-                                {pushNotificationSupported ?
+                            <Form.Row className="justify-content-center">                    
                                 <Col md lg>
-                                <Field name="notifications" type="checkbox" className="justify-content-center" >
+                                <Field name="isSubscribed" type="checkbox"  className="justify-content-center" >
                                 {({ field: {value}, form: {setFieldValue} }) => (
-                                    
-                                    <Form.Check className="justify-content-center"  label="Activate Notifications" onChange={(e) => handleCheckbox("notifications", e.target.checked, setFieldValue) } />
-                                )}
+                                    <>
+                                    {stateView ? 
+                                    <Form.Check  className="justify-content-center"  inline label="Activate Notifications" checked={values.isSubscribed} onClick={() => setFieldValue('isSubscribed',!values.isSubscribed)} />  
+                                    : <Form.Check disabled className="justify-content-center"  inline label="Activate Notifications" checked={values.isSubscribed}  /> }
+                                    </>                                     
+                                )                              }                                 
                                 </Field>   
-                                </Col>  
-                                : <p>Push notifications are not supported by the browser</p> }                                                  
+                                </Col>                                                
                             </Form.Row>  
                             <Form.Row>
                             <p>
