@@ -11,7 +11,7 @@ import {changePrice, changePublishAreaView, changeArea,
     changeTitle,
     changePhotos} from "../../actions/publishArea.actions"
 import {postSpace, updateSpaceTag, postTag, postPhotosFiles} from "../../utils/HTTPrequests"
-import {Container, Form, Row,  Button, InputGroup} from 'react-bootstrap'
+import {Container, Form, Row,  Button, InputGroup, Spinner} from 'react-bootstrap'
 import {ArrowLeft} from 'react-bootstrap-icons';
 import { Formik } from 'formik';
 import * as Yup from "yup";
@@ -43,7 +43,7 @@ export default function PriceForm () {
         setValues(toUpdate)
     }
     
-    const handleSubmit = async(values) => {
+    const handleSubmit = async(values, actions) => {
         try {
             const spaceId = await postSpace(state)
             Promise.all(state.tags.map( async ({name}) => {
@@ -55,7 +55,7 @@ export default function PriceForm () {
             files.forEach(file => {
                 data.append('file', file, file.name)
             });
-            const postedPhotos = await postPhotosFiles(data)
+            await postPhotosFiles(data)
 
             dispatch(changePublishAreaView(1))
             dispatch(changeArea(0))
@@ -68,6 +68,7 @@ export default function PriceForm () {
             dispatch(changeTitle(""))
             dispatch(changePhotos([]))
             dispatch(changePrice(0))
+            actions.setSubmitting(false)
             swal("Space Created!","Your space was created successfully","success")
             history.push("/lender/admin")
         } catch(err){
@@ -81,7 +82,7 @@ export default function PriceForm () {
         validationSchema = {FormSchema}
         onSubmit = {handleSubmit} >   
         {({
-        handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setValues
+        handleSubmit, handleChange, handleBlur, values, isSubmitting, touched, isValid, errors, setValues
         }) => (  
             <>            
             <Container>    
@@ -96,6 +97,7 @@ export default function PriceForm () {
                 <Row className="justify-content-center">                    
                     <Form className="justify-content-center mt-3" onSubmit={handleSubmit} noValidate>
                         <h3>Finally... lets talk about money:</h3>
+                        {isSubmitting ? <Spinner animation="border" variant="primary" size="xl" /> : null}
                         <InputGroup>
                         <Form.Group controlId={base.priceId}>
                             <Form.Label>Expected Price</Form.Label>               
@@ -105,7 +107,7 @@ export default function PriceForm () {
                             ): null}
                         </Form.Group>  
                         </InputGroup>                     
-                        <Button variant="primary" size="lg" type="submit">
+                        <Button disabled={isSubmitting} variant="primary" size="lg" type="submit">
                             Next
                         </Button>
                     </Form>        

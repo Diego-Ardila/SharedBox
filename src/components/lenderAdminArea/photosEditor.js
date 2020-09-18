@@ -66,19 +66,20 @@ export default function PhotosEditor({space,show,onHide}) {
     }
 
     const handleSubmit =async (space)=>{
-      try{
-        const data= new FormData()
-        data.append('spaceId', space._id)
-        files.forEach(file =>{
-          data.append('file', file, file.name)
-        })
-        await postPhotosFiles(data)
-        swal("register successful","your photos were saved succesfully","success")
+      if(files.length > 0){
+        try{
+          const data= new FormData()
+          data.append('spaceId', space._id)
+          files.forEach(file =>{
+            data.append('file', file, file.name)
+          })
+          await postPhotosFiles(data)
+          swal("register successful","your photos were saved succesfully","success")
+        }
+        catch(err){
+          swal("update photos error", "something went wrong, please try again", "error")
+        }
       }
-      catch(err){
-        swal("update photos error", "something went wrong, please try again", "error")
-      }
-      swal("deleted successfully","your photos were deleting succesfully","success")
     }
 
     return (

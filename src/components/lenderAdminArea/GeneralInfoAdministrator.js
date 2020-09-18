@@ -40,13 +40,13 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                         <Form.Control 
                             name="additionalInfo" 
                             type="textArea" 
-                            placeholder={values.additionalInfo || "i am a testing test"}
+                            placeholder={values.additionalInfo}
                             value={values.additionalInfo}
                             onChange={handleChange}    
                         />
-                        ) : values.additionalInfo || "I am a testing text"}
+                        ) : values.additionalInfo}
                     </Card.Text>
-                    <Accordion defaultActiveKey={isUpdatingState ? "0" : ""}>
+                    <Accordion defaultActiveKey={isUpdatingState ? "0" : "0"}>
                         <Card>
                             <Card.Header>
                             <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "0"}>
@@ -82,10 +82,24 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                                         onChange={handleChange}    
                                         />
                                     </React.Fragment>
-                                ) : 
-                                    `width: ${values.width}mts \n
-                                    length: ${values.length}mts 
-                                    height: ${values.height}mts `} 
+                                ) : ( 
+                                    <React.Fragment>
+                                        <Card.Text>
+                                            {`area: ${values.area}mts`}
+                                        </Card.Text>
+                                        <Card.Text>
+                                            {`width: ${values.width}mts`}
+                                        </Card.Text>
+                                        <Card.Text>
+                                            {`length: ${values.length}mts` }
+                                            
+                                        </Card.Text>
+                                        <Card.Text>
+                                            { `height: ${values.height}mts`} 
+                                        </Card.Text>
+                                    </React.Fragment>
+                                     )
+                                }         
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>

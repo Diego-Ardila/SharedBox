@@ -4,7 +4,6 @@ import {getDataUser, updateDatauser, deleteTenant} from '../../utils/HTTPrequest
 import { Field, Formik } from 'formik';
 import * as Yup from 'yup'
 import {useHistory} from 'react-router-dom'
-import { useDispatch } from "react-redux";
 import { ArrowLeft } from 'react-bootstrap-icons'
 import swal from 'sweetalert'
 import usePushNotifications from '../notifications/usePushNotifications'
@@ -23,7 +22,6 @@ const base = {
 
 function ProfileForm(){
     const history = useHistory()
-    const dispatch = useDispatch()
     let imageProfile = "https://imageog.flaticon.com/icons/png/512/16/16480.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"
     let [name,setName]=useState("");
     let [email,setEmail]=useState("");
@@ -219,7 +217,12 @@ function ProfileForm(){
                             </Form.Row>
                             <Form.Row className=" justify-content-center mt-3">
                                 <Col className="col-lg-5 ">
-                                    <Button    id = {base.deleteId} variant="danger"                            onClick={()=>deleteUser()} block>Delete Profile
+                                    <Button    
+                                    id = {base.deleteId} 
+                                    variant="danger" 
+                                    onClick={()=>deleteUser()} block
+                                    >
+                                        Delete Profile
                                     </Button>
                                 </Col>
                             </Form.Row>
