@@ -5,7 +5,6 @@ import "./Space.css"
 
 const Space = ({ space, infoFunction }) => {
   let [ index, setIndex] = useState(0);
-
   const handleSelect = (selectedIndex, e) => {
       setIndex(index = selectedIndex)
   }

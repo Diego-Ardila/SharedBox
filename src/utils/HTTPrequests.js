@@ -372,3 +372,16 @@ export const getNotificationUser = async()=>{
         throw err
     }
 }
+
+export const GetPaymentInfoByReference = async (reference)=>{
+    try{
+        const response = await axios({
+            method:"GET",
+            baseURL:"https://api.secure.payco.co/validation/v1/reference/",
+            url: reference
+        })
+        return response 
+    }catch(err){
+        throw(err)
+    }
+}
