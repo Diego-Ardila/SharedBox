@@ -62,9 +62,9 @@
                         <Row>
                             <Card.Text className="ml-3">Click here for more info</Card.Text> 
                             <Badge variant={colorBadge} className="ml-auto" >
-                                {status === "accept" && <Check2Square size = {30}/>}
-                                {status === "reject" && <XSquare size = {30}/>}
-                                {!status && <ExclamationSquare size = {30}/>}
+                                {status === "accept" && <Check2Square size = {25}/>}
+                                {status === "reject" && <XSquare size = {25}/>}
+                                {!status && <ExclamationSquare size = {25}/>}
                             </Badge>
                         </Row>
                     </Card.Footer>

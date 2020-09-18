@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {Col, Row, Image, Card, Button} from 'react-bootstrap'
+import {Col, Row, Image, Card, Button, Container} from 'react-bootstrap'
 import {getNotificationUser} from '../../utils/HTTPrequests'
 import Logo from "../../logo.svg";
 import moment from "moment" 
@@ -7,6 +7,7 @@ import NotificationCard from './notificationCard'
 import NotificationCardInfo from './notificationCardInfo'
 import {calcPrices} from '../../utils/FinanceVariables'
 import {useHistory} from 'react-router-dom'
+import './notificationCenterView.css'
 
 
 export default function NotificationCenterView (){
@@ -32,9 +33,9 @@ export default function NotificationCenterView (){
     }
     
     return(
-        <React.Fragment >
+        <Container className="notificationContainer col-lg-12" >
             <Row>
-                <Col className="col-lg-5 d-flex flex-column align-items-center">
+                <Col className="col-lg-5 d-flex flex-column ">
                     {arrNotifications.length === 0 ?
                      
                         <Card  className="m-4" border="dark" >
@@ -68,6 +69,6 @@ export default function NotificationCenterView (){
                     </div>
                 </Col>
             </Row>
-        </React.Fragment>
+        </Container>
     )
 }

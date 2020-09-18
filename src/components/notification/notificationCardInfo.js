@@ -1,6 +1,7 @@
 import {Col,Row,Card,Accordion,Button} from 'react-bootstrap'
 import React from 'react'
 import PayButton from './payButton';
+import {useHistory} from 'react-router-dom'
 
 export default function CardNotificationInfo ({notification, calPrice}){
     
@@ -15,6 +16,7 @@ export default function CardNotificationInfo ({notification, calPrice}){
     let objects = notification.inventoryId.elements
     let typeUser = localStorage.getItem("typeUser")
     let status = notification.status
+    const history = useHistory()
     let message = { 
             lenderHeader:"",
             tenantHeader:"",            
@@ -79,10 +81,10 @@ export default function CardNotificationInfo ({notification, calPrice}){
                     ))}                            
             </Card.Body>
             <Card.Footer className="text-right">
-                {localStorage.getItem("typeUser")==="lender"
+                {typeUser==="lender"
                     ? !status &&
                         <div>
-                            <Button className="mr-2">Reject</Button>
+                            <Button className="mr-2" >Reject</Button>
                             <Button >Accept</Button>
                         </div> 
                     : status==="accept" && 
@@ -98,7 +100,9 @@ export default function CardNotificationInfo ({notification, calPrice}){
                             numDays={calPrice.daysToPay}
                             inDate={initialDate}
                             finDate={finalDate}
-                            tenantId={idTenant}/>}
+                            tenantId={idTenant}/>                                               
+                        }
+                        {typeUser==="tenant"&&status==="reject"&&<Button onClick={()=>history.push("/home")}>Come to home</Button>}
             </Card.Footer>
         </Card>
     )
