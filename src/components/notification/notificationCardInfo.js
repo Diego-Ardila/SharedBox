@@ -14,7 +14,7 @@ export default function CardNotificationInfo ({notification, calPrice}){
     let phoneNumberLender = notification.lenderId.phoneNumber
     let objects = notification.inventoryId.elements
     let typeUser = localStorage.getItem("typeUser")
-    let status = notification.status||"accepte"
+    let status = notification.status
     let message = { 
             lenderHeader:"",
             tenantHeader:"",            
@@ -59,7 +59,7 @@ export default function CardNotificationInfo ({notification, calPrice}){
                 </Row>                               
                     {objects.map(obj=>(
                         <Accordion key={obj._id}>
-                            <Card bg="primary">
+                            <Card className="m-2" bg="primary">
                                 <Accordion.Toggle as={Button}  eventKey="0">
                                     <Card.Header><Card.Title>{obj.object}</Card.Title></Card.Header>
                                 </Accordion.Toggle>
@@ -79,11 +79,13 @@ export default function CardNotificationInfo ({notification, calPrice}){
                     ))}                            
             </Card.Body>
             <Card.Footer className="text-right">
-                {localStorage.getItem("typeUser")==="lender"?
-                <div>
-                    <Button className="mr-2">Reject</Button>
-                    <Button>Accept</Button>
-                </div> : status==="accept" && 
+                {localStorage.getItem("typeUser")==="lender"
+                    ? !status &&
+                        <div>
+                            <Button className="mr-2">Reject</Button>
+                            <Button >Accept</Button>
+                        </div> 
+                    : status==="accept" && 
                         <PayButton 
                             className="col-lg-3 ml-auto" 
                             block={true}  
