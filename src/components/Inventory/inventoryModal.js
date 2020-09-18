@@ -6,6 +6,7 @@ import InventoryRendericer from './inventoryRendericer'
 import {Question} from 'react-bootstrap-icons'
 import {createElements, createNotification, createDates} from '../../utils/HTTPrequests'
 import moment from "moment"
+import swal from 'sweetalert'
 
 export default function ModalInventory(props){
     
@@ -17,7 +18,6 @@ export default function ModalInventory(props){
     
 
     const handleSubmit = (values,{resetForm}) => {
-        console.log(initialDate, finalDate)
         let newObj = {
             id : elements.length + 1,
             ...values 
@@ -36,11 +36,16 @@ export default function ModalInventory(props){
     }
 
     const handleToAxios = async (finalDate,initialDate,elements,spaceId,lenderId) => {
-        const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
-        const newinitialDate = moment(initialDate).format("YYYY-MM-DD")
-        const {inventoryId,tenantId} = await createElements(elements,spaceId)
-        const date = await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
-        await createNotification(inventoryId,tenantId,lenderId,date._id)
+        try{
+            const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
+            const newinitialDate = moment(initialDate).format("YYYY-MM-DD")
+            const {inventoryId,tenantId} = await createElements(elements,spaceId)
+            await createNotification(inventoryId,tenantId,lenderId)
+            await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
+            swal("reservation rquest sent","your reservation request was sent succesfully","success")
+        }catch(err){
+            swal("reservation request error", "something went wrong, please try again", "error")
+        }
         
     }
 
