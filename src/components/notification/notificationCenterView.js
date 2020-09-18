@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import {Col, Row, Image} from 'react-bootstrap'
-import {getNotificationUser} from '../../utils/HTTPrequests'
+import {Card, Col, Row, Button, Image, Accordion} from 'react-bootstrap'
+import {getNotificationUser, updateNotification} from '../../utils/HTTPrequests'
 import Logo from "../../logo.svg";
 import moment from "moment" 
 import NotificationCard from './notificationCard'
@@ -12,15 +12,23 @@ export default function NotificationCenterView (){
     const [notification,setNotification]= useState({})    
     const [calPrice,setCalPrice] = useState("")
     const [selected,setSelected] = useState("") 
+    const [render,setRender] = useState(false)
     
     useEffect(()=>{
+        console.log(render)
         async function getNotification (){
             const notification = await getNotificationUser()
             setArrNotifications(notification.data)
         }
-        getNotification()       
-    },[])
+        getNotification()
+        setRender(false)
+    },[render])
 
+    const handleSubmit = async (event,notification)=>{
+        setRender(true)
+        await updateNotification(event,notification)
+    }
+    
     const setValuesCard = (event,notification)=>{
         setNotification(notification)        
         setCalPrice(calcPrices(moment(notification.datesReservedId.initialDate,"YYYY-MM-DD"),moment(notification.datesReservedId.finalDate,"YYYY-MM-DD"),notification.inventoryId.spaceId.pricePerDay))
@@ -44,6 +52,7 @@ export default function NotificationCenterView (){
                     <div className="sticky-top pt-3 ">
                         {Object.keys(notification).length !== 0 
                             ? <NotificationCardInfo 
+                                handleSubmit={handleSubmit}
                                 notification={notification} 
                                 calPrice={calPrice}/> 
                             : <Image 

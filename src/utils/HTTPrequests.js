@@ -372,3 +372,24 @@ export const getNotificationUser = async()=>{
         throw err
     }
 }
+
+export const updateNotification = async(status,notification)=>{
+    const user = localStorage.getItem("typeUser") === "tenant" ? localStorage.getItem("typeUser"):``
+    try{
+        const response = await axios({
+            method:"PUT",
+            url:"http://127.0.0.1:4000/notification",
+            headers:{
+                Authorization: 'Bearer '+ localStorage.getItem('token'),
+                "x-UserType":user                        
+            },
+            data: {
+                status,
+                notification
+            }
+        })
+        return response
+    }catch(err){
+        throw err
+    }
+}

@@ -8,7 +8,7 @@
     let nameLender = notification.lenderId.name
     let initialDate = notification.datesReservedId.initialDate
     let finalDate = notification.datesReservedId.finalDate    
-    let status = notification.status||"accept"
+    let status = notification.status
     let typeUser = localStorage.getItem("typeUser")
     let message = { 
         lenderHeader:"",

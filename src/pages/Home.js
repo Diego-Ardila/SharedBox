@@ -55,7 +55,7 @@ const Home = () => {
       queryStr= queryString.stringify(qs)
       history.push("/home?"+queryStr)
       dispatch(changeRendering())
-  }  
+  }
 
   const infoFunction = (spaceId) => {
     return ()  => window.open(`/space?_id=${spaceId}&startDate=${initialDate}&endDate=${finalDate}`)

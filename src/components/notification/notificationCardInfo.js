@@ -2,7 +2,7 @@ import {Col,Row,Card,Accordion,Button} from 'react-bootstrap'
 import React from 'react'
 import PayButton from './payButton';
 
-export default function CardNotificationInfo ({notification, calPrice}){
+export default function CardNotificationInfo ({handleSubmit, notification, calPrice}){
     
     let titleSpace = notification.inventoryId.spaceId.title
     let initialDate = notification.datesReservedId.initialDate
@@ -14,7 +14,7 @@ export default function CardNotificationInfo ({notification, calPrice}){
     let phoneNumberLender = notification.lenderId.phoneNumber
     let objects = notification.inventoryId.elements
     let typeUser = localStorage.getItem("typeUser")
-    let status = notification.status||"accepte"
+    let status = notification.status
     let message = { 
             lenderHeader:"",
             tenantHeader:"",            
@@ -81,8 +81,14 @@ export default function CardNotificationInfo ({notification, calPrice}){
             <Card.Footer className="text-right">
                 {localStorage.getItem("typeUser")==="lender"?
                 <div>
-                    <Button className="mr-2">Reject</Button>
-                    <Button>Accept</Button>
+
+                    <Button onClick={
+                                e=>handleSubmit("reject",notification)
+                            } className="mr-2">Reject</Button>
+                    <Button onClick={
+                                e=>handleSubmit("accept",notification)
+                            }>Accept</Button>
+
                 </div> : status==="accept" && 
                         <PayButton 
                             className="col-lg-3 ml-auto" 
