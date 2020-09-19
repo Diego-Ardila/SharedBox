@@ -80,29 +80,29 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
             </Card.Body>
             <Card.Footer className="text-right">
                 {localStorage.getItem("typeUser")==="lender"?
-                <div>
+                (!status && <div>
 
-                    <Button onClick={
-                                e=>handleSubmit("reject",notification)
-                            } className="mr-2">Reject</Button>
-                    <Button onClick={
-                                e=>handleSubmit("accept",notification)
-                            }>Accept</Button>
+                            <Button onClick={
+                                        e=>handleSubmit("reject",notification)
+                                    } className="mr-2">Reject</Button>
+                            <Button onClick={
+                                        e=>handleSubmit("accept",notification)
+                                    }>Accept</Button>
 
-                </div> : status==="accept" && 
-                        <PayButton 
-                            className="col-lg-3 ml-auto" 
-                            block={true}  
-                            finalPrice={calPrice.finalPrice}
-                            tax={calPrice.taxes}
-                            tax_base={calPrice.tax_base}
-                            spaceTitle={titleSpace}
-                            tenantName={nameTenant}
-                            tenantPhoneNum={phoneNumberTenant}
-                            numDays={calPrice.daysToPay}
-                            inDate={initialDate}
-                            finDate={finalDate}
-                            tenantId={idTenant}/>}
+                        </div>) : status==="accept" && 
+                                <PayButton 
+                                    className="col-lg-3 ml-auto" 
+                                    block={true}  
+                                    finalPrice={calPrice.finalPrice}
+                                    tax={calPrice.taxes}
+                                    tax_base={calPrice.tax_base}
+                                    spaceTitle={titleSpace}
+                                    tenantName={nameTenant}
+                                    tenantPhoneNum={phoneNumberTenant}
+                                    numDays={calPrice.daysToPay}
+                                    inDate={initialDate}
+                                    finDate={finalDate}
+                                    tenantId={idTenant}/>}
             </Card.Footer>
         </Card>
     )
