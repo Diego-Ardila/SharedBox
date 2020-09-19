@@ -1,6 +1,7 @@
 import {Col,Row,Card,Accordion,Button} from 'react-bootstrap'
 import React from 'react'
 import PayButton from './payButton';
+import {useHistory} from 'react-router-dom'
 
 export default function CardNotificationInfo ({handleSubmit, notification, calPrice}){
     
@@ -15,6 +16,7 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
     let objects = notification.inventoryId.elements
     let typeUser = localStorage.getItem("typeUser")
     let status = notification.status
+    const history = useHistory()
     let message = { 
             lenderHeader:"",
             tenantHeader:"",            
@@ -59,7 +61,7 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                 </Row>                               
                     {objects.map(obj=>(
                         <Accordion key={obj._id}>
-                            <Card bg="primary">
+                            <Card className="m-2" bg="primary">
                                 <Accordion.Toggle as={Button}  eventKey="0">
                                     <Card.Header><Card.Title>{obj.object}</Card.Title></Card.Header>
                                 </Accordion.Toggle>
@@ -79,30 +81,32 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                     ))}                            
             </Card.Body>
             <Card.Footer className="text-right">
-                {localStorage.getItem("typeUser")==="lender"?
-                (!status && <div>
-
+                {typeUser==="lender"
+                    ? !status &&
+                        <div>
                             <Button onClick={
                                         e=>handleSubmit("reject",notification)
                                     } className="mr-2">Reject</Button>
                             <Button onClick={
                                         e=>handleSubmit("accept",notification)
                                     }>Accept</Button>
-
-                        </div>) : status==="accept" && 
-                                <PayButton 
-                                    className="col-lg-3 ml-auto" 
-                                    block={true}  
-                                    finalPrice={calPrice.finalPrice}
-                                    tax={calPrice.taxes}
-                                    tax_base={calPrice.tax_base}
-                                    spaceTitle={titleSpace}
-                                    tenantName={nameTenant}
-                                    tenantPhoneNum={phoneNumberTenant}
-                                    numDays={calPrice.daysToPay}
-                                    inDate={initialDate}
-                                    finDate={finalDate}
-                                    tenantId={idTenant}/>}
+                        </div> 
+                    : status==="accept" && 
+                        <PayButton 
+                            className="col-lg-3 ml-auto" 
+                            block={true}  
+                            finalPrice={calPrice.finalPrice}
+                            tax={calPrice.taxes}
+                            tax_base={calPrice.tax_base}
+                            spaceTitle={titleSpace}
+                            tenantName={nameTenant}
+                            tenantPhoneNum={phoneNumberTenant}
+                            numDays={calPrice.daysToPay}
+                            inDate={initialDate}
+                            finDate={finalDate}
+                            tenantId={idTenant}/>                                               
+                        }
+                        {typeUser==="tenant"&&status==="reject"&&<Button onClick={()=>history.push("/home")}>Search more Spaces</Button>}
             </Card.Footer>
         </Card>
     )
