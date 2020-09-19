@@ -12,7 +12,7 @@ export default function FAQadministrator({ space }) {
                     <Card.Body>
                     <Accordion>
                         {FAQarr.map((faq, index) => (                            
-                                <Card>
+                                <Card key={faq._id}>
                                     <Card.Header>
                                     <Accordion.Toggle as={Card.Header} variant="link" eventKey={toString(index)}>
                                         {faq.question}

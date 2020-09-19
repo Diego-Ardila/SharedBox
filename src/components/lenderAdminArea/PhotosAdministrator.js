@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import {Carousel} from "react-bootstrap"
 import { useSelector } from "react-redux"
 
@@ -9,8 +9,8 @@ export default function PhotosAdministrator ({ children }) {
         <Carousel.Item key={link}>
             <img 
                 className="d-block w-100"
-                src={link} width={300} height={300}
-                alt="photo"   
+                src={link.url ? link.url : link} width={300} height={300}
+                alt="spacePhoto"   
             >
             </img>   
         </Carousel.Item>
