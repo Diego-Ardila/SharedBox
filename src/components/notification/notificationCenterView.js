@@ -20,7 +20,6 @@ export default function NotificationCenterView (){
      
     
     useEffect(()=>{
-        console.log(render)
         async function getNotification (){
             const notification = await getNotificationUser()
             setArrNotifications(notification.data)

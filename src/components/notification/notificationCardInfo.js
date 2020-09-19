@@ -9,6 +9,7 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
     let initialDate = notification.datesReservedId.initialDate
     let finalDate = notification.datesReservedId.finalDate
     let nameTenant = notification.tenantId.name
+    let spaceId = notification.inventoryId.spaceId._id
     let idTenant = notification.tenantId._id
     let phoneNumberTenant = notification.tenantId.phoneNumber
     let nameLender = notification.lenderId.name
@@ -104,7 +105,8 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                             numDays={calPrice.daysToPay}
                             inDate={initialDate}
                             finDate={finalDate}
-                            tenantId={idTenant}/>                                               
+                            tenantId={idTenant}
+                            spaceId={spaceId}/>                                               
                         }
                         {typeUser==="tenant"&&status==="reject"&&<Button onClick={()=>history.push("/home")}>Search more Spaces</Button>}
             </Card.Footer>
