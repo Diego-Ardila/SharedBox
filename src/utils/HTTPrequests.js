@@ -291,7 +291,73 @@ export const deleteTenant = async(tenantId, typeUser) => {
         throw(err)
     }
 }
+const host = "http://localhost:4000";
 
+export const registerSubscription = async(path, body) => {
+    try {
+        const response = await axios({
+            method: "POST",
+            url: `${host}${path}`,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem("typeUser")
+            },
+            data: body              
+        })
+        return response
+    } catch(err){
+        return err
+    }
+}
+export const cancelSubscription = async(path, body) => {
+    try {
+        const response = await axios({
+            method: "DELETE",
+            url: `${host}${path}`,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem("typeUser")
+            },
+            data: body              
+        })
+        return response
+    } catch(err){
+        return err
+    }
+}
+
+export const sendNotification = async(path, body) => {
+    try {
+        const response = await axios({
+            method: "POST",
+            url: `${host}${path}`,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem("typeUser")
+            },
+            data: body              
+        })
+        return response
+    } catch(err){
+        return err
+    }
+}        
+export const isUserSubscribed = async(path, body) => {
+    try {
+        const response = await axios({
+            method: "GET",
+            url: `${host}${path}`,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem("typeUser")
+            },
+            data: body              
+        })
+        return response.data
+    } catch(err){
+        return err
+    }
+}  
 export const createElements = async(elements,spaceId) => {
     try{
         const response = await axios({
@@ -312,7 +378,7 @@ export const createElements = async(elements,spaceId) => {
     }
 }
 
-export const createNotification = async(inventoryId,tenantId,lenderId) => {
+export const createNotification = async(inventoryId,tenantId,lenderId,datesReservedId) => {
     try{
         const response = await axios({
             method: "POST",
@@ -324,7 +390,8 @@ export const createNotification = async(inventoryId,tenantId,lenderId) => {
             data:{
                 inventoryId,
                 tenantId,
-                lenderId
+                lenderId,
+                datesReservedId
             }
         })
         return response
@@ -355,3 +422,32 @@ export const createDates = async(finalDate,initialDate,spaceId,tenantId) => {
     }
 }
 
+export const getNotificationUser = async()=>{
+    const user = localStorage.getItem("typeUser") === "tenant" ? localStorage.getItem("typeUser"):``
+    try{
+        const response = await axios({
+            method:"GET",
+            url:"http://127.0.0.1:4000/notification",
+            headers:{
+                Authorization: 'Bearer '+ localStorage.getItem('token'),
+                "x-UserType":user                        
+            }
+        })
+        return response
+    }catch(err){
+        throw err
+    }
+}
+
+export const GetPaymentInfoByReference = async (reference)=>{
+    try{
+        const response = await axios({
+            method:"GET",
+            baseURL:"https://api.secure.payco.co/validation/v1/reference/",
+            url: reference
+        })
+        return response 
+    }catch(err){
+        throw(err)
+    }
+}

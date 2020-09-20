@@ -13,8 +13,10 @@ import Header from './pages/Header';
 import Footer from './pages/Footer';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
+import Notification from './pages/notification'
 import { changeLogin } from './actions/loginUser.actions'
 import Space from "./pages/Space"
+import PaymentResponse from './pages/PaymentResponse';
  
 
 function PrivateRoute(props) {
@@ -31,8 +33,6 @@ function PrivateRoute(props) {
     <Route {...props}></Route>
   )
 }  
-
-
 
 function App() {
   const dispatch = useDispatch()
@@ -61,6 +61,8 @@ function App() {
           <PrivateRoute exact path="/user/profile" component={Profile} />
           <PrivateRoute exact path="/lender/admin" component={LenderAdminArea} typeUser="lender" />
           <PrivateRoute exact path="/user/logout" component={Logout} />
+          <PrivateRoute exact path="/notification" component={Notification} typeUser={"lender"||"tenant"} />
+          <PrivateRoute exact path="/response" component={PaymentResponse} />
           <Redirect from="*" to="/home" />
         </Switch>
         <Footer />

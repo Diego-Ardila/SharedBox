@@ -7,6 +7,7 @@ import {Question} from 'react-bootstrap-icons'
 import {createElements, createNotification, createDates} from '../../utils/HTTPrequests'
 import moment from "moment"
 import swal from 'sweetalert'
+import usePushNotifications from '../notifications/usePushNotifications'
 
 export default function ModalInventory(props){
     
@@ -15,7 +16,10 @@ export default function ModalInventory(props){
     const lenderId = props.space.lenderId
     const initialDate = props.initialDate
     const finalDate = props.finalDate
-    
+    const {
+        onClickSendNotification,
+        onClickIsUserSubscribed
+    } = usePushNotifications();
 
     const handleSubmit = (values,{resetForm}) => {
         let newObj = {
@@ -40,8 +44,11 @@ export default function ModalInventory(props){
             const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
             const newinitialDate = moment(initialDate).format("YYYY-MM-DD")
             const {inventoryId,tenantId} = await createElements(elements,spaceId)
-            await createNotification(inventoryId,tenantId,lenderId)
-            await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
+            const date = await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
+            await createNotification(inventoryId,tenantId,lenderId,date._id)
+            const isSubscribed = await onClickIsUserSubscribed()
+            if (isSubscribed) await onClickSendNotification()
+            
             swal("reservation rquest sent","your reservation request was sent succesfully","success")
         }catch(err){
             swal("reservation request error", "something went wrong, please try again", "error")

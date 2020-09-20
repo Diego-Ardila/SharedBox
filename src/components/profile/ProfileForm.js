@@ -1,11 +1,12 @@
 import React, {useState , useEffect} from 'react';
 import {Form,Container,Image,Card,Col,Button} from 'react-bootstrap'
-import {getDataUser, updateDatauser, deleteTenant} from '../../utils/HTTPrequests'
-import { Formik } from 'formik';
+import {getDataUser, updateDatauser, deleteTenant} from '../../utils/HTTPrequests' 
+import { Field, Formik } from 'formik';
 import * as Yup from 'yup'
 import {useHistory} from 'react-router-dom'
 import { ArrowLeft } from 'react-bootstrap-icons'
 import swal from 'sweetalert'
+import usePushNotifications from '../notifications/usePushNotifications'
 
 const base = {
     imageID: "profile-image",
@@ -28,10 +29,20 @@ function ProfileForm(){
     let [country,setCountry]=useState("");    
     let [city,setCity]=useState("");     
     let [stateView,setStateView]=useState(false);
-    let [userId, setUserId] = useState("")
+    let [userId, setUserId] = useState("");
+    let [isSubscribed, setIsSubscribed] = useState(false)
     let typeUser = localStorage.getItem("typeUser")
-    
-    
+
+    const {
+        userConsent,
+        pushNotificationSupported,
+        onClickSubscribeToNotifications,
+        onClickCancelSubscriptionToPushServer,
+        onClickSendNotification,
+        error,
+        loading
+    } = usePushNotifications();
+    const isConsentGranted = userConsent === "granted";       
     
     useEffect(() => {
         async function getDatesUser (){
@@ -43,6 +54,7 @@ function ProfileForm(){
                 setCountry(userData.data.country)
                 setCity(userData.data.city)
                 setUserId(userData.data._id)
+                setIsSubscribed(userData.data.isSubscribed)
             }
             catch(err){
                 swal("profile error", "something went wrong, please try again", "error")
@@ -52,10 +64,10 @@ function ProfileForm(){
     },[stateView])
 
     const handleSubmit = async (values) => {
-        
         if (stateView){
             try{
                 await updateDatauser(typeUser,values)
+                values.isSubscribed ? await onClickSubscribeToNotifications() : await onClickCancelSubscriptionToPushServer()
                 swal("update successful","your changes to your profile were saved succesfully","success")
                 setStateView(!stateView)
             }
@@ -94,11 +106,11 @@ function ProfileForm(){
     return(
         <Container className="container-fluid p-3">
             <Card className="p-3">
-                <Formik initialValues={{name,email,phoneNumber,country,city}}  
+                <Formik initialValues={{name,email,phoneNumber,country,city, isSubscribed}}  
                         validationSchema={stateView ? formSchema: ""}  
                         onSubmit={handleSubmit} 
                         enableReinitialize={true}>
-                    {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors })=>(
+                    {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, field, setFieldValue })=>(
                         <Form  onSubmit={handleSubmit} noValidate>
                             <Form.Row className="justify-content-left" >
                                 <Col className=" text-left ">
@@ -167,6 +179,27 @@ function ProfileForm(){
                                     </Form.Group>
                                 </Col>
                             </Form.Row >
+                            <Form.Row className="justify-content-center">                    
+                                <Col md lg>
+                                <Field name="isSubscribed" type="checkbox"  className="justify-content-center" >
+                                {({ field: {value}, form: {setFieldValue} }) => (
+                                    <>
+                                    {stateView ? 
+                                    <Form.Check  className="justify-content-center"  inline label="Activate Notifications" checked={values.isSubscribed} onClick={() => setFieldValue('isSubscribed',!values.isSubscribed)} />  
+                                    : <Form.Check disabled className="justify-content-center"  inline label="Activate Notifications" checked={values.isSubscribed}  /> }
+                                    </>                                     
+                                )                              }                                 
+                                </Field>   
+                                </Col>                                                
+                            </Form.Row>  
+                            <Form.Row>
+                            <p>
+                            User consent to recieve push notificaitons is <strong>{userConsent}</strong>.
+                            </p>                            
+                            <Button onClick={onClickSendNotification}>Send a notification</Button>                       
+                            </Form.Row>                              
+                            
+                            
                             <Form.Row className=" justify-content-center">
                                 <Col className="col-lg-5 ">
                                     {stateView? 
