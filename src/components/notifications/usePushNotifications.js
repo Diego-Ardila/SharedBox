@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {registerSubscription, cancelSubscription, sendNotification} from '../../utils/HTTPrequests'
+import {registerSubscription, cancelSubscription, isUserSubscribed, sendNotification} from '../../utils/HTTPrequests'
 
 import {
   isPushNotificationSupported,
@@ -72,11 +72,33 @@ export default function usePushNotifications() {
     }
   };
 
+  const onClickIsUserSubscribed = async () => {
+    try {
+      if (userConsent !== "granted"){
+        throw new Error('User did not granted the permission');    
+      }
+      const result = await isUserSubscribed("/subscription")
+      return result
+    } catch (err){
+      setError(err);
+    }    
+  };
+
   const onClickSendNotification = async () => {
     try {
+      if (userConsent !== "granted"){
+        throw new Error('User did not granted the permission');    
+      }
       setLoading(true);
       setError(false);
-      await sendNotification("/subscription")
+      const payload = {
+        title: "Probando desde Local ",
+        text: "HEY! Take a look at this brand new t-shirt!",
+        image: "/images/jason-leung-HM6TMmevbZQ-unsplash.jpg",
+        tag: "new-product",
+        url: "http://localhost:3000/user/login"
+      }
+      await sendNotification("/subscription/sendnotification",payload)
       setLoading(false);
     } catch (err){
       setLoading(false);
@@ -88,6 +110,7 @@ export default function usePushNotifications() {
   return {
     onClickSubscribeToNotifications,
     onClickCancelSubscriptionToPushServer,
+    onClickIsUserSubscribed,
     pushServerSubscriptionId,
     onClickSendNotification,
     userConsent,
