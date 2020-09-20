@@ -306,7 +306,7 @@ export const registerSubscription = async(path, body) => {
         })
         return response
     } catch(err){
-        throw(err)
+        return err
     }
 }
 export const cancelSubscription = async(path, body) => {
@@ -322,7 +322,7 @@ export const cancelSubscription = async(path, body) => {
         })
         return response
     } catch(err){
-        throw(err)
+        return err
     }
 }
 
@@ -339,7 +339,7 @@ export const sendNotification = async(path, body) => {
         })
         return response
     } catch(err){
-        throw (err)
+        return err
     }
 }        
 export const isUserSubscribed = async(path, body) => {
@@ -355,7 +355,7 @@ export const isUserSubscribed = async(path, body) => {
         })
         return response.data
     } catch(err){
-        throw (err)
+        return err
     }
 }  
 export const createElements = async(elements,spaceId) => {
