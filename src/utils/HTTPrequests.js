@@ -291,7 +291,73 @@ export const deleteTenant = async(tenantId, typeUser) => {
         throw(err)
     }
 }
+const host = "http://localhost:4000";
 
+export const registerSubscription = async(path, body) => {
+    try {
+        const response = await axios({
+            method: "POST",
+            url: `${host}${path}`,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem("typeUser")
+            },
+            data: body              
+        })
+        return response
+    } catch(err){
+        return err
+    }
+}
+export const cancelSubscription = async(path, body) => {
+    try {
+        const response = await axios({
+            method: "DELETE",
+            url: `${host}${path}`,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem("typeUser")
+            },
+            data: body              
+        })
+        return response
+    } catch(err){
+        return err
+    }
+}
+
+export const sendNotification = async(path, body) => {
+    try {
+        const response = await axios({
+            method: "POST",
+            url: `${host}${path}`,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem("typeUser")
+            },
+            data: body              
+        })
+        return response
+    } catch(err){
+        return err
+    }
+}        
+export const isUserSubscribed = async(path, body) => {
+    try {
+        const response = await axios({
+            method: "GET",
+            url: `${host}${path}`,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem("typeUser")
+            },
+            data: body              
+        })
+        return response.data
+    } catch(err){
+        return err
+    }
+}  
 export const createElements = async(elements,spaceId) => {
     try{
         const response = await axios({
