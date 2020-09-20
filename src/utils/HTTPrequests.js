@@ -291,7 +291,7 @@ export const deleteTenant = async(tenantId, typeUser) => {
         throw(err)
     }
 }
-const host = "http://localhost:4000";
+const host = "http://127.0.0.1:4000";
 
 export const registerSubscription = async(path, body) => {
     try {

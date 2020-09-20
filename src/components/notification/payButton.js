@@ -8,7 +8,6 @@ export default function PayButton ({finalPrice, tax, tax_base, spaceTitle, tenan
         key: process.env.REACT_APP_EPAYCO_PUBLIC_KEY,
         test: true
         })
-        console.log(finalPrice)
         paymentHandler.open({
             class: "epayco-button",
             external: 'false',

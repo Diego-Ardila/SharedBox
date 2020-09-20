@@ -192,14 +192,6 @@ function ProfileForm(){
                                 </Field>   
                                 </Col>                                                
                             </Form.Row>  
-                            <Form.Row>
-                            <p>
-                            User consent to recieve push notificaitons is <strong>{userConsent}</strong>.
-                            </p>                            
-                            <Button onClick={onClickSendNotification}>Send a notification</Button>                       
-                            </Form.Row>                              
-                            
-                            
                             <Form.Row className=" justify-content-center">
                                 <Col className="col-lg-5 ">
                                     {stateView? 
