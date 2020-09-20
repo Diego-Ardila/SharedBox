@@ -25,11 +25,15 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
 
     switch(status){
         case "accept":
+            message.lenderHeader = `Your space ${titleSpace} is going to be reserved; let's wait for the tenant's to pay`;
+            message.tenantHeader = `Your offer was accepted; the next step its to pay and then the space ${titleSpace} woul be yours from ${initialDate} to the ${finalDate}`;
+            break;
+        case "paid":
             message.lenderHeader = `Your space ${titleSpace} is reserved now from the ${initialDate} to the ${finalDate}`;
             message.tenantHeader = `the ${titleSpace} is now reserved for you from the ${initialDate} to the  ${finalDate}`;
             break; 
         case "reject":
-            message.tenantHeader = `the ${titleSpace} is rejected for lender of ${initialDate} to  ${finalDate}`;
+            message.tenantHeader = `the ${titleSpace} was rejected by the lender on the dates from ${initialDate} to  ${finalDate}`;
             break;   
         default:
             message.lenderHeader = `You recived an offer for the space ${titleSpace} on the dates ${initialDate} to  ${finalDate}`;

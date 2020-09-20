@@ -63,7 +63,7 @@ function App() {
           <PrivateRoute exact path="/user/profile" component={Profile} typeUser={"lender"||"tenant"}/>
           <PrivateRoute exact path="/lender/admin" component={LenderAdminArea} typeUser="lender" />
           <PrivateRoute exact path="/user/logout" component={Logout} />
-          <PrivateRoute exact path="/notification" component={Notification} typeUser={"lender"||"tenant"} />
+          <PrivateRoute exact path="/notification" component={Notification} /* typeUser={"lender"||"tenant"} */ />
           <PrivateRoute exact path="/response" component={PaymentResponse} />
           <Redirect from="*" to="/home" />
         </Switch>
