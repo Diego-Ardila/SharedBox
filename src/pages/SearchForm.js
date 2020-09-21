@@ -83,7 +83,7 @@ const SearchForm = (props) => {
         <Form.Row lg={10} sm={12} className="ml-2 mr-2">
           <Col sm={4} >
             <Form.Group controlId={base.titleId}>
-              <Form.Label>Title</Form.Label>
+              <Form.Label>keyword</Form.Label>
               <Form.Control className={touched.title && errors.title ? "is-invalid" : null} name="title" type="text" placeholder="Title" onChange ={(e) => customChange(e.target, setValues, values, dispatch) } value={values.title} />
               {touched.title && errors.title ? (
                 <div className="error-message">{errors.title}</div>
@@ -92,7 +92,7 @@ const SearchForm = (props) => {
           </Col>
           <Col sm={4} >
             <Form.Group controlId={base.areaId}>
-              <Form.Label>Area</Form.Label>
+              <Form.Label>Min Area</Form.Label>
               <Form.Control name="area" type="text" placeholder="Enter Area" onChange ={(e) => customChange(e.target , setValues, values, dispatch) } value={values.area} className={touched.area && errors.area ? "is-invalid" : null}  />
               {touched.area && errors.area ? (
                 <div className="error-message">{errors.area}</div>
