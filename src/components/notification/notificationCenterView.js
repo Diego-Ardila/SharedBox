@@ -31,6 +31,7 @@ export default function NotificationCenterView (){
     const handleSubmit = async (event,notification)=>{
         setRender(true)
         await updateNotification(event,notification)
+        setNotification({})
     }
     
     const setValuesCard = (event,notification)=>{
