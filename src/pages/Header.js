@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import Logo from "../logo.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { changeRendering, changeSpecificSearch } from '../actions/searchForm.actions'
+import "./Header.css"
 
 const Header = () => {
   const isLogged = useSelector(state => state.loginUserReducer.isLogged) 
