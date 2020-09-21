@@ -237,7 +237,7 @@ function ProfileForm(){
                                     :(<Button type="submit"  block>Edit profile</Button>)}
                                 </Col>
                             </Form.Row>
-                            <Form.Row className=" justify-content-center mt-3">
+                            <Form.Row className=" justify-content-center mt-3 mb-5">
                                 <Col className="col-lg-5 ">
                                     <Button    
                                     id = {base.deleteId} 

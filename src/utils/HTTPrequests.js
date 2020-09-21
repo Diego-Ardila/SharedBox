@@ -339,7 +339,7 @@ export const cancelSubscription = async(path, body) => {
         })
         return response
     } catch(err){
-        return err
+        throw err
     }
 }
 
