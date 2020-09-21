@@ -62,7 +62,7 @@ const Home = () => {
   }
 
   return (
-    <Container>
+    <Container className="mb-5">
       <SearchForm showButton={search.specificSearch} onSubmit={handleSubmit} />
         {search.specificSearch && <SearchAdvancedForms onSubmit={handleSubmit} />}
         <h3>Best Rated Locations</h3>

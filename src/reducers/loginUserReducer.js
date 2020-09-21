@@ -1,18 +1,39 @@
 let initialState={
-  isLogged: false
+  isLogged: false,
+  typeUser: "",
+  userName: "",
+  userPhoto: ""
 }
 
 const ACTIONS = {
-  CHANGE_LOGIN : "CHANGE_LOGIN"
+  CHANGE_LOGIN : "CHANGE_LOGIN",
+  CHANGE_TYPE_USER : "CHANGE_TYPE_USER",
+  CHANGE_USER_NAME : "CHANGE_USER_NAME",
+  CHANGE_USER_PHOTO : "CHANGE_USER_PHOTO"
 }
 
 const loginUserReducer = (state = initialState , action) => {
   switch(action.type){
       case ACTIONS.CHANGE_LOGIN:
-          return {
-              ...state,
-              isLogged: action.payload
-          }
+        return {
+          ...state,
+          isLogged: action.payload
+        }
+      case ACTIONS.CHANGE_TYPE_USER:
+        return {
+          ...state,
+          typeUser: action.payload
+        }
+      case ACTIONS.CHANGE_USER_NAME:
+        return {
+          ...state,
+          userName: action.payload
+        }
+      case ACTIONS.CHANGE_USER_PHOTO:
+        return {
+          ...state,
+          userPhoto: action.payload
+        }
       default : return state
   }
 }

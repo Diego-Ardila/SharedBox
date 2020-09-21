@@ -21,7 +21,7 @@ const Space = ({ space, infoFunction }) => {
     <Badge key={element.name} variant="info">{element.name}</Badge>
   );
   return (
-    <Card className="mt-4 space_card">
+    <Card className="mt-4 mb-5 space_card">
       <Row>
         <Col lg={4} md={4}>
           <Carousel 

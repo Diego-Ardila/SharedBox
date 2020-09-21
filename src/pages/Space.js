@@ -35,7 +35,7 @@ export default function Space () {
    }
 
     return(
-        <Container>
+        <Container className="mb-5">
             {loading ? "loading" : (
                 <SpecificSpaceView
                     spaceId={spaceId}
