@@ -78,22 +78,18 @@ function ProfileForm(){
     const handleSubmit = async (values) => {
         if (stateView){
             try{
-                console.log(values.files)
                 const arrayFiles = [];
                 values.files.forEach(file =>{
                     arrayFiles.push(file.file);
                 })     
                 const id = await updateDatauser(typeUser,values)
-                console.log(id)
                 values.isSubscribed ? await onClickSubscribeToNotifications() : await onClickCancelSubscriptionToPushServer()
                 localStorage.setItem("userName", values.name)
                 dispatch(changeUserName(values.name))
-                console.log(arrayFiles)
                 const data = new FormData();
                 data.append('userId', id)
                 data.append('file', arrayFiles[0])
                 const response = await postUserPhotosFiles(typeUser,data)
-                console.log(response)
                 dispatch(changeUserPhoto(response.data.profilePhoto))
                 localStorage.setItem("userPhoto", response.data.profilePhoto)  
                 swal("update successful","your changes to your profile were saved succesfully","success")
