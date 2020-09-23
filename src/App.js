@@ -13,8 +13,10 @@ import Header from './pages/Header';
 import Footer from './pages/Footer';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
-import { changeLogin } from './actions/loginUser.actions'
+import Notification from './pages/notification'
+import { changeLogin, changeTypeUser, changeUserName, changeUserPhoto } from './actions/loginUser.actions'
 import Space from "./pages/Space"
+import PaymentResponse from './pages/PaymentResponse';
  
 
 function PrivateRoute(props) {
@@ -32,18 +34,28 @@ function PrivateRoute(props) {
   )
 }  
 
-
-
 function App() {
   const dispatch = useDispatch()
 
   useEffect(() =>{
   const token = localStorage.getItem("token")  
-  if(token){
-    dispatch(changeLogin(true))
-  } else {
-    dispatch(changeLogin(false))
-  }
+  const typeUser = localStorage.getItem("typeUser")
+  const userName = localStorage.getItem("userName")
+  const userPhoto = localStorage.getItem("userPhoto")
+    if(token){
+      dispatch(changeLogin(true))
+    } else {
+      dispatch(changeLogin(false))
+    }
+    if(typeUser){
+      dispatch(changeTypeUser(typeUser))
+    } 
+    if(userName){
+      dispatch(changeUserName(userName))
+    } 
+    if(userPhoto){
+      dispatch(changeUserPhoto(userPhoto))
+    }
   })
 
   return (
@@ -61,6 +73,8 @@ function App() {
           <PrivateRoute exact path="/user/profile" component={Profile} />
           <PrivateRoute exact path="/lender/admin" component={LenderAdminArea} typeUser="lender" />
           <PrivateRoute exact path="/user/logout" component={Logout} />
+          <PrivateRoute exact path="/notification" component={Notification} />
+          <PrivateRoute exact path="/response" component={PaymentResponse} />
           <Redirect from="*" to="/home" />
         </Switch>
         <Footer />
