@@ -109,7 +109,8 @@ function ProfileForm(){
         phoneNumber : Yup.number().test('len', 'Must be exactly 10 characters', val => val && val.toString().length === 10 ),
         country : Yup.string().required("Required Field"),
         city : Yup.string().required("Required Field"),
-        files: Yup.array()
+        files: Yup.array(),
+        isSubscribed : Yup.bool()
     })
 
     const deleteUser = async () => {
@@ -215,11 +216,14 @@ function ProfileForm(){
                             <Form.Row className="justify-content-center">                    
                                 <Col md lg>
                                 <Field name="isSubscribed" type="checkbox"  className="justify-content-center" >
-                                {({ field: {value}, form: {setFieldValue} }) => (
+                                {({ field: {value}, form: {setFieldValue, touched, errors} }) => (
                                     <>
                                     {stateView ? 
                                     <Form.Check  className="justify-content-center"  inline label="Activate Notifications" checked={values.isSubscribed} onClick={() => setFieldValue('isSubscribed',!values.isSubscribed)} />  
                                     : <Form.Check disabled className="justify-content-center"  inline label="Activate Notifications" checked={values.isSubscribed}  /> }
+                                    {touched.isSubscribed && errors.isSubscribed ? (
+                                    <div className="error-message">{errors.isSubscribed}</div>
+                                     ): null}
                                     </>                                     
                                 )                              }                                 
                                 </Field>   
@@ -241,6 +245,16 @@ function ProfileForm(){
                                     onClick={()=>deleteUser()} block
                                     >
                                         Delete Profile
+                                    </Button>
+                                </Col>
+                            </Form.Row>
+                            <Form.Row className=" justify-content-center mt-3 mb-5">
+                                <Col className="col-lg-5 ">
+                                    <Button    
+                                    variant="primary" 
+                                    onClick={()=> history.push('/lender/createSpace')} block
+                                    >
+                                        Create Space
                                     </Button>
                                 </Col>
                             </Form.Row>

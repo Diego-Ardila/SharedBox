@@ -45,6 +45,7 @@ export default function PaymentResponse () {
             try{
                 const response = await GetPaymentInfoByReference(reference)
                 const newSpaces = await getFilterSpaces(`?_id:${response.data.data.x_extra4}`)
+                
                 setSpaces(newSpaces)
                 setResponse(response.data.data)
                 setLoading(false)
