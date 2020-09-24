@@ -5,10 +5,6 @@ import {Button, Container}from 'react-bootstrap'
 
 class Profile extends Component{
     
-    handleCreateButton = () => {
-        this.props.history.push("/lender/createSpace")
-    }
-    
     render(){
         return(
             <Container>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Navbar, Nav, Image, NavDropdown, Badge, Dropdown} from 'react-bootstrap';
+import { Navbar, Nav, Image, NavDropdown, Badge} from 'react-bootstrap';
 import NotificationsNavbar from '../components/notification/notificationsNavbar'
 import { BellFill} from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';
