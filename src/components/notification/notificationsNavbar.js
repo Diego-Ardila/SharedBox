@@ -6,7 +6,7 @@ import {NavLink} from 'react-router-dom';
 
 function NotificationsNavbar({ notifications }) {
   let style = notifications.length > 3 ? {height: '70vh', overflowX: 'hidden'} : {};
-  let showNotifs = notifications.length > 0 ? notifications.map(notification => (
+  let showNotifs = notifications.length > 0 ? notifications.reverse().map(notification => (
     <NotificationNavbar key={notification._id} notification={notification} />
   )) : <h6 className="text-center">There are no notifications</h6>
   return (
