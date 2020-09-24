@@ -5,25 +5,21 @@ import { NavLink } from 'react-router-dom';
 import moment from "moment"
 
 
-const NotificationNavbar = ({ notification }) => {
+const NotificationNavbar = ({ notification, onClick }) => {
   let notificationDate = moment(notification.createdAt);
   let array = [];
+  let arrayRanges = ['months','weeks','days','hours','minutes'];
   array.push({date: moment().diff(notificationDate,'months'), type: 'months'});
-  if (array[0].date < 1) {
-    array.push({date: moment().diff(notificationDate,'weeks'),type: 'weeks'});
-    if (array[1].date < 1) {
-      array.push({date: moment().diff(notificationDate,'days'),type: 'days'});
-      if (array[2].date < 1) {
-        array.push({date: moment().diff(notificationDate,'hours'),type: 'hours'});
-        if (array[3].date < 1){
-          array.push({date: moment().diff(notificationDate,'minutes'),type: 'minutes'}); 
-        }  
-      }
-    }
-  } 
+  for (let i = 0; i < arrayRanges.length;i++){
+    if (array[i].date < 1){
+      array.push({date: moment().diff(notificationDate,arrayRanges[i]), type: arrayRanges[i]});
+    } else {
+      break
+    }      
+  }
   let length = array.length
   return (    
-    <NavLink to={{pathname: "/notification", navbarId: notification._id }}>
+    <NavLink to={{pathname: "/notification", navbarId: notification._id }} onClick={() => onClick()}>
     <Card hover style={{width: '328px'}} className="ml-2 mr-2 border-0">
       <Row>
         <Col lg={4} md={4}>
