@@ -1,6 +1,7 @@
 import React from 'react';
-import { Navbar, Nav, Image, NavDropdown, Badge} from 'react-bootstrap';
-import { BellFill, ChevronDoubleDown } from 'react-bootstrap-icons';
+import { Navbar, Nav, Image, NavDropdown, Badge, Dropdown} from 'react-bootstrap';
+import NotificationsNavbar from '../components/notification/notificationsNavbar'
+import { BellFill} from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';
 import Logo from "../logo.svg";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,14 +13,14 @@ const Header = () => {
   const typeUser = useSelector(state => state.loginUserReducer.typeUser)
   const userName = useSelector(state => state.loginUserReducer.userName)
   const userPhoto = useSelector(state => state.loginUserReducer.userPhoto)
+  const notifications = useSelector(state => state.loginUserReducer.notifications)
+  console.log(notifications)
   const dispatch = useDispatch()
 
   const homecoming =()=>{
     dispatch(changeRendering())
     dispatch(changeSpecificSearch())
-  }
-
-  
+  }  
 
   return (
     <Navbar collapseOnSelect bg="primary" expand="lg">      
@@ -34,10 +35,8 @@ const Header = () => {
               </Badge>
               </NavLink>  
               {typeUser === "lender" ? <NavLink to="/lender/createSpace" className="nav-link mr-4">Create Space</NavLink> : null }
-              <NavDropdown id="collasible-nav-dropdown" className="mr-4" title={<><BellFill size={25} /><Badge variant="light">9</Badge></>}>           
-                <NavLink to="/user/profile" className="nav-link">Profile</NavLink>   
-                <NavLink to={`/${typeUser}/admin`} className="nav-link">Admin</NavLink>
-                <NavLink to="/notification" className="nav-link"><ChevronDoubleDown size={20} />View All</NavLink> 
+              <NavDropdown alignRight id="collasible-nav-dropdown" className="mr-4" title={<><BellFill size={25} /><Badge variant="light">{notifications.length}</Badge></>}>           
+                <NotificationsNavbar notifications={notifications} />                
               </NavDropdown> 
               <Image src={userPhoto} width={50} height={50} roundedCircle fluid thumbnail />            
               <NavDropdown id="collasible-nav-dropdown" title={userName}>           

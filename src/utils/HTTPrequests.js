@@ -439,6 +439,22 @@ export const createDates = async(finalDate,initialDate,spaceId,tenantId) => {
     }
 }
 
+export const getNotificationNumber = async()=>{
+    try{
+        const response = await axios({
+            method:"GET",
+            url:"http://127.0.0.1:4000/notification/number",
+            headers:{
+                Authorization: 'Bearer '+ localStorage.getItem('token'),
+                "x-UserType": localStorage.getItem('typeUser')                        
+            }
+        })
+        return response.data
+    }catch(err){
+        throw err
+    }
+}
+
 export const getNotificationUser = async()=>{
     const user = localStorage.getItem("typeUser") === "tenant" ? localStorage.getItem("typeUser"):``
     try{
