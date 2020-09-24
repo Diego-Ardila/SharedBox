@@ -492,6 +492,7 @@ export const updateNotification = async(status,notification)=>{
         throw err
     }
 }
+
 export const GetPaymentInfoByReference = async (reference)=>{
     try{
         const response = await axios({
@@ -500,6 +501,27 @@ export const GetPaymentInfoByReference = async (reference)=>{
             url: reference
         })
         return response 
+    }catch(err){
+        throw(err)
+    }
+}
+export const updateElements = async (elementId, data) => {
+    const user = localStorage.getItem("typeUser") === "tenant" ? localStorage.getItem("typeUser"):``
+    try{
+        const response = await axios({
+            method: "PUT",
+            baseURL: process.env.REACT_APP_SERVER_URL,
+            url: "element",
+            data: {
+                id: elementId,
+                data: {...data}
+            },
+            headers:{
+                Authorization: 'Bearer '+ localStorage.getItem('token'),
+                "x-UserType":user                        
+            }
+        })
+        return response.data
     }catch(err){
         throw(err)
     }

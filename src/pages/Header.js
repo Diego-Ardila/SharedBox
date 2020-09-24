@@ -14,7 +14,6 @@ const Header = () => {
   const userName = useSelector(state => state.loginUserReducer.userName)
   const userPhoto = useSelector(state => state.loginUserReducer.userPhoto)
   const notifications = useSelector(state => state.loginUserReducer.notifications)
-  console.log(notifications)
   const dispatch = useDispatch()
 
   const homecoming =()=>{

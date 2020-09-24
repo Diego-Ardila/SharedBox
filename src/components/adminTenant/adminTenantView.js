@@ -13,7 +13,7 @@ export default function AdminTenantView (){
                 </Row>
                 <Row className="justify-content-center">
                     <Button className="col-lg-5 m-3">Scores</Button>
-                    <Button className="col-lg-5 m-3">Incoming reservations</Button>
+                    <Button className="col-lg-5 m-3" onClick= {()=>history.push("/tenant/reservations")}>Incoming reservations</Button>
                 </Row>
             </Card>
         </Container>

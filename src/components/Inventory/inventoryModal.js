@@ -57,7 +57,7 @@ export default function ModalInventory(props){
                 }
                 await onClickSendNotification(payload)
             }              
-            swal("reservation rquest sent","your reservation request was sent succesfully","success")
+            swal("reservation request sent","your reservation request was sent succesfully","success")
         }catch(err){
             swal("reservation request error", "something went wrong, please try again", "error")
         }
@@ -73,7 +73,7 @@ export default function ModalInventory(props){
     })
 
 return(
-    <Modal show= {props.show} onHide= {props.onHide} size="xl" aria-labelledby="contained-modal-title-vcenter">
+    <Modal show= {props.show} onHide = {props.onHide} size="xl" aria-labelledby="contained-modal-title-vcenter">
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             The Lender wants to know what are you going to store
