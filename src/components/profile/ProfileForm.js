@@ -1,12 +1,21 @@
 import React, {useState , useEffect} from 'react';
-import {Form,Container,Image,Card,Col,Button} from 'react-bootstrap'
-import {getDataUser, updateDatauser, deleteTenant} from '../../utils/HTTPrequests' 
+
+import { FilePond, registerPlugin } from 'react-filepond'
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+import {Form,Container,Card,Col,Button} from 'react-bootstrap'
+import {getDataUser, updateDatauser, deleteTenant, postUserPhotosFiles} from '../../utils/HTTPrequests' 
+import { useDispatch } from "react-redux";
+import { changeUserName, changeUserPhoto } from '../../actions/loginUser.actions'
 import { Field, Formik } from 'formik';
 import * as Yup from 'yup'
 import {useHistory} from 'react-router-dom'
 import { ArrowLeft } from 'react-bootstrap-icons'
 import swal from 'sweetalert'
 import usePushNotifications from '../notifications/usePushNotifications'
+
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 const base = {
     imageID: "profile-image",
@@ -17,12 +26,13 @@ const base = {
     cityID: "profile-city",
     formID: "profile-form",
     submitId: "profile-submit",  
-    deleteId: "profile-delete"  
+    deleteId: "profile-delete",
+    uploadId : "photoUpload"  
 }
 
 function ProfileForm(){
     const history = useHistory()
-    let imageProfile = "https://imageog.flaticon.com/icons/png/512/16/16480.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"
+    const dispatch = useDispatch()
     let [name,setName]=useState("");
     let [email,setEmail]=useState("");
     let [phoneNumber,setPhoneNumber]=useState("");
@@ -31,6 +41,7 @@ function ProfileForm(){
     let [stateView,setStateView]=useState(false);
     let [userId, setUserId] = useState("");
     let [isSubscribed, setIsSubscribed] = useState(false)
+    let [profilePhoto, setProfilePhoto] = useState([])
     let typeUser = localStorage.getItem("typeUser")
 
     const {
@@ -55,6 +66,7 @@ function ProfileForm(){
                 setCity(userData.data.city)
                 setUserId(userData.data._id)
                 setIsSubscribed(userData.data.isSubscribed)
+                setProfilePhoto(userData.data.profilePhoto)
             }
             catch(err){
                 swal("profile error", "something went wrong, please try again", "error")
@@ -66,8 +78,20 @@ function ProfileForm(){
     const handleSubmit = async (values) => {
         if (stateView){
             try{
-                await updateDatauser(typeUser,values)
+                const arrayFiles = [];
+                values.files.forEach(file =>{
+                    arrayFiles.push(file.file);
+                })     
+                const id = await updateDatauser(typeUser,values)
                 values.isSubscribed ? await onClickSubscribeToNotifications() : await onClickCancelSubscriptionToPushServer()
+                localStorage.setItem("userName", values.name)
+                dispatch(changeUserName(values.name))
+                const data = new FormData();
+                data.append('userId', id)
+                data.append('file', arrayFiles[0])
+                const response = await postUserPhotosFiles(typeUser,data)
+                dispatch(changeUserPhoto(response.data.profilePhoto))
+                localStorage.setItem("userPhoto", response.data.profilePhoto)  
                 swal("update successful","your changes to your profile were saved succesfully","success")
                 setStateView(!stateView)
             }
@@ -84,7 +108,9 @@ function ProfileForm(){
         email: Yup.string().email().required("Required Field"),
         phoneNumber : Yup.number().test('len', 'Must be exactly 10 characters', val => val && val.toString().length === 10 ),
         country : Yup.string().required("Required Field"),
-        city : Yup.string().required("Required Field")
+        city : Yup.string().required("Required Field"),
+        files: Yup.array(),
+        isSubscribed : Yup.bool()
     })
 
     const deleteUser = async () => {
@@ -106,7 +132,7 @@ function ProfileForm(){
     return(
         <Container className="container-fluid p-3">
             <Card className="p-3">
-                <Formik initialValues={{name,email,phoneNumber,country,city, isSubscribed}}  
+                <Formik initialValues={{name,email,phoneNumber,country,city, isSubscribed, files: profilePhoto}}  
                         validationSchema={stateView ? formSchema: ""}  
                         onSubmit={handleSubmit} 
                         enableReinitialize={true}>
@@ -117,11 +143,6 @@ function ProfileForm(){
                                     {typeUser==="tenant"?
                                     (<Button type="" onClick={()=>history.push("/tenant/admin")} ><ArrowLeft/></Button>):null}
                                 </Col>
-                            </Form.Row>
-                            <Form.Row  className="justify-content-center">
-                                <Col className=" text-center "   >
-                                    <Image  src={imageProfile} height ={100} />
-                                </Col>                       
                             </Form.Row>
                             <Form.Row className="justify-content-center">
                                 <Col className="col-lg-10">
@@ -179,27 +200,35 @@ function ProfileForm(){
                                     </Form.Group>
                                 </Col>
                             </Form.Row >
+                            <Form.Group controlId={base.uploadId}>
+                                <FilePond
+                                    files={values.files}
+                                    onupdatefiles={fileItems => setFieldValue("files", fileItems)}
+                                    allowMultiple={false}
+                                    disabled={stateView ? false : true}
+                                    name="files"
+                                    labelIdle='Drag & Drop your photo or Browse'
+                                />
+                                {touched.files && errors.files ? (
+                                    <div className="error-message">{errors.files}</div>
+                                ): null}
+                            </Form.Group>
                             <Form.Row className="justify-content-center">                    
                                 <Col md lg>
                                 <Field name="isSubscribed" type="checkbox"  className="justify-content-center" >
-                                {({ field: {value}, form: {setFieldValue} }) => (
+                                {({ field: {value}, form: {setFieldValue, touched, errors} }) => (
                                     <>
                                     {stateView ? 
                                     <Form.Check  className="justify-content-center"  inline label="Activate Notifications" checked={values.isSubscribed} onClick={() => setFieldValue('isSubscribed',!values.isSubscribed)} />  
                                     : <Form.Check disabled className="justify-content-center"  inline label="Activate Notifications" checked={values.isSubscribed}  /> }
+                                    {touched.isSubscribed && errors.isSubscribed ? (
+                                    <div className="error-message">{errors.isSubscribed}</div>
+                                     ): null}
                                     </>                                     
                                 )                              }                                 
                                 </Field>   
                                 </Col>                                                
                             </Form.Row>  
-                            <Form.Row>
-                            <p>
-                            User consent to recieve push notificaitons is <strong>{userConsent}</strong>.
-                            </p>                            
-                            <Button onClick={onClickSendNotification}>Send a notification</Button>                       
-                            </Form.Row>                              
-                            
-                            
                             <Form.Row className=" justify-content-center">
                                 <Col className="col-lg-5 ">
                                     {stateView? 
@@ -216,6 +245,16 @@ function ProfileForm(){
                                     onClick={()=>deleteUser()} block
                                     >
                                         Delete Profile
+                                    </Button>
+                                </Col>
+                            </Form.Row>
+                            <Form.Row className=" justify-content-center mt-3 mb-5">
+                                <Col className="col-lg-5 ">
+                                    <Button    
+                                    variant="primary" 
+                                    onClick={()=> history.push('/lender/createSpace')} block
+                                    >
+                                        Create Space
                                     </Button>
                                 </Col>
                             </Form.Row>

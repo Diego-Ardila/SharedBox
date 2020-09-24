@@ -2,13 +2,12 @@ import React from "react"
 import { Button } from "react-bootstrap"
 import { BagCheck } from "react-bootstrap-icons"
 
-export default function PayButton ({finalPrice, tax, tax_base, spaceTitle, tenantName, tenantPhoneNum, numDays, inDate, finDate, tenantId, spaceId}) {
+export default function PayButton ({finalPrice, tax, tax_base, spaceTitle, tenantName, tenantPhoneNum, numDays, inDate, finDate, tenantId, spaceId, notification}) {
     const handlePayment= () => {
         const paymentHandler = window.ePayco.checkout.configure({
         key: process.env.REACT_APP_EPAYCO_PUBLIC_KEY,
         test: true
         })
-        console.log(finalPrice)
         paymentHandler.open({
             class: "epayco-button",
             external: 'false',
@@ -26,6 +25,7 @@ export default function PayButton ({finalPrice, tax, tax_base, spaceTitle, tenan
             extra3: `final Date: ${finDate}`,
             extra4: spaceId,
             extra5: tenantName,
+            extra6: notification._id,
             response: `http://127.0.0.1:3000/response`,
             autoclick: 'false',
             name_billing: tenantName,

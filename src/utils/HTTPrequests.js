@@ -2,16 +2,33 @@ import axios from "axios"
 
 export const userRegister = async (typeUser,values)=>{
     try{
-        const userToken = await axios ({
+        const response = await axios ({
             baseURL: "http://127.0.0.1:4000/",
             url: typeUser,
             method: "POST",
             data: values,
         }) 
-        return userToken
+        return response.data
     }
      catch(error){
         throw error
+    }
+}
+
+export const postUserPhotosFiles = async (typeUser,data) => {
+    try {
+        const response = await axios({
+            method: "POST",
+            url:`http://127.0.0.1:4000/${typeUser}/photos`,
+            data,
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        return response
+    }
+    catch(err){
+        throw err
     }
 }
 
@@ -60,7 +77,7 @@ export const updateDatauser = async (typeUser,values) => {
             },
             data:values
         })
-        return updateData 
+        return updateData.data 
     }
     catch(error){
         throw error
@@ -291,7 +308,7 @@ export const deleteTenant = async(tenantId, typeUser) => {
         throw(err)
     }
 }
-const host = "http://localhost:4000";
+const host = "http://127.0.0.1:4000";
 
 export const registerSubscription = async(path, body) => {
     try {
@@ -439,6 +456,26 @@ export const getNotificationUser = async()=>{
     }
 }
 
+export const updateNotification = async(status,notification)=>{
+    const user = localStorage.getItem("typeUser") === "tenant" ? localStorage.getItem("typeUser"):``
+    try{
+        const response = await axios({
+            method:"PUT",
+            url:"http://127.0.0.1:4000/notification",
+            headers:{
+                Authorization: 'Bearer '+ localStorage.getItem('token'),
+                "x-UserType":user                        
+            },
+            data: {
+                status,
+                notification
+            }
+        })
+        return response
+    }catch(err){
+        throw err
+    }
+}
 export const GetPaymentInfoByReference = async (reference)=>{
     try{
         const response = await axios({

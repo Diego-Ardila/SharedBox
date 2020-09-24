@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { Container, Card, Form, Button, Col, Image } from "react-bootstrap"
 import Logo from "../../logo.svg";
 import { useDispatch } from "react-redux";
-import { changeLogin } from '../../actions/loginUser.actions'
+import { changeLogin, changeTypeUser, changeUserName } from '../../actions/loginUser.actions'
 import { Link, useHistory } from 'react-router-dom';
 import swal from 'sweetalert'
 
@@ -28,7 +28,7 @@ function LoginForm () {
         password: Yup.string().required("Required Field")   
       })    
 
-    const changeTypeUser = (event, resetForm) =>{
+    const changeTypeUserForm = (event, resetForm) =>{
         switch (event.target.name){
             case "changeTenant":
                 localStorage.setItem("typeUser","tenant")
@@ -49,10 +49,13 @@ function LoginForm () {
     const handleSubmit = async (values, {setErrors}) =>  {
         try { 
             
-        const token = await loginUser(values,typeUser)
+        const {token, name} = await loginUser(values,typeUser)
         localStorage.setItem("typeUser",typeUser)
         localStorage.setItem("token",token)
+        localStorage.setItem("userName",name)
         dispatch(changeLogin(true))
+        dispatch(changeTypeUser(typeUser))
+        dispatch(changeUserName(name))
         history.push("/home")
         }
         catch(error) {
@@ -87,10 +90,10 @@ function LoginForm () {
                         </Form.Row>
                         <Form.Row className="justify-content-center m-4">
                             <Col className="col-lg-3">
-                                <Button name="changeLender" variant={typeUser==="lender"?"secondary":"primary"} disabled={typeUser==="lender"} onClick={(e)=>changeTypeUser(e,resetForm)} block>As a lender</Button>
+                                <Button name="changeLender" variant={typeUser==="lender"?"secondary":"primary"} disabled={typeUser==="lender"} onClick={(e)=>changeTypeUserForm(e,resetForm)} block>As a lender</Button>
                             </Col>
                             <Col className="col-lg-3">
-                            <Button name="changeTenant" variant={typeUser==="tenant"?"secondary":"primary"} disabled={typeUser==="tenant"} onClick={(e)=>changeTypeUser(e,resetForm)} block>As a tenant</Button>
+                            <Button name="changeTenant" variant={typeUser==="tenant"?"secondary":"primary"} disabled={typeUser==="tenant"} onClick={(e)=>changeTypeUserForm(e,resetForm)} block>As a tenant</Button>
                             </Col>
                         </Form.Row>
                         <Form.Row className="justify-content-center" >

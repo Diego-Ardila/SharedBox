@@ -47,7 +47,8 @@ export default function FrequentAskedQuestionsForm (props) {
            }
        })
        try{
-           await postFAQs(newFaqs)
+           const response = await postFAQs(newFaqs)
+           props.createdFaq(response)
            swal("FAQs saved correctly","your FAQs were saved succesfully","success")
            props.hideEditFAQ()
        }catch(err){

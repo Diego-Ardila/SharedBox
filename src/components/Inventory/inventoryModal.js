@@ -232,7 +232,7 @@ return(
             </Container>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={()=>handleToAxios(finalDate,initialDate,elements,spaceId,lenderId)}>save</Button>
+            <Button onClick={()=>{handleToAxios(finalDate,initialDate,elements,spaceId,lenderId); props.onHide()}}>save</Button>
         </Modal.Footer>
     </Modal>
 )

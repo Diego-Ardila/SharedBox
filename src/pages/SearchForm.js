@@ -80,26 +80,26 @@ const SearchForm = (props) => {
 
     }) => (
       <Form className="row justify-content-center mt-3" onSubmit={handleSubmit}  noValidate >
-        <Form.Row className="col-lg-10">
-          <Col>
+        <Form.Row lg={10} sm={12} className="ml-2 mr-2">
+          <Col sm={4} >
             <Form.Group controlId={base.titleId}>
-              <Form.Label>Title</Form.Label>
+              <Form.Label>keyword</Form.Label>
               <Form.Control className={touched.title && errors.title ? "is-invalid" : null} name="title" type="text" placeholder="Title" onChange ={(e) => customChange(e.target, setValues, values, dispatch) } value={values.title} />
               {touched.title && errors.title ? (
                 <div className="error-message">{errors.title}</div>
               ): null}
             </Form.Group>
           </Col>
-          <Col >
+          <Col sm={4} >
             <Form.Group controlId={base.areaId}>
-              <Form.Label>Area</Form.Label>
+              <Form.Label>Min Area</Form.Label>
               <Form.Control name="area" type="text" placeholder="Enter Area" onChange ={(e) => customChange(e.target , setValues, values, dispatch) } value={values.area} className={touched.area && errors.area ? "is-invalid" : null}  />
               {touched.area && errors.area ? (
                 <div className="error-message">{errors.area}</div>
               ): null}
             </Form.Group>            
           </Col>          
-          <Col>
+          <Col sm={4} >
             <Form.Group controlId={base.locationId}>
               <Form.Label>Location</Form.Label>
               <Form.Control className={touched.location && errors.location ? "is-invalid" : null} name="location" type="text" placeholder="Location" onChange ={(e) => customChange(e.target, setValues, values, dispatch) } value={values.location} />
@@ -108,7 +108,7 @@ const SearchForm = (props) => {
               ): null}
             </Form.Group>
           </Col>
-          <Col>
+          <Col sm={4} >
             <Form.Group controlId={base.initialDateId}>
               <Form.Label>Initial Date</Form.Label>
               <Form.Control type="date" placeholder="Initial Date" name="initialDate" onChange ={(e) => customChange(e.target , setValues, values, dispatch) } value={values.initialDate} className={touched.initialDate && errors.initialDate ? "is-invalid" : null}  />
@@ -117,7 +117,7 @@ const SearchForm = (props) => {
               ): null}
             </Form.Group>
           </Col>
-          <Col>
+          <Col sm={4} >
             <Form.Group controlId={base.finalDateId}>
               <Form.Label>Final Date</Form.Label>
               <Form.Control type="date" placeholder="Final Date" name="finalDate" onChange ={(e) => customChange(e.target , setValues, values, dispatch) } value={values.finalDate} className={touched.finalDate && errors.finalDate ? "is-invalid" : null} />

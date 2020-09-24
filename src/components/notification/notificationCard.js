@@ -3,6 +3,7 @@
  import {Check2Square,ExclamationSquare,XSquare} from 'react-bootstrap-icons'
   
  export default function CardNotification ({notification, setValuesCard, selected}){
+    
     let titleSpace = notification.inventoryId.spaceId.title
     let nameTenant = notification.tenantId.name    
     let nameLender = notification.lenderId.name
@@ -19,11 +20,18 @@
     }
 
     switch(status){
-        case "accept":
+        case "paid":
             message.lenderHeader = `Your space ${titleSpace} is reserved `;
             message.lenderBody = `The user  ${nameTenant}  is going to take your space ${titleSpace} from ${initialDate} to  ${finalDate}`;
             message.tenantHeader = `The ${titleSpace} is now reserved by you `;
-            message.tenantBody = `The lender ${nameLender} accepted your offer for his spaces ${titleSpace}, congratulations!!`;
+            message.tenantBody = `Now the space ${titleSpace} is yours, congratulations!!`;
+            colorBadge="success"
+            break; 
+        case "accept":
+            message.lenderHeader = `You accepted the offer for space ${titleSpace} `;
+            message.lenderBody = `let's wait for the user  ${nameTenant} to pay the rent and then he is going to be able to take your space ${titleSpace} from ${initialDate} to  ${finalDate}`;
+            message.tenantHeader = `The ${titleSpace}'s owner accepted your offer`;
+            message.tenantBody = `The lender ${nameLender} accepted your offer for his space ${titleSpace}, congratulations!!`;
             colorBadge="success"
             break; 
         case "reject":

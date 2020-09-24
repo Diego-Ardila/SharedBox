@@ -3,7 +3,7 @@ import React from 'react'
 import PayButton from './payButton';
 import {useHistory} from 'react-router-dom'
 
-export default function CardNotificationInfo ({notification, calPrice}){
+export default function CardNotificationInfo ({handleSubmit, notification, calPrice}){
     
     let titleSpace = notification.inventoryId.spaceId.title
     let initialDate = notification.datesReservedId.initialDate
@@ -25,11 +25,15 @@ export default function CardNotificationInfo ({notification, calPrice}){
 
     switch(status){
         case "accept":
+            message.lenderHeader = `Your space ${titleSpace} is going to be reserved; let's wait for the tenant's to pay`;
+            message.tenantHeader = `Your offer was accepted; the next step its to pay and then the space ${titleSpace} woul be yours from ${initialDate} to the ${finalDate}`;
+            break;
+        case "paid":
             message.lenderHeader = `Your space ${titleSpace} is reserved now from the ${initialDate} to the ${finalDate}`;
             message.tenantHeader = `the ${titleSpace} is now reserved for you from the ${initialDate} to the  ${finalDate}`;
             break; 
         case "reject":
-            message.tenantHeader = `the ${titleSpace} is rejected for lender of ${initialDate} to  ${finalDate}`;
+            message.tenantHeader = `the ${titleSpace} was rejected by the lender on the dates from ${initialDate} to  ${finalDate}`;
             break;   
         default:
             message.lenderHeader = `You recived an offer for the space ${titleSpace} on the dates ${initialDate} to  ${finalDate}`;
@@ -85,8 +89,12 @@ export default function CardNotificationInfo ({notification, calPrice}){
                 {typeUser==="lender"
                     ? !status &&
                         <div>
-                            <Button className="mr-2" >Reject</Button>
-                            <Button >Accept</Button>
+                            <Button onClick={
+                                        e=>handleSubmit("reject",notification)
+                                    } className="mr-2">Reject</Button>
+                            <Button onClick={
+                                        e=>handleSubmit("accept",notification)
+                                    }>Accept</Button>
                         </div> 
                     : status==="accept" && 
                         <PayButton 
@@ -102,7 +110,10 @@ export default function CardNotificationInfo ({notification, calPrice}){
                             inDate={initialDate}
                             finDate={finalDate}
                             tenantId={idTenant}
-                            spaceId={spaceId}/>}
+                            spaceId={spaceId}
+                            notification={notification}/>                                               
+                        }
+                        {typeUser==="tenant"&&status==="reject"&&<Button onClick={()=>history.push("/home")}>Search more Spaces</Button>}
             </Card.Footer>
         </Card>
     )
