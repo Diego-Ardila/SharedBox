@@ -1,8 +1,11 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Card, Accordion } from "react-bootstrap"
 
 export default function FAQadministrator({ space }) {
-    const [FAQarr] = useState( space.faqs )
+    const [FAQarr, setFAQarr] = useState( space.faqs )
+    useEffect(()=>{
+        setFAQarr(space.faqs)
+    },[space.faqs])
 
     return (
         <React.Fragment>

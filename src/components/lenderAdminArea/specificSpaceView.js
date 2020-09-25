@@ -16,6 +16,7 @@ import Calendar from "../viewSpaces/calendar";
 import PriceAdministrator from "./PriceAdministrator";
 import { useLocation } from "react-router-dom";
 import moment from "moment"
+import {getFilterSpaces} from '../../utils/HTTPrequests'
 
 const RoundedBttn = styled.button`
     cursor: pointer;
@@ -36,16 +37,22 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   const [startDate, setStartDate] = useState(edit ? null : moment(locationQuery.search.slice(40,50),"YYYY-MM-DD"))
   const [endDate, setEndDate] = useState(edit ? null : moment(locationQuery.search.slice(59),"YYYY-MM-DD"))
   const [calendarIsOpen, setCalendarIsOpen] = useState(false)
-  const renderingSpace = spaces.find( space => space._id === spaceId)
+  const [renderingSpace, setRenderingSpace] = useState(spaces.find( space => space._id === spaceId))
     
   useEffect(()=>{
     dispatch(changePhotos(renderingSpace.photos))
     setLoading(false)
   },[])
+
   
   const hideEditFAQ = () => {
     setEditFAQ(false)
   }
+
+  const createdFaq = async () => {  
+    let newSpace = await getFilterSpaces(`?_id=${spaceId}`)
+    setRenderingSpace(newSpace[0])
+  }  
   
   const closeCalendar = () => {
     setCalendarIsOpen(false)
@@ -101,13 +108,14 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               </Row>
               <Row className="row justify-content-center p-3">
               <Col className="col-12 d-inline-flex flex-column">
-                  <FAQadministrator space={renderingSpace}></FAQadministrator>
+                {( renderingSpace.faqs.length > 0) ? <FAQadministrator space={renderingSpace}></FAQadministrator> : null }
+                  
                   {edit && <Button onClick = {() => setEditFAQ(true) }>add FAQ questions</Button>}
                 </Col>
               </Row>
               <Row>
                 <Col className="col-12 d-inline-flex flex-column justify-content-center">
-                  {editFAQ && <FrequentAskedQuestions setEditFAQ ={hideEditFAQ} spaceId ={spaceId}></FrequentAskedQuestions>}
+                  {editFAQ && <FrequentAskedQuestions setEditFAQ ={hideEditFAQ} spaceId ={spaceId} createdFaq={createdFaq}></FrequentAskedQuestions>}
                 </Col>
               </Row>
             </React.Fragment>

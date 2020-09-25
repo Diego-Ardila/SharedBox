@@ -56,7 +56,7 @@ export default function PhotosUploadForm () {
                     </Button>
                 </Row>
                 <Row className="justify-content-center">                    
-                    <Form className="justify-content-center mt-3" onSubmit={handleSubmit} noValidate>
+                    <Form className="justify-content-center mt-3 mb-5" onSubmit={handleSubmit} noValidate>
                         <h3>Share some photos of your space! 
                             It will be mote appealing for people looking where to store their things
                         </h3>
@@ -73,7 +73,7 @@ export default function PhotosUploadForm () {
                                 <div className="error-message">{errors.files}</div>
                             ): null}
                         </Form.Group>                      
-                        <Button variant="primary" size="lg" type="submit">
+                        <Button className="mb-3" variant="primary" size="lg" type="submit">
                             Next
                         </Button>
                     </Form>        
