@@ -45,8 +45,6 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
     setLoading(false)
   },[])
 
-  useEffect(()=>{
-  },[renderingSpace])
   
   const hideEditFAQ = () => {
     setEditFAQ(false)
