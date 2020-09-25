@@ -3,7 +3,6 @@
  import {Check2Square,ExclamationSquare,XSquare} from 'react-bootstrap-icons'
   
  export default function CardNotification ({notification, setValuesCard, selected}){
-
     
     let titleSpace = notification.inventoryId.spaceId.title
     let nameTenant = notification.tenantId.name    

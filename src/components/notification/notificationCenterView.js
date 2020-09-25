@@ -18,7 +18,6 @@ export default function NotificationCenterView ({navbarId}){
     const [selected,setSelected] = useState("")
     const history = useHistory()
     const [render,setRender] = useState(false)
-    
      
     
     useEffect(()=>{
@@ -31,6 +30,7 @@ export default function NotificationCenterView ({navbarId}){
             }
         }
         getNotification()
+        setRender(false)
     },[render])
 
     const handleSubmit = async (event,notification)=>{

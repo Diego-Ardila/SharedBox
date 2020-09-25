@@ -5,13 +5,17 @@ import './incomingReservation.css'
 
 
 export default function InventoryUpdateRendericer ({elements,handleSelect,selected}){
-    console.log(elements)
     return (
         <Container>
             {
                 elements.map((element)=>{
                     return(
-                        <Toast className={`toast ${selected === element._id?"darkToast":" "}` } id={element._id} key={element._id} show={true} onClick={(e)=>handleSelect(e,element)}  >
+                        <Toast 
+                            className={`toast ${selected === element._id?"darkToast":" "}` } 
+                            id={element._id} 
+                            key={element._id} 
+                            show={true} 
+                            onClick={(e)=>handleSelect(e,element)}  >
                             <Toast.Header closeButton={false} >
                                 <strong>{element.object}</strong>
                             </Toast.Header>

@@ -21,6 +21,8 @@ const Header = () => {
     dispatch(changeSpecificSearch())
   }  
 
+  
+
   return (
     <Navbar collapseOnSelect bg="primary" expand="lg">      
       <NavLink to="/home" onClick={()=>homecoming()}><img src={Logo} alt="logo" width={100}/></NavLink>
