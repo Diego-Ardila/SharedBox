@@ -89,10 +89,10 @@ export default function InventoryCheckElement ({element}) {
                         </div>
                         <select 
                             className={`elementCard-commentSelect ${!values.comment || values.check ? "hidden" : null}`}
-                            name="category"
-                            id="category"
+                            name="errorCategory"
+                            id="errorCategory"
                             onChange={handleChange}
-                            value={values.category}
+                            value={values.errorCategory}
                         >
                             <option value="select">select category</option>
                             <option value="incorrect ammount">incorrect ammount</option>
