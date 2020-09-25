@@ -110,7 +110,8 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                             inDate={initialDate}
                             finDate={finalDate}
                             tenantId={idTenant}
-                            spaceId={spaceId}/>                                               
+                            spaceId={spaceId}
+                            notification={notification}/>                                               
                         }
                         {typeUser==="tenant"&&status==="reject"&&<Button onClick={()=>history.push("/home")}>Search more Spaces</Button>}
             </Card.Footer>
