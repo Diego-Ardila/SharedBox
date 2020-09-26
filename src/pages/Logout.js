@@ -2,7 +2,7 @@ import React from 'react';
 import swal from 'sweetalert';
 import {  useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { changeLogin } from '../actions/loginUser.actions'
+import { changeLogin, changeTypeUser, changeUserName } from '../actions/loginUser.actions'
 
 const Logout = (props) => {
   const history = useHistory(); 
@@ -24,7 +24,10 @@ const Logout = (props) => {
         case "confirm":
           localStorage.removeItem('token');
           localStorage.removeItem('typeUser'); 
+          localStorage.removeItem('userName'); 
           dispatch(changeLogin(false))
+          dispatch(changeTypeUser(""))
+          dispatch(changeUserName(""))
           history.push('/home')
           swal("Good job","Logged Out Successfully", "success")
           break;

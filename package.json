@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.2",
+    "dotenv": "^8.2.0",
     "filepond": "^4.20.1",
     "filepond-plugin-image-exif-orientation": "^1.0.9",
     "filepond-plugin-image-preview": "^4.6.4",
@@ -20,6 +21,7 @@
     "react-dates": "^21.8.0",
     "react-dom": "^16.13.1",
     "react-filepond": "^7.0.1",
+    "react-helmet": "^6.1.0",
     "react-icons": "^3.11.0",
     "react-number-format": "^4.4.1",
     "react-rating": "^2.0.5",
@@ -30,6 +32,7 @@
     "redux": "^4.0.5",
     "styled-components": "^5.1.1",
     "sweetalert": "^2.1.2",
+    "web-push": "^3.4.4",
     "yup": "^0.29.3"
   },
   "scripts": {
