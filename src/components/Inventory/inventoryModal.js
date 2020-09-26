@@ -47,8 +47,16 @@ export default function ModalInventory(props){
             const date = await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
             await createNotification(inventoryId,tenantId,lenderId,date._id)
             const isSubscribed = await onClickIsUserSubscribed()
-            if (isSubscribed) await onClickSendNotification()
-            
+            if (isSubscribed) {
+                const payload = {
+                    title: "Reservation Created",
+                    text: "Your request for reservation was sent to the lender. Let's wait for his answer!!",
+                    image: "/images/jason-leung-HM6TMmevbZQ-unsplash.jpg",
+                    tag: "new-reservation",
+                    url: "http://localhost:3000/notification"
+                }
+                await onClickSendNotification(payload)
+            }              
             swal("reservation rquest sent","your reservation request was sent succesfully","success")
         }catch(err){
             swal("reservation request error", "something went wrong, please try again", "error")

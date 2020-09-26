@@ -84,20 +84,13 @@ export default function usePushNotifications() {
     }    
   };
 
-  const onClickSendNotification = async () => {
+  const onClickSendNotification = async (payload) => {
     try {
       if (userConsent !== "granted"){
         throw new Error('User did not granted the permission');    
       }
       setLoading(true);
       setError(false);
-      const payload = {
-        title: "Probando desde Local ",
-        text: "HEY! Take a look at this brand new t-shirt!",
-        image: "/images/jason-leung-HM6TMmevbZQ-unsplash.jpg",
-        tag: "new-product",
-        url: "http://localhost:3000/user/login"
-      }
       await sendNotification("/subscription/sendnotification",payload)
       setLoading(false);
     } catch (err){
