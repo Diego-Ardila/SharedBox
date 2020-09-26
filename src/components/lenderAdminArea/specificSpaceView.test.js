@@ -92,6 +92,4 @@ describe("Especific Space View", () => {
         const ReserveButtons = getAllByTestId("edit-ModeOff")
         expect(ReserveButtons).toHaveLength(2)
     })
-
-
 })

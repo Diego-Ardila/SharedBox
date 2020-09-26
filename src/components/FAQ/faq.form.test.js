@@ -3,7 +3,7 @@ import { render, fireEvent, cleanup } from '@testing-library/react'
 import FrequentAskedQuestionsForm  from './faq.Form'
 import moxios from "moxios"
 
-describe.only("FAQ form", () => {
+describe("U-FAQ form", () => {
     beforeEach(()=>{
         moxios.install()
         cleanup()
@@ -14,7 +14,7 @@ describe.only("FAQ form", () => {
         cleanup()
     })
 
-    it.only("should create a new FAQ and send it to the server", (done) => {
+    it("should create a new FAQ and send it to the server", (done) => {
         const faqs = [
             {
                 question: "test 1",
@@ -72,9 +72,6 @@ describe.only("FAQ form", () => {
               status: 200,
               response: {...newFaq, spaceID},
             }).then(()=> done())
-        })
-        
-
-        
+        })  
     })
 })
