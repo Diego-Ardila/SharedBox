@@ -339,7 +339,7 @@ export const cancelSubscription = async(path, body) => {
         })
         return response
     } catch(err){
-        return err
+        throw err
     }
 }
 
@@ -436,6 +436,22 @@ export const createDates = async(finalDate,initialDate,spaceId,tenantId) => {
         return response.data
     } catch(err){
         throw (err)
+    }
+}
+
+export const getNotificationNumber = async()=>{
+    try{
+        const response = await axios({
+            method:"GET",
+            url:"http://127.0.0.1:4000/notification/number",
+            headers:{
+                Authorization: 'Bearer '+ localStorage.getItem('token'),
+                "x-UserType": localStorage.getItem('typeUser')                        
+            }
+        })
+        return response.data
+    }catch(err){
+        throw err
     }
 }
 

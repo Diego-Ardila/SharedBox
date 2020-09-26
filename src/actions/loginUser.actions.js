@@ -27,3 +27,10 @@ export const changeUserPhoto = (payload) => {
       payload
   }
 }
+
+export const changeNotifications = (payload) => {
+  return {
+      type: ACTIONS.CHANGE_NOTIFICATIONS,
+      payload
+  }
+}

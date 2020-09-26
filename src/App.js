@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect, useHistory } from "react-router-dom";
 //import './App.css';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import register from "./pages/register"
@@ -14,12 +14,13 @@ import Footer from './pages/Footer';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
 import Notification from './pages/notification'
-import { changeLogin, changeTypeUser, changeUserName, changeUserPhoto } from './actions/loginUser.actions'
+import { changeLogin, changeTypeUser, changeUserName, changeUserPhoto, changeNotifications } from './actions/loginUser.actions'
 import Space from "./pages/Space"
 import PaymentResponse from './pages/PaymentResponse';
- 
+import { getNotificationUser} from './utils/HTTPrequests';
+import TitleComponent from './TitleComponent'; 
 
-function PrivateRoute(props) {
+function PrivateRoute(props) {  
   const history = useHistory()
   useEffect(() => {
     const token = props.typeUser ? false : localStorage.getItem("token")
@@ -35,13 +36,15 @@ function PrivateRoute(props) {
 }  
 
 function App() {
+  const [numberNotifications, setNumberNotifications] = useState(0)
   const dispatch = useDispatch()
+  const isLogged = useSelector(state => state.loginUserReducer.isLogged)
 
   useEffect(() =>{
   const token = localStorage.getItem("token")  
   const typeUser = localStorage.getItem("typeUser")
   const userName = localStorage.getItem("userName")
-  const userPhoto = localStorage.getItem("userPhoto")
+  const userPhoto = localStorage.getItem("userPhoto")  
     if(token){
       dispatch(changeLogin(true))
     } else {
@@ -58,8 +61,24 @@ function App() {
     }
   })
 
+  useEffect(() =>{
+    const fetchData = async () => {
+      if (isLogged){
+        const notifications = await getNotificationUser()
+        dispatch(changeNotifications(notifications.data))
+        setNumberNotifications(notifications.data.length)
+      } else {
+        dispatch(changeNotifications([]))
+        setNumberNotifications(0)  
+      }      
+    }  
+    fetchData();
+  })
+
+  const title = numberNotifications > 0 ? `(${numberNotifications})` : '';
   return (
-    <Router>
+    <Router>      
+      <TitleComponent title={`${title} SharedBox`} />
       <div className="App">
         <Header />
         <Switch>
