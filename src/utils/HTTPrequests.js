@@ -269,7 +269,7 @@ export const getFilterSpaces = async (queryString) => {
             baseURL:`http://localhost:4000/space/tenant`,
             url: queryString
           })
-          return response.data
+          return response
     }
     catch(err){
         throw err
