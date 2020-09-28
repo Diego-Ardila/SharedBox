@@ -269,6 +269,20 @@ export const getFilterSpaces = async (queryString) => {
             baseURL:`http://localhost:4000/space/tenant`,
             url: queryString
           })
+          return response.data
+    }
+    catch(err){
+        throw err
+    }
+} 
+
+export const getFilterSpacesHome = async (queryString) => {
+    try {
+        const response = await axios({
+            method: "GET",
+            baseURL:`http://localhost:4000/space/tenant`,
+            url: queryString
+          })
           return response
     }
     catch(err){

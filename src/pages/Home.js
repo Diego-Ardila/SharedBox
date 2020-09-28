@@ -8,7 +8,7 @@ import SearchForm from './SearchForm';
 import SearchAdvancedForms from './SearchAdvancedForm';
 import { changeRendering } from '../actions/searchForm.actions'
 import  changeSpaces  from '../actions/viewSpaces.actions'
-import { getFilterSpaces} from '../utils/HTTPrequests'
+import { getFilterSpacesHome } from '../utils/HTTPrequests'
 import swal from 'sweetalert'
 import Pagination from 'react-bootstrap/Pagination'
 import DropdownButton from 'react-bootstrap/DropdownButton'
@@ -31,7 +31,7 @@ const Home = () => {
   useEffect(()=>{
     async function getspaces () {
       try{
-        const response = await getFilterSpaces(locationQuery.search)
+        const response = await getFilterSpacesHome(locationQuery.search)
         dispatch(changeSpaces(response.data || []))
         const maxPages = response.headers["content-pages"]
         let newItems = []
