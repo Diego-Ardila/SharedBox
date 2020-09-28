@@ -11,7 +11,7 @@ export default function InventoryUpdateRendericer ({elements,handleSelect,select
                 elements.map((element)=>{
                     return(
                         <Toast 
-                            className={`toast ${selected === element._id?"darkToast":" "}` } 
+                            className={`toastupdate ${selected === element._id?"darkToast":" "}` } 
                             id={element._id} 
                             key={element._id} 
                             show={true} 
@@ -30,7 +30,11 @@ export default function InventoryUpdateRendericer ({elements,handleSelect,select
                                 <Row className="m-2">
                                     <Col><strong>Description:</strong></Col><Col>{element.description}</Col>
                                 </Row>
+                                {element.status === "rejected" &&<Row className="m-2">
+                                     <Col><strong>status:</strong></Col><Col>{element.status}</Col> 
+                                </Row>}                                                                
                             </Toast.Body>
+                            
                         </Toast>
                     )
                 })

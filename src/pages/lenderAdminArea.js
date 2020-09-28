@@ -29,7 +29,7 @@ export default function LenderAdminArea () {
   },[moreInfoDisplay]) 
 
   const changeViewToDisplay = (spaceId) => {
-    return () => {
+    return () => () => {
       setMoreInfoDisplay(!moreInfoDisplay)
       if(spaceId) setSpaceId(spaceId)
     } 

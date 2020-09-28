@@ -6,9 +6,9 @@ import InventoryUpdateModal from '../components/incomingReservations/inventoryUp
 
 
 
-export default function IncomingReservations (){
+export default function IncomingReservations (props){
  
-    const [elements, setElements]=useState([])
+    
     const [notifications,setnotifications] = useState([])
     const [loading, setloading]=useState(true)
     const [showUpdateModal, setShowUpdateModal]=useState(false)
@@ -19,11 +19,15 @@ export default function IncomingReservations (){
     useEffect(()=>{
         const getSpace = async()=>{
             const notifications = await getNotificationUser()
-            const notificationsPay = notifications.data.filter(notification=>notification.status==="accept")
-            setnotifications(notificationsPay)
-            setloading(false)            
+            const notificationsPay = notifications.data.filter(notification=>notification.status==="rejected-element")
+            setnotifications(notificationsPay)                    
+            setloading(false)                      
         }
         getSpace()
+        if (props.location.externalinventory){
+            setShowUpdateModal(true)
+            setInventoriId(props.location.externalinventory)
+        }
     },[renderizer])
 
     const changeRenderize = () =>{

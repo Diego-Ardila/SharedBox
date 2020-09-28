@@ -35,7 +35,11 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
         case "reject":
             message.tenantHeader = `the ${titleSpace} was rejected by the lender on the dates from ${initialDate} to  ${finalDate}`;
             break;   
-        default:
+        case "pending":
+            message.lenderHeader = `You recived an offer for the space ${titleSpace} on the dates ${initialDate} to  ${finalDate}`;
+            message.tenantHeader = `the space ${titleSpace} recived your reservation offer for dates ${initialDate} to ${finalDate}`;
+            break;
+        case "rejected-element":
             message.lenderHeader = `You recived an offer for the space ${titleSpace} on the dates ${initialDate} to  ${finalDate}`;
             message.tenantHeader = `the space ${titleSpace} recived your reservation offer for dates ${initialDate} to ${finalDate}`;
             break;
@@ -47,7 +51,7 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                 {typeUser==="lender"? message.lenderHeader : message.tenantHeader} 
             </Card.Header>
             <Card.Body >
-                {typeUser==="tenant" && !status && <Card.Text>we will contact you as soon as we get a response thank you</Card.Text>}
+                {typeUser==="tenant" && status === "pending" && <Card.Text>we will contact you as soon as we get a response thank you</Card.Text>}
                 <Row> 
                     <Col>
                         <Card.Title> For : {typeUser==="lender" ? nameTenant : nameLender} </Card.Title>
@@ -86,17 +90,17 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                     ))}                            
             </Card.Body>
             <Card.Footer className="text-right">
-                {typeUser==="lender"
-                    ? !status &&
-                        <div>
-                            <Button onClick={
-                                        e=>handleSubmit("reject",notification)
-                                    } className="mr-2">Reject</Button>
-                            <Button onClick={
-                                        e=>handleSubmit("accept",notification)
-                                    }>Accept</Button>
-                        </div> 
-                    : status==="accept" && 
+                {typeUser==="lender" && status === "pending" && 
+                    <div>
+                        <Button onClick={
+                                    e=>handleSubmit("reject",notification)
+                                } className="mr-2">Reject</Button>
+                        <Button onClick={
+                                    e=>handleSubmit("accept",notification)
+                                }>Accept</Button>
+                    </div>
+                }
+                {typeUser==="tenant" && status==="accept" && 
                         <PayButton 
                             className="col-lg-3 ml-auto" 
                             block={true}  
@@ -112,8 +116,9 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                             tenantId={idTenant}
                             spaceId={spaceId}
                             notification={notification}/>                                               
-                        }
-                        {typeUser==="tenant"&&status==="reject"&&<Button onClick={()=>history.push("/home")}>Search more Spaces</Button>}
+                    }
+                    {typeUser==="tenant" && status==="reject" && <Button onClick={()=>history.push("/home")}>Search more Spaces</Button>}
+                    {typeUser==="tenant" && status==="rejected-element" && <Button onClick={()=>history.push({pathname:"/tenant/reservations",externalinventory: notification.inventoryId._id})}>Go to update objects</Button>}
             </Card.Footer>
         </Card>
     )

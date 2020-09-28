@@ -39,13 +39,19 @@
             message.tenantBody = `Don´t worry lets keep searching the perfect space for you`;
             colorBadge="danger"
             break;   
-        default:
+        case "pending":
             message.lenderHeader = `You recived an offer for the space ${titleSpace} from ${initialDate} to  ${finalDate}`;
             message.lenderBody = `The user ${nameTenant} sent you an offer to rent your space ${titleSpace}`;
             message.tenantHeader = `Your offer was sent to ${nameLender}, owner of the space ${titleSpace}, lets wait for his answer`;
             message.tenantBody = `You want to reserved The space ${titleSpace} from ${initialDate} to ${finalDate}`;
             colorBadge="warning"
             break;
+        case "rejected-element":
+            message.lenderHeader = `You recived an offer for the space ${titleSpace} from ${initialDate} to  ${finalDate}`;
+            message.lenderBody = `The user ${nameTenant} sent you an offer to rent your space ${titleSpace}`;
+            message.tenantHeader = `Your offer was sent to ${nameLender}, owner of the space ${titleSpace}, lets wait for his answer`;
+            message.tenantBody = `You want to reserved The space ${titleSpace} from ${initialDate} to ${finalDate}`;
+            colorBadge="warning"
     }
 
     return (
@@ -71,7 +77,8 @@
                             <Badge variant={colorBadge} className="ml-auto" >
                                 {status === "accept" && <Check2Square size = {25}/>}
                                 {status === "reject" && <XSquare size = {25}/>}
-                                {!status && <ExclamationSquare size = {25}/>}
+                                {status === "rejected-element" && <XSquare size = {25}/>}
+                                {status === "pending" && <ExclamationSquare size = {25}/>}
                             </Badge>
                         </Row>
                     </Card.Footer>

@@ -10,11 +10,11 @@ import {useHistory} from 'react-router-dom'
 import './notificationCenterView.css'
 
 
-export default function NotificationCenterView (props){
+export default function NotificationCenterView ({navbarId}){
     const [arrNotifications,setArrNotifications] = useState([])
     const [notification,setNotification]= useState({})    
     const [calPrice,setCalPrice] = useState("")
-    const [selected,setSelected] = useState(props.navbarId || "")
+    const [selected,setSelected] = useState(navbarId || "")
     const history = useHistory()
     const [render,setRender] = useState(false)
      
