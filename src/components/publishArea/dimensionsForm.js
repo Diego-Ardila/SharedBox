@@ -54,7 +54,7 @@ export default function BasicSpaceInfo (){
         handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setValues
         }) => (  
             <>            
-            <Container>    
+            <Container data-testid="dimensions-form">    
                 <Row className="justify-content-center">
                     <h1>Register Dimensions</h1>         
                 </Row>
