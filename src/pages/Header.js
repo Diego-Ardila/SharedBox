@@ -1,5 +1,5 @@
-import React from 'react';
-import { Navbar, Nav, Image, NavDropdown, Badge, Dropdown} from 'react-bootstrap';
+import React, {useState} from 'react';
+import { Navbar, Nav, Image, NavDropdown, Badge} from 'react-bootstrap';
 import NotificationsNavbar from '../components/notification/notificationsNavbar'
 import { BellFill} from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { changeRendering, changeSpecificSearch } from '../actions/searchForm.act
 import "./Header.css"
 
 const Header = () => {
+  const [expanded, setExpanded] = useState(false)
   const isLogged = useSelector(state => state.loginUserReducer.isLogged) 
   const typeUser = useSelector(state => state.loginUserReducer.typeUser)
   const userName = useSelector(state => state.loginUserReducer.userName)
@@ -20,15 +21,16 @@ const Header = () => {
     dispatch(changeRendering())
     dispatch(changeSpecificSearch())
   }  
-
-  
-
-  return (
-    <Navbar collapseOnSelect bg="primary" expand="lg">      
+  const handleClick = () => {
+    document.body.click()
+    setExpanded(false)
+  }
+  return (    
+    <Navbar collapseOnSelect bg="primary" expand="lg" >      
       <NavLink to="/home" onClick={()=>homecoming()}><img src={Logo} alt="logo" width={100}/></NavLink>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">      
-        <Nav className="ml-auto"> 
+      <Navbar.Collapse  id="responsive-navbar-nav">      
+        <Nav className="ml-auto" > 
           { isLogged ? 
             <>      
               <NavLink to="/user/profile" className="nav-link"><Badge pill variant="dark">
@@ -36,9 +38,9 @@ const Header = () => {
               </Badge>
               </NavLink>  
               {typeUser === "lender" ? <NavLink to="/lender/createSpace" className="nav-link mr-4">Create Space</NavLink> : null }
-              <NavDropdown alignRight id="collasible-nav-dropdown" className="mr-4" title={<><BellFill size={25} /><Badge variant="light">{notifications.length}</Badge></>}>           
-                <NotificationsNavbar notifications={notifications} />                
-              </NavDropdown> 
+              <NavDropdown open={expanded} alignRight onClick={() => setExpanded(true)} onBlur={()=>setExpanded(true)} id="collasible-nav-dropdown" className="mr-4" title={<><BellFill size={25} /><Badge variant="light">{notifications.length}</Badge></>}>         
+                <NotificationsNavbar notifications={notifications} onClick={handleClick} />                        
+              </NavDropdown>         
               <Image src={userPhoto} width={50} height={50} roundedCircle fluid thumbnail />            
               <NavDropdown id="collasible-nav-dropdown" title={userName}>           
                 <NavLink to="/user/profile" className="nav-link">Profile</NavLink>   
