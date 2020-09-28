@@ -21,12 +21,15 @@ const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();  
   const locationQuery = useLocation();
+  const locationParsed = queryString.parse(locationQuery.search)
   const spaces = useSelector(state => state.viewSpacesReducer.spaces);
   const search = useSelector(state => state.searchFormReducer);
   const {title, area, location, initialDate, finalDate, height, width, length, tags, pricePerDay, pricePerMonth, specificSearch, rendering} = search; 
   let [active, setActive] = useState(1)
   let [items, setItems] = useState([])
   let [limit,setLimit] = useState(10)
+  let [total,setTotal] = useState()
+  let [message,setMessage] = useState("")
   
   useEffect(()=>{
     async function getspaces () {
@@ -34,6 +37,22 @@ const Home = () => {
         const response = await getFilterSpacesHome(locationQuery.search)
         dispatch(changeSpaces(response.data || []))
         const maxPages = response.headers["content-pages"]
+        const totalItems = response.headers["content-total"]
+        setTotal(totalItems)
+        let renderTotal = total ? total : totalItems
+        let renderLimit = locationParsed.limit ? locationParsed.limit : limit
+        let prevActive= parseInt(active)-1
+        let firstElement = parseInt(renderLimit*prevActive)
+        if(active == 1 && maxPages > 1){
+          setMessage(`${active} to ${renderLimit*active} out of ${renderTotal}`)
+        }else if(active == maxPages && active != 1){
+          setMessage(`${firstElement + 1} to ${renderTotal % renderLimit == 0 ? renderLimit*active : renderTotal % renderLimit + firstElement} out of ${renderTotal}`)
+        }else if(maxPages == 1){
+          setMessage(`${firstElement + 1} to ${renderTotal % renderLimit == 0 ? renderLimit : renderTotal % renderLimit} out of ${renderTotal}`)
+        }else {
+          setMessage(`${firstElement + 1} to ${renderLimit*active} out of ${renderTotal}`)
+        }
+  
         let newItems = []
         for(let i = 1; i <= maxPages; i++){
           newItems.push(
@@ -44,6 +63,7 @@ const Home = () => {
               <DropdownButton 
               drop= "up"
               title="items per page" 
+              size='sm'
               >
                 <Dropdown.Item eventKey={5} onSelect= {handleLimit}>5</Dropdown.Item>
                 <Dropdown.Item eventKey={10} onSelect={handleLimit}>10</Dropdown.Item>
@@ -66,12 +86,12 @@ const Home = () => {
       }
     }
     getspaces()
-  },[rendering,limit])
+  },[rendering])
 
   const handleLimit = (newLimit) => {
     setLimit(newLimit)
     setActive(1)
-    let qs = queryString.parse(locationQuery.search)
+    let qs = locationParsed
       qs.page = 1
       qs.limit = newLimit
       queryStr = queryString.stringify(qs)
@@ -82,7 +102,7 @@ const Home = () => {
   const handlePage = (page) => {
     return () => {
       setActive(page)
-      let qs = queryString.parse(locationQuery.search)
+      let qs = locationParsed
       qs.page = page
       qs.limit = limit
       queryStr = queryString.stringify(qs)
@@ -121,8 +141,15 @@ const Home = () => {
       <SearchForm showButton={search.specificSearch} onSubmit={handleSubmit} />
         {search.specificSearch && <SearchAdvancedForms onSubmit={handleSubmit} />}
         <h3>Best Rated Locations</h3>
+      <div>
+        <p>{message}</p>
+        <Pagination size='sm' className="justify-content-center mb-3 mt-3">{items}</Pagination>
+      </div>
       <Spaces spaces={spaces} infoFunction={infoFunction} />
-      <Pagination className="mb-3">{items}</Pagination>
+      <div>
+        <p>{message}</p>
+        <Pagination size='sm' className="justify-content-center mb-3">{items}</Pagination>
+      </div>
       <div className='mb-5'><br/></div>
     </Container>
   );
