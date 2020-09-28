@@ -3,10 +3,10 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import {Question} from 'react-bootstrap-icons'
 import {Col, Button, Container, Form, Card, Row, Popover, OverlayTrigger} from "react-bootstrap"
+import './incomingReservation.css'
 
 export default function InvetoryUpdateForm({handleUpdateElement,element}){
       
-    
     const validatorForm = Yup.object().shape({
         object : Yup.string().required("Required Field"),
         description : Yup.string().max(200,"maximum 200 characters").required("Required Field"),
@@ -17,10 +17,14 @@ export default function InvetoryUpdateForm({handleUpdateElement,element}){
 
 return(  
     <Container> 
-        <Formik initialValues={{id:element._id, object : element.object ,description : element.description, quantity : element.quantity ,category : element.category, value:element.value}} onSubmit={handleUpdateElement} validationSchema={validatorForm} enableReinitialize={true}>
+        <Formik 
+            initialValues={{id:element._id, object : element.object ,description : element.description, quantity : element.quantity ,category : element.category, value:element.value}} 
+            onSubmit={handleUpdateElement} 
+            validationSchema={validatorForm} 
+            enableReinitialize={true}>
             {({handleSubmit,handleChange,values,errors,touched,})=>(
-                <Form onSubmit={handleSubmit} >
-                    <Card className = "justify-content-center p-3">
+                <Form onSubmit={handleSubmit}  >
+                    <Card className = "formInventoryUpdate justify-content-center p-3">
                         <Form.Row  className="justify-content-center">
                             <Col >
                                 <Form.Group>

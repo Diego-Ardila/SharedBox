@@ -21,8 +21,7 @@ export default function IncomingReservations (){
             const notifications = await getNotificationUser()
             const notificationsPay = notifications.data.filter(notification=>notification.status==="accept")
             setnotifications(notificationsPay)
-            setloading(false)
-            
+            setloading(false)            
         }
         getSpace()
     },[renderizer])
@@ -39,15 +38,18 @@ export default function IncomingReservations (){
             }
         }
     }
+    const onHide =()=>{
+        setShowUpdateModal(false)
+    }
     
     return(
         <Container className="container-fluid pb-3 mb-5">
             {loading?<h1>loading</h1>:(
                 notifications.map(notification=>(
-                    <Space key={notification._id} space={notification.inventoryId.spaceId} infoFunction={infoFunction} notifi={notification}/>                   
+                    <Space id={notification.inventoryId.spaceId._id} key={notification.inventoryId.spaceId._id} space={notification.inventoryId.spaceId} infoFunction={infoFunction} notifi={notification}/>                   
                 ))
             )}
-            <InventoryUpdateModal showModal={showUpdateModal} onHide={()=>setShowUpdateModal(false)} inventoryId={inventoryId} change={changeRenderize}/>
+            <InventoryUpdateModal showModal={showUpdateModal} onHide={onHide} inventoryId={inventoryId} change={changeRenderize}/>
         </Container>
     )
 
