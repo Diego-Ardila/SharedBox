@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Col, Row, Image, Card, Button, Container} from 'react-bootstrap'
 import {getNotificationUser, updateNotification} from '../../utils/HTTPrequests'
 import Logo from "../../logo.svg";
@@ -66,8 +66,7 @@ export default function NotificationCenterView ({navbarId}){
                                     selected={selected} 
                                     key={notifi._id}  
                                     notification={notifi} 
-                                    setValuesCard={setValuesCard}
-                                    
+                                    setValuesCard={setValuesCard}                                    
                                 />
                     ))}                                
                 </Col>

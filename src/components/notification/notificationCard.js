@@ -58,8 +58,7 @@
         <React.Fragment>
             {notification.status === "reject" && typeUser==="lender"  ? null :
                 <Card   id={notification._id} 
-                        key={notification._id}
-                         
+                        key={notification._id}                         
                         onClick={(e)=>{setValuesCard(e,notification)}} 
                         className="m-4 notificationCard" 
                         border="primary" 
