@@ -47,10 +47,10 @@
             colorBadge="warning"
             break;
         case "rejected-element":
-            message.lenderHeader = `You recived an offer for the space ${titleSpace} from ${initialDate} to  ${finalDate}`;
-            message.lenderBody = `The user ${nameTenant} sent you an offer to rent your space ${titleSpace}`;
-            message.tenantHeader = `Your offer was sent to ${nameLender}, owner of the space ${titleSpace}, lets wait for his answer`;
-            message.tenantBody = `You want to reserved The space ${titleSpace} from ${initialDate} to ${finalDate}`;
+            message.lenderHeader = `You sended inconsistencies between objects received for the space ${titleSpace}`;
+            message.lenderBody = `The user ${nameTenant} received inconsistencies that you identified for your space ${titleSpace}, please wait for the  answer `;
+            message.tenantHeader = `the user ${nameLender} has pointed out that there is an inconsistancy between what you said you would bring to the space ${titleSpace} and what he/she recieved.`;
+            message.tenantBody = `Don´t worry! just check your inventory and clarify any misleading information. This is necesary to garantee that we can cover all your products just in case something were to happen.`;
             colorBadge="warning"
     }
 

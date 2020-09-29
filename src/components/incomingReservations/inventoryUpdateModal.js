@@ -4,6 +4,7 @@ import { updateElements, getElementsByInventoryId } from '../../utils/HTTPreques
 import InvetoryUpdateForm from './inventoryUpdateForm'
 import InventoryUpdateRendericer from './inventoryUpdateRendericer'
 import './incomingReservation.css'
+import swal from 'sweetalert'
 
 
 
@@ -11,22 +12,35 @@ export default function InventoryUpdateModal({showModal,onHide,inventoryId,chang
     const [element,setElement] = useState({})
     const [elements,setElements] = useState([])
     const [selected,setSelected] = useState("")
+    const [elementRejected,setElementRejected] = useState(false)
    
     useEffect(()=>{        
         if(inventoryId && showModal){
             const newElements = async()=>{
-            const elemes = await getElementsByInventoryId(inventoryId)
-            setElements(elemes)
+                try{
+                   const elemes = await getElementsByInventoryId(inventoryId)
+                    setElements(elemes) 
+                }catch(err){
+                    swal ("get elements Failed", "Failed connection to dataServer, check your connection to the internet and try again later", "error") 
+                }            
+            }
+        newElements()
         }
-        newElements()}
     },[showModal,element])    
     
-    const handleUpdateElement = (values)=>{
-        const {id,...rest}=values
-        updateElements(id,rest)
-        change()
-        setElement({})
-        setSelected("")        
+    const handleUpdateElement =  async (values)=>{
+        try {
+            const {id,...rest}=values
+            const data = {...rest,status:"updated",comment:"",errorCategory:"select"}
+            await updateElements(id,data)
+            change()
+            setElement({})
+            setSelected("")
+            setElementRejected(false)
+            console.log(elementRejected)
+        }catch(err){
+            swal ("update Failed", "Failed connection to dataServer, check your connection to the internet and try again later", "error") 
+        }        
     }    
 
     const handleSelectElement = (event,element) => {
@@ -41,19 +55,26 @@ export default function InventoryUpdateModal({showModal,onHide,inventoryId,chang
         setSelected("")
     }
 
+    const showMenssageReject =()=>{
+        setElementRejected(true)
+    }
+
+    
+
     return(
         <Modal className="modalUpdateInventory" show={showModal} onHide = {()=>handleCloseModal()} size="xl">
             <Modal.Header closeButton={true} >
                 <Modal.Title>update what are you going to store</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+            {elementRejected && <p>please update the Object</p>}
                 <Row>
                     <Col className="col-lg-5">
-                        <InventoryUpdateRendericer elements={elements} handleSelect={handleSelectElement} selected={selected}/>
+                        <InventoryUpdateRendericer elements={elements} handleSelect={handleSelectElement} selected={selected} showMenssageReject={showMenssageReject}/>
                     </Col>
                     {Object.keys(element).length===0?null:
                     <Col className="col-lg-6">
-                        <InvetoryUpdateForm handleUpdateElement={handleUpdateElement} element={element}/>
+                        <InvetoryUpdateForm handleUpdateElement={handleUpdateElement} element={element} />
                     </Col>
                     }
                 </Row>

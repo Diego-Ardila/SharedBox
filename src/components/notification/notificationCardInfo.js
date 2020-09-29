@@ -40,8 +40,8 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
             message.tenantHeader = `the space ${titleSpace} recived your reservation offer for dates ${initialDate} to ${finalDate}`;
             break;
         case "rejected-element":
-            message.lenderHeader = `You recived an offer for the space ${titleSpace} on the dates ${initialDate} to  ${finalDate}`;
-            message.tenantHeader = `the space ${titleSpace} recived your reservation offer for dates ${initialDate} to ${finalDate}`;
+            message.lenderHeader = `You sended inconsistencies between objects received for the space ${titleSpace},the tenant ${nameTenant} should update to objects`;
+            message.tenantHeader = `the user ${nameLender} has pointed out that there is an inconsistancy between what you said you would bring to the space`;
             break;
     }
 

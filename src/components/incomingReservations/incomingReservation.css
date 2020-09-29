@@ -5,6 +5,9 @@
     transform: translate(-2%, -3%);
     box-shadow: 9px 9px 14px 1px rgba(89,86,89,0.82); 
 }
+.alertToast.toast{
+    background-color: rgb(248, 184, 66) ;   
+}
 .toastupdate:hover{    
     transform: translate(-2%, -3%);
     box-shadow: 9px 9px 14px 1px rgba(89,86,89,0.82);

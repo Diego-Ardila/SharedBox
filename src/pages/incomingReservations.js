@@ -3,6 +3,7 @@ import {  Container } from 'react-bootstrap'
 import {  getNotificationUser } from '../utils/HTTPrequests'
 import Space from "../components/viewSpaces/Space"
 import InventoryUpdateModal from '../components/incomingReservations/inventoryUpdateModal'
+import swal from 'sweetalert'
 
 
 
@@ -18,10 +19,16 @@ export default function IncomingReservations (props){
     
     useEffect(()=>{
         const getSpace = async()=>{
-            const notifications = await getNotificationUser()
-            const notificationsPay = notifications.data.filter(notification=>notification.status==="rejected-element")
-            setnotifications(notificationsPay)                    
-            setloading(false)                      
+            try{
+                const notifications = await getNotificationUser()
+                const notificationsPay = notifications.data.filter(notification=>notification.status==="rejected-element")
+                setnotifications(notificationsPay)                    
+                setloading(false)
+            }
+            catch(err){
+                swal ("get notifications Failed", "Failed connection to dataServer, check your connection to the internet and try again later", "error") 
+            }
+                                  
         }
         getSpace()
         if (props.location.externalinventory){
