@@ -1,0 +1,112 @@
+.elementCard{
+    .elementCard-objectTitle{
+        grid-area: ot;
+    }
+    .elementCard-obectContent{
+        grid-area: oc;
+    }
+    .elementCard-descriptionTitle{
+        grid-area: dt;
+    }
+    .elementCard-descriptionContent{
+        grid-area: dc;
+    }
+    .elementCard-checkbox{
+        grid-area: ch;
+    }
+    .elementCard-quantityTitle{
+        grid-area: qt;
+        justify-self: center;
+    }
+    .elementCard-quantityContent{
+        grid-area: qc;
+        justify-self: center;
+    }
+    .elementCard-valueTitle{
+        grid-area: vt;
+        justify-self: center;
+    }
+    .elementCard-valueContent{
+        grid-area: vc;
+        justify-self: center;
+    }
+    .elementCard-comment{
+        grid-area: cc;
+        width: 100%;
+        input{
+            margin-top: 5px;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid black;
+            text-align: center;
+            outline: none;
+            box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.15);
+        }
+    }
+    .elementCard-submitButton{
+        grid-area: sb;
+        width: 100%;
+        border-radius: 5px;
+        border:none;
+        background-color: #318FB5;
+        color: white;
+        transition: all .2s;
+        outline: none;
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15) ;
+        }
+        &:active {
+            transform: translateY(-2px);
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15) ;
+        }
+    }
+    .elementCard-commentSelect {
+        grid-area: ca;
+        width: 100%;
+        outline: none;
+        border:none;
+        text-align: center;
+        animation: appear .3s ease-in-out;
+    }
+
+    .hidden {
+        animation: disappear .3s ease-in-out;
+        transform: scale(1 , 0);
+    }
+    
+    p{
+        margin: 0;
+    }
+}
+
+.elementForm{
+    transition: all .5s ease-in-out;
+}
+
+.cardHidden{
+    display: none;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: scale(1 , 0);
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1 , 1);
+    }
+}
+
+@keyframes disappear {
+    0% {
+        opacity: 1;
+        transform: scale(1 , 1);
+    }
+    100%{
+        opacity: 0;
+        display:none;
+        transform: scale(1 , 0);
+    }
+}
