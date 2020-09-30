@@ -3,7 +3,7 @@ import axios from "axios"
 export const userRegister = async (typeUser,values)=>{
     try{
         const response = await axios ({
-            baseURL: "http://127.0.0.1:4000/",
+            baseURL: process.env.REACT_APP_SERVER_URL,
             url: typeUser,
             method: "POST",
             data: values,
@@ -19,7 +19,7 @@ export const postUserPhotosFiles = async (typeUser,data) => {
     try {
         const response = await axios({
             method: "POST",
-            url:`http://127.0.0.1:4000/${typeUser}/photos`,
+            url:`${process.env.REACT_APP_SERVER_URL}/${typeUser}/photos`,
             data,
             headers:{
                 'Content-Type': 'multipart/form-data'
@@ -36,7 +36,8 @@ export const loginUser = async(values,typeUser) => {
     try{
         const response = await axios({
             method:"POST",
-            url: `http://127.0.0.1:4000/${typeUser}/login`,
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url: `/${typeUser}/login`,
             data:values
         })
         return response.data
@@ -51,7 +52,7 @@ export const getDataUser = async (typeUser)=>{
     try{
         const dataUser = await axios({
             method:"GET",
-            baseURL: "http://127.0.0.1:4000/",
+            baseURL: process.env.REACT_APP_SERVER_URL,
             url: typeUser,
             headers:{
                 Authorization: 'Bearer '+ localStorage.getItem('token'),
@@ -69,7 +70,7 @@ export const updateDatauser = async (typeUser,values) => {
     try{
         const updateData = await axios({
             method:'PUT',
-            baseURL:"http://127.0.0.1:4000/",
+            baseURL:process.env.REACT_APP_SERVER_URL,
             url: typeUser,
             headers:{
                 Authorization: "Bearer " + localStorage.getItem('token'),
@@ -88,7 +89,8 @@ export const getSuggestions = async () => {
     try{
         const tags = await axios({
             method: "GET",
-            url: "http://127.0.0.1:4000/spaceTags/all"
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url: "/spaceTags/all"
         })
         return tags.data
     }catch(error){
@@ -102,7 +104,8 @@ export const postSpace=async (state)=>{
     try{
         const respose = await axios({
             method:"POST",
-            url:"http://127.0.0.1:4000/space",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url:"/space",
             headers:{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
@@ -120,7 +123,8 @@ export const updateSpaceTag = async (spaceId, name) => {
     try{
         const response = await axios({
             method:"PUT",
-            url:"http://127.0.0.1:4000/spaceTags",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url:"/spaceTags",
             headers:{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
@@ -139,7 +143,8 @@ export const postTag = async (spaceId, name)=>{
     try {
         const respose = await axios({
             method:"POST",
-            url:"http://127.0.0.1:4000/spaceTags",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url:"/spaceTags",
             headers:{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
@@ -159,7 +164,8 @@ export const getUserSpaces = async () => {
     try{
         const response = await axios({
             method: "GET",
-            url: "http://127.0.0.1:4000/space",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url: "/space",
             headers:{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
@@ -175,7 +181,8 @@ export const postScore = async(values) => {
     try{
         const response = await axios({
             method:"POST",
-            url:"http://127.0.0.1:4000/score",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url:"/score",
             headers:{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
@@ -194,7 +201,8 @@ export const postComment = async(values) => {
     try{
         const response = await axios({
             method:"POST",
-            url:"http://127.0.0.1:4000/score",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url:"/score",
             headers:{
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
@@ -212,7 +220,8 @@ export const postPhotosFiles = async (data) => {
     try {
         const response = await axios({
             method: "POST",
-            url:"http://127.0.0.1:4000/space/photos",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url:"/space/photos",
             data,
             headers:{
                 'Content-Type': 'multipart/form-data'
@@ -229,7 +238,7 @@ export const updateSpace = async (spaceId, values) =>{
     try{
         const response = await axios ({
             method: "PUT",
-            baseURL: "http://127.0.0.1:4000/",
+            baseURL: process.env.REACT_APP_SERVER_URL,
             url:"/space",
             data:{
                 spaceId,
@@ -249,7 +258,8 @@ export const deletePhoto = async (photo, spaceId) => {
     try {
         const response = await axios({
             method: "DELETE",
-            url: "http://127.0.0.1:4000/space/photos",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url: "/space/photos",
             data: {
                 photo,
                 spaceId
@@ -266,7 +276,7 @@ export const getFilterSpaces = async (queryString) => {
     try {
         const response = await axios({
             method: "GET",
-            baseURL:`http://localhost:4000/space/tenant`,
+            baseURL:`${process.env.REACT_APP_SERVER_URL}/space/tenant`,
             url: queryString
           })
           return response.data
@@ -280,7 +290,8 @@ export const postFAQs = async (newFAQs) => {
     try{
         const response = await axios({
             method: "POST",
-            url: "http://127.0.0.1:4000/queAns",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url: "/queAns",
             data: newFAQs
         })
         return response.data
@@ -294,7 +305,8 @@ export const deleteTenant = async(tenantId, typeUser) => {
     try{
         const response = await axios({
             method: "DELETE",
-            url: "http://127.0.0.1:4000/tenant",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url: "/tenant",
             headers:{
                 Authorization: "Bearer " + localStorage.getItem('token'),
                 'x-UserType' : user
@@ -379,7 +391,8 @@ export const createElements = async(elements,spaceId) => {
     try{
         const response = await axios({
             method: "POST",
-            url: "http://127.0.0.1:4000/element",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url: "/element",
             headers:{
                 Authorization: "Bearer " + localStorage.getItem('token'),
                 'x-UserType' : localStorage.getItem('typeUser')
@@ -399,7 +412,8 @@ export const createNotification = async(inventoryId,tenantId,lenderId,datesReser
     try{
         const response = await axios({
             method: "POST",
-            url: "http://127.0.0.1:4000/notification",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url: "/notification",
             headers:{
                 Authorization: "Bearer " + localStorage.getItem('token'),
                 'x-UserType' : localStorage.getItem('typeUser')
@@ -421,7 +435,8 @@ export const createDates = async(finalDate,initialDate,spaceId,tenantId) => {
     try{
         const response = await axios({
             method: "POST",
-            url: "http://127.0.0.1:4000/dates",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url: "/dates",
             headers:{
                 Authorization: "Bearer " + localStorage.getItem('token'),
                 'x-UserType' : localStorage.getItem('typeUser')
@@ -443,7 +458,8 @@ export const getNotificationNumber = async()=>{
     try{
         const response = await axios({
             method:"GET",
-            url:"http://127.0.0.1:4000/notification/number",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url:"/notification/number",
             headers:{
                 Authorization: 'Bearer '+ localStorage.getItem('token'),
                 "x-UserType": localStorage.getItem('typeUser')                        
@@ -460,7 +476,8 @@ export const getNotificationUser = async()=>{
     try{
         const response = await axios({
             method:"GET",
-            url:"http://127.0.0.1:4000/notification",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url:"/notification",
             headers:{
                 Authorization: 'Bearer '+ localStorage.getItem('token'),
                 "x-UserType":user                        
@@ -477,7 +494,8 @@ export const updateNotification = async(status,notification)=>{
     try{
         const response = await axios({
             method:"PUT",
-            url:"http://127.0.0.1:4000/notification",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url:"/notification",
             headers:{
                 Authorization: 'Bearer '+ localStorage.getItem('token'),
                 "x-UserType":user                        
