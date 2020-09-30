@@ -8,11 +8,7 @@ class Profile extends Component{
     render(){
         return(
             <Container>
-                {localStorage.getItem("typeUser") === "lender" ?
-                <Container className="p-2 text-center ">
-                    <Button onClick ={this.handleCreateButton} variant="primary">Create a new space</Button>                 
-                </Container>:null}             
-                <ProfileForm />
+                <ProfileForm/>
             </Container>
         )
     }
