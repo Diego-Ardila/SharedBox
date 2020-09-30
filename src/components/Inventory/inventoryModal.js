@@ -40,26 +40,32 @@ export default function ModalInventory(props){
     }
 
     const handleToAxios = async (finalDate,initialDate,elements,spaceId,lenderId) => {
-        try{
-            const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
-            const newinitialDate = moment(initialDate).format("YYYY-MM-DD")
-            const {inventoryId,tenantId} = await createElements(elements,spaceId)
-            const date = await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
-            await createNotification(inventoryId,tenantId,lenderId,date._id)
-            const isSubscribed = await onClickIsUserSubscribed()
-            if (isSubscribed) {
-                const payload = {
-                    title: "Reservation Created",
-                    text: "Your request for reservation was sent to the lender. Let's wait for his answer!!",
-                    image: "/images/jason-leung-HM6TMmevbZQ-unsplash.jpg",
-                    tag: "new-reservation",
-                    url: "http://localhost:3000/notification"
+        if (elements.length !== 0){
+            try{
+                const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
+                const newinitialDate = moment(initialDate).format("YYYY-MM-DD")
+                const {inventoryId,tenantId} = await createElements(elements,spaceId)
+                const date = await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
+                await createNotification(inventoryId,tenantId,lenderId,date._id)
+                const isSubscribed = await onClickIsUserSubscribed()
+                if (isSubscribed) {
+                    const payload = {
+                        title: "Reservation Created",
+                        text: "Your request for reservation was sent to the lender. Let's wait for his answer!!",
+                        image: "/images/jason-leung-HM6TMmevbZQ-unsplash.jpg",
+                        tag: "new-reservation",
+                        url: "http://localhost:3000/notification"
+                    }
+                    await onClickSendNotification(payload)
                 }
-                await onClickSendNotification(payload)
-            }              
-            swal("reservation request sent","your reservation request was sent succesfully","success")
-        }catch(err){
-            swal("reservation request error", "something went wrong, please try again", "error")
+                props.onHide()              
+                swal("reservation request sent","your reservation request was sent succesfully","success")
+                
+            }catch(err){
+                swal("reservation error", "something went wrong, please try again", "error")
+            }
+        }else{
+            swal("reservation request error", "to reserve this space, you need to have elements added to the inventory", "error")
         }
         
     }
@@ -240,7 +246,7 @@ return(
             </Container>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={()=>{handleToAxios(finalDate,initialDate,elements,spaceId,lenderId); props.onHide()}}>save</Button>
+            <Button onClick={()=>{handleToAxios(finalDate,initialDate,elements,spaceId,lenderId)}}>save</Button>
         </Modal.Footer>
     </Modal>
 )

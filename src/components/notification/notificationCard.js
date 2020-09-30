@@ -86,6 +86,7 @@
                                 {status === "paid" && <Check2Square size = {25}/>}
                                 {status === "reject" && <XSquare size = {25}/>}
                                 {status === "rejected-element" && <XSquare size = {25}/>}
+                                {status === "updated-element" && <ExclamationSquare size = {25}/>}
                                 {status === "pending" && <ExclamationSquare size = {25}/>}
                             </Badge>
                         </Row>
