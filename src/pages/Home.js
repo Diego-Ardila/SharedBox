@@ -55,14 +55,14 @@ const Home = () => {
       queryStr= queryString.stringify(qs)
       history.push("/home?"+queryStr)
       dispatch(changeRendering())
-  }  
+  }
 
   const infoFunction = (spaceId) => {
     return ()  => window.open(`/space?_id=${spaceId}&startDate=${initialDate}&endDate=${finalDate}`)
   }
 
   return (
-    <Container>
+    <Container className="mb-5">
       <SearchForm showButton={search.specificSearch} onSubmit={handleSubmit} />
         {search.specificSearch && <SearchAdvancedForms onSubmit={handleSubmit} />}
         <h3>Best Rated Locations</h3>

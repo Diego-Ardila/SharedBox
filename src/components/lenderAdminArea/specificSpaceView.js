@@ -16,6 +16,8 @@ import Calendar from "../viewSpaces/calendar";
 import PriceAdministrator from "./PriceAdministrator";
 import { useLocation } from "react-router-dom";
 import moment from "moment"
+import {getFilterSpaces} from '../../utils/HTTPrequests'
+import InventoryCheck from "./InventoryCheck";
 
 const RoundedBttn = styled.button`
     cursor: pointer;
@@ -36,16 +38,25 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   const [startDate, setStartDate] = useState(edit ? null : moment(locationQuery.search.slice(40,50),"YYYY-MM-DD"))
   const [endDate, setEndDate] = useState(edit ? null : moment(locationQuery.search.slice(59),"YYYY-MM-DD"))
   const [calendarIsOpen, setCalendarIsOpen] = useState(false)
-  const renderingSpace = spaces.find( space => space._id === spaceId)
+  const [renderingSpace, setRenderingSpace] = useState(spaces.find( space => space._id === spaceId))
     
   useEffect(()=>{
     dispatch(changePhotos(renderingSpace.photos))
     setLoading(false)
   },[])
+
+  useEffect(()=>{
+    setRenderingSpace(spaces.find( space => space._id === spaceId))
+  },[renderingSpace])
   
   const hideEditFAQ = () => {
     setEditFAQ(false)
   }
+
+  const createdFaq = async () => {  
+    let newSpace = await getFilterSpaces(`?_id=${spaceId}`)
+    setRenderingSpace(newSpace[0])
+  }  
   
   const closeCalendar = () => {
     setCalendarIsOpen(false)
@@ -79,8 +90,8 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
               <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
             </Col>
-            <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column justify-content-center">
-              <Container className={`text-center mt-2 ${edit? "sticky-top": ""}`}  onClick={(e) => openCalendar(e)} >
+            <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column text-center justify-content-center">
+              <Container className={`text-center mt-2`}  onClick={(e) => openCalendar(e)} >
                 <Calendar
                 space={renderingSpace} 
                 startDate={startDate}
@@ -90,7 +101,11 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
                 ></Calendar>
               </Container>
               {calendarIsOpen && <div style={{height:370}}></div>}
-              {edit ? null : (<PriceAdministrator
+              {edit ?
+              <InventoryCheck
+                space={renderingSpace}
+              ></InventoryCheck> : 
+               (<PriceAdministrator
                 space={renderingSpace} 
                 startDate={startDate}
                 endDate={endDate}
@@ -101,13 +116,14 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               </Row>
               <Row className="row justify-content-center p-3">
               <Col className="col-12 d-inline-flex flex-column">
-                  <FAQadministrator space={renderingSpace}></FAQadministrator>
+                {( renderingSpace.faqs.length > 0) ? <FAQadministrator space={renderingSpace}></FAQadministrator> : null }
+                  
                   {edit && <Button onClick = {() => setEditFAQ(true) }>add FAQ questions</Button>}
                 </Col>
               </Row>
               <Row>
                 <Col className="col-12 d-inline-flex flex-column justify-content-center">
-                  {editFAQ && <FrequentAskedQuestions setEditFAQ ={hideEditFAQ} spaceId ={spaceId}></FrequentAskedQuestions>}
+                  {editFAQ && <FrequentAskedQuestions setEditFAQ ={hideEditFAQ} spaceId ={spaceId} createdFaq={createdFaq}></FrequentAskedQuestions>}
                 </Col>
               </Row>
             </React.Fragment>

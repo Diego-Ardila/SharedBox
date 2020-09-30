@@ -7,9 +7,10 @@ import {Container,
     Col} from 'react-bootstrap';
 
 
-export default function FrequentAskedQuestions ({spaceId, setEditFAQ}) {
+export default function FrequentAskedQuestions ({spaceId, setEditFAQ, createdFaq}) {
 
     let [faqs , setFaqs] = useState([])
+    
 
     const handleNewFaq = (faq) => {
         let newFaq = {
@@ -33,7 +34,7 @@ export default function FrequentAskedQuestions ({spaceId, setEditFAQ}) {
             <Container className="FAQ">
                 <Form>
                  <Row>
-                    <Col lg={6} md={6} xl={6}>  <FormFaq className="mb-5" hideEditFAQ={ setEditFAQ } spaceId={ spaceId } faqs={faqs} handleNewFaq={handleNewFaq} /> </Col>
+                    <Col lg={6} md={6} xl={6}>  <FormFaq className="mb-5" hideEditFAQ={ setEditFAQ } spaceId={ spaceId } faqs={faqs} handleNewFaq={handleNewFaq} createdFaq={createdFaq} /> </Col>
                     <Col lg={6} md={6} xl={6}> <Rendericer faqs={faqs} deleteFaq= {deleteFaq} /> </Col>
                 </Row>
                 </Form>
