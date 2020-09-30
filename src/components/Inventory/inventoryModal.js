@@ -4,7 +4,7 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import InventoryRendericer from './inventoryRendericer'
 import {Question} from 'react-bootstrap-icons'
-import {createElements, createNotification, createDates} from '../../utils/HTTPrequests'
+import {createElements, createNotification, createDates, updateUserReservedSpaces} from '../../utils/HTTPrequests'
 import moment from "moment"
 import swal from 'sweetalert'
 import usePushNotifications from '../notifications/usePushNotifications'
@@ -44,7 +44,10 @@ export default function ModalInventory(props){
             const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
             const newinitialDate = moment(initialDate).format("YYYY-MM-DD")
             const {inventoryId,tenantId} = await createElements(elements,spaceId)
-            const date = await createDates(newfinalDate,newinitialDate,spaceId,tenantId)                      
+            const date = await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
+            const spaceObj = {}
+            spaceObj.reservedSpaces = spaceId
+            const id = await updateUserReservedSpaces(localStorage.getItem("typeUser"),spaceObj)
             await createNotification(inventoryId,tenantId,lenderId,date._id)
             const isSubscribed = await onClickIsUserSubscribed()
             if (isSubscribed) {
