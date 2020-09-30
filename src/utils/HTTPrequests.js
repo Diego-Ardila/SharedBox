@@ -317,6 +317,20 @@ export const getFilterSpaces = async (queryString) => {
     }
 } 
 
+export const getFilterSpacesHome = async (queryString) => {
+    try {
+        const response = await axios({
+            method: "GET",
+            baseURL:`http://localhost:4000/space/tenant`,
+            url: queryString
+          })
+          return response
+    }
+    catch(err){
+        throw err
+    }
+} 
+
 export const postFAQs = async (newFAQs) => {
     try{
         const response = await axios({
