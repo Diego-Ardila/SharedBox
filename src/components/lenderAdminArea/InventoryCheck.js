@@ -28,7 +28,7 @@ export default function InventoryCheck ({space}) {
         const getAcceptedNotifications = async () => {
             try{
                 const response = await getNotificationUser()
-                const acceptedNotifications = response.data.filter( notification => notification.status === "accept")
+                const acceptedNotifications = response.data.filter( notification => notification.status === "paid"||notification.status === "updated-element")
                 const acceptedNotificationsOfThisSpace = acceptedNotificationFromThisSpace(space, acceptedNotifications)
                 const render = shouldRenderNotificationBasedOnDate(today, acceptedNotificationsOfThisSpace)
                 setNotificationToRender(render)

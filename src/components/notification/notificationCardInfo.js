@@ -43,10 +43,14 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
             message.lenderHeader = `You sended inconsistencies between objects received for the space ${titleSpace},the tenant ${nameTenant} should update to objects`;
             message.tenantHeader = `the user ${nameLender} has pointed out that there is an inconsistancy between what you said you would bring to the space`;
             break;
+        case "updated-element":
+            message.lenderHeader = `The user ${nameTenant} updated to the inventory elements for your space ${titleSpace}, your should check the objects again`;
+            message.tenantHeader = `the user ${nameLender} has received the changes of the elements to validate that everything is fine`;
+            break;
     }
 
     return (
-        <Card className="m-2" bg="secondary" border="dark" text="white">
+        <Card className="m-2 pb-5" bg="secondary" border="dark" text="white">
             <Card.Header as="h5" className="text-center" > 
                 {typeUser==="lender"? message.lenderHeader : message.tenantHeader} 
             </Card.Header>
@@ -119,6 +123,7 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                     }
                     {typeUser==="tenant" && status==="reject" && <Button onClick={()=>history.push("/home")}>Search more Spaces</Button>}
                     {typeUser==="tenant" && status==="rejected-element" && <Button onClick={()=>history.push({pathname:"/tenant/reservations",externalinventory: notification.inventoryId._id})}>Go to update objects</Button>}
+                    {typeUser==="lender" && status==="updated-element" && <Button onClick={()=>history.push({pathname:"/lender/admin",externalSpaceId: notification.inventoryId.spaceId._id})}>check the changes</Button>}
             </Card.Footer>
         </Card>
     )

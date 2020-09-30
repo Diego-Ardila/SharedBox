@@ -52,6 +52,14 @@
             message.tenantHeader = `the user ${nameLender} has pointed out that there is an inconsistancy between what you said you would bring to the space ${titleSpace} and what he/she recieved.`;
             message.tenantBody = `Don´t worry! just check your inventory and clarify any misleading information. This is necesary to garantee that we can cover all your products just in case something were to happen.`;
             colorBadge="warning"
+            break;
+        case "updated-element":
+            message.lenderHeader = `the tenant ${nameTenant} updated to the elements of the inventory for the space ${titleSpace}`;
+            message.lenderBody = `The user ${nameTenant} updated the inventory elements for your space ${titleSpace}, please check to changes.`;
+            message.tenantHeader = `the user ${nameLender} has received the chages of the elements for the space ${titleSpace}, please wait for his answer.`;
+            message.tenantBody = `the user ${nameLender} has received the changes of the elements for the space ${titleSpace} and he is checking now there not inconsistency`;
+            colorBadge="warning"
+            break;
     }
 
     return (
@@ -75,6 +83,7 @@
                             <Card.Text className="ml-3">Click here for more info</Card.Text> 
                             <Badge variant={colorBadge} className="ml-auto" >
                                 {status === "accept" && <Check2Square size = {25}/>}
+                                {status === "paid" && <Check2Square size = {25}/>}
                                 {status === "reject" && <XSquare size = {25}/>}
                                 {status === "rejected-element" && <XSquare size = {25}/>}
                                 {status === "pending" && <ExclamationSquare size = {25}/>}

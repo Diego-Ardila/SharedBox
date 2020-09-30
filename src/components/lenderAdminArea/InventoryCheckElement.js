@@ -50,7 +50,7 @@ export default function InventoryCheckElement ({element}) {
 
     return (
         <Formik
-        initialValues={ {check:false, comment:"", category:"select"} }
+        initialValues={ {check:false, comment:"", errorCategory:"select"} }
         onSubmit={handleSubmit}
         >
         {({

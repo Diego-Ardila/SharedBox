@@ -58,9 +58,7 @@ export default function InventoryUpdateModal({showModal,onHide,inventoryId,chang
     const showMenssageReject =()=>{
         setElementRejected(true)
     }
-
     
-
     return(
         <Modal className="modalUpdateInventory" show={showModal} onHide = {()=>handleCloseModal()} size="xl">
             <Modal.Header closeButton={true} >

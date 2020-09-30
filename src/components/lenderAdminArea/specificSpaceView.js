@@ -29,6 +29,8 @@ const RoundedBttn = styled.button`
 
 export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit}){  
   
+  console.log("spaceId =",spaceId)
+  console.log("spaces = ",spaces)
   const locationQuery = useLocation()  
   const dispatch = useDispatch()
   const [showModal,setShowModal] = useState(false)
@@ -39,7 +41,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   const [endDate, setEndDate] = useState(edit ? null : moment(locationQuery.search.slice(59),"YYYY-MM-DD"))
   const [calendarIsOpen, setCalendarIsOpen] = useState(false)
   const [renderingSpace, setRenderingSpace] = useState(spaces.find( space => space._id === spaceId))
-    
+  
   useEffect(()=>{
     dispatch(changePhotos(renderingSpace.photos))
     setLoading(false)
