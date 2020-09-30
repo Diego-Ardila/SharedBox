@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button, Container, Card, Row } from 'react-bootstrap'
 import {useHistory} from 'react-router-dom'
+import SpecificSpaceView from '../lenderAdminArea/specificSpaceView';
 
 export default function AdminTenantView (){
     const history = useHistory()
@@ -9,7 +10,7 @@ export default function AdminTenantView (){
             <Card className="p-3">
                 <Row className="justify-content-center">
                     <Button className="col-lg-5 m-3 " onClick={()=>history.push("/user/profile")} >Personal Information</Button>
-                    <Button className="col-lg-5 m-3">History Transactions</Button>
+                    <Button className="col-lg-5 m-3" onClick={() => history.push("/tenant/spaces?state=current") }>History Transactions</Button>
                 </Row>
                 <Row className="justify-content-center">
                     <Button className="col-lg-5 m-3">Scores</Button>

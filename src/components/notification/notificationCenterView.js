@@ -47,7 +47,7 @@ export default function NotificationCenterView ({navbarId}){
     }
     
     return(
-        <Container className="notificationContainer col-lg-12" >
+        <Container className="notificationContainer col-lg-12 mb-5" >
             <Row>
                 <Col className="col-lg-5 d-flex flex-column ">
                     {arrNotifications.length === 0 ?
