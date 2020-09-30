@@ -1,12 +1,12 @@
 import React, { useState } from "react"
-import { Row, Col, Button, Container } from 'react-bootstrap';
+import { Row, Col, Button, Container, Badge } from 'react-bootstrap';
 import PhotosAdministrator from './PhotosAdministrator';
 import EditButton from "./EditButton";
 import GeneralInfoAdministrator from "./GeneralInfoAdministrator";
 import PhotosEditor from "./photosEditor"    
 import { ArrowLeftShort } from "react-bootstrap-icons"
 import styled from "styled-components"
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {changePhotos} from '../../actions/publishArea.actions'
 import { useEffect } from "react";
 import FAQadministrator from "./FAQadminstrator";
@@ -31,6 +31,8 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   
   const locationQuery = useLocation()  
   const dispatch = useDispatch()
+  const isLogged = useSelector(state => state.loginUserReducer.isLogged) 
+
   const [showModal,setShowModal] = useState(false)
   const [showModalInventory,setShowModalInventory] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -39,6 +41,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   const [endDate, setEndDate] = useState(edit ? null : moment(locationQuery.search.slice(59),"YYYY-MM-DD"))
   const [calendarIsOpen, setCalendarIsOpen] = useState(false)
   const [renderingSpace, setRenderingSpace] = useState(spaces.find( space => space._id === spaceId))
+  console.log(spaces)
     
   useEffect(()=>{
     dispatch(changePhotos(renderingSpace.photos))
@@ -47,7 +50,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
 
   useEffect(()=>{
     setRenderingSpace(spaces.find( space => space._id === spaceId))
-  },[renderingSpace])
+  },[spaces])
   
   const hideEditFAQ = () => {
     setEditFAQ(false)
@@ -72,7 +75,19 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
     if(e.target.id) setCalendarIsOpen(true)
   }
 
+  console.log(renderingSpace)
 
+  const reservedDates = isLogged ? <>
+    <h2> Your reservations:</h2>      
+      {renderingSpace.dateReservedId && renderingSpace.dateReservedId.length > 0 ? renderingSpace.dateReservedId.map(elem => <>    
+        <Row className="justify-content-center mb-2">
+          <h2><Badge variant="info">{moment(elem.initialDate).format("DD MMM YYYY")}</Badge></h2><h2>-</h2>
+          <h2><Badge variant="info">{moment(elem.finalDate).format("DD MMM YYYY")}</Badge></h2>
+        </Row>    
+      </>
+      ) 
+    : <h6>There are no reservations for this place</h6>}</> 
+  : null;
   return(
     <React.Fragment>
       {loading ? "loading" : (
@@ -92,6 +107,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
             </Col>
             <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column text-center justify-content-center">
               <Container className={`text-center mt-2`}  onClick={(e) => openCalendar(e)} >
+                {reservedDates}
                 <Calendar
                 space={renderingSpace} 
                 startDate={startDate}
@@ -113,7 +129,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               >
               </PriceAdministrator>)}
             </Col>
-              </Row>
+          </Row>
               <Row className="row justify-content-center p-3">
               <Col className="col-12 d-inline-flex flex-column">
                 {( renderingSpace.faqs.length > 0) ? <FAQadministrator space={renderingSpace}></FAQadministrator> : null }

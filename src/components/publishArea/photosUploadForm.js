@@ -65,7 +65,7 @@ export default function PhotosUploadForm () {
                                 files={values.files}
                                 onupdatefiles={fileItems => setFieldValue("files", fileItems)}
                                 allowMultiple={true}
-                                maxFiles={3}
+                                maxFiles={5}
                                 name="files"
                                 labelIdle='Drag & Drop your files or Browse'
                             />
