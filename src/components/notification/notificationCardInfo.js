@@ -47,7 +47,7 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                 {typeUser==="lender"? message.lenderHeader : message.tenantHeader} 
             </Card.Header>
             <Card.Body >
-                {typeUser==="tenant" && !status && <Card.Text>we will contact you as soon as we get a response thank you</Card.Text>}
+                {typeUser==="tenant" && status === "pending" && <Card.Text>we will contact you as soon as we get a response thank you</Card.Text>}
                 <Row> 
                     <Col>
                         <Card.Title> For : {typeUser==="lender" ? nameTenant : nameLender} </Card.Title>
@@ -87,7 +87,7 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
             </Card.Body>
             <Card.Footer className="text-right">
                 {typeUser==="lender"
-                    ? !status &&
+                    ? status === "pending" &&
                         <div>
                             <Button onClick={
                                         e=>handleSubmit("reject",notification)
@@ -110,7 +110,8 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                             inDate={initialDate}
                             finDate={finalDate}
                             tenantId={idTenant}
-                            spaceId={spaceId}/>                                               
+                            spaceId={spaceId}
+                            notification={notification}/>                                               
                         }
                         {typeUser==="tenant"&&status==="reject"&&<Button onClick={()=>history.push("/home")}>Search more Spaces</Button>}
             </Card.Footer>
