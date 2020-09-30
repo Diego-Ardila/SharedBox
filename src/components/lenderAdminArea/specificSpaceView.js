@@ -41,7 +41,6 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   const [endDate, setEndDate] = useState(edit ? null : moment(locationQuery.search.slice(59),"YYYY-MM-DD"))
   const [calendarIsOpen, setCalendarIsOpen] = useState(false)
   const [renderingSpace, setRenderingSpace] = useState(spaces.find( space => space._id === spaceId))
-  console.log(spaces)
     
   useEffect(()=>{
     dispatch(changePhotos(renderingSpace.photos))
@@ -74,8 +73,6 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   const openCalendar = (e) =>{
     if(e.target.id) setCalendarIsOpen(true)
   }
-
-  console.log(renderingSpace)
 
   const reservedDates = isLogged ? <>
     <h2> Your reservations:</h2>      

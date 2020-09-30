@@ -31,10 +31,6 @@ const TenantSpaces = () => {
 
   useEffect(() => {
     fetchSpacesData()
-  },[]) 
-
-  useEffect(() => {
-    fetchSpacesData()
   },[moreInfoDisplay,key]) 
 
   return (

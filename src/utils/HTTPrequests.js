@@ -89,7 +89,7 @@ export const updateUserReservedSpaces = async (typeUser,values) => {
     try{
         const updateData = await axios({
             method:'PUT',
-            baseURL:"http://127.0.0.1:4000/",
+            baseURL:process.env.REACT_APP_SERVER_URL,
             url: `${typeUser}/reservedSpaces`,
             headers:{
                 Authorization: "Bearer " + localStorage.getItem('token'),
@@ -191,18 +191,16 @@ export const getUserSpaces = async () => {
 }
 
 export const getTenantRegisteredSpaces = async (queryString) => {
-    console.log(queryString)
     try {
         const response = await axios({
             method: "GET",
-            baseURL:`http://localhost:4000/space/tenantRegistered`,
+            baseURL:`${process.env.REACT_APP_SERVER_URL}/space/tenantRegistered`,
             url: queryString,
             headers:{
                 Authorization: "Bearer "+localStorage.getItem('token'),
                 'x-UserType' : localStorage.getItem('typeUser')
             },
           })
-          console.log(response.data)
           return response.data
     }
     catch(err){
@@ -309,7 +307,6 @@ export const getFilterSpaces = async (queryString) => {
             baseURL:`http://localhost:4000/space/tenant`,
             url: queryString
         })
-        console.log(response.data)
         return response.data
     }
     catch(err){
