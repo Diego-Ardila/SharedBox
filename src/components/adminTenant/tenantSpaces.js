@@ -22,7 +22,6 @@ const TenantSpaces = () => {
   const fetchSpacesData = async() =>{
     try{
       const userSpaces = await getTenantRegisteredSpaces(`?state=${key}`) || []
-      console.log(userSpaces)
       setSpaces(userSpaces)
     }catch(err) {
       setError(err)

@@ -44,7 +44,6 @@ export default function PaymentResponse () {
         const getResponse = async () => {
             try{                
                 const response = await GetPaymentInfoByReference(reference)
-                console.log(response)
                 const newSpaces = await getFilterSpaces(`?_id:${response.data.data.x_extra4}`)
                 const spaceObj = {}
                 spaceObj.reservedSpaces = response.data.data.x_extra4  
@@ -54,7 +53,6 @@ export default function PaymentResponse () {
                 setResponse(response.data.data)
                 setLoading(false)
             }catch(err){
-                console.log(err )
                 swal("Ups something went wrong",
                     "looks like we were unable to connect. Please checkout your internet connection and try again",
                     "error")

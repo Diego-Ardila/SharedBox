@@ -32,7 +32,7 @@ export default function Space () {
    }, [isLogged])
 
    const changeViewToDisplay = () => {
-       return () => history.push("/home")
+       return () => ()=> history.push("/home")
    }
 
     return(

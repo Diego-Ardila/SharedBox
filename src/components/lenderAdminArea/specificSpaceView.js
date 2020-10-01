@@ -31,8 +31,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   
   const locationQuery = useLocation()  
   const dispatch = useDispatch()
-  const isLogged = useSelector(state => state.loginUserReducer.isLogged) 
-
+  const isLogged = useSelector(state => state.loginUserReducer.isLogged)
   const [showModal,setShowModal] = useState(false)
   const [showModalInventory,setShowModalInventory] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -41,7 +40,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   const [endDate, setEndDate] = useState(edit ? null : moment(locationQuery.search.slice(59),"YYYY-MM-DD"))
   const [calendarIsOpen, setCalendarIsOpen] = useState(false)
   const [renderingSpace, setRenderingSpace] = useState(spaces.find( space => space._id === spaceId))
-    
+  
   useEffect(()=>{
     dispatch(changePhotos(renderingSpace.photos))
     setLoading(false)
@@ -90,7 +89,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
       {loading ? "loading" : (
         <React.Fragment>
           <Row className="m-2 mt-4">
-              <RoundedBttn className="ml-4" onClick={changeViewToDisplay()}><ArrowLeftShort size={30}></ArrowLeftShort></RoundedBttn>
+              <RoundedBttn className="ml-4" onClick={changeViewToDisplay()()}><ArrowLeftShort size={30}></ArrowLeftShort></RoundedBttn>
           </Row>
           <Row className="row justify-content-center p-3">
             <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
