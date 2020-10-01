@@ -56,7 +56,7 @@
         case "updated-element":
             message.lenderHeader = `the tenant ${nameTenant} updated to the elements of the inventory for the space ${titleSpace}`;
             message.lenderBody = `The user ${nameTenant} updated the inventory elements for your space ${titleSpace}, please check to changes.`;
-            message.tenantHeader = `the user ${nameLender} has received the chages of the elements for the space ${titleSpace}, please wait for his answer.`;
+            message.tenantHeader = `the user ${nameLender} has received the changes of the elements for the space ${titleSpace}, please wait for his answer.`;
             message.tenantBody = `the user ${nameLender} has received the changes of the elements for the space ${titleSpace} and he is checking now there not inconsistency`;
             colorBadge="warning"
             break;

@@ -37,7 +37,6 @@ export default function InventoryUpdateModal({showModal,onHide,inventoryId,chang
             setElement({})
             setSelected("")
             setElementRejected(false)
-            console.log(elementRejected)
         }catch(err){
             swal ("update Failed", "Failed connection to dataServer, check your connection to the internet and try again later", "error") 
         }        

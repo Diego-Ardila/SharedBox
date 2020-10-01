@@ -595,7 +595,6 @@ export const getElementsByInventoryId =  async (inventoryId) => {
         return response.data
     }
     catch(err){
-        console.dir(err)
         throw(err)
     }
 }

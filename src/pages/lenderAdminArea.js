@@ -11,7 +11,6 @@ export default function LenderAdminArea (props) {
   const [error, setError] = useState("")
   const [moreInfoDisplay, setMoreInfoDisplay] = useState(false)
   const [spaceId, setSpaceId] = useState("")
-  console.log("by admin area", extSpaceId)
 
   useEffect(() => {
     const getDataSpace = async()=>{
