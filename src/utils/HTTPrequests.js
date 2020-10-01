@@ -372,7 +372,7 @@ export const deleteTenant = async(tenantId, typeUser) => {
         throw(err)
     }
 }
-const host = "http://127.0.0.1:4000";
+const host = process.env.REACT_APP_SERVER_URL;
 
 export const registerSubscription = async(path, body) => {
     try {
