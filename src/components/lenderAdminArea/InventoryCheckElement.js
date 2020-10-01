@@ -43,14 +43,13 @@ export default function InventoryCheckElement ({element}) {
             const res = await updateElements(element._id , values)
             setSubmited(true)
         }catch(err){
-            console.log(err)
             swal("ups something went wrong", "plase check your internet connection","error")
         }
     }
 
     return (
         <Formik
-        initialValues={ {check:false, comment:"", category:"select"} }
+        initialValues={ {check:false, comment:"", errorCategory:"select"} }
         onSubmit={handleSubmit}
         >
         {({

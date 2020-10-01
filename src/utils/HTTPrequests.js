@@ -84,6 +84,26 @@ export const updateDatauser = async (typeUser,values) => {
     }
 }
 
+export const updateUserReservedSpaces = async (typeUser,values) => {
+    const user = (typeUser === "tenant" ? `"${typeUser}"`:``)
+    try{
+        const updateData = await axios({
+            method:'PUT',
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url: `${typeUser}/reservedSpaces`,
+            headers:{
+                Authorization: "Bearer " + localStorage.getItem('token'),
+                'x-UserType' : user
+            },
+            data:values
+        })
+        return updateData.data 
+    }
+    catch(error){
+        throw error
+    }
+}
+
 export const getSuggestions = async () => {
     try{
         const tags = await axios({
@@ -100,7 +120,7 @@ export const postSpace=async (state)=>{
     const {additionalInfo,width,length,height,city,address,price,title,area} = state
     
     try{
-        const respose = await axios({
+        const response = await axios({
             method:"POST",
             url:"http://127.0.0.1:4000/space",
             headers:{
@@ -110,7 +130,7 @@ export const postSpace=async (state)=>{
                 title,width,length,height,additionalInfo,city,address,pricePerDay:price,area
             }
         })
-        return(respose.data._id)
+        return(response.data._id)
     }catch(err){
         throw err
     }
@@ -169,6 +189,24 @@ export const getUserSpaces = async () => {
         throw err
     }
 }
+
+export const getTenantRegisteredSpaces = async (queryString) => {
+    try {
+        const response = await axios({
+            method: "GET",
+            baseURL:`${process.env.REACT_APP_SERVER_URL}/space/tenantRegistered`,
+            url: queryString,
+            headers:{
+                Authorization: "Bearer "+localStorage.getItem('token'),
+                'x-UserType' : localStorage.getItem('typeUser')
+            },
+          })
+          return response.data
+    }
+    catch(err){
+        throw err
+    }
+} 
 
 export const postScore = async(values) => {
     const {rating} = values
@@ -268,8 +306,8 @@ export const getFilterSpaces = async (queryString) => {
             method: "GET",
             baseURL:`http://localhost:4000/space/tenant`,
             url: queryString
-          })
-          return response.data
+        })
+        return response.data
     }
     catch(err){
         throw err
@@ -506,6 +544,7 @@ export const updateNotification = async(status,notification)=>{
         throw err
     }
 }
+
 export const GetPaymentInfoByReference = async (reference)=>{
     try{
         const response = await axios({
@@ -537,6 +576,25 @@ export const updateElements = async (elementId, data) => {
         })
         return response.data
     }catch(err){
+        throw(err)
+    }
+}
+
+export const getElementsByInventoryId =  async (inventoryId) => {
+    const user = localStorage.getItem("typeUser") === "tenant" ? localStorage.getItem("typeUser"):``
+    try{
+        const response = await axios ({
+            method:"GET",
+            baseURL:process.env.REACT_APP_SERVER_URL,
+            url:`element/getByinventoryId?inventoryId=${inventoryId}`,
+            headers:{
+                Authorization: 'Bearer '+ localStorage.getItem('token'),
+                "x-UserType":user                        
+            } 
+        })
+        return response.data
+    }
+    catch(err){
         throw(err)
     }
 }

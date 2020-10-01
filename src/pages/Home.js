@@ -133,7 +133,7 @@ const Home = () => {
   }
 
   const infoFunction = (spaceId) => {
-    return ()  => window.open(`/space?_id=${spaceId}&startDate=${initialDate}&endDate=${finalDate}`)
+    return () => () => window.open(`/space?_id=${spaceId}&startDate=${initialDate}&endDate=${finalDate}`)
   }
 
   return (

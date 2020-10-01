@@ -83,7 +83,7 @@ const SearchForm = (props) => {
         <Form.Row lg={10} sm={12} className="ml-2 mr-2">
           <Col sm={4} >
             <Form.Group controlId={base.titleId}>
-              <Form.Label>keyword</Form.Label>
+              <Form.Label>Keyword</Form.Label>
               <Form.Control className={touched.title && errors.title ? "is-invalid" : null} name="title" type="text" placeholder="Title" onChange ={(e) => customChange(e.target, setValues, values, dispatch) } value={values.title} />
               {touched.title && errors.title ? (
                 <div className="error-message">{errors.title}</div>

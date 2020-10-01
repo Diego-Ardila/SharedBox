@@ -3,7 +3,7 @@ import { Card, Col, Row, Badge, Carousel, Button } from 'react-bootstrap';
 import "./Space.css"
 
 
-const Space = ({ space, infoFunction }) => {
+const Space = ({ space, infoFunction,notifi }) => {
   let [ index, setIndex] = useState(0);
   const handleSelect = (selectedIndex, e) => {
       setIndex(index = selectedIndex)
@@ -40,7 +40,7 @@ const Space = ({ space, infoFunction }) => {
             <Card.Footer>
               {carouselBadges}
             </Card.Footer>
-            <Button variant="secondary" onClick={infoFunction(space._id)}>Info</Button>
+            <Button variant="secondary" onClick={infoFunction(space._id)(notifi)}>{!notifi?"Info":"update Inventory"}</Button>
           </Card.Body>
         </Col>
       </Row>
