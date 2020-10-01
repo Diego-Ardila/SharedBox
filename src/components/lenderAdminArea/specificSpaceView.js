@@ -29,12 +29,9 @@ const RoundedBttn = styled.button`
 
 export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay, edit}){  
   
-  console.log("spaceId =",spaceId)
-  console.log("spaces = ",spaces)
   const locationQuery = useLocation()  
   const dispatch = useDispatch()
-  const isLogged = useSelector(state => state.loginUserReducer.isLogged) 
-
+  const isLogged = useSelector(state => state.loginUserReducer.isLogged)
   const [showModal,setShowModal] = useState(false)
   const [showModalInventory,setShowModalInventory] = useState(false)
   const [loading, setLoading] = useState(true)
