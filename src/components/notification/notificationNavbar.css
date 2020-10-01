@@ -1,0 +1,10 @@
+.small-text{
+  font-size: 10px
+}
+.medium-text{
+  font-size: 14px;
+}
+
+a > div.card:hover{
+  background-color: #C0C0C0
+}
