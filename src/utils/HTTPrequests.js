@@ -328,7 +328,7 @@ export const getFilterSpacesHome = async (queryString) => {
     try {
         const response = await axios({
             method: "GET",
-            baseURL:`http://localhost:4000/space/tenant`,
+            baseURL:`${process.env.REACT_APP_SERVER_URL}/space/tenant`,
             url: queryString
           })
           return response
