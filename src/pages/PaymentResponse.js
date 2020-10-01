@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useHistory } from "react-router-dom"
 import swal from "sweetalert"
-import {getFilterSpaces, GetPaymentInfoByReference, updateNotification} from "../utils/HTTPrequests"
+import {getFilterSpaces, GetPaymentInfoByReference, updateNotification, updateUserReservedSpaces} from "../utils/HTTPrequests"
 import { Container, Row, Col, Card, Button } from "react-bootstrap"
 import "./PaymentResponse.css"
 import PayButton from "../components/notification/payButton"
@@ -42,9 +42,13 @@ export default function PaymentResponse () {
 
     useEffect( () =>{
         const getResponse = async () => {
-            try{
+            try{                
                 const response = await GetPaymentInfoByReference(reference)
+                console.log(response)
                 const newSpaces = await getFilterSpaces(`?_id:${response.data.data.x_extra4}`)
+                const spaceObj = {}
+                spaceObj.reservedSpaces = response.data.data.x_extra4  
+                const id = await updateUserReservedSpaces(localStorage.getItem("typeUser"),spaceObj)
                 await updateNotification('paid',response.data.data.x_extra6)
                 setSpaces(newSpaces)
                 setResponse(response.data.data)
