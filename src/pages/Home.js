@@ -24,7 +24,7 @@ const Home = () => {
   const locationParsed = queryString.parse(locationQuery.search)
   const spaces = useSelector(state => state.viewSpacesReducer.spaces);
   const search = useSelector(state => state.searchFormReducer);
-  const {title, area, location, initialDate, finalDate, height, width, length, tags, pricePerDay, pricePerMonth, specificSearch, rendering} = search; 
+  const {keyword, area, location, initialDate, finalDate, height, width, length, tags, pricePerDay, pricePerMonth, specificSearch, rendering} = search; 
   let [active, setActive] = useState(1)
   let [items, setItems] = useState([])
   let [limit,setLimit] = useState(10)
@@ -62,7 +62,7 @@ const Home = () => {
             newItems.push(
               <DropdownButton 
               drop= "up"
-              title="items per page" 
+              keyword="items per page" 
               size='sm'
               >
                 <Dropdown.Item eventKey={5} onSelect= {handleLimit}>5</Dropdown.Item>
@@ -113,7 +113,7 @@ const Home = () => {
   
    const handleSubmit = () => {
       let qs = {}
-        qs.title = title
+        qs.keyword = keyword
         qs.area =  `${area}-${parseInt(area)+1000}`
         qs.location = location.toUpperCase()
         qs.inDate = initialDate
@@ -123,11 +123,12 @@ const Home = () => {
         qs.height= `${height}-20`
         qs.width= `${width}-40`
         qs.length= `${length}-40`
-        qs.tag= tags.flatMap(elem => [elem.name]).join('-')      
-        qs.pricePerDay= pricePerDay
-        qs.pricePerMonth= pricePerMonth
+        if(tags.length > 0) qs.tag= tags.flatMap(elem => [elem.name]).join('-')      
+        if(qs.pricePerDay > 0) qs.pricePerDay= pricePerDay
+        if(qs.pricePerMonth > 0) qs.pricePerMonth= pricePerMonth
       }           
       queryStr= queryString.stringify(qs)
+
       history.push("/home?"+queryStr)
       dispatch(changeRendering())
   }
