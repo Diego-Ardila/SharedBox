@@ -18,8 +18,7 @@ const Footer = () => {
                 </Tooltip>
               }
             >
-               <Breadcrumb.Item href={user.profile}>{user.name}</Breadcrumb.Item>
-              
+               <Breadcrumb.Item href={user.profile}>{user.name}</Breadcrumb.Item>              
             </OverlayTrigger>
           ))}
           </Breadcrumb>

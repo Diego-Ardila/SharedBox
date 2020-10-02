@@ -26,7 +26,7 @@ export default function PayButton ({finalPrice, tax, tax_base, spaceTitle, tenan
             extra4: spaceId,
             extra5: tenantName,
             extra6: notification._id,
-            response: `${process.env.REACT_APP_SERVER_URL}/response`,
+            response: `${process.env.REACT_APP_FRONT_URL}/response`,
             autoclick: 'false',
             name_billing: tenantName,
             type_doc_billing: 'cc',

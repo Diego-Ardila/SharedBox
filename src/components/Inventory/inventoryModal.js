@@ -54,7 +54,7 @@ export default function ModalInventory(props){
                         text: "Your request for reservation was sent to the lender. Let's wait for his answer!!",
                         image: "/images/jason-leung-HM6TMmevbZQ-unsplash.jpg",
                         tag: "new-reservation",
-                        url: `${process.env.REACT_APP_SERVER_URL}/notification`
+                        url: `${process.env.REACT_APP_FRONT_URL}/notification`
                     }
                     await onClickSendNotification(payload)
                 }
@@ -74,8 +74,8 @@ export default function ModalInventory(props){
         object : Yup.string().required("Required Field"),
         description : Yup.string().max(200,"Maximum 200 characters").required("Required Field"),
         category : Yup.string().required("Required Field"),
-        value : Yup.number().typeError('Value must be a number').min(1,"Required average minimum 1 "),
-        quantity: Yup.number().typeError('Value must be a number').min(1,"At least 1 object is required")
+        value : Yup.number().typeError('Value must be a number').required("Required Field").min(1,"The minimum average value is 1 "),
+        quantity: Yup.number().typeError('Value must be a number').required("Required Field").min(1,"At least 1 object is required")
     })
 
 return(
