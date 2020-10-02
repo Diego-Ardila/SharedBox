@@ -40,7 +40,7 @@ const Space = ({ space, infoFunction,notifi }) => {
             <Card.Footer>
               {carouselBadges}
             </Card.Footer>
-            <Button variant="secondary" onClick={infoFunction(space._id)(notifi)}>{!notifi?"Info":"update Inventory"}</Button>
+            <Button variant="secondary" onClick={infoFunction(space._id)(notifi)}>{!notifi?"Info":"Update Inventory"}</Button>
           </Card.Body>
         </Col>
       </Row>
