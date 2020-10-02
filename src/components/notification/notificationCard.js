@@ -39,11 +39,25 @@
             message.tenantBody = `Don´t worry lets keep searching the perfect space for you`;
             colorBadge="danger"
             break;   
-        default:
+        case "pending":
             message.lenderHeader = `You recived an offer for the space ${titleSpace} from ${initialDate} to  ${finalDate}`;
             message.lenderBody = `The user ${nameTenant} sent you an offer to rent your space ${titleSpace}`;
             message.tenantHeader = `Your offer was sent to ${nameLender}, owner of the space ${titleSpace}, lets wait for his answer`;
             message.tenantBody = `You want to reserved The space ${titleSpace} from ${initialDate} to ${finalDate}`;
+            colorBadge="warning"
+            break;
+        case "rejected-element":
+            message.lenderHeader = `You sended inconsistencies between objects received for the space ${titleSpace}`;
+            message.lenderBody = `The user ${nameTenant} received inconsistencies that you identified for your space ${titleSpace}, please wait for the  answer `;
+            message.tenantHeader = `the user ${nameLender} has pointed out that there is an inconsistancy between what you said you would bring to the space ${titleSpace} and what he/she recieved.`;
+            message.tenantBody = `Don´t worry! just check your inventory and clarify any misleading information. This is necesary to garantee that we can cover all your products just in case something were to happen.`;
+            colorBadge="warning"
+            break;
+        case "updated-element":
+            message.lenderHeader = `the tenant ${nameTenant} updated to the elements of the inventory for the space ${titleSpace}`;
+            message.lenderBody = `The user ${nameTenant} updated the inventory elements for your space ${titleSpace}, please check to changes.`;
+            message.tenantHeader = `the user ${nameLender} has received the changes of the elements for the space ${titleSpace}, please wait for his answer.`;
+            message.tenantBody = `the user ${nameLender} has received the changes of the elements for the space ${titleSpace} and he is checking now there not inconsistency`;
             colorBadge="warning"
             break;
     }
@@ -52,7 +66,7 @@
         <React.Fragment>
             {notification.status === "reject" && typeUser==="lender"  ? null :
                 <Card   id={notification._id} 
-                        key={notification._id} 
+                        key={notification._id}                         
                         onClick={(e)=>{setValuesCard(e,notification)}} 
                         className="m-4 notificationCard" 
                         border="primary" 
@@ -69,8 +83,11 @@
                             <Card.Text className="ml-3">Click here for more info</Card.Text> 
                             <Badge variant={colorBadge} className="ml-auto" >
                                 {status === "accept" && <Check2Square size = {25}/>}
+                                {status === "paid" && <Check2Square size = {25}/>}
                                 {status === "reject" && <XSquare size = {25}/>}
-                                {!status && <ExclamationSquare size = {25}/>}
+                                {status === "rejected-element" && <XSquare size = {25}/>}
+                                {status === "updated-element" && <ExclamationSquare size = {25}/>}
+                                {status === "pending" && <ExclamationSquare size = {25}/>}
                             </Badge>
                         </Row>
                     </Card.Footer>

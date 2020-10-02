@@ -10,11 +10,11 @@ import {useHistory} from 'react-router-dom'
 import './notificationCenterView.css'
 
 
-export default function NotificationCenterView (props){
+export default function NotificationCenterView ({navbarId}){
     const [arrNotifications,setArrNotifications] = useState([])
     const [notification,setNotification]= useState({})    
     const [calPrice,setCalPrice] = useState("")
-    const [selected,setSelected] = useState(props.navbarId || "")
+    const [selected,setSelected] = useState(navbarId || "")
     const history = useHistory()
     const [render,setRender] = useState(false)
      
@@ -23,6 +23,10 @@ export default function NotificationCenterView (props){
         async function getNotification (){
             const notification = await getNotificationUser()
             setArrNotifications(notification.data)
+            if(navbarId){
+                const initialNotification = notification.data.filter(notification=>notification._id===navbarId)
+                setValuesCard(null,initialNotification[0],navbarId)
+            }
         }
         getNotification()
         setRender(false)
@@ -34,14 +38,16 @@ export default function NotificationCenterView (props){
         setNotification({})
     }
     
-    const setValuesCard = (event,notification)=>{
+    const setValuesCard = (event,notification,navbarId) => {
+        
         setNotification(notification)        
         setCalPrice(calcPrices(moment(notification.datesReservedId.initialDate,"YYYY-MM-DD"),moment(notification.datesReservedId.finalDate,"YYYY-MM-DD"),notification.inventoryId.spaceId.pricePerDay))
+        if(navbarId)return setSelected(navbarId)
         setSelected(event.target.closest(".notificationCard").id)
     }
     
     return(
-        <Container className="notificationContainer col-lg-12" >
+        <Container className="notificationContainer col-lg-12 mb-5" >
             <Row>
                 <Col className="col-lg-5 d-flex flex-column ">
                     {arrNotifications.length === 0 ?
@@ -60,7 +66,7 @@ export default function NotificationCenterView (props){
                                     selected={selected} 
                                     key={notifi._id}  
                                     notification={notifi} 
-                                    setValuesCard={setValuesCard} 
+                                    setValuesCard={setValuesCard}                                    
                                 />
                     ))}                                
                 </Col>

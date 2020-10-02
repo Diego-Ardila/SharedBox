@@ -28,7 +28,7 @@ export default function InventoryCheck ({space}) {
         const getAcceptedNotifications = async () => {
             try{
                 const response = await getNotificationUser()
-                const acceptedNotifications = response.data.filter( notification => notification.status === "accept")
+                const acceptedNotifications = response.data.filter( notification => notification.status === "paid"||notification.status === "updated-element")
                 const acceptedNotificationsOfThisSpace = acceptedNotificationFromThisSpace(space, acceptedNotifications)
                 const render = shouldRenderNotificationBasedOnDate(today, acceptedNotificationsOfThisSpace)
                 setNotificationToRender(render)
@@ -55,7 +55,11 @@ export default function InventoryCheck ({space}) {
                         cover any unexpected outcome. Don´t forget to fill out this checklist 
                         while you store the things on your space.
                     </Card.Text>
-                    {notificationToRender.inventoryId.elements.map( element => <InventoryCheckElement element={element}></InventoryCheckElement>)}
+                    {notificationToRender.inventoryId.elements.map( element => {
+                        if(element.status === "pending" || element.status === "updated") {
+                            return <InventoryCheckElement element={element}></InventoryCheckElement>
+                            }
+                        })}
                     <Button variant="primary">Go somewhere</Button>
                     </Card.Body>
                     <Card.Footer className="text-muted">2 days ago</Card.Footer>
