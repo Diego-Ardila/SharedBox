@@ -56,14 +56,14 @@ export default function LocationForm () {
                         <h3>Now let's talk about the location:</h3>
                         <Form.Group controlId={base.locationCityId}>
                             <Form.Label>City</Form.Label>
-                            <Form.Control className={touched.city && errors.city ? "is-invalid" : null} name="city" type="text" placeholder="City" onChange ={handleChange} value={values.city} />
+                            <Form.Control className={touched.city && errors.city ? "is-invalid" : null} name="city" type="text" placeholder="Enter City" onChange ={handleChange} value={values.city} />
                             {touched.city && errors.city ? (
                                 <div className="error-message">{errors.city}</div>
                             ): null}
                         </Form.Group>
                         <Form.Group controlId={base.locationAddressId}>
                             <Form.Label>Address</Form.Label>
-                            <Form.Control className={touched.address && errors.address ? "is-invalid" : null} name="address" type="text" placeholder="address" onChange ={handleChange} value={values.address} />
+                            <Form.Control className={touched.address && errors.address ? "is-invalid" : null} name="address" type="text" placeholder="Enter Address" onChange ={handleChange} value={values.address} />
                             {touched.address && errors.address ? (
                                 <div className="error-message">{errors.address}</div>
                             ): null}

@@ -1,8 +1,8 @@
 import { ACTIONS } from '../reducers/searchFormReducer';
 
-export const changeTitle = (payload) => {
+export const changeKeyword = (payload) => {
   return {
-      type: ACTIONS.CHANGE_TITLE,
+      type: ACTIONS.CHANGE_KEYWORD,
       payload
   }
 }

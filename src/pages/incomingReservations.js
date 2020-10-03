@@ -27,7 +27,7 @@ export default function IncomingReservations (props){
                 setloading(false)
             }
             catch(err){
-                swal ("get notifications Failed", "Failed connection to dataServer, check your connection to the internet and try again later", "error") 
+                swal ("Error with Notifications", "Failed connection to dataServer, check your connection to the internet and try again later", "error") 
             }
                                   
         }
@@ -59,15 +59,15 @@ export default function IncomingReservations (props){
             {loading?<h1>loading</h1>:
                 notifications.length !== 0 ? 
                     (notifications.map(notification=>(<Space 
-                                                            id={notification.inventoryId.spaceId._id} 
-                                                            key={notification.inventoryId.spaceId._id} 
-                                                            space={notification.inventoryId.spaceId} 
-                                                            infoFunction={infoFunction} 
-                                                            notifi={notification}/>))
+                        id={notification.inventoryId.spaceId._id} 
+                        key={notification.inventoryId.spaceId._id} 
+                        space={notification.inventoryId.spaceId} 
+                        infoFunction={infoFunction} 
+                        notifi={notification}/>))
                     ):
                     (<Card  className="m-4" border="dark" >
                         <Card.Header  className="text-center" > 
-                            <Card.Title as="h3"> no new notifications now, come back later</Card.Title>
+                            <Card.Title as="h3"> There are no new notifications now, please come back later</Card.Title>
                         </Card.Header>
                         <Card.Body className="text-center">
                             <Button onClick={()=>history.push("/tenant/admin")}>Come to admin</Button>

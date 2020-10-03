@@ -96,7 +96,7 @@ export default function PriceForm () {
                 </Row>
                 <Row className="justify-content-center">                    
                     <Form className="justify-content-center mt-3" onSubmit={handleSubmit} noValidate>
-                        <h3>Finally... lets talk about money:</h3>
+                        <h3>Finally, lets talk about money:</h3>
                         {isSubmitting ? <Spinner animation="border" variant="primary" size="xl" /> : null}
                         <InputGroup>
                         <Form.Group controlId={base.priceId}>
