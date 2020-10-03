@@ -130,7 +130,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               <Col className="col-12 d-inline-flex flex-column">
                 {( renderingSpace.faqs.length > 0) ? <FAQadministrator space={renderingSpace}></FAQadministrator> : null }
                   
-                  {edit && <Button onClick = {() => setEditFAQ(true) }>add FAQ questions</Button>}
+                  {edit && <Button onClick = {() => setEditFAQ(true) }>Add FAQ questions</Button>}
                 </Col>
               </Row>
               <Row>

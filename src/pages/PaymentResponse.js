@@ -53,8 +53,8 @@ export default function PaymentResponse () {
                 setResponse(response.data.data)
                 setLoading(false)
             }catch(err){
-                swal("Ups something went wrong",
-                    "looks like we were unable to connect. Please checkout your internet connection and try again",
+                swal("Something went wrong",
+                    "Looks like we were unable to connect. Please checkout your internet connection and try again",
                     "error")
             }  
         }

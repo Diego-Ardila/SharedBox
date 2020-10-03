@@ -33,7 +33,7 @@ export default function InventoryCheck ({space}) {
                 const render = shouldRenderNotificationBasedOnDate(today, acceptedNotificationsOfThisSpace)
                 setNotificationToRender(render)
             }catch(err){
-                swal("ups something went wrong", "check your internet connection and try again", "error")
+                swal("Something went wrong", "Check your internet connection and try again", "error")
             }
         }
         getAcceptedNotifications()
@@ -43,7 +43,7 @@ export default function InventoryCheck ({space}) {
         <React.Fragment>
             {notificationToRender ?
                 <Card className="text-center mt-3">
-                    <Card.Header>incoming reservation</Card.Header>
+                    <Card.Header>Incoming reservation</Card.Header>
                     <Card.Body>
                     <Card.Title>You have a reservation on this warehouse for today!</Card.Title>
                     <Card.Text>
