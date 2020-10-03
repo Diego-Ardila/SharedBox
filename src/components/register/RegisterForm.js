@@ -3,7 +3,7 @@ import { FilePond, registerPlugin } from 'react-filepond'
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import { Form, Col,Row, Button, Container} from 'react-bootstrap';
+import { Form, Col,Row, Button, Container, Spinner} from 'react-bootstrap';
 import {  useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { Formik, Field } from 'formik';
@@ -44,7 +44,7 @@ const RegisterForm = (props) => {
         onClickSendNotification
     } = usePushNotifications();
     
-    const handleSubmit = async (values) => {
+    const handleSubmit = async (values, actions) => {
         try{
             const arrayFiles = [];
             values.files.forEach(file =>{
@@ -65,9 +65,11 @@ const RegisterForm = (props) => {
             dispatch(changeUserPhoto(response.data.profilePhoto))
             localStorage.setItem("userPhoto", response.data.profilePhoto)  
             swal("Register successfully","Your registration were saved succesfully","success")
+            actions.setSubmitting(false)
             history.push(props.typeUser==="lender" ? `/user/profile`: '/tenant/admin')
         }catch(err){
             swal("error", `${err.response.data}`, "error")
+            actions.setSubmitting(false)
         }
     }     
     return(
@@ -76,7 +78,7 @@ const RegisterForm = (props) => {
             <Col md={4} sm={12}>
             <h4 className="text-center">{`Register ${localStorage.getItem("typeUser").charAt(0).toUpperCase()+localStorage.getItem("typeUser").slice(1)}`}</h4>
             <Formik initialValues={{ name:"", email:"", phoneNumber:"", password:"", v_password:"", isSubscribed: false, files:[]}} validationSchema={formSchema} onSubmit={ handleSubmit} >
-            {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setFieldValue }) => (
+            {({ handleSubmit, handleChange, handleBlur, values, isSubmitting, touched, isValid, errors, setFieldValue }) => (
                 <Form onSubmit={handleSubmit}  noValidate>
                     <Form.Group controlId={base.nameId}>
                         <Form.Label>Name</Form.Label>
@@ -132,8 +134,8 @@ const RegisterForm = (props) => {
                         )}
                         </Field>          
                     </Form.Group>
-                    
-                    <Button className="mb-5"variant={isValid?"primary":"secondary"} disabled= {!isValid} size="md" type="submit">
+                    {isSubmitting ? <Spinner animation="border" variant="primary" size="xl" /> : null}
+                    <Button className="mb-5"variant={isValid?"primary":"secondary"} disabled= {!isValid && isSubmitting} size="md" type="submit">
                         Send
                     </Button>
                 </Form>
