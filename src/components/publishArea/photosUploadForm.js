@@ -58,7 +58,7 @@ export default function PhotosUploadForm () {
                 <Row className="justify-content-center">                    
                     <Form className="justify-content-center mt-3 mb-5" onSubmit={handleSubmit} noValidate>
                         <h3>Share some photos of your space! 
-                            It will be mote appealing for people looking where to store their things
+                            It will be more appealing for people looking where to store their things
                         </h3>
                         <Form.Group controlId={base.uploadId}>
                             <FilePond

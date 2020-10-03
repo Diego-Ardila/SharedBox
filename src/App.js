@@ -19,6 +19,7 @@ import Space from "./pages/Space"
 import PaymentResponse from './pages/PaymentResponse';
 import { getNotificationUser} from './utils/HTTPrequests';
 import TitleComponent from './TitleComponent'; 
+import incomingReservations from './pages/incomingReservations'; 
 import TenantSpaces from './components/adminTenant/tenantSpaces';
 
 function PrivateRoute(props) {  
@@ -89,6 +90,7 @@ function App() {
           <Route exact path="/user/register/" component={register} />
           <PrivateRoute exact path="/lender/createSpace" component={PublishSpaceArea} typeUser="lender" />
           <PrivateRoute exact path="/tenant/admin" component={adminTenant} typeUser="tenant" />
+          <PrivateRoute exact path="/tenant/reservations" component={incomingReservations} typeUser="tenant" />
           <PrivateRoute exact path="/tenant/spaces" component={TenantSpaces} typeUser="tenant" />
           <Route exact path="/space/" component={Space} />
           <PrivateRoute exact path="/user/profile" component={Profile} />

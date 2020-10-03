@@ -40,43 +40,46 @@ export default function ModalInventory(props){
     }
 
     const handleToAxios = async (finalDate,initialDate,elements,spaceId,lenderId) => {
-        try{
-            const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
-            const newinitialDate = moment(initialDate).format("YYYY-MM-DD")
-            const {inventoryId,tenantId} = await createElements(elements,spaceId)
-            const date = await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
-            const spaceObj = {}
-            spaceObj.reservedSpaces = spaceId
-            const id = await updateUserReservedSpaces(localStorage.getItem("typeUser"),spaceObj)
-            await createNotification(inventoryId,tenantId,lenderId,date._id)
-            const isSubscribed = await onClickIsUserSubscribed()
-            if (isSubscribed) {
-                const payload = {
-                    title: "Reservation Created",
-                    text: "Your request for reservation was sent to the lender. Let's wait for his answer!!",
-                    image: "/images/jason-leung-HM6TMmevbZQ-unsplash.jpg",
-                    tag: "new-reservation",
-                    url: "http://localhost:3000/notification"
+        if (elements.length !== 0){
+            try{
+                const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
+                const newinitialDate = moment(initialDate).format("YYYY-MM-DD")
+                const {inventoryId,tenantId} = await createElements(elements,spaceId)
+                const date = await createDates(newfinalDate,newinitialDate,spaceId,tenantId)
+                await createNotification(inventoryId,tenantId,lenderId,date._id)
+                const isSubscribed = await onClickIsUserSubscribed()
+                if (isSubscribed) {
+                    const payload = {
+                        title: "Reservation Created",
+                        text: "Your request for reservation was sent to the lender. Let's wait for his answer!!",
+                        image: "/images/jason-leung-HM6TMmevbZQ-unsplash.jpg",
+                        tag: "new-reservation",
+                        url: `${process.env.REACT_APP_FRONT_URL}/notification`
+                    }
+                    await onClickSendNotification(payload)
                 }
-                await onClickSendNotification(payload)
-            }              
-            swal("reservation request sent","your reservation request was sent succesfully","success")
-        }catch(err){
-            swal("reservation request error", "something went wrong, please try again", "error")
+                props.onHide()              
+                swal("Reservation request sent","Your reservation request was sent succesfully","success")
+                
+            }catch(err){
+                swal("Reservation error", "Something went wrong, please try again", "error")
+            }
+        }else{
+            swal("Reservation request error", "To reserve this space, you need to have elements added to the inventory", "error")
         }
         
     }
 
     const validatorForm = Yup.object().shape({
         object : Yup.string().required("Required Field"),
-        description : Yup.string().max(200,"maximum 200 characters").required("Required Field"),
+        description : Yup.string().max(200,"Maximum 200 characters").required("Required Field"),
         category : Yup.string().required("Required Field"),
-        value : Yup.number().min(1,"requiered average minimun 1 "),
-        quantity: Yup.number().min(1,"requiered minimun 1 object")
+        value : Yup.number().typeError('Value must be a number').required("Required Field").min(1,"The minimum average value is 1 "),
+        quantity: Yup.number().typeError('Value must be a number').required("Required Field").min(1,"At least 1 object is required")
     })
 
 return(
-    <Modal show= {props.show} onHide= {props.onHide} size="xl" aria-labelledby="contained-modal-title-vcenter">
+    <Modal show= {props.show} onHide = {props.onHide} size="xl" aria-labelledby="contained-modal-title-vcenter">
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             The Lender wants to know what are you going to store
@@ -161,13 +164,13 @@ return(
                                         </OverlayTrigger>
                                         <Form.Control as="select" name="category"  value={values.category} onChange = {handleChange} className={touched.category && errors.category ? "is-invalid" : null} >
                                         <option> </option>
-                                        <option>arts and crafts</option>
-                                        <option>automobile</option>
-                                        <option>books</option>
-                                        <option>computers</option>
-                                        <option>electronics</option>
-                                        <option>home and Kitchen</option>
-                                        <option>apparels and clothing</option>
+                                        <option>Arts and crafts</option>
+                                        <option>Automobile</option>
+                                        <option>Books</option>
+                                        <option>Computers</option>
+                                        <option>Electronics</option>
+                                        <option>Home and Kitchen</option>
+                                        <option>Apparels and clothing</option>
                                         <option>Industrial</option>
                                         <option>Sport elements</option>
                                         <option>Tools and Home repair</option>
@@ -217,7 +220,7 @@ return(
                                                             In this field write a small description of objects <strong className="ml-2">maximum 200 characters</strong>
                                                         </Row>
                                                         <Row className="m-3">
-                                                        <strong className="mr-2">Example: </strong> it is books reds.
+                                                        <strong className="mr-2">Example: </strong> It is books reds.
                                                         </Row>
                                                     </Popover.Content>
                                                 </Popover>
@@ -231,7 +234,7 @@ return(
                                     </Form.Group>
                                 </Col>
                             </Form.Row>
-                            <Button type = "submit" className="col-lg-4 m-2" variant={"primary"}>add</Button>
+                            <Button type = "submit" className="col-lg-4 m-2" variant={"primary"}>Add</Button>
                         </Card>
                     </Form>
                 )}
@@ -243,7 +246,7 @@ return(
             </Container>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={()=>{handleToAxios(finalDate,initialDate,elements,spaceId,lenderId); props.onHide()}}>save</Button>
+            <Button onClick={()=>{handleToAxios(finalDate,initialDate,elements,spaceId,lenderId)}}>Save</Button>
         </Modal.Footer>
     </Modal>
 )

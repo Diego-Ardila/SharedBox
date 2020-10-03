@@ -9,7 +9,7 @@ export default function MainView ({error, spaces, displayMoreInfo}) {
         <React.Fragment>
             <Row className="row justify-content-center p-3">
               <Col className="col-6 d-inline-flex flex-column justify-content-center">
-                <h2 style={{textAlign:"center"}}>your Spaces</h2>
+                <h2 style={{textAlign:"center"}}>View your Spaces</h2>
                 <Button className="btn btn-primary" onClick={ (e) => history.push("/lender/createSpace")}>Create a new Space</Button>
               </Col>
             </Row>

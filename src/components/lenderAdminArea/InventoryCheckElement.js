@@ -43,14 +43,13 @@ export default function InventoryCheckElement ({element}) {
             const res = await updateElements(element._id , values)
             setSubmited(true)
         }catch(err){
-            console.log(err)
-            swal("ups something went wrong", "plase check your internet connection","error")
+            swal("Something went wrong", "Please check your internet connection","error")
         }
     }
 
     return (
         <Formik
-        initialValues={ {check:false, comment:"", category:"select"} }
+        initialValues={ {check:false, comment:"", errorCategory:"select"} }
         onSubmit={handleSubmit}
         >
         {({
@@ -71,7 +70,7 @@ export default function InventoryCheckElement ({element}) {
                                 value={values.check}
                                 onChange={handleChange}
                             ></input>
-                            <label>all in order</label>
+                            <label>All in order</label>
                         </div>
                         <h6 className="elementCard-quantityTitle">Quantity</h6>
                         <p className="elementCard-quantityContent">{element.quantity}</p>
@@ -82,7 +81,7 @@ export default function InventoryCheckElement ({element}) {
                             name="comment"
                             id="comment"
                             type="textArea" 
-                            placeholder="any irregularities? let us know!"
+                            placeholder="Any irregularities? let us know!"
                             value={values.comment}
                             onChange={handleChange}
                             ></input>
@@ -94,14 +93,14 @@ export default function InventoryCheckElement ({element}) {
                             onChange={handleChange}
                             value={values.errorCategory}
                         >
-                            <option value="select">select category</option>
-                            <option value="incorrect ammount">incorrect ammount</option>
-                            <option value="damaged product">damaged product</option>
-                            <option value="product not here">product not here</option>
-                            <option value="incorrect product">incorrect product</option>
-                            <option value="other">other</option>
+                            <option value="select">Select category</option>
+                            <option value="incorrect ammount">Incorrect amount</option>
+                            <option value="damaged product">Damaged product</option>
+                            <option value="product not here">Product not here</option>
+                            <option value="incorrect product">Incorrect product</option>
+                            <option value="other">Other</option>
                         </select>
-                        <button className="elementCard-submitButton">submit</button>
+                        <button className="elementCard-submitButton">Submit</button>
                 </ElementCard>
             </Form>
         }

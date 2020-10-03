@@ -62,7 +62,7 @@ const Home = () => {
             newItems.push(
               <DropdownButton 
               drop= "up"
-              title="items per page" 
+              title="Items per page" 
               size='sm'
               >
                 <Dropdown.Item eventKey={5} onSelect= {handleLimit}>5</Dropdown.Item>
@@ -82,7 +82,7 @@ const Home = () => {
         setItems(newItems)
       }
       catch(err){
-        swal("upss something is wrong", "something went wrong, please try again", "error")
+        swal("Something went wrong", "Something went wrong, please try again", "error")
       }
     }
     getspaces()
@@ -133,7 +133,7 @@ const Home = () => {
   }
 
   const infoFunction = (spaceId) => {
-    return ()  => window.open(`/space?_id=${spaceId}&startDate=${initialDate}&endDate=${finalDate}`)
+    return () => () => window.open(`/space?_id=${spaceId}&startDate=${initialDate}&endDate=${finalDate}`)
   }
 
   return (

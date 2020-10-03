@@ -25,19 +25,19 @@ export default function Space () {
                 setSpace(spaces)
                 setLoading(false)
             }catch(err){
-                swal("something went wrong!",`${err.message}`,"error")
+                swal("Something went wrong!",`${err.message}`,"error")
             }
        }
         getSpace()
    }, [isLogged])
 
    const changeViewToDisplay = () => {
-       return () => history.push("/home")
+       return () => ()=> history.push("/home")
    }
 
     return(
         <Container className="mb-5">
-            {loading ? "loading" : (
+            {loading ? "Loading" : (
                 <SpecificSpaceView
                     spaceId={spaceId}
                     spaces={spaces}
