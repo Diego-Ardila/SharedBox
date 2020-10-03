@@ -87,8 +87,8 @@ const SearchAdvancedForms = (props) => {
   };
 
   const FormSchema = Yup.object().shape({
-    pricePerDay: Yup.number().typeError('Value must be a number').required("Required Field"),
-    pricePerMonth: Yup.number().typeError('Value must be a number').required("Required Field")    
+    pricePerDay: Yup.number().typeError('Value must be a number'),
+    pricePerMonth: Yup.number().typeError('Value must be a number')    
   })
   
 
