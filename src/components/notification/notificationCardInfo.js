@@ -26,26 +26,26 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
     switch(status){
         case "accept":
             message.lenderHeader = `Your space ${titleSpace} is going to be reserved; let's wait for the tenant's to pay`;
-            message.tenantHeader = `Your offer was accepted; the next step its to pay and then the space ${titleSpace} woul be yours from ${initialDate} to the ${finalDate}`;
+            message.tenantHeader = `Your offer was accepted; the next step its to pay and then the space ${titleSpace} would be yours from ${initialDate} to the ${finalDate}`;
             break;
         case "paid":
             message.lenderHeader = `Your space ${titleSpace} is reserved now from the ${initialDate} to the ${finalDate}`;
-            message.tenantHeader = `the ${titleSpace} is now reserved for you from the ${initialDate} to the  ${finalDate}`;
+            message.tenantHeader = `The ${titleSpace} is now reserved for you from the ${initialDate} to the  ${finalDate}`;
             break; 
         case "reject":
-            message.tenantHeader = `the ${titleSpace} was rejected by the lender on the dates from ${initialDate} to  ${finalDate}`;
+            message.tenantHeader = `The ${titleSpace} was rejected by the lender on the dates from ${initialDate} to  ${finalDate}`;
             break;   
         case "pending":
-            message.lenderHeader = `You recived an offer for the space ${titleSpace} on the dates ${initialDate} to  ${finalDate}`;
-            message.tenantHeader = `the space ${titleSpace} recived your reservation offer for dates ${initialDate} to ${finalDate}`;
+            message.lenderHeader = `You received an offer for the space ${titleSpace} on the dates ${initialDate} to  ${finalDate}`;
+            message.tenantHeader = `The space ${titleSpace} received your reservation offer for dates ${initialDate} to ${finalDate}`;
             break;
         case "rejected-element":
             message.lenderHeader = `You sended inconsistencies between objects received for the space ${titleSpace},the tenant ${nameTenant} should update to objects`;
-            message.tenantHeader = `the user ${nameLender} has pointed out that there is an inconsistancy between what you said you would bring to the space`;
+            message.tenantHeader = `The user ${nameLender} has pointed out that there is an inconsistency between what you said you would bring to the space`;
             break;
         case "updated-element":
             message.lenderHeader = `The user ${nameTenant} updated to the inventory elements for your space ${titleSpace}, your should check the objects again`;
-            message.tenantHeader = `the user ${nameLender} has received the changes of the elements to validate that everything is fine`;
+            message.tenantHeader = `The user ${nameLender} has received the changes of the elements to validate that everything is fine`;
             break;
     }
 
@@ -55,7 +55,7 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                 {typeUser==="lender"? message.lenderHeader : message.tenantHeader} 
             </Card.Header>
             <Card.Body >
-                {typeUser==="tenant" && status === "pending" && <Card.Text>we will contact you as soon as we get a response thank you</Card.Text>}
+                {typeUser==="tenant" && status === "pending" && <Card.Text>We will contact you as soon as we get a response thank you</Card.Text>}
                 <Row> 
                     <Col>
                         <Card.Title> For : {typeUser==="lender" ? nameTenant : nameLender} </Card.Title>
@@ -123,7 +123,7 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                     }
                     {typeUser==="tenant" && status==="reject" && <Button onClick={()=>history.push("/home")}>Search more Spaces</Button>}
                     {typeUser==="tenant" && status==="rejected-element" && <Button onClick={()=>history.push({pathname:"/tenant/reservations",externalinventory: notification.inventoryId._id})}>Go to update objects</Button>}
-                    {typeUser==="lender" && status==="updated-element" && <Button onClick={()=>history.push({pathname:"/lender/admin",externalSpaceId: notification.inventoryId.spaceId._id})}>check the changes</Button>}
+                    {typeUser==="lender" && status==="updated-element" && <Button onClick={()=>history.push({pathname:"/lender/admin",externalSpaceId: notification.inventoryId.spaceId._id})}>Check the changes</Button>}
             </Card.Footer>
         </Card>
     )

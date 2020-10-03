@@ -328,7 +328,7 @@ export const getFilterSpacesHome = async (queryString) => {
     try {
         const response = await axios({
             method: "GET",
-            baseURL:`http://localhost:4000/space/tenant`,
+            baseURL:`${process.env.REACT_APP_SERVER_URL}/space/tenant`,
             url: queryString
           })
           return response
@@ -372,7 +372,7 @@ export const deleteTenant = async(tenantId, typeUser) => {
         throw(err)
     }
 }
-const host = "http://127.0.0.1:4000";
+const host = process.env.REACT_APP_SERVER_URL;
 
 export const registerSubscription = async(path, body) => {
     try {

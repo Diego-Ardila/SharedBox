@@ -87,10 +87,10 @@ export default function PhotosEditor({space,show,onHide}) {
             data.append('file', file, file.name)
           })
           await postPhotosFiles(data)
-          swal("register successful","your photos were saved succesfully","success")
+          swal("Register successfully","Your photos were saved succesfully","success")
         }
         catch(err){
-          swal("updating photos error", "something went wrong, please try again", "error")
+          swal("Updating photos error", "Something went wrong, please try again", "error")
         }
         setFiles([])
       }

@@ -42,7 +42,7 @@ const Header = () => {
                 <NotificationsNavbar notifications={notifications} onClick={handleClick} />                        
               </NavDropdown>         
               <Image src={userPhoto} width={50} height={50} roundedCircle fluid thumbnail />            
-              <NavDropdown id="collasible-nav-dropdown" title={userName}>           
+              <NavDropdown alignRight id="collasible-nav-dropdown" title={userName}>           
                 <NavLink to="/user/profile" className="nav-link">Profile</NavLink>   
                 <NavLink to={`/${typeUser}/admin`} className="nav-link">Admin</NavLink>
                 <NavLink to={{pathname: "/user/logout",
