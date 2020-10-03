@@ -99,7 +99,7 @@ function LoginForm () {
                         <Form.Row className="justify-content-center" >
                             <Col className="col-lg-6" >
                                 <Form.Group controlId={base.emailId}>
-                                <Form.Label>EMAIL</Form.Label>
+                                <Form.Label>Email</Form.Label>
                                 <Form.Control name="email" type="text" placeholder="me@email.com" onChange ={handleChange} value={values.email} className={touched.email && errors.email ? "is-invalid" : null}  />
                                 {touched.email && errors.email ? (
                                     <div className="error-message">{errors.email}</div>
@@ -110,7 +110,7 @@ function LoginForm () {
                         <Form.Row className="justify-content-center">
                             <Col className="col-lg-6">
                                 <Form.Group controlId={base.passwordId}>
-                                <Form.Label>PASSWORD</Form.Label>
+                                <Form.Label>Password</Form.Label>
                                 <Form.Control name="password" type="password" placeholder="xxxxxx" onChange ={handleChange} value={values.password} className={touched.password && errors.password ? "is-invalid" : null}  />
                                 {touched.password && errors.password ? (
                                     <div className="error-message">{errors.password}</div>

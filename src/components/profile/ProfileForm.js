@@ -69,7 +69,7 @@ function ProfileForm(){
                 setProfilePhoto(userData.data.profilePhoto)
             }
             catch(err){
-                swal("profile error", "something went wrong, please try again", "error")
+                swal("Profile error", "Something went wrong, please try again", "error")
             }
         }
         getDatesUser()
@@ -92,11 +92,11 @@ function ProfileForm(){
                 const response = await postUserPhotosFiles(typeUser,data)
                 dispatch(changeUserPhoto(response.data.profilePhoto))
                 localStorage.setItem("userPhoto", response.data.profilePhoto)  
-                swal("update successful","your changes to your profile were saved succesfully","success")
+                swal("Update successful","Your changes to your profile were saved succesfully","success")
                 setStateView(!stateView)
             }
             catch(err){
-                swal("update error", "something went wrong, please try again", "error")                 
+                swal("Update error", "Something went wrong, please try again", "error")                 
             }
         }else{
             setStateView(!stateView)
@@ -106,7 +106,7 @@ function ProfileForm(){
     const formSchema = Yup.object().shape({
         name : Yup.string().required("Required Field"),
         email: Yup.string().email().required("Required Field"),
-        phoneNumber : Yup.number().test('len', 'Must be exactly 10 characters', val => val && val.toString().length === 10 ),
+        phoneNumber : Yup.number().typeError('Value must be a number').test('len', 'Must be exactly 10 characters', val => val && val.toString().length === 10 ),
         country : Yup.string().required("Required Field"),
         city : Yup.string().required("Required Field"),
         files: Yup.array(),
