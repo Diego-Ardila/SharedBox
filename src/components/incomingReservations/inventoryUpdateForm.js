@@ -5,14 +5,14 @@ import {Question} from 'react-bootstrap-icons'
 import {Col, Button, Container, Form, Card, Row, Popover, OverlayTrigger} from "react-bootstrap"
 import './incomingReservation.css'
 
-export default function InvetoryUpdateForm({handleUpdateElement,element}){
+export default function InventoryUpdateForm({handleUpdateElement,element}){
       
     const validatorForm = Yup.object().shape({
         object : Yup.string().required("Required Field"),
-        description : Yup.string().max(200,"maximum 200 characters").required("Required Field"),
+        description : Yup.string().max(200,"Maximum 200 characters").required("Required Field"),
         category : Yup.string().required("Required Field"),
-        value : Yup.number().min(1,"requiered average minimun 1 "),
-        quantity: Yup.number().min(1,"requiered minimun 1 object")
+        value : Yup.number().typeError('Value must be a number').min(1,"Value must to be greater than 1 "),
+        quantity: Yup.number().typeError('Value must be a number').min(1,"Value must to be greater than 1")
     })
 
 return(  
@@ -96,13 +96,13 @@ return(
                                     </OverlayTrigger>
                                     <Form.Control as="select" name="category"  value={values.category} onChange = {handleChange} className={touched.category && errors.category ? "is-invalid" : null} >
                                     <option> </option>
-                                    <option>arts and crafts</option>
-                                    <option>automobile</option>
-                                    <option>books</option>
-                                    <option>computers</option>
-                                    <option>electronics</option>
-                                    <option>home and Kitchen</option>
-                                    <option>apparels and clothing</option>
+                                    <option>Arts and crafts</option>
+                                    <option>Automobile</option>
+                                    <option>Books</option>
+                                    <option>Computers</option>
+                                    <option>Electronics</option>
+                                    <option>Home and Kitchen</option>
+                                    <option>Apparels and clothing</option>
                                     <option>Industrial</option>
                                     <option>Sport elements</option>
                                     <option>Tools and Home repair</option>
@@ -149,10 +149,10 @@ return(
                                                 <Popover.Title as="h3">Description</Popover.Title>
                                                 <Popover.Content>
                                                     <Row className="m-3">
-                                                        In this field write a small description of objects <strong className="ml-2">maximum 200 characters</strong>
+                                                        In this field write a small description of objects <strong className="ml-2">Maximum 200 characters</strong>
                                                     </Row>
                                                     <Row className="m-3">
-                                                    <strong className="mr-2">Example: </strong> it is books reds.
+                                                    <strong className="mr-2">Example: </strong> It is books reds.
                                                     </Row>
                                                 </Popover.Content>
                                             </Popover>
@@ -166,7 +166,7 @@ return(
                                 </Form.Group>
                             </Col>
                         </Form.Row>
-                        <Button type = "submit" className="col-lg-4 m-2" variant={"primary"}>update</Button>
+                        <Button type = "submit" className="col-lg-4 m-2" variant={"primary"}>Update</Button>
                     </Card>
                 </Form>
             )}

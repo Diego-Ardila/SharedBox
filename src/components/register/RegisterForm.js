@@ -30,7 +30,7 @@ const RegisterForm = (props) => {
     const formSchema = Yup.object().shape({   
         name: Yup.string().required("Required Field"),
         email: Yup.string().email().required("Required Field"),
-        phoneNumber: Yup.number().test('len', 'Must be exactly 10 characters', val => val && val.toString().length === 10 ),
+        phoneNumber: Yup.number().typeError('Value must be a number').test('len', 'Must be exactly 10 characters', val => val && val.toString().length === 10 ),
         password: Yup.string().required("Required Field"),
         v_password: Yup.string().oneOf([Yup.ref('password')], "Passwords must match").required("Required Field"),
         files: Yup.array().required("Required Field").min(0,"Photos are not required").max(1,"The maximum amount of photos allowed are 1")
@@ -64,7 +64,7 @@ const RegisterForm = (props) => {
             const response = await postUserPhotosFiles(props.typeUser,data)
             dispatch(changeUserPhoto(response.data.profilePhoto))
             localStorage.setItem("userPhoto", response.data.profilePhoto)  
-            swal("register successful","your registred were saved succesfully","success")
+            swal("Register successfully","Your registration were saved succesfully","success")
             history.push(props.typeUser==="lender" ? `/user/profile`: '/tenant/admin')
         }catch(err){
             swal("error", `${err.response.data}`, "error")

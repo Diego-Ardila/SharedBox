@@ -38,6 +38,7 @@ export default function TagManager () {
  
     return (
         <ReactTags
+        className="justify-content-center"
         ref={reactTags}
         tags={tags}
         suggestions={suggestions}

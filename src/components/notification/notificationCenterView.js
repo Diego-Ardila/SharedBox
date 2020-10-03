@@ -54,7 +54,7 @@ export default function NotificationCenterView ({navbarId}){
                      
                         <Card  className="m-4" border="dark" >
                             <Card.Header  className="text-center" > 
-                                <Card.Title as="h3"> no new notifications now, come back letter</Card.Title>
+                                <Card.Title as="h3"> There aren't new notifications now, come back later</Card.Title>
                             </Card.Header>
                             <Card.Body className="text-center">
                                 <Button onClick={()=>history.push("/home")}>Come to home</Button>

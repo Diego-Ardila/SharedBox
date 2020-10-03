@@ -21,7 +21,7 @@ export default function InventoryUpdateModal({showModal,onHide,inventoryId,chang
                    const elemes = await getElementsByInventoryId(inventoryId)
                     setElements(elemes) 
                 }catch(err){
-                    swal ("get elements Failed", "Failed connection to dataServer, check your connection to the internet and try again later", "error") 
+                    swal ("Elements got failed", "Failed connection to dataServer, check your connection to the internet and try again later", "error") 
                 }            
             }
         newElements()
@@ -38,7 +38,7 @@ export default function InventoryUpdateModal({showModal,onHide,inventoryId,chang
             setSelected("")
             setElementRejected(false)
         }catch(err){
-            swal ("update Failed", "Failed connection to dataServer, check your connection to the internet and try again later", "error") 
+            swal ("Update Failed", "Failed connection to dataServer, check your connection to the internet and try again later", "error") 
         }        
     }    
 
@@ -61,10 +61,10 @@ export default function InventoryUpdateModal({showModal,onHide,inventoryId,chang
     return(
         <Modal className="modalUpdateInventory" show={showModal} onHide = {()=>handleCloseModal()} size="xl">
             <Modal.Header closeButton={true} >
-                <Modal.Title>update what are you going to store</Modal.Title>
+                <Modal.Title>Update what are you going to store</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            {elementRejected && <p>please update the Object</p>}
+            {elementRejected && <p>Please update the Object</p>}
                 <Row>
                     <Col className="col-lg-5">
                         <InventoryUpdateRendericer elements={elements} handleSelect={handleSelectElement} selected={selected} showMenssageReject={showMenssageReject}/>
