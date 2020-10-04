@@ -35,7 +35,7 @@ export default function PhotosUploadForm () {
         dispatch(changePublishAreaView(5))
     }
 
-    const redirectBack = () => dispatch(changePublishAreaView(2))
+    const redirectBack = () => dispatch(changePublishAreaView(3))
     
     return(
         <Formik 
@@ -46,12 +46,12 @@ export default function PhotosUploadForm () {
         handleSubmit, handleChange, values, touched, isValid, errors, setFieldValue
         }) => (  
             <>            
-            <Container>    
+            <Container >    
                 <Row className="justify-content-center mt-4">
                     <h3>Register Photos</h3>         
                 </Row>
                 <Row className="justify-content-center">                    
-                    <Form className="justify-content-center mt-3 mb-5" onSubmit={handleSubmit} noValidate>
+                    <Form className="justify-content-center mt-3 mb-5 p-3" onSubmit={handleSubmit} noValidate>
                         <h6>Share some photos of your space! 
                             It will be more appealing for people looking where to store their things
                         </h6>
