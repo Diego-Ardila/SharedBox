@@ -1,12 +1,13 @@
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Container, Form, Row,  Button} from 'react-bootstrap'
-import {ArrowLeft} from 'react-bootstrap-icons';
+import {ArrowLeft, Display} from 'react-bootstrap-icons';
 import {changePublishAreaView,
     changeCity,
     changeAddress} from "../../actions/publishArea.actions"
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import "./LocationForm.scss"
 
 const base =  {
     locationCityId: "locationCity",
@@ -42,35 +43,37 @@ export default function LocationForm () {
         handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, setValues
         }) => (  
             <>            
-            <Container>    
+            <Container className="p-3">   
                 <Row className="justify-content-center">
-                    <h1>Register Location</h1>         
-                </Row>
-                <Row md={{span: 4, offset: 4}} lg={{span: 4, offset: 4}}>
-                    <Button variant="primary" size="lg" onClick={redirectBack}>
-                        <ArrowLeft />
-                    </Button>
+                    <h4>Register Location</h4>         
                 </Row>
                 <Row className="justify-content-center">                    
-                    <Form className="justify-content-center mt-3" onSubmit={handleSubmit} noValidate>
-                        <h3>Now let's talk about the location:</h3>
-                        <Form.Group controlId={base.locationCityId}>
-                            <Form.Label>City</Form.Label>
-                            <Form.Control className={touched.city && errors.city ? "is-invalid" : null} name="city" type="text" placeholder="Enter City" onChange ={handleChange} value={values.city} />
-                            {touched.city && errors.city ? (
-                                <div className="error-message">{errors.city}</div>
-                            ): null}
-                        </Form.Group>
-                        <Form.Group controlId={base.locationAddressId}>
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control className={touched.address && errors.address ? "is-invalid" : null} name="address" type="text" placeholder="Enter Address" onChange ={handleChange} value={values.address} />
-                            {touched.address && errors.address ? (
-                                <div className="error-message">{errors.address}</div>
-                            ): null}
-                        </Form.Group>                        
-                        <Button variant="primary" size="lg" type="submit">
-                            Next
-                        </Button>
+                    <Form className="d-grid justify-content-center mt-3" onSubmit={handleSubmit} noValidate>
+                        <div className="location-form-div">
+                            <div className="location-form">
+                                <h6>Now let's talk about the location:</h6>
+                                <Form.Group controlId={base.locationCityId}>
+                                    <Form.Label>City</Form.Label>
+                                    <Form.Control className={touched.city && errors.city ? "is-invalid" : null} name="city" type="text" placeholder="Enter City" onChange ={handleChange} value={values.city} />
+                                    {touched.city && errors.city ? (
+                                        <div className="error-message">{errors.city}</div>
+                                    ): null}
+                                </Form.Group>
+                                <Form.Group controlId={base.locationAddressId}>
+                                    <Form.Label>Address</Form.Label>
+                                    <Form.Control className={touched.address && errors.address ? "is-invalid" : null} name="address" type="text" placeholder="Enter Address" onChange ={handleChange} value={values.address} />
+                                    {touched.address && errors.address ? (
+                                        <div className="error-message">{errors.address}</div>
+                                    ): null}
+                                </Form.Group> 
+                            </div>
+                                <Button className="form-btn-last" variant="primary" size="lg" onClick={redirectBack}>
+                                    <ArrowLeft />
+                                </Button>                        
+                                <Button className="form-btn-next" variant="primary" size="lg" type="submit">
+                                    Next
+                                </Button>
+                        </div>
                     </Form>        
                 </Row>                     
             </Container>

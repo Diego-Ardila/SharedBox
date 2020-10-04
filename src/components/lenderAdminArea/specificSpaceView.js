@@ -77,11 +77,11 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   }
 
   const reservedDates = isLogged ? <>
-    <h2> Your reservations:</h2>      
+    <h4> Your reservations:</h4>      
       {renderingSpace.dateReservedId && renderingSpace.dateReservedId.length > 0 ? renderingSpace.dateReservedId.map(elem => <>    
         <Row className="justify-content-center mb-2">
-          <h2><Badge variant="info">{moment(elem.initialDate).format("DD MMM YYYY")}</Badge></h2><h2>-</h2>
-          <h2><Badge variant="info">{moment(elem.finalDate).format("DD MMM YYYY")}</Badge></h2>
+          <h4><Badge variant="info">{moment(elem.initialDate).format("DD MMM YYYY")}</Badge></h4><h4>-</h4>
+          <h4><Badge variant="info">{moment(elem.finalDate).format("DD MMM YYYY")}</Badge></h4>
         </Row>    
       </>
       ) 
@@ -91,12 +91,12 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
     <React.Fragment>
       {loading ? "loading" : (
         <React.Fragment>
-          <Row className="m-2 mt-4">
-              <RoundedBttn className="ml-4" onClick={changeViewToDisplay()()}><ArrowLeftShort size={30}></ArrowLeftShort></RoundedBttn>
+          <Row className="mb-2">
+              <Button className="ml-4" onClick={changeViewToDisplay()()}><ArrowLeftShort size={30}></ArrowLeftShort></Button>
           </Row>
           <Row className="row justify-content-center p-3">
             <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
-              <h2>{renderingSpace.title}</h2>  {!edit && <Button onClick={()=> { isLogged ?
+              <h4>{renderingSpace.title}</h4>  {!edit && <Button onClick={()=> { isLogged ?
               setShowModalInventory(true) 
               : swal("Denied Access", "Please login as a tenant user for reserve spaces", "error").then((value) => history.push("/user/login") )  }} >Reserve this space!!</Button>}
               <PhotosAdministrator className =" position-relative">

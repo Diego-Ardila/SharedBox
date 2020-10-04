@@ -1,10 +1,12 @@
 body {
   margin: 0;
   padding: 0;
- 
+ overflow-x: hidden ;
 }
 .App{
-  min-height: 90vh;
+  min-height: 81vh;
+  display: grid;
+  align-content: center;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

@@ -1,3 +1,7 @@
+.header{
+    min-height: 10vh;
+}
+
 .dropdown-menu.show {
     z-index: 1030;
 }

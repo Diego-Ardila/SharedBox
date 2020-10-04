@@ -80,8 +80,8 @@ function App() {
   return (
     <Router>      
       <TitleComponent title={`${title} SharedBox`} />
+      <Header />
       <div className="App">
-        <Header />
         <Switch>
           <Route exact path="/lender/frequentAsked" component={frequentAsked} />
           <Route exact path="/home" component={Home} />
