@@ -23,7 +23,7 @@ const NotificationNavbar = ({ notification, onClick }) => {
     <Card hover style={{width: '328px'}} className="ml-2 mr-2 border-0">
       <Row>
         <Col lg={4} md={4}>
-          <Image rounded width={100} height={70} src={notification.inventoryId.spaceId.photos[0]}/>          
+          <Image rounded width={100} height={70} src={notification.inventoryId.spaceId.photos[0] || 'https://www.freeiconspng.com/uploads/no-image-icon-15.png'}/>          
         </Col>
         <Col lg={8} md={8}>                      
             <Card.Text>

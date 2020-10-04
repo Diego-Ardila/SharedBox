@@ -2,7 +2,7 @@ import React,{ useState } from "react"
 import { loginUser } from "../../utils/HTTPrequests"
 import {Formik} from "formik"
 import * as Yup from "yup";
-import { Container, Card, Form, Button, Col, Image } from "react-bootstrap"
+import { Container, Card, Form, Button, Col, Image, Spinner } from "react-bootstrap"
 import Logo from "../../logo.svg";
 import { useDispatch } from "react-redux";
 import { changeLogin, changeTypeUser, changeUserName } from '../../actions/loginUser.actions'
@@ -46,7 +46,7 @@ function LoginForm () {
         }
     } 
     
-    const handleSubmit = async (values, {setErrors}) =>  {
+    const handleSubmit = async (values, {setErrors},actions) =>  {
         try { 
             
         const {token, name} = await loginUser(values,typeUser)
@@ -57,6 +57,7 @@ function LoginForm () {
         dispatch(changeTypeUser(typeUser))
         dispatch(changeUserName(name))
         history.push("/home")
+        actions.setSubmitting(false)
         }
         catch(error) {
             if(error.response.status === 400) {
@@ -79,7 +80,7 @@ function LoginForm () {
             initialValues = {{email: "" ,password: ""}}
             validationSchema = {formSchema}
             onSubmit = {handleSubmit}>
-        {({handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, resetForm}) => (
+        {({handleSubmit, handleChange, handleBlur, values, isSubmitting, touched, isValid, errors, resetForm}) => (
             <Container >
                 <Card md={8} className="p-5 mt-5">
                     <Form onSubmit={handleSubmit} className="justify-content-center mt-3">
@@ -119,7 +120,8 @@ function LoginForm () {
                             </Col>  
                         </Form.Row>
                         <Form.Row className="justify-content-center">
-                            <Button type ="submit">LOGIN</Button>
+                            {isSubmitting ? <Spinner animation="border" variant="primary" size="xl" /> : null}
+                            <Button disabled={isSubmitting} type ="submit">LOGIN</Button>
                         </Form.Row>
                         <Form.Row className="justify-content-center mt-5">
                             <Link to="/user/register" onClick={()=>localStorage.setItem("typeUser","tenant")}>Create account</Link>
