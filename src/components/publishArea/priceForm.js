@@ -87,16 +87,11 @@ export default function PriceForm () {
             <>            
             <Container>    
                 <Row className="justify-content-center">
-                    <h1>Register Price</h1>         
-                </Row>
-                <Row md={{span: 4, offset: 4}} lg={{span: 4, offset: 4}}>
-                    <Button variant="primary" size="lg" onClick={redirectBack}>
-                        <ArrowLeft />
-                    </Button>
+                    <h3>Register Price</h3>         
                 </Row>
                 <Row className="justify-content-center">                    
-                    <Form className="justify-content-center mt-3" onSubmit={handleSubmit} noValidate>
-                        <h3>Finally, lets talk about money:</h3>
+                    <Form className="justify-content-center mt-3 p-3" onSubmit={handleSubmit} noValidate>
+                        <h6>Finally, lets talk about money:</h6>
                         {isSubmitting ? <Spinner animation="border" variant="primary" size="xl" /> : null}
                         <InputGroup>
                         <Form.Group controlId={base.priceId}>
@@ -106,10 +101,15 @@ export default function PriceForm () {
                                 <div className="error-message">{errors.price}</div>
                             ): null}
                         </Form.Group>  
-                        </InputGroup>                     
-                        <Button disabled={isSubmitting} variant="primary" size="lg" type="submit">
-                            Next
-                        </Button>
+                        </InputGroup>
+                        <Container className="text-center">
+                            <Button className="mr-3" variant="primary" size="lg" onClick={redirectBack}>
+                                <ArrowLeft />
+                            </Button>                      
+                            <Button disabled={isSubmitting} variant="primary" size="lg" type="submit">
+                                Next
+                            </Button>
+                        </Container>                     
                     </Form>        
                 </Row>                     
             </Container>

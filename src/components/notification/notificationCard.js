@@ -1,6 +1,7 @@
  import {Card,Badge,Row} from 'react-bootstrap'
  import React from 'react'
  import {Check2Square,ExclamationSquare,XSquare} from 'react-bootstrap-icons'
+ import './notificationCenterView.scss'
   
  export default function CardNotification ({notification, setValuesCard, selected}){
     
@@ -46,23 +47,29 @@
             message.tenantBody = `You want to reserved the space ${titleSpace} from ${initialDate} to ${finalDate}`;
             colorBadge="warning"
             break;
-        case "rejected-element":
+        case "element-rejected":
             message.lenderHeader = `You sended inconsistencies between objects received for the space ${titleSpace}`;
             message.lenderBody = `The user ${nameTenant} has received inconsistencies that you identified for your space ${titleSpace}, please wait for the  answer `;
             message.tenantHeader = `The user ${nameLender} has pointed out that there is an inconsistancy between what you said you would bring to the space ${titleSpace} and what he/she recieved.`;
             message.tenantBody = `Don´t worry! just check your inventory and clarify any misleading information. This is necesary to guarantee that we can cover all your products just in case something were to happen.`;
             colorBadge="warning"
             break;
-        case "updated-element":
+        case "element-updated":
             message.lenderHeader = `The tenant ${nameTenant} updated to the elements of the inventory for the space ${titleSpace}`;
             message.lenderBody = `The user ${nameTenant} updated the inventory elements for your space ${titleSpace}, please check to changes.`;
             message.tenantHeader = `The user ${nameLender} has received the changes of the elements for the space ${titleSpace}, please wait for his answer.`;
             message.tenantBody = `The user ${nameLender} has received the changes of the elements for the space ${titleSpace} and  is checking now there not inconsistency`;
             colorBadge="warning"
             break;
+        case "element-accepted":
+            message.lenderHeader = `your have accepted the elements of ${nameTenant} that you have store now in your space.`;
+            message.lenderBody = `The tenant ${nameTenant} now has its elements in your space ${titleSpace}.`;
+            message.tenantHeader = `The lender ${nameLender} has accepted the elementes that are  stored in the space ${titleSpace}.`;
+            message.tenantBody = `The user ${nameLender} has accepted the elementes that are  stored in the space ${titleSpace}.`;
+            colorBadge="success"
+            break;
         default:
-            break
-
+            break;
     }
 
     return (
@@ -71,15 +78,15 @@
                 <Card   id={notification._id} 
                         key={notification._id}                         
                         onClick={(e)=>{setValuesCard(e,notification)}} 
-                        className="m-4 notificationCard" 
+                        className={`m-4 notificationCard ${notification._id === selected && "select"}`}
                         border="primary" 
-                        bg={notification._id === selected ? "secondary" : null } 
-                        text={notification._id === selected ? "white" : null }>
-                    <Card.Header> 
-                        <Card.Title>{typeUser==="lender" ? message.lenderHeader : message.tenantHeader}</Card.Title>
+                        bg={notification._id === selected && "secondary"} 
+                        text={notification._id === selected && "white"}>
+                    <Card.Header > 
+                        <Card.Title as = "h6">{typeUser==="lender" ? message.lenderHeader : message.tenantHeader}</Card.Title>
                     </Card.Header>
                     <Card.Body>
-                        <Card.Text>{typeUser==="lender" ? message.lenderBody : message.tenantBody}</Card.Text>
+                        <Card.Text >{typeUser==="lender" ? message.lenderBody : message.tenantBody}</Card.Text>
                     </Card.Body>
                     <Card.Footer>
                         <Row>
@@ -88,9 +95,11 @@
                                 {status === "accept" && <Check2Square size = {25}/>}
                                 {status === "paid" && <Check2Square size = {25}/>}
                                 {status === "reject" && <XSquare size = {25}/>}
-                                {status === "rejected-element" && <XSquare size = {25}/>}
-                                {status === "updated-element" && <ExclamationSquare size = {25}/>}
+                                {status === "element-rejected" && <XSquare size = {25}/>}
+                                {status === "element-accepted" && <Check2Square size = {25}/>}
+                                {status === "element-updated" && <ExclamationSquare size = {25}/>}
                                 {status === "pending" && <ExclamationSquare size = {25}/>}
+                                
                             </Badge>
                         </Row>
                     </Card.Footer>

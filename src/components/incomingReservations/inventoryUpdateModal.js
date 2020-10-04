@@ -31,7 +31,7 @@ export default function InventoryUpdateModal({showModal,onHide,inventoryId,chang
     const handleUpdateElement =  async (values)=>{
         try {
             const {id,...rest}=values
-            const data = {...rest,status:"updated",comment:"",errorCategory:"select"}
+            const data = {...rest,status:"element-updated",comment:"",errorCategory:"select"}
             await updateElements(id,data)
             change()
             setElement({})

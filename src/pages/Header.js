@@ -41,7 +41,7 @@ const Header = () => {
               <NavDropdown open={expanded} alignRight onClick={() => setExpanded(true)} onBlur={()=>setExpanded(true)} id="collasible-nav-dropdown" className="mr-4" title={<><BellFill size={25} /><Badge variant="light">{notifications.length}</Badge></>}>         
                 <NotificationsNavbar notifications={notifications} onClick={handleClick} />                        
               </NavDropdown>         
-              <Image src={userPhoto} width={50} height={50} roundedCircle fluid thumbnail />            
+              <Image className="userPhoto" src={userPhoto} width={50} height={50} roundedCircle fluid thumbnail />            
               <NavDropdown alignRight id="collasible-nav-dropdown" title={userName}>           
                 <NavLink to="/user/profile" className="nav-link">Profile</NavLink>   
                 <NavLink to={`/${typeUser}/admin`} className="nav-link">Admin</NavLink>

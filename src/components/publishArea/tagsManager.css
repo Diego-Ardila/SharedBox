@@ -1,5 +1,11 @@
 .react-tags {
-    width: 375px;
+    width: 370px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    grid-template-areas: 
+    "search"
+    "tags";
 }
 
 .react-tags__selected{
@@ -8,22 +14,28 @@
     justify-content: center;
     align-content: center;
     align-items: center;
-    /* flex-wrap: wrap; */
-
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    grid-area: tags;
+}
+.react-tags__search-wrapper{
+    display:grid;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    margin-bottom: 16px;
+    grid-area: search;
 }
 
 .react-tags__search-input {
-    width: 310px;
-    height: 43px;
+    width: 200px;
+    height: 36px;
     left: 455px;
-    top: 682px;
-    background: #318FB5;
-    opacity: 0.4;
-    border-radius: 40px;
+    top: 682px;;
     text-align: center;
     outline: none;
-    color: #001244;
-    font-weight: bold;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
 }
 .react-tags__search-input:hover {
     box-shadow: 0 0 3pt 2pt #B0CAC7;
