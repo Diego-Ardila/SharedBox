@@ -14,10 +14,11 @@ import FrequentAskedQuestions from "../../pages/frequentAsked";
 import ModalInventory from "../Inventory/inventoryModal"
 import Calendar from "../viewSpaces/calendar";
 import PriceAdministrator from "./PriceAdministrator";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import moment from "moment"
 import {getFilterSpaces} from '../../utils/HTTPrequests'
 import InventoryCheck from "./InventoryCheck";
+import swal from "sweetalert";
 
 const RoundedBttn = styled.button`
     cursor: pointer;
@@ -40,6 +41,8 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   const [endDate, setEndDate] = useState(edit ? null : moment(locationQuery.search.slice(59),"YYYY-MM-DD"))
   const [calendarIsOpen, setCalendarIsOpen] = useState(false)
   const [renderingSpace, setRenderingSpace] = useState(spaces.find( space => space._id === spaceId))
+
+  let history = useHistory();
   
   useEffect(()=>{
     dispatch(changePhotos(renderingSpace.photos))
@@ -93,7 +96,9 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
           </Row>
           <Row className="row justify-content-center p-3">
             <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
-              <h4>{renderingSpace.title}</h4>  {!edit && <Button onClick={()=> setShowModalInventory(true)} >Reserve this space!!</Button>}
+              <h4>{renderingSpace.title}</h4>  {!edit && <Button onClick={()=> { isLogged ?
+              setShowModalInventory(true) 
+              : swal("Denied Access", "Please login as a tenant user for reserve spaces", "error").then((value) => history.push("/user/login") )  }} >Reserve this space!!</Button>}
               <PhotosAdministrator className =" position-relative">
                 {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
               </PhotosAdministrator>
