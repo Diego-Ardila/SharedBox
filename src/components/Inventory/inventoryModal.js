@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Modal, Col, Button, Container, Form, Card, Row, Popover, OverlayTrigger} from "react-bootstrap"
+import {Modal, Col, Button, Container, Form, Card, Row, Popover, OverlayTrigger, Spinner} from "react-bootstrap"
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import InventoryRendericer from './inventoryRendericer'
@@ -12,6 +12,7 @@ import usePushNotifications from '../notifications/usePushNotifications'
 export default function ModalInventory(props){
     
     let [elements,setElements] = useState([])
+    let [submitForm, setSubmitForm] = useState(false)
     const spaceId = props.space._id
     const lenderId = props.space.lenderId
     const initialDate = props.initialDate
@@ -40,6 +41,7 @@ export default function ModalInventory(props){
     }
 
     const handleToAxios = async (finalDate,initialDate,elements,spaceId,lenderId) => {
+        setSubmitForm(true)
         if (elements.length !== 0){
             try{
                 const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
@@ -58,14 +60,17 @@ export default function ModalInventory(props){
                     }
                     await onClickSendNotification(payload)
                 }
-                props.onHide()              
+                props.onHide()
+                props.updateSpace()          
                 swal("Reservation request sent","Your reservation request was sent succesfully","success")
-                
+                setSubmitForm(false)
             }catch(err){
                 swal("Reservation error", "Something went wrong, please try again", "error")
+                setSubmitForm(false)
             }
         }else{
             swal("Reservation request error", "To reserve this space, you need to have elements added to the inventory", "error")
+            setSubmitForm(false)
         }
         
     }
@@ -246,7 +251,8 @@ return(
             </Container>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={()=>{handleToAxios(finalDate,initialDate,elements,spaceId,lenderId)}}>Save</Button>
+            {submitForm ? <Spinner animation="border" variant="primary" size="xl" /> : null}
+            <Button disabled={submitForm} onClick={()=>{handleToAxios(finalDate,initialDate,elements,spaceId,lenderId)}}>Save</Button>
         </Modal.Footer>
     </Modal>
 )

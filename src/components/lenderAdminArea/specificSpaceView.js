@@ -54,7 +54,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
     setEditFAQ(false)
   }
 
-  const createdFaq = async () => {  
+  const updateRenderingSpace = async () => {  
     let newSpace = await getFilterSpaces(`?_id=${spaceId}`)
     setRenderingSpace(newSpace[0])
   }  
@@ -97,7 +97,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               <PhotosAdministrator className =" position-relative">
                 {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
               </PhotosAdministrator>
-              <ModalInventory finalDate={endDate} initialDate={startDate} space={renderingSpace} show={showModalInventory} onHide={()=>setShowModalInventory(false)} ></ModalInventory>
+              <ModalInventory finalDate={endDate} initialDate={startDate} space={renderingSpace} show={showModalInventory} onHide={()=>setShowModalInventory(false)} updateSpace={updateRenderingSpace} ></ModalInventory>
               <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
               <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
             </Col>
@@ -135,7 +135,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               </Row>
               <Row>
                 <Col className="col-12 d-inline-flex flex-column justify-content-center">
-                  {editFAQ && <FrequentAskedQuestions setEditFAQ ={hideEditFAQ} spaceId ={spaceId} createdFaq={createdFaq}></FrequentAskedQuestions>}
+                  {editFAQ && <FrequentAskedQuestions setEditFAQ ={hideEditFAQ} spaceId ={spaceId} createdFaq={updateRenderingSpace}></FrequentAskedQuestions>}
                 </Col>
               </Row>
             </React.Fragment>
