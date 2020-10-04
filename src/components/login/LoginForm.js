@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { Container, Card, Form, Button, Col, Image, Spinner } from "react-bootstrap"
 import Logo from "../../logo.svg";
 import { useDispatch } from "react-redux";
-import { changeLogin, changeTypeUser, changeUserName } from '../../actions/loginUser.actions'
+import { changeLogin, changeTypeUser, changeUserName, changeUserPhoto  } from '../../actions/loginUser.actions'
 import { Link, useHistory } from 'react-router-dom';
 import swal from 'sweetalert'
 
@@ -49,13 +49,15 @@ function LoginForm () {
     const handleSubmit = async (values, {setErrors},actions) =>  {
         try { 
             
-        const {token, name} = await loginUser(values,typeUser)
+        const {token, name, profilePhoto} = await loginUser(values,typeUser)
         localStorage.setItem("typeUser",typeUser)
         localStorage.setItem("token",token)
         localStorage.setItem("userName",name)
+        localStorage.setItem("userPhoto",profilePhoto)
         dispatch(changeLogin(true))
         dispatch(changeTypeUser(typeUser))
         dispatch(changeUserName(name))
+        dispatch(changeUserPhoto(profilePhoto))
         history.push("/home")
         actions.setSubmitting(false)
         }
