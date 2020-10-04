@@ -47,6 +47,10 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
             message.lenderHeader = `The user ${nameTenant} updated to the inventory elements for your space ${titleSpace}, your should check the objects again`;
             message.tenantHeader = `The user ${nameLender} has received the changes of the elements to validate that everything is fine`;
             break;
+        case "element-accepted":
+            message.lenderHeader = `The tenant ${nameTenant} now has its elements in your space ${titleSpace} from ${initialDate} to  ${finalDate}.`;
+            message.tenantHeader = `The user ${nameLender} has accepted the elementes that are  stored in the space ${titleSpace} from ${initialDate} to  ${finalDate}.`;
+            break;
         default:
             break;
     }

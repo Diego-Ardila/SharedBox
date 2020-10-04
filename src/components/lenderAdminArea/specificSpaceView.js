@@ -95,16 +95,18 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
               <Button className="ml-4" onClick={changeViewToDisplay()()}><ArrowLeftShort size={30}></ArrowLeftShort></Button>
           </Row>
           <Row className="row justify-content-center p-3">
-            <Col xs={12} lg={6} md={6} className="col-6 d-inline-flex flex-column justify-content-center">
-              <h4>{renderingSpace.title}</h4>  {!edit && <Button onClick={()=> { isLogged ?
-              setShowModalInventory(true) 
-              : swal("Denied Access", "Please login as a tenant user for reserve spaces", "error").then((value) => history.push("/user/login") )  }} >Reserve this space!!</Button>}
-              <PhotosAdministrator className =" position-relative">
-                {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
-              </PhotosAdministrator>
-              <ModalInventory finalDate={endDate} initialDate={startDate} space={renderingSpace} show={showModalInventory} onHide={()=>setShowModalInventory(false)} updateSpace={updateRenderingSpace} ></ModalInventory>
-              <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
-              <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
+            <Col xs={12} lg={6} md={6} className="col-6 justify-content-center">
+              <div style={{alignSelf:"start"}}>
+                <h4>{renderingSpace.title}</h4>  {!edit && <Button block={true} onClick={()=> { isLogged ?
+                setShowModalInventory(true) 
+                : swal("Denied Access", "Please login as a tenant user for reserve spaces", "error").then((value) => history.push("/user/login") )  }} >Reserve this space!!</Button>}
+                <PhotosAdministrator className =" position-relative">
+                  {edit ? <EditButton onClick={()=>setShowModal(true)} className="z-index-3"></EditButton> : null}
+                </PhotosAdministrator>
+                <ModalInventory finalDate={endDate} initialDate={startDate} space={renderingSpace} show={showModalInventory} onHide={()=>setShowModalInventory(false)} updateSpace={updateRenderingSpace} ></ModalInventory>
+                <PhotosEditor show={showModal} onHide={()=>setShowModal(false)}  space={renderingSpace} ></PhotosEditor>
+                <GeneralInfoAdministrator space ={renderingSpace} edit={edit}></GeneralInfoAdministrator>
+              </div>
             </Col>
             <Col xs={12} lg={6} md={6} className="col-6 d-relative flex-column text-center justify-content-center">
               <Container className={`text-center mt-2`}  onClick={(e) => openCalendar(e)} >
