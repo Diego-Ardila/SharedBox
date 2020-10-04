@@ -18,7 +18,7 @@ export default function NotificationCenterView ({navbarId}){
     const [selected,setSelected] = useState(navbarId || "")
     const history = useHistory()
     const [render,setRender] = useState(false)
-     
+    let typeUser = localStorage.getItem("typeUser")
     
     useEffect(()=>{
         async function getNotification (){
@@ -92,7 +92,11 @@ export default function NotificationCenterView ({navbarId}){
                                 </Card.Body>
                             </Card>
                         :
-                            arrNotifications.map(notifi=>(
+                            arrNotifications.filter(notifi=>{
+                                return typeUser === "lender" ?
+                                 notifi.status !== "reject" :
+                                 true
+                            }).map(notifi=>(
                                 <Carousel.Item >
                                     <NotificationCard 
                                         className="cardNotification"

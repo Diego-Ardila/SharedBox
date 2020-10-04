@@ -6,7 +6,6 @@ body {
 .App{
   min-height: 81vh;
   display: grid;
-  justify-items: center;
   align-content: center;
 }
 code {
