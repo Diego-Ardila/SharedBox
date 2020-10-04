@@ -99,8 +99,8 @@ function App() {
           <PrivateRoute exact path="/response" component={PaymentResponse} />
           <Redirect from="*" to="/home" />
         </Switch>
-        <Footer />
       </div>
+        <Footer />
     </Router>
   );
 }

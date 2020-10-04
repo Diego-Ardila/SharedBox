@@ -1,8 +1,11 @@
 body {
   margin: 0;
   padding: 0;
+ 
 }
-
+.App{
+  min-height: 90vh;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

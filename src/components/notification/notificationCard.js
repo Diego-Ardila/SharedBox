@@ -1,6 +1,7 @@
  import {Card,Badge,Row} from 'react-bootstrap'
  import React from 'react'
  import {Check2Square,ExclamationSquare,XSquare} from 'react-bootstrap-icons'
+ import './notificationCenterView.scss'
   
  export default function CardNotification ({notification, setValuesCard, selected}){
     
@@ -61,8 +62,7 @@
             colorBadge="warning"
             break;
         default:
-            break
-
+            break;
     }
 
     return (
@@ -71,15 +71,15 @@
                 <Card   id={notification._id} 
                         key={notification._id}                         
                         onClick={(e)=>{setValuesCard(e,notification)}} 
-                        className="m-4 notificationCard" 
+                        className={`m-4 notificationCard ${notification._id === selected && "select"}`}
                         border="primary" 
-                        bg={notification._id === selected ? "secondary" : null } 
-                        text={notification._id === selected ? "white" : null }>
-                    <Card.Header> 
-                        <Card.Title>{typeUser==="lender" ? message.lenderHeader : message.tenantHeader}</Card.Title>
+                        bg={notification._id === selected && "secondary"} 
+                        text={notification._id === selected && "white"}>
+                    <Card.Header > 
+                        <Card.Title as = "h6">{typeUser==="lender" ? message.lenderHeader : message.tenantHeader}</Card.Title>
                     </Card.Header>
                     <Card.Body>
-                        <Card.Text>{typeUser==="lender" ? message.lenderBody : message.tenantBody}</Card.Text>
+                        <Card.Text >{typeUser==="lender" ? message.lenderBody : message.tenantBody}</Card.Text>
                     </Card.Body>
                     <Card.Footer>
                         <Row>
