@@ -1,0 +1,75 @@
+.notificationContainer.container{
+    min-height : 84.5vh;
+}
+.card.notificationCardInfo{
+    box-shadow: 9px 9px 14px 1px rgba(89,86,89,0.82);
+}
+.card.notificationCard{
+    transition: box-shadow 0.5s,transform 0.5s;
+    margin-bottom: 10vh;
+    margin-bottom: 50vh;
+    height: 220px;
+    $translate: -1%, -2%;
+    .card-header{
+        h6{
+            font-size: 1rem;
+        }        
+    }
+    .card-body{
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+    &:hover{
+       transform: translate($translate);
+        box-shadow: 9px 9px 14px 1px rgba(89,86,89,0.82); 
+    }
+    &.select{
+        transform: translate($translate);
+        box-shadow: 9px 9px 14px 1px rgba(89,86,89,0.82);
+    }
+}
+.confirm-notification-swal{
+    .swal-button{
+        $varScale: 1.08;
+        transition: background-color, transform 0.5s;
+        &.reject,
+        &.accept{
+            color: #fffbfb;
+            &:hover{
+                transform: scale($varScale);
+            }
+        }
+        &.reject{
+            background-color: #b60303 ;            
+            &:hover{
+                background-color: #d80505;               
+            }
+        }
+        &.accept{
+            background-color: #00AF33;
+            &:hover{
+                background-color: rgb(5, 197, 21);
+            }
+        }
+    }
+}
+
+.carousel-notification {
+    .carousel{
+        &-control-next-icon,
+        &-control-prev-icon,
+        &-indicators {
+            filter: invert(80%);
+            position: absolute;    
+        }
+        &-control-next-icon{
+        margin-left: 100%; 
+        }
+        &-control-prev-icon{
+            margin-right: 100%;
+        }
+        &-indicators{
+            margin-bottom: 1%;
+        }
+    }
+}

@@ -47,11 +47,13 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
             message.lenderHeader = `The user ${nameTenant} updated to the inventory elements for your space ${titleSpace}, your should check the objects again`;
             message.tenantHeader = `The user ${nameLender} has received the changes of the elements to validate that everything is fine`;
             break;
+        default:
+            break;
     }
 
     return (
-        <Card className="m-2 pb-5" bg="secondary" border="dark" text="white">
-            <Card.Header as="h5" className="text-center" > 
+        <Card className="m-2 notificationCardInfo" bg="secondary" border="dark" text="white">
+            <Card.Header as="h6" className="text-center" > 
                 {typeUser==="lender"? message.lenderHeader : message.tenantHeader} 
             </Card.Header>
             <Card.Body >
