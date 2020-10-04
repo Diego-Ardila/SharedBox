@@ -1,0 +1,21 @@
+.location-form-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 5fr 1fr;
+    grid-template-areas:
+    " form form" 
+    " return next";
+}
+
+.location-form {
+    grid-area: form
+}
+
+.form-btn-last{
+    grid-area: return
+}
+
+.form-btn-next{
+    grid-area: next
+}
+

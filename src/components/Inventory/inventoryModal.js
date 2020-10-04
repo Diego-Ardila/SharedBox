@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
-import {Modal, Col, Button, Container, Form, Card, Row, Popover, OverlayTrigger} from "react-bootstrap"
+import {Modal, Col, Button, Container, Form, Card, Row, Popover, OverlayTrigger, Spinner} from "react-bootstrap"
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import InventoryRendericer from './inventoryRendericer'
 import {Question} from 'react-bootstrap-icons'
-import {createElements, createNotification, createDates, updateUserReservedSpaces} from '../../utils/HTTPrequests'
+import {createElements, createNotification, createDates} from '../../utils/HTTPrequests'
 import moment from "moment"
 import swal from 'sweetalert'
 import usePushNotifications from '../notifications/usePushNotifications'
@@ -12,6 +12,7 @@ import usePushNotifications from '../notifications/usePushNotifications'
 export default function ModalInventory(props){
     
     let [elements,setElements] = useState([])
+    let [submitForm, setSubmitForm] = useState(false)
     const spaceId = props.space._id
     const lenderId = props.space.lenderId
     const initialDate = props.initialDate
@@ -40,6 +41,7 @@ export default function ModalInventory(props){
     }
 
     const handleToAxios = async (finalDate,initialDate,elements,spaceId,lenderId) => {
+        setSubmitForm(true)
         if (elements.length !== 0){
             try{
                 const newfinalDate= moment(finalDate).format("YYYY-MM-DD")
@@ -54,28 +56,31 @@ export default function ModalInventory(props){
                         text: "Your request for reservation was sent to the lender. Let's wait for his answer!!",
                         image: "/images/jason-leung-HM6TMmevbZQ-unsplash.jpg",
                         tag: "new-reservation",
-                        url: "http://localhost:3000/notification"
+                        url: `${process.env.REACT_APP_FRONT_URL}/notification`
                     }
                     await onClickSendNotification(payload)
                 }
-                props.onHide()              
-                swal("reservation request sent","your reservation request was sent succesfully","success")
-                
+                props.onHide()
+                props.updateSpace()          
+                swal("Reservation request sent","Your reservation request was sent succesfully","success")
+                setSubmitForm(false)
             }catch(err){
-                swal("reservation error", "something went wrong, please try again", "error")
+                swal("Reservation error", "Something went wrong, please try again", "error")
+                setSubmitForm(false)
             }
         }else{
-            swal("reservation request error", "to reserve this space, you need to have elements added to the inventory", "error")
+            swal("Reservation request error", "To reserve this space, you need to have elements added to the inventory", "error")
+            setSubmitForm(false)
         }
         
     }
 
     const validatorForm = Yup.object().shape({
         object : Yup.string().required("Required Field"),
-        description : Yup.string().max(200,"maximum 200 characters").required("Required Field"),
+        description : Yup.string().max(200,"Maximum 200 characters").required("Required Field"),
         category : Yup.string().required("Required Field"),
-        value : Yup.number().min(1,"requiered average minimun 1 "),
-        quantity: Yup.number().min(1,"requiered minimun 1 object")
+        value : Yup.number().typeError('Value must be a number').required("Required Field").min(1,"The minimum average value is 1 "),
+        quantity: Yup.number().typeError('Value must be a number').required("Required Field").min(1,"At least 1 object is required")
     })
 
 return(
@@ -164,13 +169,13 @@ return(
                                         </OverlayTrigger>
                                         <Form.Control as="select" name="category"  value={values.category} onChange = {handleChange} className={touched.category && errors.category ? "is-invalid" : null} >
                                         <option> </option>
-                                        <option>arts and crafts</option>
-                                        <option>automobile</option>
-                                        <option>books</option>
-                                        <option>computers</option>
-                                        <option>electronics</option>
-                                        <option>home and Kitchen</option>
-                                        <option>apparels and clothing</option>
+                                        <option>Arts and crafts</option>
+                                        <option>Automobile</option>
+                                        <option>Books</option>
+                                        <option>Computers</option>
+                                        <option>Electronics</option>
+                                        <option>Home and Kitchen</option>
+                                        <option>Apparels and clothing</option>
                                         <option>Industrial</option>
                                         <option>Sport elements</option>
                                         <option>Tools and Home repair</option>
@@ -220,7 +225,7 @@ return(
                                                             In this field write a small description of objects <strong className="ml-2">maximum 200 characters</strong>
                                                         </Row>
                                                         <Row className="m-3">
-                                                        <strong className="mr-2">Example: </strong> it is books reds.
+                                                        <strong className="mr-2">Example: </strong> It is books reds.
                                                         </Row>
                                                     </Popover.Content>
                                                 </Popover>
@@ -234,7 +239,7 @@ return(
                                     </Form.Group>
                                 </Col>
                             </Form.Row>
-                            <Button type = "submit" className="col-lg-4 m-2" variant={"primary"}>add</Button>
+                            <Button type = "submit" className="col-lg-4 m-2" variant={"primary"}>Add</Button>
                         </Card>
                     </Form>
                 )}
@@ -246,7 +251,8 @@ return(
             </Container>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={()=>{handleToAxios(finalDate,initialDate,elements,spaceId,lenderId)}}>save</Button>
+            {submitForm ? <Spinner animation="border" variant="primary" size="xl" /> : null}
+            <Button disabled={submitForm} onClick={()=>{handleToAxios(finalDate,initialDate,elements,spaceId,lenderId)}}>Save</Button>
         </Modal.Footer>
     </Modal>
 )

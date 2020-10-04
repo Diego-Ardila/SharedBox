@@ -87,10 +87,10 @@ export default function PhotosEditor({space,show,onHide}) {
             data.append('file', file, file.name)
           })
           await postPhotosFiles(data)
-          swal("register successful","your photos were saved succesfully","success")
+          swal("Register successfully","Your photos were saved succesfully","success")
         }
         catch(err){
-          swal("updating photos error", "something went wrong, please try again", "error")
+          swal("Updating photos error", "Something went wrong, please try again", "error")
         }
         setFiles([])
       }
@@ -107,10 +107,11 @@ export default function PhotosEditor({space,show,onHide}) {
           <Container>
             <Row >
               {photos && photos.map(photo =>{
+                let img = photo || 'https://www.freeiconspng.com/uploads/no-image-icon-15.png';
                 return (
                     <Col className="mb-3" sm={6} md={3} xl={3} >
                         <Photos>
-                            <Image key={photo} src={photo.url ? photo.url : photo} fluid/>
+                            <Image key={img} src={img} fluid/>
                             <Button size="sm" onClick={()=> deletePhotos(photo)} className="position-absolute" >
                                 <Trash/>
                             </Button>

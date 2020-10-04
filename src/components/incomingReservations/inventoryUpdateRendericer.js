@@ -34,7 +34,7 @@ export default function InventoryUpdateRendericer ({elements,handleSelect,select
                                 {element.status === "rejected" &&
                                 <Row className="m-2">
                                     <Row>
-                                        <Col><strong>status:</strong> {element.status}</Col> 
+                                        <Col><strong>Status:</strong> {element.status}</Col> 
                                     </Row>
                                     <Row>
                                         <Col><strong>Error category:</strong> {element.errorCategory}</Col> 

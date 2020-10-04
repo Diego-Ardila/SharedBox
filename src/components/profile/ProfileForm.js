@@ -4,7 +4,7 @@ import { FilePond, registerPlugin } from 'react-filepond'
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import {Form,Container,Card,Col,Button} from 'react-bootstrap'
+import {Form,Container,Card,Col,Button, Spinner} from 'react-bootstrap'
 import {getDataUser, updateDatauser, deleteTenant, postUserPhotosFiles} from '../../utils/HTTPrequests' 
 import { useDispatch } from "react-redux";
 import { changeUserName, changeUserPhoto } from '../../actions/loginUser.actions'
@@ -41,6 +41,7 @@ function ProfileForm(){
     let [stateView,setStateView]=useState(false);
     let [userId, setUserId] = useState("");
     let [isSubscribed, setIsSubscribed] = useState(false)
+    let [submitDelete, setSubmitDelete] = useState(false)
     let [profilePhoto, setProfilePhoto] = useState([])
     let typeUser = localStorage.getItem("typeUser")
 
@@ -69,13 +70,13 @@ function ProfileForm(){
                 setProfilePhoto(userData.data.profilePhoto)
             }
             catch(err){
-                swal("profile error", "something went wrong, please try again", "error")
+                swal("Profile error", "Something went wrong, please try again", "error")
             }
         }
         getDatesUser()
     },[stateView])
 
-    const handleSubmit = async (values) => {
+    const handleSubmit = async (values, actions) => {
         if (stateView){
             try{
                 const arrayFiles = [];
@@ -92,11 +93,12 @@ function ProfileForm(){
                 const response = await postUserPhotosFiles(typeUser,data)
                 dispatch(changeUserPhoto(response.data.profilePhoto))
                 localStorage.setItem("userPhoto", response.data.profilePhoto)  
-                swal("update successful","your changes to your profile were saved succesfully","success")
+                swal("Update successful","Your changes to your profile were saved succesfully","success")
+                actions.setSubmitting(false)
                 setStateView(!stateView)
             }
             catch(err){
-                swal("update error", "something went wrong, please try again", "error")                 
+                swal("Update error", "Something went wrong, please try again", "error")                 
             }
         }else{
             setStateView(!stateView)
@@ -106,44 +108,49 @@ function ProfileForm(){
     const formSchema = Yup.object().shape({
         name : Yup.string().required("Required Field"),
         email: Yup.string().email().required("Required Field"),
-        phoneNumber : Yup.number().test('len', 'Must be exactly 10 characters', val => val && val.toString().length === 10 ),
+        phoneNumber : Yup.number().typeError('Value must be a number').test('len', 'Must be exactly 10 characters', val => val && val.toString().length === 10 ),
         country : Yup.string().required("Required Field"),
         city : Yup.string().required("Required Field"),
         files: Yup.array(),
         isSubscribed : Yup.bool()
     })
 
-    const deleteUser = async () => {
+    const deleteUser = async () => {       
         swal("Are you sure to delete your profile?",
         "All of your registered resources will be deleted", {
             dangerMode: true,
             buttons: true,
         }).then((value) => {
+            setSubmitDelete(true)
             if(value) {
                 deleteTenant(userId, localStorage.getItem("typeUser")).then(() => {
                     swal("Good job", "User deleted successfully", "success").then(() => {
+                    setSubmitDelete(false)
                     history.push({ pathname: '/lender/logout', fromMenu : false})
                     })
                 })
-                .catch(() => swal("Oops..", "Something went wrong, please try again", "error") )                
+                .catch(() => {
+                    swal("Oops..", "Something went wrong, please try again", "error")
+                    setSubmitDelete(false)
+                })                
             }
+            setSubmitDelete(false)
         });
+        
     }
     return(
         <Container className="container-fluid p-3">
+            <Col className=" text-left mb-4">
+                {typeUser==="tenant"?
+                (<Button type="" onClick={()=>history.push("/tenant/admin")} ><ArrowLeft/></Button>):null}
+            </Col>
             <Card className="p-3">
                 <Formik initialValues={{name,email,phoneNumber,country,city, isSubscribed, files: profilePhoto}}  
                         validationSchema={stateView ? formSchema: ""}  
                         onSubmit={handleSubmit} 
                         enableReinitialize={true}>
-                    {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, field, setFieldValue })=>(
+                    {({ handleSubmit, handleChange, handleBlur, values, isSubmitting, touched, isValid, errors, field, setFieldValue })=>(
                         <Form  onSubmit={handleSubmit} noValidate>
-                            <Form.Row className="justify-content-left" >
-                                <Col className=" text-left ">
-                                    {typeUser==="tenant"?
-                                    (<Button type="" onClick={()=>history.push("/tenant/admin")} ><ArrowLeft/></Button>):null}
-                                </Col>
-                            </Form.Row>
                             <Form.Row className="justify-content-center">
                                 <Col className="col-lg-10">
                                     <Form.Group controlId={base.nameID}>
@@ -229,19 +236,22 @@ function ProfileForm(){
                                 </Field>   
                                 </Col>                                                
                             </Form.Row>  
-                            <Form.Row className=" justify-content-center">
+                            <Form.Row className=" justify-content-center mt-3">
                                 <Col className="col-lg-5 ">
+                                    {isSubmitting ? <Spinner animation="border" variant="primary" size="xl" /> : null}
                                     {stateView? 
                                     (<Button    id = {base.submitId} variant={isValid?"primary":"secondary"} type = "submit"  
-                                                disabled= {!isValid} block>Save</Button>)
+                                                disabled= {!isValid && isSubmitting} block>Save</Button>)
                                     :(<Button type="submit"  block>Edit profile</Button>)}
                                 </Col>
                             </Form.Row>
-                            <Form.Row className=" justify-content-center mt-3 mb-5">
+                            <Form.Row className=" justify-content-center mt-3">
                                 <Col className="col-lg-5 ">
+                                    {submitDelete ? <Spinner animation="border" variant="primary" size="xl" /> : null}
                                     <Button    
                                     id = {base.deleteId} 
                                     variant="danger" 
+                                    disabled={submitDelete}
                                     onClick={()=>deleteUser()} block
                                     >
                                         Delete Profile
@@ -250,12 +260,13 @@ function ProfileForm(){
                             </Form.Row>
                             <Form.Row className=" justify-content-center mt-3 mb-5">
                                 <Col className="col-lg-5 ">
+                                    {typeUser==="lender" &&  
                                     <Button    
                                     variant="primary" 
                                     onClick={()=> history.push('/lender/createSpace')} block
                                     >
                                         Create Space
-                                    </Button>
+                                    </Button>}
                                 </Col>
                             </Form.Row>
                         </Form>

@@ -16,7 +16,7 @@ const TenantSpaces = () => {
   const history = useHistory();  
 
   const infoFunction = (spaceId) => {
-    return ()  => window.open(`/space?_id=${spaceId}&startDate=${moment().format("YYYY-MM-DD")}&endDate=${moment().add(1,'days').format("YYYY-MM-DD")}`)
+    return () => () => window.open(`/space?_id=${spaceId}&startDate=${moment().format("YYYY-MM-DD")}&endDate=${moment().add(1,'days').format("YYYY-MM-DD")}`)
   }
 
   const fetchSpacesData = async() =>{
