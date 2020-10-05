@@ -37,8 +37,8 @@ export default function InventoryCheckElement ({element}) {
     const [submited, setSubmited] = useState(false)
 
     const handleSubmit = async (values) =>{
-        if(values.check) values.status = "accepted"
-        if(!values.check) values.status = "rejected"
+        if(values.check) values.status = "element-accepted"
+        if(!values.check) values.status = "element-rejected"
         try{
             const res = await updateElements(element._id , values)
             setSubmited(true)

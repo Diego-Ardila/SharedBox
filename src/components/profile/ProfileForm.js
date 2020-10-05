@@ -140,6 +140,10 @@ function ProfileForm(){
     }
     return(
         <Container className="container-fluid p-3">
+            <Col className=" text-left mb-4">
+                {typeUser==="tenant"?
+                (<Button type="" onClick={()=>history.push("/tenant/admin")} ><ArrowLeft/></Button>):null}
+            </Col>
             <Card className="p-3">
                 <Formik initialValues={{name,email,phoneNumber,country,city, isSubscribed, files: profilePhoto}}  
                         validationSchema={stateView ? formSchema: ""}  
@@ -147,12 +151,6 @@ function ProfileForm(){
                         enableReinitialize={true}>
                     {({ handleSubmit, handleChange, handleBlur, values, isSubmitting, touched, isValid, errors, field, setFieldValue })=>(
                         <Form  onSubmit={handleSubmit} noValidate>
-                            <Form.Row className="justify-content-left" >
-                                <Col className=" text-left ">
-                                    {typeUser==="tenant"?
-                                    (<Button type="" onClick={()=>history.push("/tenant/admin")} ><ArrowLeft/></Button>):null}
-                                </Col>
-                            </Form.Row>
                             <Form.Row className="justify-content-center">
                                 <Col className="col-lg-10">
                                     <Form.Group controlId={base.nameID}>
@@ -238,7 +236,7 @@ function ProfileForm(){
                                 </Field>   
                                 </Col>                                                
                             </Form.Row>  
-                            <Form.Row className=" justify-content-center">
+                            <Form.Row className=" justify-content-center mt-3">
                                 <Col className="col-lg-5 ">
                                     {isSubmitting ? <Spinner animation="border" variant="primary" size="xl" /> : null}
                                     {stateView? 
@@ -247,7 +245,7 @@ function ProfileForm(){
                                     :(<Button type="submit"  block>Edit profile</Button>)}
                                 </Col>
                             </Form.Row>
-                            <Form.Row className=" justify-content-center mt-3 mb-5">
+                            <Form.Row className=" justify-content-center mt-3">
                                 <Col className="col-lg-5 ">
                                     {submitDelete ? <Spinner animation="border" variant="primary" size="xl" /> : null}
                                     <Button    
@@ -262,12 +260,13 @@ function ProfileForm(){
                             </Form.Row>
                             <Form.Row className=" justify-content-center mt-3 mb-5">
                                 <Col className="col-lg-5 ">
+                                    {typeUser==="lender" &&  
                                     <Button    
                                     variant="primary" 
                                     onClick={()=> history.push('/lender/createSpace')} block
                                     >
                                         Create Space
-                                    </Button>
+                                    </Button>}
                                 </Col>
                             </Form.Row>
                         </Form>

@@ -35,7 +35,7 @@ export default function PhotosUploadForm () {
         dispatch(changePublishAreaView(5))
     }
 
-    const redirectBack = () => dispatch(changePublishAreaView(2))
+    const redirectBack = () => dispatch(changePublishAreaView(3))
     
     return(
         <Formik 
@@ -46,20 +46,15 @@ export default function PhotosUploadForm () {
         handleSubmit, handleChange, values, touched, isValid, errors, setFieldValue
         }) => (  
             <>            
-            <Container>    
-                <Row className="justify-content-center">
-                    <h1>Register Photos</h1>         
-                </Row>
-                <Row md={{span: 4, offset: 4}} lg={{span: 4, offset: 4}}>
-                    <Button variant="primary" size="lg" onClick={redirectBack}>
-                        <ArrowLeft />
-                    </Button>
+            <Container >    
+                <Row className="justify-content-center mt-4">
+                    <h3>Register Photos</h3>         
                 </Row>
                 <Row className="justify-content-center">                    
-                    <Form className="justify-content-center mt-3 mb-5" onSubmit={handleSubmit} noValidate>
-                        <h3>Share some photos of your space! 
+                    <Form className="justify-content-center mt-3 mb-5 p-3" onSubmit={handleSubmit} noValidate>
+                        <h6>Share some photos of your space! 
                             It will be more appealing for people looking where to store their things
-                        </h3>
+                        </h6>
                         <Form.Group controlId={base.uploadId}>
                             <FilePond
                                 files={values.files}
@@ -72,10 +67,15 @@ export default function PhotosUploadForm () {
                             {touched.files && errors.files ? (
                                 <div className="error-message">{errors.files}</div>
                             ): null}
-                        </Form.Group>                      
-                        <Button className="mb-3" variant="primary" size="lg" type="submit">
-                            Next
-                        </Button>
+                        </Form.Group>
+                        <Container className="text-center">
+                            <Button className="mr-3" variant="primary" size="lg" onClick={redirectBack}>
+                                <ArrowLeft />
+                            </Button>                      
+                            <Button variant="primary" size="lg" type="submit">
+                                Next
+                            </Button>
+                        </Container>
                     </Form>        
                 </Row>                     
             </Container>

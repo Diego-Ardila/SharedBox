@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {Col, Row, Image, Card, Button, Container} from 'react-bootstrap'
+import {Col, Row, Image, Card, Button, Container, Carousel} from 'react-bootstrap'
 import {getNotificationUser, updateNotification} from '../../utils/HTTPrequests'
 import Logo from "../../logo.svg";
 import moment from "moment" 
@@ -7,7 +7,8 @@ import NotificationCard from './notificationCard'
 import NotificationCardInfo from './notificationCardInfo'
 import {calcPrices} from '../../utils/FinanceVariables'
 import {useHistory} from 'react-router-dom'
-import './notificationCenterView.css'
+import './notificationCenterView.scss'
+import swal from 'sweetalert';
 
 
 export default function NotificationCenterView ({navbarId}){
@@ -17,7 +18,7 @@ export default function NotificationCenterView ({navbarId}){
     const [selected,setSelected] = useState(navbarId || "")
     const history = useHistory()
     const [render,setRender] = useState(false)
-     
+    let typeUser = localStorage.getItem("typeUser")
     
     useEffect(()=>{
         async function getNotification (){
@@ -32,10 +33,39 @@ export default function NotificationCenterView ({navbarId}){
         setRender(false)
     },[render])
 
-    const handleSubmit = async (event,notification)=>{
-        setRender(true)
-        await updateNotification(event,notification)
-        setNotification({})
+    const handleSubmit = (event,notification)=>{
+        async function updateNotifi (){
+            try{
+                await updateNotification(event,notification)
+                swal("reservation request sent","your reservation request was sent succesfully","success",{timer:1500,buttons:false})
+            }
+            catch(err){
+                swal("notification request error", "something went wrong, please try again", "error")
+            }
+        }
+        swal({
+         className:"confirm-notification-swal",
+         title :  `Are you sure to ${event} this reserve?` ,
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         buttons:{
+            confirm:{
+                className: `${event}`,
+                text: `Yes, I want to ${event}`,
+                value: "Confirm",
+            },
+            cancel:"Cancel",
+         }
+        })
+        .then((value)=>{
+            if (value === "Confirm"){
+                updateNotifi ()
+                setRender(true) 
+                setSelected("")               
+                setNotification({})
+                
+            }
+        })
     }
     
     const setValuesCard = (event,notification,navbarId) => {
@@ -48,11 +78,41 @@ export default function NotificationCenterView ({navbarId}){
     
     return(
         <Container className="notificationContainer col-lg-12 mb-5" >
+            
+                <Col sm={12}>
+                    <Carousel className="carousel-notification d-block d-lg-none " interval={null} >
+                        {arrNotifications.length === 0 ?
+                        
+                            <Card  className=" m-4" border="dark" >
+                                <Card.Header  className="text-center" > 
+                                    <Card.Title as="h3"> no new notifications now, come back letter</Card.Title>
+                                </Card.Header>
+                                <Card.Body className="text-center">
+                                    <Button onClick={()=>history.push("/home")}>Come to home</Button>
+                                </Card.Body>
+                            </Card>
+                        :
+                            arrNotifications.filter(notifi=>{
+                                return typeUser === "lender" ?
+                                 notifi.status !== "reject" :
+                                 true
+                            }).map(notifi=>(
+                                <Carousel.Item >
+                                    <NotificationCard 
+                                        className="cardNotification"
+                                        selected={selected} 
+                                        key={notifi._id}  
+                                        notification={notifi} 
+                                        setValuesCard={setValuesCard}                                    
+                                    />
+                                </Carousel.Item>
+                        ))} 
+                    </Carousel>
+                </Col>
             <Row>
-                <Col className="col-lg-5 d-flex flex-column ">
-                    {arrNotifications.length === 0 ?
-                     
-                        <Card  className="m-4" border="dark" >
+                <Col className="d-none d-lg-block" >
+                    {arrNotifications.length === 0 ?                        
+                        <Card  className=" m-4" border="dark" >
                             <Card.Header  className="text-center" > 
                                 <Card.Title as="h3"> There aren't new notifications now, come back later</Card.Title>
                             </Card.Header>
@@ -60,20 +120,24 @@ export default function NotificationCenterView ({navbarId}){
                                 <Button onClick={()=>history.push("/home")}>Come to home</Button>
                             </Card.Body>
                         </Card>
-                      :
+                    :
                         arrNotifications.map(notifi=>(
-                            <NotificationCard 
+                            
+                                <NotificationCard 
+                                    className="cardNotification"
                                     selected={selected} 
                                     key={notifi._id}  
                                     notification={notifi} 
                                     setValuesCard={setValuesCard}                                    
                                 />
-                    ))}                                
+                            
+                    ))} 
                 </Col>
-                <Col>
+                <Col >
                     <div className="sticky-top pt-3 ">
                         {Object.keys(notification).length !== 0 
-                            ? <NotificationCardInfo 
+                            ? <NotificationCardInfo
+                                className="cardNotificationInfo"
                                 handleSubmit={handleSubmit}
                                 notification={notification} 
                                 calPrice={calPrice}/> 

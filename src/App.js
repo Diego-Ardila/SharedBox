@@ -20,6 +20,7 @@ import { getNotificationUser} from './utils/HTTPrequests';
 import TitleComponent from './TitleComponent'; 
 import incomingReservations from './pages/incomingReservations'; 
 import TenantSpaces from './components/adminTenant/tenantSpaces';
+import swal from 'sweetalert';
 
 function PrivateRoute(props) {  
   const history = useHistory()
@@ -60,6 +61,16 @@ function App() {
     if(userPhoto){
       dispatch(changeUserPhoto(userPhoto))
     }
+    window.addEventListener("storage", e =>{
+      if(e.key === "token"){
+        if (localStorage.getItem("token")) {
+          dispatch(changeLogin(true)) 
+        } else {
+          swal("Logged out", "You logged out from the application", "error").then((value) => dispatch(changeLogin(false))  )          
+        }           
+      }
+      }
+    );
   })
 
   useEffect(() =>{
@@ -80,8 +91,8 @@ function App() {
   return (
     <Router>      
       <TitleComponent title={`${title} SharedBox`} />
+      <Header />
       <div className="App">
-        <Header />
         <Switch>
           <Route exact path="/lender/frequentAsked" component={frequentAsked} />
           <Route exact path="/home" component={Home} />
@@ -99,8 +110,8 @@ function App() {
           <PrivateRoute exact path="/response" component={PaymentResponse} />
           <Redirect from="*" to="/home" />
         </Switch>
-        <Footer />
       </div>
+        <Footer />
     </Router>
   );
 }
