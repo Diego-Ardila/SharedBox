@@ -5,7 +5,7 @@ import {changeArea,
     changeLength,
     changeHeight,
     changeWidth,
-    changePublishAreaView} from "../../actions/publishArea.actions"
+    changePublishAreaView, changePhotos} from "../../actions/publishArea.actions"
 import { Formik } from 'formik';
 import * as Yup from "yup";   
 import "./dimensionsForm.css"
@@ -34,6 +34,7 @@ export default function BasicSpaceInfo (){
     const length = useSelector(state => state.publishAreaReducer.length)
     const height = useSelector(state => state.publishAreaReducer.height)
     const dispatch = useDispatch()
+    dispatch(changePhotos([]))
 
     const handleSubmit = (values) => {
         const {width, length, height} = values;
