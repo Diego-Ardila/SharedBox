@@ -4,8 +4,9 @@ import {useSelector, useDispatch} from "react-redux"
 import { changeDescription, changePublishAreaView, changeTitle } from "../../actions/publishArea.actions"
 import { Container, Row,  Form, Button } from "react-bootstrap"
 import {ArrowLeft} from 'react-bootstrap-icons';
-import { Formik } from "formik"
+import { Formik } from "formik";
 import * as Yup from "yup"; 
+import "./descriptionForm.js"
 
 const FormSchema = Yup.object().shape({  
     additionalInfo: Yup.string()
@@ -43,25 +44,14 @@ export default function DescriptionForm () {
             }) => ( 
                 <Container>
                     <Form onSubmit = {handleSubmit} noValidate>
-                        <Row md={{span: 4, offset: 4}} lg={{span: 4, offset: 4}}>
-                            <Button variant="primary" size="lg" onClick={redirectBack}>
-                                <ArrowLeft />
-                            </Button>
-                        </Row>
-                        <Row className="justify-content-center">
-                            <h1>Register Name</h1>
-                        </Row>
                         <Row className="justify-content-center">    
-                            <h3>
-                                <p className="text-center">Now tell us more about what a tenant could expect:
-                                </p>
-                            </h3>
+                            <h4>
+                                <p className="text-center">Register description</p>
+                            </h4>
                         </Row>
                         <Row className="justify-content-center">
                             <h6>
-                                <p className="text-center">
-                                Add tags for your space
-                                </p>
+                                <p className="text-center">Add some tags for your space</p>
                             </h6>
                         </Row>
                         <Row className="justify-content-center">
@@ -87,9 +77,14 @@ export default function DescriptionForm () {
                             </Form.Group>                                
                         </Row>
                         <Row className="justify-content-center">
-                            <Button variant="primary" size="md" type="submit">
+                            <div style={{display:"flex", width:203.6}}>
+                            <Button style={{width:"50%"}}variant="primary" size="lg" onClick={redirectBack}>
+                                <ArrowLeft />
+                            </Button>
+                            <Button style={{width:"50%"}} variant="primary" size="md" type="submit">
                                 Next
                             </Button>
+                            </div>
                         </Row>
                     </Form>
                 </Container>

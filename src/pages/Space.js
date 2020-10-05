@@ -3,7 +3,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { getFilterSpaces, getTenantRegisteredSpaces } from "../utils/HTTPrequests";
 import swal from "sweetalert";
 import {useSelector} from 'react-redux'
-import { Container } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import SpecificSpaceView from "../components/lenderAdminArea/specificSpaceView";
 
 
@@ -37,7 +37,7 @@ export default function Space () {
 
     return(
         <Container className="mb-5">
-            {loading ? "Loading" : (
+            {loading ? <Spinner /> : (
                 <SpecificSpaceView
                     spaceId={spaceId}
                     spaces={spaces}

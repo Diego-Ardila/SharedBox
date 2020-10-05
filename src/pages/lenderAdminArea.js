@@ -7,7 +7,7 @@ import SpecificSpaceView from '../components/lenderAdminArea/specificSpaceView';
 export default function LenderAdminArea (props) {
   
   const [spaces, setSpaces] = useState([])
-  const [extSpaceId, setExtspaceId] = useState(props.location.externalSpaceId)
+  const extSpaceId = props.location.externalSpaceId
   const [error, setError] = useState("")
   const [moreInfoDisplay, setMoreInfoDisplay] = useState(false)
   const [spaceId, setSpaceId] = useState("")

@@ -1,3 +1,15 @@
+.header{
+    min-height: 10vh;
+}
+
 .dropdown-menu.show {
     z-index: 1030;
+}
+
+.userPhoto.rounded-circle{
+    border: none;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    margin-top: 5px;
 }
