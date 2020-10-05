@@ -17,7 +17,7 @@ export default function PaymentResponse () {
     const [spaces, setSpaces] = useState([])
     const [reference] = location.search.substr(1).split("&").map( param => param.split("=")[1])
 
-    const infoFunction = () =>{
+    const infoFunction = () => () =>{
         history.push(`/space?_id=${response.x_extra4}&${response.x_extra2.split(" ")[2]}&${response.x_extra3.split(" ")[2]}`)
     }
 
