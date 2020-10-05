@@ -28,7 +28,6 @@ const Home = () => {
   let [active, setActive] = useState(1)
   let [items, setItems] = useState([])
   let [limit,setLimit] = useState(10)
-  let [total,setTotal] = useState()
   let [message,setMessage] = useState("")
   
   useEffect(()=>{
@@ -37,18 +36,17 @@ const Home = () => {
         const response = await getFilterSpacesHome(locationQuery.search)
         dispatch(changeSpaces(response.data || []))
         const maxPages = response.headers["content-pages"]
-        const totalItems = response.headers["content-total"]
-        setTotal(totalItems)
-        let renderTotal = total ? total : totalItems
+        const renderTotal = response.headers["content-total"]
         let renderLimit = locationParsed.limit ? locationParsed.limit : limit
         let prevActive= parseInt(active)-1
         let firstElement = parseInt(renderLimit*prevActive)
+        
         if(active == 1 && maxPages > 1){
           setMessage(`${active} to ${renderLimit*active} out of ${renderTotal}`)
         }else if(active == maxPages && active != 1){
           setMessage(`${firstElement + 1} to ${renderTotal % renderLimit == 0 ? renderLimit*active : renderTotal % renderLimit + firstElement} out of ${renderTotal}`)
         }else if(maxPages == 1){
-          setMessage(`${firstElement + 1} to ${renderTotal % renderLimit == 0 ? renderLimit : renderTotal % renderLimit} out of ${renderTotal}`)
+          setMessage(`1 to ${renderTotal % renderLimit == 0 ? renderLimit : renderTotal % renderLimit} out of ${renderTotal}`)
         }else {
           setMessage(`${firstElement + 1} to ${renderLimit*active} out of ${renderTotal}`)
         }
