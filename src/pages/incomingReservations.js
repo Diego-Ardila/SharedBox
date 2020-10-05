@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {  Container, Card, Button } from 'react-bootstrap'
+import {  Container, Card, Button, Spinner } from 'react-bootstrap'
 import {  getNotificationUser } from '../utils/HTTPrequests'
 import Space from "../components/viewSpaces/Space"
 import InventoryUpdateModal from '../components/incomingReservations/inventoryUpdateModal'
@@ -56,7 +56,7 @@ export default function IncomingReservations (props){
     
     return(
         <Container className="container-fluid pb-3 mb-5">
-            {loading?<h1>loading</h1>:
+            {loading? <Spinner />:
                 notifications.length !== 0 ? 
                     (notifications.map(notification=>(<Space 
                         id={notification.inventoryId.spaceId._id} 

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Row, Col, Button, Container, Badge } from 'react-bootstrap';
+import { Row, Col, Button, Container, Badge, Spinner } from 'react-bootstrap';
 import PhotosAdministrator from './PhotosAdministrator';
 import EditButton from "./EditButton";
 import GeneralInfoAdministrator from "./GeneralInfoAdministrator";
@@ -89,7 +89,7 @@ export default function SpecificSpaceView ({spaces, spaceId, changeViewToDisplay
   : null;
   return(
     <React.Fragment>
-      {loading ? "loading" : (
+      {loading ? <Spinner /> : (
         <React.Fragment>
           <Row className="mb-2">
               <Button className="ml-4" onClick={changeViewToDisplay()()}><ArrowLeftShort size={30}></ArrowLeftShort></Button>
