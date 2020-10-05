@@ -128,8 +128,8 @@ export default function CardNotificationInfo ({handleSubmit, notification, calPr
                             notification={notification}/>                                               
                     }
                     {typeUser==="tenant" && status==="reject" && <Button onClick={()=>history.push("/home")}>Search more Spaces</Button>}
-                    {typeUser==="tenant" && status==="rejected-element" && <Button onClick={()=>history.push({pathname:"/tenant/reservations",externalinventory: notification.inventoryId._id})}>Go to update objects</Button>}
-                    {typeUser==="lender" && status==="updated-element" && <Button onClick={()=>history.push({pathname:"/lender/admin",externalSpaceId: notification.inventoryId.spaceId._id})}>Check the changes</Button>}
+                    {typeUser==="tenant" && status==="element-rejected" && <Button onClick={()=>history.push({pathname:"/tenant/reservations",externalinventory: notification.inventoryId._id})}>Go to update objects</Button>}
+                    {typeUser==="lender" && status==="element-updated" && <Button onClick={()=>history.push({pathname:"/lender/admin",externalSpaceId: notification.inventoryId.spaceId._id})}>Check the changes</Button>}
             </Card.Footer>
         </Card>
     )
