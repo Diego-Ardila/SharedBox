@@ -4,14 +4,14 @@ import { Search } from 'react-bootstrap-icons';
 import { useSelector, useDispatch } from "react-redux";
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import { changeTitle, 
+import { changeKeyword, 
   changeArea, 
   changeLocation, 
   changeInitialDate, 
   changeFinalDate, 
   changeSpecificSearch} from '../actions/searchForm.actions';
 const base = {
-  titleId: "home-title",
+  keywordId: "home-keyword",
   areaId: "home-area",
   locationId: "home-location",
   initialDateId: "home-initial-date",
@@ -30,8 +30,8 @@ const SearchForm = (props) => {
   const customChange= (eventTarget, setValues, values, dispatch) =>{
     let action
     switch(eventTarget.name) {
-      case "title" :
-        action = changeTitle
+      case "keyword" :
+        action = changeKeyword
         break
       case "area" :
         action = changeArea
@@ -55,7 +55,7 @@ const SearchForm = (props) => {
   }
 
   const formSchema = Yup.object().shape({
-    title: Yup.string().required("Required Field"),
+    keyword: Yup.string(),
     area: Yup.number().typeError('Value must be a number').required("Required Field"),
     location: Yup.string().required("Required Field"),
     initialDate: Yup.date().required("Required Field"),
@@ -64,7 +64,7 @@ const SearchForm = (props) => {
     ).required("Required Field")    
   })
 
-  const title = useSelector(state => state.searchFormReducer.title)
+  const keyword = useSelector(state => state.searchFormReducer.keyword)
   const area = useSelector(state => state.searchFormReducer.area)
   const location = useSelector(state => state.searchFormReducer.location)
   const initialDate = useSelector(state => state.searchFormReducer.initialDate)
@@ -72,7 +72,7 @@ const SearchForm = (props) => {
 
   return (
     <Formik
-      initialValues={{ title, area, location, initialDate ,finalDate}}
+      initialValues={{ keyword, area, location, initialDate ,finalDate}}
       validationSchema={formSchema}
       onSubmit={handleGeneralSubmit}>     
     {({
@@ -82,11 +82,11 @@ const SearchForm = (props) => {
       <Form className="row justify-content-center mt-3" onSubmit={handleSubmit}  noValidate >
         <Form.Row lg={10} sm={12} className="ml-2 mr-2">
           <Col sm={4} >
-            <Form.Group controlId={base.titleId}>
-              <Form.Label>keyword</Form.Label>
-              <Form.Control className={touched.title && errors.title ? "is-invalid" : null} name="title" type="text" placeholder="Title" onChange ={(e) => customChange(e.target, setValues, values, dispatch) } value={values.title} />
-              {touched.title && errors.title ? (
-                <div className="error-message">{errors.title}</div>
+            <Form.Group controlId={base.keywordId}>
+              <Form.Label>Keyword</Form.Label>
+              <Form.Control className={touched.keyword && errors.keyword ? "is-invalid" : null} name="keyword" type="text" placeholder="keyword" onChange ={(e) => customChange(e.target, setValues, values, dispatch) } value={values.keyword} />
+              {touched.keyword && errors.keyword ? (
+                <div className="error-message">{errors.keyword}</div>
               ): null}
             </Form.Group>
           </Col>

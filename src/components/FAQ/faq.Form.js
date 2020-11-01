@@ -45,17 +45,17 @@ export default function FrequentAskedQuestionsForm (props) {
        try{
            const response = await postFAQs(newFaqs)
            props.createdFaq(response)
-           swal("FAQs saved correctly","your FAQs were saved succesfully","success")
+           swal("FAQs saved correctly","Your FAQs were saved succesfully","success")
            props.hideEditFAQ()
        }catch(err){
-           swal("Upss something went wrong",`${err.message}`,"error")
+           swal("Something went wrong",`${err.message}`,"error")
        }
     }
 
     return(
         <Form>
             <Form.Group controlId="formBasicEmail">
-                <Form.Label >what is a common question you are asked about this space?</Form.Label>
+                <Form.Label >What is a common question you are asked about this space?</Form.Label>
                 <Form.Control   onChange={handleChange}
                                 name = {base.questionId}
                                 type = "textarea"
@@ -63,7 +63,7 @@ export default function FrequentAskedQuestionsForm (props) {
 
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
-                <Form.Label >And what is your answer?</Form.Label>
+                <Form.Label >What is your answer?</Form.Label>
                 <Form.Control  onChange={handleChange} name={base.responseId} type = "textarea" value={answer}/>
             </Form.Group>
                 <Button onClick={handleCreationFAQ} >Create FAQ</Button>

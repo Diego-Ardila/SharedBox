@@ -1,0 +1,36 @@
+#FormContainer{
+    position: relative;
+}
+
+#rangeValue{
+    position: absolute;
+    color:white;
+    top: 0;
+    right: 0;
+    transform: translate(-5%,-27%);
+    padding: 6px;
+    width: 60px;
+    box-sizing: border-box;
+    background:  #B0CAC7;
+}
+
+#rangeValue::before{
+    background-color:  #B0CAC7;
+    content:'';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    left:-5px;
+    width:10px;
+    height: 10px;
+}
+
+.range{
+    width: 70%;
+}
+
+.btn.btn-primary.button-next{
+    width: 33%;
+    margin-left: 33%;
+    margin-top: 40px
+}

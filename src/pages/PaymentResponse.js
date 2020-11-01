@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useHistory } from "react-router-dom"
 import swal from "sweetalert"
-import {getFilterSpaces, GetPaymentInfoByReference, updateNotification} from "../utils/HTTPrequests"
-import { Container, Row, Col, Card, Button } from "react-bootstrap"
+import {getFilterSpaces, GetPaymentInfoByReference, updateNotification, updateUserReservedSpaces} from "../utils/HTTPrequests"
+import { Container, Row, Col, Card, Button, Spinner } from "react-bootstrap"
 import "./PaymentResponse.css"
 import PayButton from "../components/notification/payButton"
 import Space from "../components/viewSpaces/Space"
@@ -17,7 +17,7 @@ export default function PaymentResponse () {
     const [spaces, setSpaces] = useState([])
     const [reference] = location.search.substr(1).split("&").map( param => param.split("=")[1])
 
-    const infoFunction = () =>{
+    const infoFunction = () => () =>{
         history.push(`/space?_id=${response.x_extra4}&${response.x_extra2.split(" ")[2]}&${response.x_extra3.split(" ")[2]}`)
     }
 
@@ -42,17 +42,19 @@ export default function PaymentResponse () {
 
     useEffect( () =>{
         const getResponse = async () => {
-            try{
+            try{                
                 const response = await GetPaymentInfoByReference(reference)
                 const newSpaces = await getFilterSpaces(`?_id:${response.data.data.x_extra4}`)
+                const spaceObj = {}
+                spaceObj.reservedSpaces = response.data.data.x_extra4  
+                const id = await updateUserReservedSpaces(localStorage.getItem("typeUser"),spaceObj)
                 await updateNotification('paid',response.data.data.x_extra6)
                 setSpaces(newSpaces)
                 setResponse(response.data.data)
                 setLoading(false)
             }catch(err){
-                console.log(err )
-                swal("Ups something went wrong",
-                    "looks like we were unable to connect. Please checkout your internet connection and try again",
+                swal("Something went wrong",
+                    "Looks like we were unable to connect. Please checkout your internet connection and try again",
                     "error")
             }  
         }
@@ -61,7 +63,7 @@ export default function PaymentResponse () {
 
     return (
         <React.Fragment>
-            {loading ? <h1>loading</h1> : (
+            {loading ? <Spinner /> : (
                 <Container className="response ">
                     <Row className ="justify-content-md-center m-0">
                         <Col className="p-0 text-center">

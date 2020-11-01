@@ -39,8 +39,7 @@ const MainWraper = styled.section`
   align-content: center;
   align-items: center;
   width : 100vw;
-  min-height: 100vh;
-  background: linear-gradient(180deg, #FFF9F4 1.12%, #B0CAC7 100%);
+  align-self : center;
 `
 
 export default function PublishArea (props) {

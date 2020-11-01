@@ -5,9 +5,10 @@ import {changeArea,
     changeLength,
     changeHeight,
     changeWidth,
-    changePublishAreaView} from "../../actions/publishArea.actions"
+    changePublishAreaView, changePhotos} from "../../actions/publishArea.actions"
 import { Formik } from 'formik';
-import * as Yup from "yup";    
+import * as Yup from "yup";   
+import "./dimensionsForm.css"
 
 
 const base = {
@@ -33,6 +34,7 @@ export default function BasicSpaceInfo (){
     const length = useSelector(state => state.publishAreaReducer.length)
     const height = useSelector(state => state.publishAreaReducer.height)
     const dispatch = useDispatch()
+    dispatch(changePhotos([]))
 
     const handleSubmit = (values) => {
         const {width, length, height} = values;
@@ -56,42 +58,42 @@ export default function BasicSpaceInfo (){
             <>            
             <Container data-testid="dimensions-form">    
                 <Row className="justify-content-center">
-                    <h1>Register Dimensions</h1>         
+                    <h4>Register Dimensions</h4>         
                 </Row>
                 <Row className="justify-content-center">
-                    <Form className="justify-content-center mt-3" onSubmit={handleSubmit} noValidate>
-                        <h3>Tell us a little more about your space:</h3>
-                        <Form.Group controlId={base.widthId}>
-                            <Form.Label>Width</Form.Label>
-                            <Form.Control name="width" min={0} max={40} type="range" onChange ={handleChange} value ={values.width} />
-                            <Badge pill variant="primary">
-                            {(values.width || 0) + ' mts'}
-                            </Badge>{' '}
-                            {touched.width && errors.width ? (
-                            <div className="error-message">{errors.width}</div>
-                            ): null}
-                        </Form.Group>
-                        <Form.Group controlId={base.lengthId}>
-                            <Form.Label>Length</Form.Label>
-                            <Form.Control name="length" min={0} max={40} type="range" onChange ={handleChange} value ={values.length} />
-                            <Badge pill variant="primary">
-                            {(values.length || 0) + ' mts'}
-                            </Badge>
-                            {touched.length && errors.length ? (
-                            <div className="error-message">{errors.length}</div>
-                            ): null}
-                        </Form.Group>
-                        <Form.Group controlId={base.heightId}>
-                            <Form.Label>Height</Form.Label>
-                            <Form.Control name="height" min={0} max={10} step={0.1}type="range" onChange ={handleChange} value ={values.height} />
-                            <Badge pill variant="primary">
-                            {(values.height || 0) + ' mts'}
-                            </Badge>{' '}
-                            {touched.height && errors.height ? (
-                            <div className="error-message">{errors.height}</div>
-                            ): null}
-                        </Form.Group>
-                        <Button variant="primary" size="lg" type="submit">
+                    <Form className="d-flex flex-column justify-content-center mt-3 p-3" onSubmit={handleSubmit} noValidate>
+                        <h6>Tell us a little more about your space:</h6>
+                        <div controlId={base.widthId}>
+                            <label>Width</label>
+                            <div id="FormContainer">
+                                <span id="rangeValue">{(values.width || 0) + ' mts'}</span>
+                                <input className="range" name="width" min={0} max={40} type="range" onChange ={handleChange} value ={values.width} />
+                                {touched.width && errors.width ? (
+                                <div className="error-message">{errors.width}</div>
+                                ): null}
+                            </div>
+                        </div>
+                        <div controlId={base.widthId}>
+                            <label>Length</label>
+                            <div id="FormContainer">
+                                <span id="rangeValue">{(values.length || 0) + ' mts'}</span>
+                                <input className="range" name="length" min={0} max={40} type="range" onChange ={handleChange} value ={values.length} />
+                                {touched.length && errors.length ? (
+                                <div className="error-message">{errors.length}</div>
+                                ): null}
+                            </div>
+                        </div>
+                        <div controlId={base.widthId}>
+                            <label>Heigth</label>
+                            <div id="FormContainer">
+                                <span id="rangeValue">{(values.height || 0) + ' mts'}</span>
+                                <input className="range" name="height" min={0} max={10} type="range" onChange ={handleChange} value ={values.height} />
+                                {touched.height && errors.height ? (
+                                <div className="error-message">{errors.height}</div>
+                                ): null}
+                            </div>
+                        </div>
+                        <Button className='button-next' variant="primary" size="md" type="submit">
                             Next
                         </Button>
                     </Form>        

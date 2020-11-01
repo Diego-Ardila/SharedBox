@@ -9,14 +9,14 @@ const tomorrowString =  `${tomorrow.getFullYear()}-${tomorrowMonth < 10 ? "0"+ t
 
 
 let initialState={
-  title: "",
+  keyowrd: "",
   area: "",
   location:"",
   initialDate: todayString,
   finalDate: tomorrowString,
-  height: 20,
-  width: 20,
-  length:20,
+  height: 0,
+  width: 0,
+  length:0,
   tags: [],
   pricePerDay: 0,
   pricePerMonth:0,
@@ -25,7 +25,7 @@ let initialState={
 }
 
 const ACTIONS = {
-  CHANGE_TITLE : "CHANGE_TITLE",
+  CHANGE_KEYWORD : "CHANGE_KEYWORD",
   CHANGE_AREA : "CHANGE_AREA",
   CHANGE_LOCATION : "CHANGE_LOCATION",
   CHANGE_INITIAL_DATE : "CHANGE_INITIAL_DATE",
@@ -42,10 +42,10 @@ const ACTIONS = {
 
 const searchFormReducer = (state = initialState, action) => {
   switch(action.type){
-    case ACTIONS.CHANGE_TITLE:
+    case ACTIONS.CHANGE_KEYWORD:
       return {
         ...state,
-        title: action.payload
+        keyword: action.payload
       }
     case ACTIONS.CHANGE_AREA:
       return {

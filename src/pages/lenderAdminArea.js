@@ -4,34 +4,34 @@ import {getUserSpaces} from "../utils/HTTPrequests"
 import MainView from '../components/lenderAdminArea/mainView';
 import SpecificSpaceView from '../components/lenderAdminArea/specificSpaceView';
 
-export default function LenderAdminArea () {
+export default function LenderAdminArea (props) {
   
   const [spaces, setSpaces] = useState([])
+  const extSpaceId = props.location.externalSpaceId
   const [error, setError] = useState("")
   const [moreInfoDisplay, setMoreInfoDisplay] = useState(false)
   const [spaceId, setSpaceId] = useState("")
-  
-  const fetchSpacesData = async() =>{
+
+  useEffect(() => {
+    const getDataSpace = async()=>{
       try{
         const userSpaces = await getUserSpaces() || []
-        setSpaces(userSpaces)
+        setSpaces(userSpaces)        
       }catch(err) {
         setError(err)
       }
-  }
-
-  useEffect(() => {
-    fetchSpacesData()
-  },[]) 
+    }
+    getDataSpace()  
+  },[moreInfoDisplay]) 
   
   useEffect(() => {
-    fetchSpacesData()
-  },[moreInfoDisplay]) 
-
+      if(spaces.length!==0 && extSpaceId) setMoreInfoDisplay(true)
+  },[spaces]) 
+    
   const changeViewToDisplay = (spaceId) => {
-    return () => {
+    return () => () => {
       setMoreInfoDisplay(!moreInfoDisplay)
-      if(spaceId) setSpaceId(spaceId)
+      if(spaceId) {setSpaceId(spaceId)}
     } 
   }
   
@@ -40,7 +40,7 @@ export default function LenderAdminArea () {
         {moreInfoDisplay ? (
           <SpecificSpaceView 
             spaces={spaces} 
-            spaceId={spaceId} 
+            spaceId={extSpaceId? extSpaceId : spaceId} 
             changeViewToDisplay={changeViewToDisplay}
             edit={true}
           ></SpecificSpaceView>

@@ -11,9 +11,9 @@ export default function GeneralInfoAdministrator ({space, edit}) {
     const handleSubmit = async values => {
         try{
             await updateSpace(space._id, values)
-            swal("udpate successful","your changes to your space were saved succesfully","success")
+            swal("Update successfully","Your changes to your space were saved succesfully","success")
         }catch(error){
-            swal("update error", "something went wrong, please try again", "error")
+            swal("Update error", "Something went wrong, please try again", "error")
         }
     }
 
@@ -32,9 +32,9 @@ export default function GeneralInfoAdministrator ({space, edit}) {
         }) => (
             <Form onSubmit={handleSubmit}>
                 <Card className="text-center">
-                    <Card.Header>INFORMATION</Card.Header>
+                    <Card.Header>Information</Card.Header>
                     <Card.Body>
-                    <Card.Title><Form.Label>SPACE DESCRIPTION</Form.Label></Card.Title>
+                    <Card.Title><Form.Label>Space Description</Form.Label></Card.Title>
                     <Card.Text>
                         {isUpdatingState ? (
                         <Form.Control 
@@ -50,14 +50,14 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                         <Card>
                             <Card.Header>
                             <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "0"}>
-                                <h6>DIMENSIONS</h6>
+                                <h6>Dimensions</h6>
                             </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "0"}>
                             <Card.Body>
                                 {isUpdatingState ? (
                                     <React.Fragment>
-                                        <Form.Label>WIDTH</Form.Label>
+                                        <Form.Label>Width</Form.Label>
                                         <Form.Control 
                                         name="width" 
                                         type="text" 
@@ -65,7 +65,7 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                                         value={values.width}
                                         onChange={handleChange}    
                                         />
-                                        <Form.Label>LENGTH</Form.Label>
+                                        <Form.Label>Length</Form.Label>
                                         <Form.Control 
                                         name="length" 
                                         type="text" 
@@ -73,7 +73,7 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                                         value={values.length}
                                         onChange={handleChange}    
                                         />
-                                        <Form.Label>HEIGHT</Form.Label>
+                                        <Form.Label>Height</Form.Label>
                                         <Form.Control 
                                         name="height" 
                                         type="text" 
@@ -85,17 +85,17 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                                 ) : ( 
                                     <React.Fragment>
                                         <Card.Text>
-                                            {`area: ${values.area}mts`}
+                                            {`Area: ${values.area} mts`}
                                         </Card.Text>
                                         <Card.Text>
-                                            {`width: ${values.width}mts`}
+                                            {`Width: ${values.width} mts`}
                                         </Card.Text>
                                         <Card.Text>
-                                            {`length: ${values.length}mts` }
+                                            {`Length: ${values.length} mts` }
                                             
                                         </Card.Text>
                                         <Card.Text>
-                                            { `height: ${values.height}mts`} 
+                                            { `Height: ${values.height} mts`} 
                                         </Card.Text>
                                     </React.Fragment>
                                      )
@@ -106,14 +106,14 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                         <Card>
                             <Card.Header>
                             <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "1"}>
-                                <h6>PRICES</h6>
+                                <h6>Prices</h6>
                             </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "1"}>
                             <Card.Body>
                             {isUpdatingState ? (
                                     <React.Fragment>
-                                        <Form.Label>PRICE PER DAY</Form.Label>
+                                        <Form.Label>Price per Day</Form.Label>
                                         <Form.Control 
                                         name="pricePerDay" 
                                         type="number" 
@@ -121,7 +121,7 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                                         value={values.pricePerDay}
                                         onChange={handleChange}    
                                         />
-                                        <Form.Label>PRICE PER MONTH</Form.Label>
+                                        <Form.Label>Price per Month</Form.Label>
                                         <Form.Control 
                                         name="pricePermonth" 
                                         type="number" 
@@ -130,14 +130,14 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                                         onChange={handleChange}    
                                         />
                                     </React.Fragment>
-                                ) : `price per day: ${values.pricePerDay} price per month: ${values.pricePermonth}` }
+                                ) : `Price per Day: ${values.pricePerDay} Price per Month: ${values.pricePermonth}` }
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>
                         <Card>
                             <Card.Header>
                             <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "2"}>
-                                <h6>TAGS</h6>
+                                <h6>Tags</h6>
                             </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "2"}>
@@ -149,14 +149,14 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                         <Card>
                             <Card.Header>
                             <Accordion.Toggle as={Card.Header} variant="text" eventKey={isUpdatingState ? eventKeyUpdatingState : "3"}>
-                                <h6>LOCATION</h6>
+                                <h6>Location</h6>
                             </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey={isUpdatingState ? eventKeyUpdatingState : "3"}>
                             <Card.Body>
                             {isUpdatingState ? (
                                     <React.Fragment>
-                                        <Form.Label>CITY</Form.Label>
+                                        <Form.Label>City</Form.Label>
                                         <Form.Control 
                                         name="city" 
                                         type="text" 
@@ -164,7 +164,7 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                                         value={values.city}
                                         onChange={handleChange}    
                                         />
-                                        <Form.Label>ADDRESS</Form.Label>
+                                        <Form.Label>Address</Form.Label>
                                         <Form.Control 
                                         name="address" 
                                         type="text" 
@@ -173,14 +173,14 @@ export default function GeneralInfoAdministrator ({space, edit}) {
                                         onChange={handleChange}    
                                         />
                                     </React.Fragment>
-                                ) : `city: ${values.city} address: ${values.address}` }
+                                ) : `City: ${values.city} Address: ${values.address}` }
                             </Card.Body>
                             </Accordion.Collapse>
                         </Card>
                         </Accordion>
-                    {edit ? <Button data-testid="edit-ModeOn" type={isUpdatingState ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => buttonBehavior()} >{isUpdatingState? "save" : "edit"}<Pencil></Pencil></Button> : null}
+                    {edit ? <Button  type={isUpdatingState ? "" : "submit"} className="mt-4" variant="primary" onClick={(e) => buttonBehavior()} >{isUpdatingState? "Save" : "Edit"}<Pencil></Pencil></Button> : null}
                     </Card.Body>
-                    <Card.Footer className="text-muted">{`created ${Date(space.createdAt)}`}</Card.Footer>
+                    <Card.Footer className="text-muted">{`Created at: ${Date(space.createdAt)}`}</Card.Footer>
                 </Card>
             </Form>
         )}
