@@ -14,7 +14,7 @@ const defaultValue = 1;
 const viewSelector = (testing) => {
     switch(testing) {
         case 1 :{
-            return <DimensionsForm></DimensionsForm>
+            return <DimensionsForm ></DimensionsForm>
         }
         case 2 :{
             return <LocationForm></LocationForm>
