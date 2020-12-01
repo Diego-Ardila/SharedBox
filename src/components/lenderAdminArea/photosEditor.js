@@ -111,7 +111,7 @@ export default function PhotosEditor({space,show,onHide}) {
                 return (
                     <Col className="mb-3" sm={6} md={3} xl={3} >
                         <Photos>
-                            <Image key={img} src={img} fluid/>
+                            <Image key={img} src={img.url ? img.url : img} fluid/>
                             <Button size="sm" onClick={()=> deletePhotos(photo)} className="position-absolute" >
                                 <Trash/>
                             </Button>

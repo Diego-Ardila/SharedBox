@@ -30,7 +30,7 @@ function PrivateRoute(props) {
     const typeValid = props.typeUser ? (localStorage.getItem("typeUser") === typeUser) : true
     const isValid = true // an axios called to verify the token is required
     if(!token && !typeValid && isValid) history.push("/user/login") 
-  }, )
+  },[])
 
   return(
     <Route {...props}></Route>
@@ -71,7 +71,7 @@ function App() {
       }
       }
     );
-  })
+  },[])
 
   useEffect(() =>{
     const fetchData = async () => {
@@ -85,7 +85,7 @@ function App() {
       }      
     }  
     fetchData();
-  })
+  },[])
 
   const title = numberNotifications > 0 ? `(${numberNotifications})` : '';
   return (
