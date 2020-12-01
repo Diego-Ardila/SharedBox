@@ -129,9 +129,9 @@ let scores=[
 ];
 
 
-let spaces=[
+export let spaces=[
     {
-        _id: "jñkljlñklkj141",
+        _id: "5f57c865a5e4884704ed6ce1",
         area: 12,
         width: 2,
         length: 2,
@@ -139,7 +139,7 @@ let spaces=[
         pricePerMeterPerDay: 25000,
         spaceTags: ["adsfa134","fdf13413","adfj24511"],
         datesReserved: "13afdgafasdf",
-        photos: ["http://www.aws.s3.com/131ñlksfads", "http://www.aws.s3.com/123413asfdad", "http://www.aws.s3.com/adf134134", "http://www.aws.s3.com/hggf5"],
+        photos: ["https://res.cloudinary.com/sharedbox/image/upload/v1599504183/sharedBox/file_jwv7lg.jpg"],
         aditionalInfo: "it is really cold area without cooling",
         lenderId: "1345asdfasd1",
         inventory:"aldsfjh4534",
@@ -147,7 +147,8 @@ let spaces=[
             long:123413,
             latt:1345145
         },
-        frequentaskedQuestionsId: "dahjdalf13r4",
+        faqs:[],
+        dateReservedId: []
     },
     {
         _id: "nbnbn34141432",
@@ -158,10 +159,12 @@ let spaces=[
         pricePerMeterPerDay: 20000,
         spaceTags: ["adsfa134","fdf13413","ñkjlñkj1234","ajklsdfñ134"],
         datesReserved: "13afdgfddgfadfdf",
-        photos: ["http://www.aws.s3.com/gqr4gr", "http://www.aws.s3.com/sfg24355", "http://www.aws.s3.com/fads4543", "http://www.aws.s3.com/gjhkkg3456"],
+        photos: ["https://res.cloudinary.com/sharedbox/image/upload/v1599504185/sharedBox/file_iceg1j.jpg"],
         aditionalInfo: "The entrance is really small so I don´t think large objects is a good idea",
         lenderId: "1345asdfasd1",
-        inventory: "hjlkh134315"
+        inventory: "hjlkh134315",
+        faqs:[],
+        dateReservedId: []
     },
     {
         _id: "mjkhlh1234",
@@ -172,10 +175,12 @@ let spaces=[
         pricePerMeterPerDay: 1000,
         spaceTags: ["adsfa134"],
         datesReserved: "14efre1jgd23",
-        photos: ["http://www.aws.s3.com/131ñlksfads", "http://www.aws.s3.com/123413asfdad", "http://www.aws.s3.com/adf134134", "http://www.aws.s3.com/hggf5"],
+        photos: ["https://res.cloudinary.com/sharedbox/image/upload/v1599504255/sharedBox/file_lgpfcn.jpg"],
         aditionalInfo: "the sun hits the space directly in the afternoons",
         lenderId: "1345dfa1",
-        inventory: "lkghghkjjh1324"
+        inventory: "lkghghkjjh1324",
+        faqs:[],
+        dateReservedId: []
     },
     {
         _id: "ñhljkhlkjh13432",
@@ -186,10 +191,12 @@ let spaces=[
         pricePerMeterPerDay: 1000,
         spaceTags: ["adsfa134"],
         datesReserved: "1j345lhlsd145",
-        photos: ["http://www.aws.s3.com/131ñlksfads", "http://www.aws.s3.com/123413asfdad", "http://www.aws.s3.com/adf134134", "http://www.aws.s3.com/hggf5"],
+        photos: ["https://res.cloudinary.com/sharedbox/image/upload/v1599509211/sharedBox/file_rsfqyt.jpg"],
         aditionalInfo: "the sun hits the space directly in the afternoons",
         lenderId: "fdaf234",
-        inventory: "zxzcxvzkjhl124"
+        inventory: "zxzcxvzkjhl124",
+        faqs:[],
+        dateReservedId: []
     }
 ]
 

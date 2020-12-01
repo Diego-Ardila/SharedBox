@@ -18,6 +18,7 @@ export default function FrequentAskedQuestionsForm (props) {
 
     const handleChange = (event) => {
         const {name , value} = event.target
+        console.log(name, value)
         if(name===base.questionId) setQuestion(value);
         if(name===base.responseId) setAnswer(value);
     }

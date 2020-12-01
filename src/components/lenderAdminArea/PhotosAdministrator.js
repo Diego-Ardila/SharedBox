@@ -10,7 +10,7 @@ export default function PhotosAdministrator ({ children }) {
         return (<Carousel.Item key={link}>
             <img 
                 className="d-block w-100"
-                src={img} width={300} height={300}
+                src={img.url ? img.url : img} width={300} height={300}
                 alt="spacePhoto"   
             >
             </img>   

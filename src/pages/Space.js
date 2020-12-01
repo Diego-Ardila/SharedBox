@@ -6,9 +6,6 @@ import {useSelector} from 'react-redux'
 import { Container, Spinner } from "react-bootstrap";
 import SpecificSpaceView from "../components/lenderAdminArea/specificSpaceView";
 
-
-
-
 export default function Space () {
     
     const [spaces, setSpace] = useState([])
@@ -16,7 +13,6 @@ export default function Space () {
     const locationQuery = useLocation()
     const history = useHistory()
     const spaceId = locationQuery.search.slice(5,29)
-
     const isLogged = useSelector(state => state.loginUserReducer.isLogged)   
     useEffect( () => {
         async function getSpace () {
