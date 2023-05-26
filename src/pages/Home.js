@@ -1,6 +1,6 @@
   import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import {  Container } from 'react-bootstrap';
+import {  Container, Spinner } from 'react-bootstrap';
 import { useSelector, useDispatch } from "react-redux"
 import Spaces from '../components/viewSpaces/Spaces';
 import queryString from 'query-string';
@@ -29,11 +29,13 @@ const Home = () => {
   let [items, setItems] = useState([])
   let [limit,setLimit] = useState(10)
   let [message,setMessage] = useState("")
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(()=>{
     async function getspaces () {
       try{
         const response = await getFilterSpacesHome(locationQuery.search)
+        setIsLoading(false);
         dispatch(changeSpaces(response.data || []))
         const maxPages = response.headers["content-pages"]
         const renderTotal = response.headers["content-total"]
@@ -80,6 +82,7 @@ const Home = () => {
         setItems(newItems)
       }
       catch(err){
+        setIsLoading(false);
         swal("Something went wrong", "Something went wrong, please try again", "error")
       }
     }
@@ -133,6 +136,10 @@ const Home = () => {
 
   const infoFunction = (spaceId) => {
     return () => () => window.open(`/space?_id=${spaceId}&startDate=${initialDate}&endDate=${finalDate}`)
+  }
+
+  if(isLoading) {
+    return <Spinner className="mt-6"/>
   }
 
   return (
