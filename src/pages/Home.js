@@ -82,7 +82,7 @@ const Home = () => {
         setItems(newItems)
       }
       catch(err){
-        setIsLoading(false);
+        //setIsLoading(false);
         swal("Something went wrong", "Something went wrong, please try again", "error")
       }
     }
@@ -139,7 +139,11 @@ const Home = () => {
   }
 
   if(isLoading) {
-    return <Spinner className="mt-6"/>
+    return (
+      <div className='d-flex w-100 justify-content-center'>
+        <Spinner animation="border" className="mt-8" variant="primary" />
+      </div>
+    )
   }
 
   return (
